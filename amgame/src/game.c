@@ -3,7 +3,19 @@
 void init_screen();
 void splash();
 void read_key();
-
+typedef struct _vec {
+ int x;
+ int y; 
+}vec;
+typedef struct _body{
+  int x;
+  int y;
+}body;
+typedef struct _snake{
+    int x;
+    int y;
+    body* next;
+}snake;
 int main() {
   // Operating system is a C program
   _ioe_init();
