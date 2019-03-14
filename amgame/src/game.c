@@ -12,10 +12,13 @@ typedef struct _body{
   int y;
 }body;
 typedef struct _snake{
-    int x;
-    int y;
-    body* next;
+    body block;
+    struct _snake* next;
 }snake;
+snake one_snake;/*
+void move(snake a)	{
+	a.x+=b
+}*/
 int main() {
   // Operating system is a C program
   _ioe_init();
