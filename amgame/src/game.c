@@ -77,7 +77,7 @@ int main() {
 	if(update_enable()) {
 		i++;
 		i%=30;
-		puts(itoa(i));
+		puts(itoa(i+11));
 		draw_blo(20,i,0xffffff);
 	}
   }
