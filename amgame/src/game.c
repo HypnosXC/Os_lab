@@ -23,7 +23,7 @@ char* itoa(uint32_t ax)	{
 		pre[i]='s';	
 	int j=0,t=ax;
 	while(t)j++,t/=10;
-	pre[j]='\n';
+	pre[j+1]='\n';
 	for(int i=j;i>=0;i--){
 		pre[i]=ax%10+'0';
 		ax/=10;
