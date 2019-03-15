@@ -68,7 +68,7 @@ int main() {
   while (1) {
     read_key();
 	time_update();
-	puts(itoa(TI.upda));
+	puts(itoa(TI.now_FPS));
 	int i=0;
 	if(update_enable()) {
 		i++;
