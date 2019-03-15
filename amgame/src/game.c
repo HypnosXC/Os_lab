@@ -17,7 +17,19 @@ typedef struct _snake{
     body block;
     struct _snake* next;
 }snake;
-
+char pre[100];
+char *itoa(uint32_t ax)	{
+	
+	int j=0,t=ax;
+	while(t)j++,t/=10;
+	pre[j]=0;
+	j--;
+	for(int i=j;i>=0;i--){
+		pre[j]=ax%10+'0';
+		ax/=10;
+	}
+	return pre;
+}
 snake one_snake;/*
 void move(snake a)	{
 	a.x+=b
@@ -30,8 +42,8 @@ int main() {
   while (1) {
     read_key();
 	for(int i=1;i<=1000000;i++)	{
-//		if(i>=1000000)
-//			printf("%d",uptime());
+		if(i>=1000000)
+			puts(itoa(uptime()));
 	}
   }
   return 0;
