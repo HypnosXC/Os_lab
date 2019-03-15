@@ -43,8 +43,8 @@ int main() {
   splash();
   while (1) {
     read_key();
-	for(int i=1;i<=10000000;i++)	{
-		if(i>=10000000)
+	for(int i=1;i<=100000000;i++)	{
+		if(i>=100000000)
 			puts(itoa(uptime()));
 	}
   }
