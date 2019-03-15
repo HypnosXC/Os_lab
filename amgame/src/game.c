@@ -24,6 +24,7 @@ uint32_t rand();
 uint32_t srand(int seed);
 uint32_t uptime();
 void init_time();
+char * itoa(uint32_t x);
 void time_update();
 void init_screen();
 void draw_blo(int x,int y,int color);
@@ -32,6 +33,7 @@ void read_key();
 void init_time(){
 	TI.last_FPS=uptime()*FPS/1000;
 	TI.now_FPS=TI.last_FPS;
+	puts(itoa(TI.last_FPS*1000));
 	TI.upda=0;
 }
 void time_update()	{
