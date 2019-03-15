@@ -71,7 +71,7 @@ int main() {
     read_key();
 	time_update();
 	for(int i=1;i<=1000000;i++)
-		for(int j=1;j<=10000;j++)
+		for(int j=1;j<=1000;j++)
 			if(i>=1000000)
 				puts(itoa(uptime()));
 	int i=0;
