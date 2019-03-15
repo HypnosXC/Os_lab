@@ -11,6 +11,7 @@ typedef struct _body{
   int x;
   int y;
 }body;
+uint32_t uptime();
 typedef struct _snake{
     body block;
     struct _snake* next;
