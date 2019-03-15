@@ -1,5 +1,6 @@
 #include <game.h>
-
+#define FPS 60
+uint32_t printf(char *tmf,...);
 void init_screen();
 void splash();
 void read_key();
@@ -16,6 +17,7 @@ typedef struct _snake{
     body block;
     struct _snake* next;
 }snake;
+
 snake one_snake;/*
 void move(snake a)	{
 	a.x+=b
@@ -27,6 +29,10 @@ int main() {
   splash();
   while (1) {
     read_key();
+	for(int i=1;i<=1000000;i++)	{
+		if(i>10000000)
+			printf("%d",uptime());
+	}
   }
   return 0;
 }
