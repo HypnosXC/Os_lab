@@ -31,13 +31,12 @@ void draw_blo(int x,int y,int color);
 void splash();
 void read_key();
 void init_time(){
-	TI.last_FPS=uptime()*FPS/1000;
+	TI.last_FPS=uptime()/1000;
 	TI.now_FPS=TI.last_FPS;
-	puts(itoa(TI.last_FPS*1000));
 	TI.upda=0;
 }
 void time_update()	{
-	TI.now_FPS=uptime()*FPS/1000;
+	TI.now_FPS=uptime()/1000;
 	if(TI.now_FPS!=TI.last_FPS)
 		TI.upda=1,TI.last_FPS=TI.now_FPS;
 	else
