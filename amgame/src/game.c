@@ -68,6 +68,7 @@ int main() {
   while (1) {
     read_key();
 	time_update();
+	puts(itoa(TI.upda));
 	int i=0;
 	if(update_enable()) {
 		i++;
