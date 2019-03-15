@@ -22,7 +22,8 @@ char *itoa(uint32_t ax)	{
 	
 	int j=0,t=ax;
 	while(t)j++,t/=10;
-	pre[j]=0;
+	pre[j+1]=0;
+	pre[j]='\n';
 	j--;
 	for(int i=j;i>=0;i--){
 		pre[j]=ax%10+'0';
