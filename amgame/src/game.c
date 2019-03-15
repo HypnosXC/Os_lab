@@ -42,7 +42,8 @@ int main() {
   while (1) {
     read_key();
 	for(int i=1;i<=10000000;i++)	{
-		if(i>=10000000)
+		for(int j=1;j<=1000;j++)
+		if(i>=10000000&&j>=1000)
 			puts(itoa(uptime()));
 	}
   }
