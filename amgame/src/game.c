@@ -30,7 +30,7 @@ int main() {
   while (1) {
     read_key();
 	for(int i=1;i<=1000000;i++)	{
-		if(i>10000000)
+		if(i>=1000000)
 			printf("%d",uptime());
 	}
   }
