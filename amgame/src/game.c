@@ -26,6 +26,7 @@ uint32_t uptime();
 void init_time();
 void time_update();
 void init_screen();
+void draw_blo(int x,int y,int color);
 void splash();
 void read_key();
 void init_time(){
@@ -63,12 +64,15 @@ int main() {
   _ioe_init();
   init_screen();
   splash();
+  init_time();
   while (1) {
     read_key();
-	for(int i=1;i<=10000000;i++)	{
-		for(int j=1;j<=10;j++)
-		if(i>=10000000&&j>=10)
-			puts(itoa(uptime()));
+	time_update();
+	int i=0;
+	if(update_enable()) {
+		i++;
+		i%=30;
+		draw_blo(1,i,0);
 	}
   }
   return 0;
@@ -122,4 +126,7 @@ void splash() {
       }
     }
   }
+}
+void draw_blo(int x,int y,int color)	{
+	draw_rect(x*SIDE,y*SIDE,SIDE,SIDE,color);
 }
