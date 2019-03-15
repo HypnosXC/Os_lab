@@ -69,14 +69,15 @@ int main() {
   while (1) {
     read_key();
 	time_update();
-	for(int i=1;i<=1000000;i++)
-		for(int j=1;j<=1000;j++)
-			if(i>=1000000)
-				puts(itoa(uptime()));
+//	for(int i=1;i<=1000000;i++)
+//		for(int j=1;j<=1000;j++)
+//			if(i>=1000000)
+//				puts(itoa(uptime()));
 	int i=0;
 	if(update_enable()) {
 		i++;
 		i%=30;
+		puts(itoa(i));
 		draw_blo(20,i,0);
 	}
   }
