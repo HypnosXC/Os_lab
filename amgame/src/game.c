@@ -1,5 +1,5 @@
 #include <game.h>
-#define FPS 60
+#define FPS 30
 //uint32_t printf(char *tmf,...);
 struct time_flow{
 	int last_FPS;
@@ -20,6 +20,7 @@ typedef struct _snake{
 }snake;
 snake one_snake;
 char pre[100];
+int w,h;
 uint32_t rand();
 uint32_t srand(int seed);
 uint32_t uptime();
@@ -106,9 +107,6 @@ void read_key() {
     puts("\n");
   }
 }
-
-int w, h;
-
 void init_screen() {
   _DEV_VIDEO_INFO_t info = {0};
   _io_read(_DEV_VIDEO, _DEVREG_VIDEO_INFO, &info, sizeof(info));
