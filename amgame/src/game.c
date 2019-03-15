@@ -1,9 +1,11 @@
 #include <game.h>
 #define FPS 60
 //uint32_t printf(char *tmf,...);
-void init_screen();
-void splash();
-void read_key();
+struct time_flow{
+	int last_FPS;
+	int now_FPS;
+	int upda;
+}TI;
 typedef struct _vec {
  int x;
  int y; 
@@ -12,12 +14,36 @@ typedef struct _body{
   int x;
   int y;
 }body;
-uint32_t uptime();
 typedef struct _snake{
     body block;
     struct _snake* next;
 }snake;
+snake one_snake;
 char pre[100];
+uint32_t rand();
+uint32_t srand(int seed);
+uint32_t uptime();
+void init_time();
+void time_update();
+void init_screen();
+void splash();
+void read_key();
+void init_time(){
+	TI.last_FPS=uptime()*FPS/1000;
+	TI.now_FPS=TI.last_FPS;
+	TI.upda=0;
+}
+void time_update()	{
+	TI.now_FPS=uptime()*FPS/1000;
+	if(TI.now_FPS!=TI.last_FPS)
+		TI.upda=1,TI.last_FPS=TI.now_FPS;
+	else
+		TI.upda=0;
+}
+int update_enable()	{
+	return TI.upda;
+}
+
 char* itoa(uint32_t ax)	{
     ax/=1000;
 	for(int i=0;i<100;i++)
@@ -32,10 +58,6 @@ char* itoa(uint32_t ax)	{
 	}
 	return pre;
 }
-snake one_snake;/*
-void move(snake a)	{
-	a.x+=b
-}*/
 int main() {
   // Operating system is a C program
   _ioe_init();
