@@ -48,7 +48,11 @@ int main() {
   }
   return 0;
 }
-
+uint32_t uptime() {
+  _DEV_TIMER_UPTIME_t uptime;
+  _io_read(_DEV_TIMER, _DEVREG_TIMER_UPTIME, &uptime, sizeof(uptime));
+  return uptime.lo;
+}
 void read_key() {
   _DEV_INPUT_KBD_t event = { .keycode = _KEY_NONE };
   #define KEYNAME(key) \
