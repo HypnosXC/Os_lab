@@ -52,7 +52,7 @@ char* itoa(uint32_t ax)	{
 		pre[i]=0;	
 	int j=0,t=ax;
 	while(t)j++,t/=10;
-	if(t!=0)
+	if(ax!=0)
 		j--;
 	pre[j+1]='\n';
 	for(int i=j;i>=0;i--){
