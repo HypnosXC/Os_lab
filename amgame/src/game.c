@@ -47,7 +47,6 @@ int update_enable()	{
 }
 
 char* itoa(uint32_t ax)	{
-    ax/=1000;
 	for(int i=0;i<100;i++)
 		pre[i]=0;	
 	int j=0,t=ax;
