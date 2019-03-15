@@ -19,8 +19,8 @@ typedef struct _snake{
 }snake;
 char pre[100];
 char* itoa(uint32_t ax)	{
-    for(int i=0;i<100;i++)
-		pre[i]=0;	
+    for(int i=0;i<10;i++)
+		pre[i]='s';	
 	int j=0,t=ax;
 	while(t)j++,t/=10;
 	pre[j+1]='\n';
