@@ -73,7 +73,7 @@ int main() {
 	for(int i=1;i<=1000000;i++)
 		for(int j=1;j<=1000;j++)
 			if(i>=1000000)
-				puts(itoa(TI.now_FPS));
+				puts(itoa(uptime()));
 	int i=0;
 	if(update_enable()) {
 		i++;
