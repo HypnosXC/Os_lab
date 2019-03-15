@@ -72,7 +72,7 @@ int main() {
 	if(update_enable()) {
 		i++;
 		i%=30;
-		draw_blo(1,i,0);
+		draw_blo(20,i,0);
 	}
   }
   return 0;
