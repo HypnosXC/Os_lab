@@ -1,6 +1,6 @@
 #include <game.h>
 #define FPS 60
-uint32_t printf(char *tmf,...);
+//uint32_t printf(char *tmf,...);
 void init_screen();
 void splash();
 void read_key();
@@ -30,8 +30,8 @@ int main() {
   while (1) {
     read_key();
 	for(int i=1;i<=1000000;i++)	{
-		if(i>=1000000)
-			printf("%d",uptime());
+//		if(i>=1000000)
+//			printf("%d",uptime());
 	}
   }
   return 0;
