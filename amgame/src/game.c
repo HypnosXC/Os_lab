@@ -64,7 +64,7 @@ int main() {
   // Operating system is a C program
   _ioe_init();
   init_screen();
-  splash();
+//  splash();
   init_time();
   while (1) {
     read_key();
@@ -78,7 +78,7 @@ int main() {
 		i++;
 		i%=30;
 		puts(itoa(i));
-		draw_blo(20,i,0);
+		draw_blo(20,i,0xffffff);
 	}
   }
   return 0;
