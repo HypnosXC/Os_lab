@@ -1,5 +1,5 @@
 #include <game.h>
-#define FPS 30
+#define FPS 300
 //uint32_t printf(char *tmf,...);
 struct time_flow{
 	int last_FPS;
