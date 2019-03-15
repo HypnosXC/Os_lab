@@ -79,6 +79,7 @@ int main() {
 	if(update_enable()) {
 		i++;
 		i+=6;
+		i%=450;
 		puts(itoa(i));
 		draw_blo(20,i/SIDE,0xffffff);
 		draw_blo(20,(i-6)/SIDE,0);
