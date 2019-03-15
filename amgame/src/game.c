@@ -68,6 +68,7 @@ int main() {
   init_screen();
 //  splash();
   init_time();
+  int i=0;
   while (1) {
     read_key();
 	time_update();
@@ -75,7 +76,6 @@ int main() {
 //		for(int j=1;j<=1000;j++)
 //			if(i>=1000000)
 //				puts(itoa(uptime()));
-	int i=0;
 	if(update_enable()) {
 		i++;
 		i%=30;
