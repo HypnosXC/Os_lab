@@ -78,9 +78,10 @@ int main() {
 //				puts(itoa(uptime()));
 	if(update_enable()) {
 		i++;
-		i%=30;
+		i+=6;
 		puts(itoa(i));
-		draw_blo(20,i,0xffffff);
+		draw_blo(20,i/SIDE,0xffffff);
+		draw_blo(20,(i-6)/SIDE,0);
 	}
   }
   return 0;
