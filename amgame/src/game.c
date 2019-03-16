@@ -167,8 +167,9 @@ char* read_key() {
   if (event.keycode != _KEY_NONE && event.keydown) {
     puts("Key pressed: ");
     puts(key_names[event.keycode]);
+	puts("\n");
 	return (char *)key_names[event.keycode];
-    puts("\n");
+    
   }
   return NULL;
 }
