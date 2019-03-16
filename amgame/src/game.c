@@ -132,7 +132,7 @@ int main() {
 	if(update_enable()) {
 		i++;
 		puts(itoa(i));
-		if(i>10)	{
+		if(i>60)	{
 			inc_snake(head);
 			i=0;
 		}
