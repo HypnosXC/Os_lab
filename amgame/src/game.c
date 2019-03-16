@@ -145,6 +145,9 @@ int main() {
 		puts(itoa(i));
 		if(i>60)	{
 			inc_snake(head);
+			int t=head->dir.x;
+			head->dir.x=head->dir.y;
+			head->dir.y=t;
 			i=0;
 			inc=1;
 		}
