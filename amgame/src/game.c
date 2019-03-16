@@ -120,7 +120,7 @@ int main() {
   srand(uptime());
 //  splash();
   init_time();
-  int i=0;
+  init_snake();
   while (1) {
     read_key();
 	time_update();
@@ -129,12 +129,7 @@ int main() {
 //			if(i>=1000000)
 //				puts(itoa(uptime()));
 	if(update_enable()) {
-		i++;
-		i+=1;
-		i%=450;
-		puts(itoa(i));
-		draw_blo(20,(i-6)/SIDE,0);
-		draw_blo(20,i/SIDE,0xffffff);
+		redraw_snake();
 	}
   }
   return 0;
