@@ -128,8 +128,13 @@ int main() {
 //		for(int j=1;j<=1000;j++)
 //			if(i>=1000000)
 //				puts(itoa(uptime()));
+	int i=0;
 	if(update_enable()) {
-		inc_snake(head);
+		i++;
+		if(i>60)	{
+			inc_snake(head);
+			i=0;
+		}
 		puts(itoa(tot));
 		puts("\n");
 		redraw_snake();
