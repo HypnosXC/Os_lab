@@ -98,7 +98,7 @@ void loc_update(snake *a)	{
 void init_snake()	{
 	head=&used[tot++];
 	head->block.x=head->block.y=1;
-	head->dir.x=1;
+	head->dir.x=16;
 	head->dir.y=0;
 }
 snake* f_tail(snake *a){
