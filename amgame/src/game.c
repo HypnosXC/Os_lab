@@ -22,9 +22,13 @@ typedef struct _snake{
 snake used[109];
 snake *head;
 body rand_bl[1009];
+char fix[4][100]={"UP","DOWN","RIGHT","LEFT"};
+vec f_ch[4];
+char *now_fix;
 int tot,rtot,inc;
 char pre[100];
 int w,h;
+int strcmp(const char *s1,const char *s2);
 uint32_t rand();
 uint32_t srand(int seed);
 uint32_t uptime();
@@ -102,6 +106,14 @@ void init_snake()	{
 	head->block.x=head->block.y=1;
 	head->dir.x=16;
 	head->dir.y=0;
+	f_ch[0].x=16;
+	f_ch[0].y=0;
+	f_ch[1].x=-16;
+	f_ch[1].y=0;
+	f_ch[2].x=0;
+	f_ch[2].y=16;
+	f_ch[3].x=0;
+	f_ch[3].y=-16;
 }
 snake* f_tail(snake *a){
 	if(a->next==NULL)
@@ -118,22 +130,26 @@ void redraw_snake()	{
 	draw_blo(head->block.x/SIDE,head->block.y/SIDE,0xffffff);
 
 }
+void dir_change()	{
+	if(now_fix==NULL)
+		return;
+	for(int i=0;i<4;i++)	{
+		if(!strcmp(now_fix,fix[i]))
+			head->dir=f_ch[i];
+	}
+	return;
+}
 int main() {
   // Operating system is a C program
   _ioe_init();
   init_screen();
   srand(uptime());
-//  splash();
   init_time();
   init_snake();
   int i=0;
   while (1) {
     read_key();
 	time_update();
-//	for(int i=1;i<=1000000;i++)
-//		for(int j=1;j<=1000;j++)
-//			if(i>=1000000)
-//				puts(itoa(uptime()));
 	if(update_enable()) {
 		i++;
 		if(i>60)	{
