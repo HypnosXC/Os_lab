@@ -157,7 +157,7 @@ void inc_confirm()	{
 			for(int j=i;j<rtot-1;j++)
 				rand_bl[i]=rand_bl[i+1];
 			rtot--;
-			break;
+			return;
 		}
 	inc=0;
 }
