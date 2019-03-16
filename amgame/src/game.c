@@ -22,7 +22,7 @@ typedef struct _snake{
 snake used[109];
 snake *head;
 body rand_bl[1009];
-char fix[4][100]={"RIGHT","LEFT","UP","DOWN"};
+char fix[4][100]={"RIGHT","LEFT","DOWN","UP"};
 vec f_ch[4];
 char *now_fix;
 int tot,rtot,inc;
