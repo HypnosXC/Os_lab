@@ -142,7 +142,6 @@ int main() {
 //				puts(itoa(uptime()));
 	if(update_enable()) {
 		i++;
-		puts(itoa(i));
 		if(i>60)	{
 			inc_snake(head);
 			int t=head->dir.x;
@@ -153,8 +152,6 @@ int main() {
 		}
 		else
 			inc=0;
-		puts(itoa(tot));
-		puts("\n");
 		redraw_snake();
 	}
   }
