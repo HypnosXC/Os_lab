@@ -129,6 +129,7 @@ int main() {
 //			if(i>=1000000)
 //				puts(itoa(uptime()));
 	if(update_enable()) {
+		inc_snake(head);
 		redraw_snake();
 	}
   }
