@@ -130,6 +130,8 @@ int main() {
 //				puts(itoa(uptime()));
 	if(update_enable()) {
 		inc_snake(head);
+		puts(itoa(tot));
+		puts("\n");
 		redraw_snake();
 	}
   }
