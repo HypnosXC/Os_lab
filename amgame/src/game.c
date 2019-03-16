@@ -21,7 +21,8 @@ typedef struct _snake{
 }snake;
 snake used[109];
 snake *head;
-int tot,inc;
+body rand_bl[1009];
+int tot,rtot,inc;
 char pre[100];
 int w,h;
 uint32_t rand();
@@ -33,7 +34,7 @@ void time_update();
 void init_screen();
 void draw_blo(int x,int y,int color);
 void splash();
-void read_key();
+char *read_key();
 void init_time(){
 	TI.last_FPS=uptime()+1000/FPS;
 	TI.now_FPS=uptime();
@@ -164,7 +165,7 @@ uint32_t uptime() {
   _io_read(_DEV_TIMER, _DEVREG_TIMER_UPTIME, &uptime, sizeof(uptime));
   return uptime.lo;
 }
-void read_key() {
+char* read_key() {
   _DEV_INPUT_KBD_t event = { .keycode = _KEY_NONE };
   #define KEYNAME(key) \
     [_KEY_##key] = #key,
@@ -175,8 +176,10 @@ void read_key() {
   if (event.keycode != _KEY_NONE && event.keydown) {
     puts("Key pressed: ");
     puts(key_names[event.keycode]);
+	return (char *)key_names[event.keycode];
     puts("\n");
   }
+  return NULL;
 }
 void init_screen() {
   _DEV_VIDEO_INFO_t info = {0};
