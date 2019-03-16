@@ -16,9 +16,11 @@ typedef struct _body{
 }body;
 typedef struct _snake{
     body block;
+	vec dir;
     struct _snake* next;
 }snake;
-snake one_snake;
+snake one_snake,used[109];
+int tot;
 char pre[100];
 int w,h;
 uint32_t rand();
@@ -63,6 +65,35 @@ char* itoa(uint32_t ax)	{
 	}
 	return pre;
 }
+body cal_motion(snake *a,int k)	{
+	body bx;
+	bx.x=a->block.x+k*a->dir.x;
+	bx.y=a->block.y+k*a->dir.y;
+	return bx;
+}
+vec vec_update(snake *a,const snake *fa) {
+	a->dir.x=fa->block.x-a->block.x;
+	a->dir.y=fa->block.y-a->block.y;
+	return a->dir;
+}
+void inc_snake(snake *a)	{
+	if(a->next==NULL) {
+		a->next=&used[tot++];
+		body* bx=&a->next->block;
+		*bx=cal_motion(a,-1);
+		vec_update(a->next,a);
+		return;
+	}
+	inc_snake(a->next);
+}
+void loc_update(snake *a)	{
+	if(a->next==NULL)
+		return;
+	loc_update(a->next);
+	vec_update(a->next,a);
+	a->next->block=cal_motion(a->next,1);
+}
+
 int main() {
   // Operating system is a C program
   _ioe_init();
