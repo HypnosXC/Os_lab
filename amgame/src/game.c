@@ -145,7 +145,7 @@ void new_blo()	{
 	if(x&1)
 		return;
 	rand_bl[rtot++].x=(rand()%w)/SIDE;
-	rand_bl[tot-1].y=(rand()%h)/SIDE;
+	rand_bl[rtot-1].y=(rand()%h)/SIDE;
 	draw_blo(rand_bl[rtot-1].x,rand_bl[rtot-1].y,0xffffff);
 }
 void inc_confirm()	{
@@ -177,7 +177,10 @@ int main() {
 	time_update();
 	if(update_enable()) {
 		i++;
-		new_blo();
+		if(i==100)	{
+			new_blo();
+			i=0;
+		}
 		inc_confirm();
 		if(inc)	{
 			inc_snake(head);
