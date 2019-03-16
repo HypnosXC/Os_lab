@@ -177,7 +177,7 @@ int main() {
 	time_update();
 	if(update_enable()) {
 		i++;
-		if(i==100)	{
+		if(i==10)	{
 			new_blo();
 			i=0;
 		}
