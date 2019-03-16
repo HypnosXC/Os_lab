@@ -131,6 +131,7 @@ int main() {
 	int i=0;
 	if(update_enable()) {
 		i++;
+		puts(itoa(i));
 		if(i>10)	{
 			inc_snake(head);
 			i=0;
