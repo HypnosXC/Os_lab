@@ -19,7 +19,8 @@ typedef struct _snake{
 	vec dir;
     struct _snake* next;
 }snake;
-snake one_snake,used[109];
+snake used[109];
+snake *head;
 int tot;
 char pre[100];
 int w,h;
@@ -93,7 +94,25 @@ void loc_update(snake *a)	{
 	vec_update(a->next,a);
 	a->next->block=cal_motion(a->next,1);
 }
+void init_snake()	{
+	head=&used[tot++];
+	head->block.x=head->block.y=1;
+	head->dir.x=1;
+	head->dir.y=0;
+}
+snake* f_tail(snake *a){
+	if(a->next==NULL)
+		return a;
+	return f_tail(a->next);
+}
+void redraw_snake()	{
+	snake *Tail=f_tail(head);
+    draw_blo(Tail->block.x/SIDE,Tail->block.y/SIDE,0);
+	loc_update(head);
+	head->block=cal_motion(head,1);
+	draw_blo(head->block.x/SIDE,head->block.y/SIDE,0xffffff);
 
+}
 int main() {
   // Operating system is a C program
   _ioe_init();
