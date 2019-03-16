@@ -148,7 +148,8 @@ int main() {
   init_snake();
   int i=0;
   while (1) {
-    read_key();
+    now_fix=read_key();
+	puts(now_fix);
 	time_update();
 	if(update_enable()) {
 		i++;
