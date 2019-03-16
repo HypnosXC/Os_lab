@@ -67,6 +67,7 @@ int main() {
   // Operating system is a C program
   _ioe_init();
   init_screen();
+  srand(uptime());
 //  splash();
   init_time();
   int i=0;
