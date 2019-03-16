@@ -21,7 +21,7 @@ typedef struct _snake{
 }snake;
 snake used[109];
 snake *head;
-int tot;
+int tot,inc;
 char pre[100];
 int w,h;
 uint32_t rand();
@@ -79,6 +79,7 @@ vec vec_update(snake *a,const snake *fa) {
 }
 void inc_snake(snake *a)	{
 	if(a->next==NULL) {
+		inc=1;
 		a->next=&used[tot++];
 		body* bx=&a->next->block;
 		*bx=cal_motion(a,-1);
@@ -109,6 +110,8 @@ void redraw_snake()	{
 	snake *Tail=f_tail(head);
     draw_blo(Tail->block.x/SIDE,Tail->block.y/SIDE,0);
 	loc_update(head);
+	if(inc)
+		draw_blo(Tail->block.x/SIDE,Tail->block.y/SIDE,0);
 	head->block=cal_motion(head,1);
 	draw_blo(head->block.x/SIDE,head->block.y/SIDE,0xffffff);
 
@@ -135,7 +138,10 @@ int main() {
 		if(i>60)	{
 			inc_snake(head);
 			i=0;
+			inc=1;
 		}
+		else
+			inc=0;
 		puts(itoa(tot));
 		puts("\n");
 		redraw_snake();
