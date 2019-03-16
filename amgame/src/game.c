@@ -140,6 +140,27 @@ void dir_change()	{
 	}
 	return;
 }
+void new_blo()	{
+	int x=rand();
+	if(x&1)
+		return;
+	rand_bl[rtot++].x=(rand()%w)/SIDE;
+	rand_bl[tot-1].y=(rand()%h)/SIDE;
+	draw_blo(rand_bl[rtot-1].x,rand_bl[rtot-1].y,0xffffff);
+}
+void inc_confirm()	{
+	int dx=head->block.x/SIDE,dy=head->block.y/SIDE;
+	for(int i=0;i<rtot;i++)
+		if(dx==rand_bl[i].x&&dy==rand_bl[i].y)	{
+			inc=1;
+			draw_blo(rand_bl[i].x,rand_bl[i].y,0);
+			for(int j=i;j<rtot-1;j++)
+				rand_bl[i]=rand_bl[i+1];
+			rtot--;
+			break;
+		}
+	inc=0;
+}
 int main() {
   // Operating system is a C program
   _ioe_init();
@@ -156,14 +177,13 @@ int main() {
 	time_update();
 	if(update_enable()) {
 		i++;
-		if(i>60)	{
+		new_blo();
+		inc_confirm();
+		if(inc)	{
 			inc_snake(head);
-			i=0;
-			inc=1;
 		}
-		else
-			inc=0;
 		redraw_snake();
+
 	}
   }
   return 0;
