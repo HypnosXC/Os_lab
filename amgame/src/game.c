@@ -112,13 +112,8 @@ void redraw_snake()	{
 	snake *Tail=f_tail(head);
     draw_blo(Tail->block.x/SIDE,Tail->block.y/SIDE,0);
 	loc_update(head);
-	if(inc){
-		puts("draw");
-		puts(itoa(Tail->block.x));
-		puts("ad");
-	
+	if(inc)
 		draw_blo(Tail->block.x/SIDE,Tail->block.y/SIDE,0xffffff);
-	}
 	head->block=cal_motion(head,1);
 	puts(itoa(head->block.x));
 	draw_blo(head->block.x/SIDE,head->block.y/SIDE,0xffffff);
