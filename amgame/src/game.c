@@ -131,7 +131,7 @@ int main() {
 	int i=0;
 	if(update_enable()) {
 		i++;
-		if(i>60)	{
+		if(i>10)	{
 			inc_snake(head);
 			i=0;
 		}
