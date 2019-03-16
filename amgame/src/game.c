@@ -114,6 +114,7 @@ void init_snake()	{
 	f_ch[2].y=16;
 	f_ch[3].x=0;
 	f_ch[3].y=-16;
+	now_fix=NULL;
 }
 snake* f_tail(snake *a){
 	if(a->next==NULL)
@@ -149,7 +150,8 @@ int main() {
   int i=0;
   while (1) {
     now_fix=read_key();
-	puts(now_fix);
+	if(now_fix!=NULL)
+		puts(now_fix);
 	time_update();
 	if(update_enable()) {
 		i++;
