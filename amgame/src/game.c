@@ -74,8 +74,8 @@ body cal_motion(snake *a,int k)	{
 	body bx;
 	bx.x=a->block.x+k*a->dir.x;
 	bx.y=a->block.y+k*a->dir.y;
-	bx.x%=w;
-	bx.y%=h;
+	bx.x=(bx.x+w)%w;
+	bx.y=(bx.y+h)%h;
 	return bx;
 }
 vec vec_update(snake *a,const snake *fa) {
