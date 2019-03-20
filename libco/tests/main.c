@@ -13,7 +13,7 @@ static void add_count() {
 static int get_count() {
     return g_count;
 }
-#if definde(__i386__)
+#if defined(__i386__)
 	#define PS "%%esp"
 #elif defined(__x86_64__) 
 	#define PS "%%rsp"
