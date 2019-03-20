@@ -19,7 +19,6 @@
 	
 
 struct co {
-	void* ori_SP __attribute((aligned(SIZE_align)));
 	void* SP __attribute__((aligned(SIZE_align)));
 	jmp_buf buf;
 	func_t func;
@@ -28,20 +27,21 @@ struct co {
 	int sleep;
 	int start;
 	int dead;
+	struct co * back;
+	struct co * par;
 }runtines[MAX_CO];
 struct co * current;
 int rec_sta[MAX_CO],rec_top;
-void swi(struct co* rc)	{
-	asm volatile ("mov %0," _SP : : "g"(rc->SP));
-	current=rc;
-}
 void co_init() {
 	current=&runtines[0];
 	current->sleep=0;
 	current->dead=0;
+	asm volatile ("mov " _SP ",%0":"=g"(current->SP):);
 	for(int i=1;i<MAX_CO;i++)	{
 		runtines[i].sleep=1;
 		runtines[i].dead=1;
+		runtines[i].back=NULL;
+		runtines[i].par=NULL;
 		runtines[i].start=0;
 		runtines[i].SP=malloc(MAX_HEAP_SIZE*sizeof(char));
 //		printf("%p\n",runtines[i].SP);
@@ -54,10 +54,13 @@ void co_func(struct co *thd)  {
 		  	"=g"(thd->ori_SP) :
 			"g"(thd->SP));
 	(*(thd->func))((void *)thd->argc);
-	asm volatile("mov %0," _SP : :"g"(thd->ori_SP));
+	thd->back->sleep=0;//wake the thd in wait
+	thd->dead=1;//thd ends
+	while(thd->par->dead)
+		thd->par=the->par->par;
+	asm volatile("mov %0," _SP : :"g"(thd->par->SP));
 }
 struct co* co_start(const char *name, func_t func, void *arg) {
-
   struct co* new_co=&runtines[rec_sta[--rec_top]];
   new_co->func=func;
   strcpy(new_co->name,name);
@@ -74,7 +77,7 @@ void co_yield() {
 				continue;
 			}
 			if(!runtines[i].sleep&&!runtines[i].dead)	{
-				swi(&runtines[i]);
+				current=&runtines[i];
 				if(current->start){
 					longjmp(current->buf,1);
 				}
@@ -86,30 +89,25 @@ void co_yield() {
 			}
 		}
 	}
-	swi(rc);
+	current=rc;
 }
-
 void co_wait(struct co *thd) {
-	struct co *rc=current;
 	current->sleep=1;
 	for(int i=1;i<MAX_CO;i++)
 		if(thd==&runtines[i])	{
-			if(thd->sleep||thd->dead)	{
-				printf("wait for dead %d or sleeping %d thd!",thd->dead,thd->sleep);
+			if(thd->sleep||thd->back!=NULL)	{
+				printf("wait for dead  or sleeping %d thd!",thd->sleep);
 				assert(0);
 			}
-			swi(thd);
+			thd->back=current;
+			current=thd;
 			if(!thd->start)	{
 				thd->start=1;
 				co_func(thd);
 			}
-			else
-				longjmp(thd->buf,1);
-			thd->dead=1;
-			rec_sta[rec_top++]=i;
-			break;
+			else {
+				longjmp(current->buf,1);
+			}
 		}
-	swi(rc);
-	rc->sleep=0;
 }
 
