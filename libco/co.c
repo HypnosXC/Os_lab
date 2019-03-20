@@ -51,6 +51,7 @@ void co_init() {
 }
 void co_func(struct co *thd)  {
 	current=thd;
+	printf("%p\n",thd->SP);
 	asm volatile ("mov %0," _SP :	:"g"(thd->SP));
 //	printf("%p",current->SP);
 //	thd=current;
