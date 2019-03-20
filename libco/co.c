@@ -55,7 +55,7 @@ void co_func(struct co *thd)  {
 //	printf("%p",current->SP);	
 	*thd=*current;
 	(*(current->func))((void *)current->argc);
-	printf("teminated here!");
+//	printf("teminated here!");
 	thd->back->sleep=0;//wake the thd in wait
 	thd->dead=1;//thd ends
 	for(int i=1;i<MAX_CO;i++)
