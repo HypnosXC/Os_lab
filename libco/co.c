@@ -46,12 +46,12 @@ void co_init() {
 	rec_top=MAX_CO;
 }
 void co_func(struct co *thd)  {
-	//asm volatile ("mov " _SP ",%0;mov %1, " _SP :
-	//	  	"=g"(thd->ori_SP) :
-	//		"g"(thd->SP));
-//	printf("%p %p\n",thd->SP,thd->ori_SP);
+	asm volatile ("mov " _SP ",%0;mov %1, " _SP :
+		  	"=g"(thd->ori_SP) :
+			"g"(thd->SP));
+	printf("%p %p\n",thd->SP,thd->ori_SP);
 	(*(thd->func))((void *)thd->argc);
-//	asm volatile("mov %0," _SP : :"g"(thd->ori_SP));
+	asm volatile("mov %0," _SP : :"g"(thd->ori_SP));
 }
 struct co* co_start(const char *name, func_t func, void *arg) {
 
@@ -63,8 +63,9 @@ struct co* co_start(const char *name, func_t func, void *arg) {
   return new_co;
 }
 void co_yield() {
+	struct *rc=current;
 	printf("yiedld once at current=%p",current);
-/*	if(!setjmp(*current->buf))	{//first return , change current
+	if(!setjmp(*current->buf))	{//first return , change current
 		for(int i=1;i<=MAX_CO;i++)	{
 			if(!runtines[i].sleep&&!runtines[i].dead)	{
 				current=&runtines[i];
@@ -74,17 +75,20 @@ void co_yield() {
 					co_func(current);
 			}
 		}
-	}*/
+	}
+	current=rc;
 }
 
 void co_wait(struct co *thd) {
+	struct co *rc=current;
 	current->sleep=1;
 	for(int i=1;i<=MAX_CO;i++)
-		if(thd==&current[i])	{
+		if(thd==&runtines[i])	{
 			if(thd->sleep||thd->dead)	{
 				printf("wait for dead %d or sleeping %d thd!",thd->dead,thd->sleep);
 				assert(0);
 			}
+			current=thd;
 			if(thd->buf==NULL)	{
 				printf("here?\n");
 				co_func(thd);
@@ -95,6 +99,7 @@ void co_wait(struct co *thd) {
 			rec_sta[rec_top++]=i;
 			break;
 		}
-	current->sleep=0;
+	current=rc;
+	rc->sleep=0;
 }
 
