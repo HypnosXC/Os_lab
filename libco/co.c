@@ -59,6 +59,7 @@ void co_func(struct co *thd)  {
 			rec_sta[rec_top++]=i;
 			break;
 		}
+	assert(thd->par!=NULL);
 	while(thd->par->dead)
 		thd->par=thd->par->par;
 	asm volatile("mov %0," _SP : :"g"(thd->par->SP));
