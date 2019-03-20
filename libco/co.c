@@ -51,7 +51,7 @@ void co_init() {
 	asm volatile("mov %0," SP : :"g"(thd->ori_SP));\
 }
 struct co* co_start(const char *name, func_t func, void *arg) {
-  struct co* new_co=&runtine[rec_sta[--top]];
+  struct co* new_co=&runtine[rec_sta[--rec_top]];
   new_co->func=func;
   new_co->argc=arg;
   new_co->dead=0;
@@ -61,7 +61,7 @@ struct co* co_start(const char *name, func_t func, void *arg) {
 void co_yield() {
 	if(!setjmp(*current->buf))	{//first return , change current
 		for(int i=1;i<=MAX_CO;i++)	{
-			if(!runtine[i].sleep&&!runtines[i].dead)	{
+			if(!runtines[i].sleep&&!runtines[i].dead)	{
 				current=&runtines[i];
 				if(current->buf!=NULL)
 					longjmp(*current->buf,1);
@@ -80,7 +80,7 @@ void co_wait(struct co *thd) {
 				printf("wait for dead %d or sleeping %d thd!",thd->dead,thd->sleep);
 				assert(0);
 			}
-			if(thd.buf==NULL)
+			if(thd->buf==NULL)
 				co_func(thd);
 			else
 				longjmp(*thd->buf,1);
