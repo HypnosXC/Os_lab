@@ -43,7 +43,7 @@ static void test_1() {
 static int g_running = 1;
 
 static void do_produce(Queue *queue) {
-    assert(!q_is_full(queue));
+   // assert(!q_is_full(queue));
     printf("1");
     Item *item = (Item*)malloc(sizeof(Item));
   
@@ -61,7 +61,7 @@ static void do_produce(Queue *queue) {
     }
     printf("4");
     memset(item->data, 0, 10);*/
-    sprintf(item->data, "libco-%d", g_count++);
+    //sprintf(item->data, "libco-%d", g_count++);
     q_push(queue, item);
 }
 
