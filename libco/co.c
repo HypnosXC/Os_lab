@@ -72,7 +72,7 @@ void co_yield() {
 			if(!runtines[i].sleep&&!runtines[i].dead)	{
 				current=&runtines[i];
 				if(current->start){
-					printf("fuck");
+					printf("fuck\n");
 					longjmp(current->buf,1);
 				}
 				else	{
