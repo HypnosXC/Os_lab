@@ -12,9 +12,9 @@
 	#define _SP "%%rsp"
 #endif
 #if defined(__i386__)
-	#define  SIZE_align 8
+	#define  SIZE_align 16
 #elif defined(__x86_64__)
-	#define SIZE_align 16
+	#define SIZE_align 32
 #endif
 	
 
