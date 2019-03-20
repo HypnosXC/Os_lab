@@ -48,6 +48,7 @@ void co_func(struct co *thd)  {
 	asm volatile ("mov " _SP ",%0;mov %1, " _SP :
 		  	"=g"(thd->ori_SP) :
 			"g"(thd->SP));
+	printf("dmped");
 	(*(thd->func))(thd->argc);
 	asm volatile("mov %0," _SP : :"g"(thd->ori_SP));
 }
