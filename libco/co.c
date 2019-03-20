@@ -45,7 +45,7 @@ void co_init() {
 		runtines[i].ori_SP=0;
 		rec_sta[i-1]=i;
 	}
-	rec_top=MAX_CO;
+	rec_top=MAX_CO-1;
 }
 void co_func(struct co *thd)  {
 	asm volatile ("mov " _SP ",%0;mov %1, " _SP :
