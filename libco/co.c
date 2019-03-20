@@ -36,7 +36,7 @@ void co_init() {
 		runtines[i].sleep=1;
 		runtines[i].dead=1;
 		runtines[i].buf=NULL;
-		runtines[i].SP=(uintptr_t)malloc(MAX_HEAP_SIZE*sizeof(char));
+		runtines[i].SP=malloc(MAX_HEAP_SIZE*sizeof(char));
 		runtines[i].SP+=MAX_HEAP_SIZE*sizeof(char);
 		runtines[i].ori_SP=0;
 		rec_sta[i-1]=i;
@@ -51,7 +51,7 @@ void co_init() {
 	asm volatile("mov %0," SP : :"g"(thd->ori_SP));\
 }
 struct co* co_start(const char *name, func_t func, void *arg) {
-  struct co* new_co=&runtine[rec_sta[--rec_top]];
+  struct co* new_co=&runtines[rec_sta[--rec_top]];
   new_co->func=func;
   new_co->argc=arg;
   new_co->dead=0;
