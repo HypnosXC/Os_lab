@@ -33,6 +33,13 @@ struct co {
 }runtines[MAX_CO*2];
 struct co * current;
 int rec_sta[MAX_CO*2],rec_top;
+co_change(struct co* target) {//only use for one context over
+	if(target->sleep)//invaild operation
+		assert("wrong op"&& 0);
+	if(target->dead)
+		co_change(target->par);
+	longjmp(target->buf);
+}
 void co_init() {
 	current=&runtines[0];
 	current->sleep=0;
@@ -43,19 +50,19 @@ void co_init() {
 		runtines[i].back=NULL;
 		runtines[i].par=NULL;
 		runtines[i].start=0;
-		runtines[i].SP=malloc(sizeof(char)*4096)__attribute__((aligned(SIZE_align)));
+		runtines[i].SP=malloc(sizeof(char)*4096);
 		rec_sta[rec_top++]=MAX_CO-i;
 	}
 }
 void co_func(struct co *thd)  {
 	current=thd;
-//	asm volatile ("mov %0," _SP :	:"g"(thd->SP));
+	asm volatile ("mov %0," _SP :	:"g"(thd->SP));
 	(*(current->func))((void *)current->argc);
 	if(current->back!=NULL)
 		current->back->sleep=0;//wake the thd in wait
 	current->dead=1;//thd ends
 	assert(current->par!=NULL);
-	asm volatile("mov %0," _SP : :"g"(current->RSP));
+//	asm volatile("mov %0," _SP : :"g"(current->RSP));
 }
 struct co* co_start(const char *name, func_t func, void *arg) {
   struct co* new_co=&runtines[rec_sta[--rec_top]];
