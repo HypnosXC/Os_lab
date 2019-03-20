@@ -52,7 +52,7 @@ void co_func(struct co *thd)  {
 			"g"(thd->SP));
 	printf("dmped");
 	printf("%p %p\n",thd->func,thd->argc);
-//	(*(thd->func))((void *)thd->argc);
+	(*(thd->func))((void *)thd->argc);
 	asm volatile("mov %0," _SP : :"g"(thd->ori_SP));
 }
 struct co* co_start(const char *name, func_t func, void *arg) {
