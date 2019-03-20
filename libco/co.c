@@ -5,9 +5,9 @@
 #include <assert.h>
 #define MAX_CO 1024
 #define MAX_HEAP_SIZE 4096
-#if define(__i386__)
-	#define SP "%%esp"
-#elif define(__x86_64__)
+#if defined(__i386__)
+	define SP "%%esp"
+#elif defined(__x86_64__)
 	#define SP "%%rsp"
 #endif
 #if define(__i386__)
