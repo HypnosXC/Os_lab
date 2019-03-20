@@ -38,7 +38,7 @@ void co_init() {
 		runtines[i].dead=1;
 		runtines[i].buf=NULL;
 		runtines[i].SP=malloc(MAX_HEAP_SIZE*sizeof(char));
-		runtines[i].SP+=MAX_HEAP_SIZE*sizeof(char);
+		runtines[i].SP+=MAX_HEAP_SIZE/2*sizeof(char);
 //		printf("%p\n",runtines[i].SP);
 		runtines[i].ori_SP=0;
 		rec_sta[i-1]=i;
