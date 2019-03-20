@@ -3,6 +3,7 @@
 #include <setjmp.h>
 #include <stdlib.h>
 #include <assert.h>
+#include <string.h>
 #define MAX_CO 1024
 #define MAX_HEAP_SIZE 4096
 #if defined(__i386__)
@@ -22,7 +23,7 @@ struct co {
 	void* SP __attribute__((aligned(SIZE_align)));
 	jmp_buf *buf;
 	func_t func;
-	void * argc;
+	char argc[100];
 	int sleep;
 	int dead;
 }runtines[MAX_CO];
@@ -50,14 +51,14 @@ void co_func(struct co *thd)  {
 		  	"=g"(thd->ori_SP) :
 			"g"(thd->SP));
 	printf("dmped");
-//	(*(thd->func))(thd->argc);
+	(*(thd->func))((void *)thd->argc);
 	asm volatile("mov %0," _SP : :"g"(thd->ori_SP));
 }
 struct co* co_start(const char *name, func_t func, void *arg) {
   printf("fault here??\n");
   struct co* new_co=&runtines[rec_sta[--rec_top]];
   new_co->func=func;
-  new_co->argc=arg;
+  strcpy(new_co->argc,(char *)arg);
   new_co->dead=0;
   new_co->sleep=0;
   return new_co;
