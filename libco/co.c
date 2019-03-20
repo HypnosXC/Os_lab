@@ -49,7 +49,7 @@ void co_init() {
 }
 void co_func(struct co *thd)  {
 	current=thd;
-	asm volatile ("mov %0," _SP :	:"g"(thd->SP));
+//	asm volatile ("mov %0," _SP :	:"g"(thd->SP));
 	(*(current->func))((void *)current->argc);
 	if(current->back!=NULL)
 		current->back->sleep=0;//wake the thd in wait
