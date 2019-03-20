@@ -44,8 +44,7 @@ void co_init() {
 		runtines[i].back=NULL;
 		runtines[i].par=NULL;
 		runtines[i].start=0;
-		runtines[i].SP=malloc(MAX_HEAP_SIZE*sizeof(char));
-		runtines[i].SP+=MAX_HEAP_SIZE/2*sizeof(char)+SIZE_align/2;
+		runtines[i].SP=(void *)runtines[i].stack;
 //		printf("%p\n",runtines[i].SP);
 		rec_sta[rec_top++]=MAX_CO-i;
 	}
