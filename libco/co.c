@@ -87,7 +87,7 @@ void co_wait(struct co *thd) {
 			}
 			if(thd->buf==NULL)	{
 				printf("here?\n");
-//				co_func(thd);
+				co_func(thd);
 			}
 			else
 				longjmp(*thd->buf,1);
