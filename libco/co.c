@@ -54,7 +54,7 @@ void co_init() {
 	current->dead=0;
 }
 void co_func()  {
-	asm volatile ("mov %0," _SP :	:"g"(thd->SP));
+	asm volatile ("mov %0," _SP :	:"g"(current->SP));
 	(*(current->func))((void *)current->argc);
 	if(current->back!=NULL)
 		current->back->sleep=0;//wake the thd in wait
