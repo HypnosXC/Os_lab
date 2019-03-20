@@ -32,7 +32,7 @@ struct co {
 struct co * current;
 int rec_sta[MAX_CO],rec_top;
 void swi(struct co* rc)	{
-	asm volatile ("mov %0," _SP : : rc->SP);
+	asm volatile ("mov %0," _SP : : "g"(rc->SP));
 	current=rc;
 }
 void co_init() {
