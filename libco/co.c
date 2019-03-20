@@ -101,24 +101,23 @@ void co_yield() {
 void co_wait(struct co *thd) {
 	struct co * rc=current;
 	current->sleep=1;
-	for(int i=1;i<MAX_CO;i++)
-		if(thd==&runtines[i])	{
-			if(thd->sleep||thd->back!=NULL)	{
-				printf("wait for dead  or sleeping %d thd!",thd->sleep);
-				assert(0);
+	if(thd==&runtines[i])	{
+		if(thd->sleep||thd->back!=NULL)	{
+			printf("wait for dead  or sleeping %d thd!",thd->sleep);			
+			assert(0);
 			}
-			thd->back=current;
-			current=thd;
-			if(!thd->start)	{
-				printf("goes to func");
-				thd->start=1;
-				thd->par=rc;
-				co_func(thd);
-			}
-			else {
-				longjmp(current->buf,1);
-			}
+		thd->back=current;
+		current=thd;			
+		if(!thd->start)	{
+			printf("goes to func");
+			thd->start=1;				
+			thd->par=rc;
+			co_func(thd);
 		}
+		else {
+			longjmp(current->buf,1);
+		}
+	}
 	printf("here reach at co_wait!\n");
 }
 
