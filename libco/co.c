@@ -90,7 +90,7 @@ void co_yield() {
 void co_wait(struct co *thd) {
 	struct co *rc=current;
 	current->sleep=1;
-	for(int i=1;i<=MAX_CO;i++)
+	for(int i=1;i<MAX_CO;i++)
 		if(thd==&runtines[i])	{
 			if(thd->sleep||thd->dead)	{
 				printf("wait for dead %d or sleeping %d thd!",thd->dead,thd->sleep);
