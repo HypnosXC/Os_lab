@@ -50,10 +50,10 @@ void co_init() {
 	}
 }
 void co_func(struct co *thd)  {
-	current=thd;
+//	current=thd;
 	asm volatile ("mov %0," _SP :	:"g"(thd->SP));
-	printf("%p",current->SP);
-	thd=current;
+//	printf("%p",current->SP);
+//	thd=current;
 	(*(current->func))((void *)current->argc);
 	printf("teminated here!");
 	thd->back->sleep=0;//wake the thd in wait
