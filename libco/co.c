@@ -116,6 +116,7 @@ void co_wait(struct co *thd) {
 				co_func(thd);
 			}
 			else {
+				">>>>??";
 				longjmp(current->buf,1);
 			}
 		}
