@@ -43,7 +43,7 @@ void co_init() {
 		runtines[i].back=NULL;
 		runtines[i].par=NULL;
 		runtines[i].start=0;
-		runtines[i].SP=__attribute__((aligned(SIZE_align))) malloc(sizeof(char)*4096);//(void *)runtines[i].stack;
+		runtines[i].SP=malloc(sizeof(char)*4096)__attribute__((aligned(SIZE_align)));
 		rec_sta[rec_top++]=MAX_CO-i;
 	}
 }
