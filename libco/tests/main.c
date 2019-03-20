@@ -72,7 +72,7 @@ static void producer(void *arg) {
             // co_yield();
             do_produce(queue);*/
             i += 1;
-        }
+      //  }
   //      co_yield();
     }
 }
