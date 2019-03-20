@@ -70,8 +70,10 @@ void co_yield() {
 	if(!setjmp(current->buf))	{//first return , change current
 	//	printf("nofindin\n");
 		for(int i=1;i<MAX_CO;i++)	{
-			if(&runtines[i]==current)
+			if(&runtines[i]==current)	{
+				printf("%s",current->name);
 				continue;
+			}
 			if(!runtines[i].sleep&&!runtines[i].dead)	{
 				current=&runtines[i];
 				if(current->start)
