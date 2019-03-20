@@ -45,7 +45,7 @@ static int g_running = 1;
 static void do_produce(Queue *queue) {
    // assert(!q_is_full(queue));
     printf("1");
-    Item *item = (Item*)malloc(sizeof(Item));
+  //  Item *item = (Item*)malloc(sizeof(Item));
   
 /*    if (!item) {
         fprintf(stderr, "New item failure\n");
@@ -62,17 +62,17 @@ static void do_produce(Queue *queue) {
     printf("4");
     memset(item->data, 0, 10);*/
     //sprintf(item->data, "libco-%d", g_count++);
-    q_push(queue, item);
+   // q_push(queue, item);
 }
 
 static void producer(void *arg) {
     Queue *queue = (Queue*)arg;
     for (int i = 0; i < 100; ) {
-        if (!q_is_full(queue)) {
+     //   if (!q_is_full(queue)) {
             // co_yield();
             do_produce(queue);
             i += 1;
-        }
+       // }
   //      co_yield();
     }
 }
