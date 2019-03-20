@@ -24,6 +24,7 @@ struct co {
 	func_t func;
 	char argc[100] __attribute__((aligned(SIZE_align)));
 	char name[100];
+	uint8_t stack[MAX_HEAP_SIZE] __attribute__ ((aligned(SIZE_align)));
 	int sleep;
 	int start;
 	int dead;
