@@ -51,7 +51,7 @@ void co_init() {
 }
 void co_func(struct co *thd)  {
 	current=thd;
-//	asm volatile ("mov %0," _SP :	:"g"(thd->SP));
+	asm volatile ("mov %0," _SP :	:"g"(thd->SP));
 //	printf("%p",current->SP);
 //	thd=current;
 //	(*(current->func))((void *)current->argc);
@@ -66,7 +66,7 @@ void co_func(struct co *thd)  {
 //	assert(thd->par!=NULL);
 //	while(thd->par->dead)
 //		thd->par=thd->par->par;
-//	asm volatile("mov %0," _SP : :"g"(thd->par->SP));
+	asm volatile("mov %0," _SP : :"g"(thd->par->SP));
 }
 struct co* co_start(const char *name, func_t func, void *arg) {
   struct co* new_co=&runtines[rec_sta[--rec_top]];
