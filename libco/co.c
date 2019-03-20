@@ -62,7 +62,7 @@ void co_func(struct co *thd)  {
 //		if(thd==&runtines[i]) {
 //			rec_sta[rec_top++]=i;
 //			break;
-		}
+//		}
 //	assert(thd->par!=NULL);
 //	while(thd->par->dead)
 //		thd->par=thd->par->par;
