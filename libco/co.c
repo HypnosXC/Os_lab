@@ -2,6 +2,7 @@
 #include "co.h"
 #include <setjmp.h>
 #include <stdlib.h>
+#include <assert.h>
 #define MAX_CO 1024
 #define MAX_HEAP_SIZE 4096
 #if define(__i386__)
@@ -76,7 +77,7 @@ void co_wait(struct co *thd) {
 	for(int i=1;i<=MAX_CO;i++)
 		if(thd==&current[i])	{
 			if(thd->sleep||thd->dead)	{
-				Log("wait for dead %d or sleeping %d thd!",thd->dead,thd->sleep);
+				printf("wait for dead %d or sleeping %d thd!",thd->dead,thd->sleep);
 				assert(0);
 			}
 			if(thd.buf==NULL)
