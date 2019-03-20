@@ -24,6 +24,7 @@ struct co {
 	jmp_buf *buf;
 	func_t func;
 	char argc[100] __attribute__((aligned(SIZE_align)));
+	char name[100];
 	int sleep;
 	int dead;
 }runtines[MAX_CO];
@@ -49,7 +50,7 @@ void co_func(struct co *thd)  {
 	asm volatile ("mov " _SP ",%0;mov %1, " _SP :
 		  	"=g"(thd->ori_SP) :
 			"g"(thd->SP));
-	printf("%p %p\n",thd->SP,thd->ori_SP);
+	printf("%p %s\n",thd->SP,thd->name);
 	(*(thd->func))((void *)thd->argc);
 	asm volatile("mov %0," _SP : :"g"(thd->ori_SP));
 }
@@ -57,6 +58,7 @@ struct co* co_start(const char *name, func_t func, void *arg) {
 
   struct co* new_co=&runtines[rec_sta[--rec_top]];
   new_co->func=func;
+  strcpy(new_co->name,name);
   strcpy(new_co->argc,(char *)arg);
   new_co->dead=0;
   new_co->sleep=0;
