@@ -43,9 +43,8 @@ void co_init() {
 		runtines[i].SP+=MAX_HEAP_SIZE/2*sizeof(char);
 //		printf("%p\n",runtines[i].SP);
 		runtines[i].ori_SP=0;
-		rec_sta[i-1]=i;
+		rec_sta[rec_top++]=i;
 	}
-	rec_top=MAX_CO-1;
 }
 void co_func(struct co *thd)  {
 	asm volatile ("mov " _SP ",%0;mov %1, " _SP :
