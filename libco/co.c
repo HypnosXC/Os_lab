@@ -43,12 +43,12 @@ void co_init() {
 	}
 	rec_top=MAX_CO;
 }
-#define co_func(thd)  {\
-	asm volatile ("mov " _SP ",%0;mov %1, " _SP :\
-		  	"=g"(thd->ori_SP) :\
-			"g"(thd->SP));\
-	(*(thd->func))(thd->argc);\
-	asm volatile("mov %0," _SP : :"g"(thd->ori_SP));\
+void co_func(struct co *thd)  {
+	asm volatile ("mov " _SP ",%0;mov %1, " _SP :
+		  	"=g"(thd->ori_SP) :
+			"g"(thd->SP));
+	(*(thd->func))(thd->argc);
+	asm volatile("mov %0," _SP : :"g"(thd->ori_SP));
 }
 struct co* co_start(const char *name, func_t func, void *arg) {
   struct co* new_co=&runtines[rec_sta[--rec_top]];
