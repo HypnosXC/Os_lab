@@ -52,21 +52,20 @@ void co_init() {
 void co_func(struct co *thd)  {
 	current=thd;
 	asm volatile ("mov %0," _SP :	:"g"(thd->SP));
-//	printf("%p",current->SP);	
-	*thd=*current;
+//	printf("%p",current->SP);
 	(*(current->func))((void *)current->argc);
 //	printf("teminated here!");
-	thd->back->sleep=0;//wake the thd in wait
-	thd->dead=1;//thd ends
+	current->back->sleep=0;//wake the thd in wait
+	current->dead=1;//thd ends
 	for(int i=1;i<MAX_CO;i++)
-		if(thd==&runtines[i]) {
+		if(current==&runtines[i]) {
 			rec_sta[rec_top++]=i;
 			break;
 		}
-	assert(thd->par!=NULL);
-	while(thd->par->dead)
-		thd->par=thd->par->par;
-	asm volatile("mov %0," _SP : :"g"(thd->par->SP));
+	assert(current->par!=NULL);
+	while(current->par->dead)
+		current->par=thd->par->par;
+	asm volatile("mov %0," _SP : :"g"(current->par->SP));
 }
 struct co* co_start(const char *name, func_t func, void *arg) {
   struct co* new_co=&runtines[rec_sta[--rec_top]];
