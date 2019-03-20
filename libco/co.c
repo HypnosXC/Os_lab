@@ -6,9 +6,9 @@
 #define MAX_CO 1024
 #define MAX_HEAP_SIZE 4096
 #if defined(__i386__)
-	define SP "%%esp"
+	define _SP "%%esp"
 #elif defined(__x86_64__)
-	#define SP "%%rsp"
+	#define _SP "%%rsp"
 #endif
 #if define(__i386__)
 	define  SIZE_align 8
@@ -44,11 +44,11 @@ void co_init() {
 	rec_top=MAX_CO;
 }
 #define co_func(thd)  {\
-	asm volatile ("mov " SP ",%0;mov %1, " SP :\
+	asm volatile ("mov " _SP ",%0;mov %1, " _SP :\
 		  	"=g"(thd->ori_SP) :\
 			"g"(thd->SP));\
 	(*(thd->func))(thd->argc);\
-	asm volatile("mov %0," SP : :"g"(thd->ori_SP));\
+	asm volatile("mov %0," _SP : :"g"(thd->ori_SP));\
 }
 struct co* co_start(const char *name, func_t func, void *arg) {
   struct co* new_co=&runtines[rec_sta[--rec_top]];
