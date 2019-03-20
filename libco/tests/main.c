@@ -13,9 +13,9 @@ static void add_count() {
 static int get_count() {
     return g_count;
 }
-#ifdef(__i386__)
+#if definde(__i386__)
 	#define PS "%%esp"
-#else 
+#elif defined(__x86_64__) 
 	#define PS "%%rsp"
 #endif
 static void work_loop(void *arg) {
