@@ -29,9 +29,9 @@ struct co {
 	int dead;
 	struct co * back;
 	struct co * par;
-}runtines[MAX_CO];
+}runtines[MAX_CO*2];
 struct co * current;
-int rec_sta[MAX_CO],rec_top;
+int rec_sta[MAX_CO*2],rec_top;
 void co_init() {
 	current=&runtines[0];
 	current->sleep=0;
@@ -54,6 +54,11 @@ void co_func(struct co *thd)  {
 	(*(thd->func))((void *)thd->argc);
 	thd->back->sleep=0;//wake the thd in wait
 	thd->dead=1;//thd ends
+	for(int i=1;i<MAX_CO;i++)
+		if(&routines[i]==thd) {
+			rec_sta[tec_top++]=i;
+			break;
+		}
 	while(thd->par->dead)
 		thd->par=thd->par->par;
 	asm volatile("mov %0," _SP : :"g"(thd->par->SP));
