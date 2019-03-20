@@ -47,7 +47,7 @@ static void do_produce(Queue *queue) {
     printf("1");
     Item *item = (Item*)malloc(sizeof(Item));
   
-    if (!item) {
+/*    if (!item) {
         fprintf(stderr, "New item failure\n");
         return;
     }
@@ -60,7 +60,7 @@ static void do_produce(Queue *queue) {
         return;
     }
     printf("4");
-    memset(item->data, 0, 10);
+    memset(item->data, 0, 10);*/
     sprintf(item->data, "libco-%d", g_count++);
     q_push(queue, item);
 }
