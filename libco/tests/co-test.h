@@ -291,6 +291,7 @@ static inline void q_push(Queue *queue, Item *item) {
     }
     list_add_tail(&item->link, &queue->list);
     queue->sz += 1;
+    printf("%d",queue->sz);
 }
 
 static inline Item* q_pop(Queue *queue) {
