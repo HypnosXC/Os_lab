@@ -5,7 +5,7 @@
 #include <assert.h>
 #include <string.h>
 #define MAX_CO 1024
-#define MAX_HEAP_SIZE 4096
+#define MAX_HEAP_SIZE 8192
 #if defined(__i386__)
 	#define _SP "%%esp"
 #elif defined(__x86_64__)
