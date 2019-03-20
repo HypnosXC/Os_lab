@@ -5,13 +5,13 @@
 #include <assert.h>
 #define MAX_CO 1024
 #define MAX_HEAP_SIZE 4096
-#if defined(__i386__)
-	define _SP "%%esp"
+#if defined (__i386__)
+	#define _SP "%%esp"
 #elif defined(__x86_64__)
 	#define _SP "%%rsp"
 #endif
-#if define(__i386__)
-	define  SIZE_align 8
+#if define (__i386__)
+	#define  SIZE_align 8
 #elif define(__x86_64__)
 	#define SIZE_align 8
 #endif
