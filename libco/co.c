@@ -42,7 +42,7 @@ void co_init() {
 		runtines[i].SP=malloc(MAX_HEAP_SIZE*sizeof(char));
 //		printf("%p\n",runtines[i].SP);
 		runtines[i].ori_SP=0;
-		rec_sta[rec_top++]=NAX_CO-i;
+		rec_sta[rec_top++]=MAX_CO-i;
 	}
 }
 void co_func(struct co *thd)  {
