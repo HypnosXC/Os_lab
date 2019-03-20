@@ -35,7 +35,7 @@ void co_init() {
 	current=&runtines[0];
 	current->sleep=0;
 	current->dead=0;
-	for(int i=1;i<=MAX_CO;i++)	{
+	for(int i=1;i<MAX_CO;i++)	{
 		runtines[i].sleep=1;
 		runtines[i].dead=1;
 		runtines[i].start=0;
@@ -70,7 +70,7 @@ void co_yield() {
 //	printf("yiedld once at current=%p\n",current);
 	if(!setjmp(current->buf))	{//first return , change current
 	//	printf("nofindin\n");
-		for(int i=1;i<=MAX_CO;i++)	{
+		for(int i=1;i<MAX_CO;i++)	{
 			if(&runtines[i]==current)
 				continue;
 			if(!runtines[i].sleep&&!runtines[i].dead)	{
