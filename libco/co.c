@@ -41,10 +41,7 @@ void co_change(struct co* target) {//only use for one context over
 	longjmp(target->buf,1);
 }
 void co_init() {
-	current=&runtines[0];
-	current->sleep=0;
-	current->dead=0;
-	for(int i=1;i<MAX_CO;i++)	{ 
+	for(int i=0;i<MAX_CO;i++)	{ 
 		runtines[i].sleep=1;
 		runtines[i].dead=1;
 		runtines[i].back=NULL;
@@ -53,16 +50,19 @@ void co_init() {
 		runtines[i].SP=malloc(sizeof(char)*4096);
 		rec_sta[rec_top++]=MAX_CO-i;
 	}
+	current=&runtines[0];
+	current->sleep=0;
+	current->dead=0;
 }
 void co_func(struct co *thd)  {
 	current=thd;
 	asm volatile ("mov %0," _SP :	:"g"(thd->SP));
-/*	(*(current->func))((void *)current->argc);
+	(*(current->func))((void *)current->argc);
 	if(current->back!=NULL)
 		current->back->sleep=0;//wake the thd in wait
 	current->dead=1;//thd ends
-	assert(current->par!=NULL);
-//	asm volatile("mov %0," _SP : :"g"(current->RSP));*/
+	assert(current->par!=NULL);//the parent is impossible
+	co_change(current->par);
 }
 struct co* co_start(const char *name, func_t func, void *arg) {
   struct co* new_co=&runtines[rec_sta[--rec_top]];
@@ -77,7 +77,7 @@ struct co* co_start(const char *name, func_t func, void *arg) {
 void co_yield() {
 	struct co *rc=current;
 	if(!setjmp(current->buf))	{//first return , change  current
-/*		for(int i=1;i<MAX_CO;i++)	{
+		for(int i=1;i<MAX_CO;i++)	{
 			if(&runtines[i]==current)	{
 				continue;
 		 	}
@@ -93,7 +93,7 @@ void co_yield() {
 		 		}
 				break;
 		 	}
-		}*/ 
+		} 
 	}
 	current=rc;
 }
