@@ -31,6 +31,10 @@ struct co {
 }runtines[MAX_CO];
 struct co * current;
 int rec_sta[MAX_CO],rec_top;
+void swi(struct co* rc)	{
+	asm volatile ("mov %0," _SP : : rc->SP);
+	current=rc;
+}
 void co_init() {
 	current=&runtines[0];
 	current->sleep=0;
@@ -70,9 +74,8 @@ void co_yield() {
 				continue;
 			}
 			if(!runtines[i].sleep&&!runtines[i].dead)	{
-				current=&runtines[i];
+				swi(&runtines[i]);
 				if(current->start){
-					printf("fuck\n");
 					longjmp(current->buf,1);
 				}
 				else	{
@@ -83,7 +86,7 @@ void co_yield() {
 			}
 		}
 	}
-	current=rc;
+	swi(rc);
 }
 
 void co_wait(struct co *thd) {
@@ -95,7 +98,7 @@ void co_wait(struct co *thd) {
 				printf("wait for dead %d or sleeping %d thd!",thd->dead,thd->sleep);
 				assert(0);
 			}
-			current=thd;
+			swi(thd);
 			if(!thd->start)	{
 				thd->start=1;
 				co_func(thd);
@@ -106,7 +109,7 @@ void co_wait(struct co *thd) {
 			rec_sta[rec_top++]=i;
 			break;
 		}
-	current=rc;
+	swi(rc);
 	rc->sleep=0;
 }
 
