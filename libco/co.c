@@ -92,7 +92,6 @@ void co_wait(struct co *thd) {
 			}
 			current=thd;
 			if(thd->buf==NULL)	{
-				printf("here?\n");
 				co_func(thd);
 			}
 			else
