@@ -277,7 +277,8 @@ static inline void q_free(Queue *queue) {
 }
 
 static inline int q_is_full(Queue *queue) {
-    return queue->sz == queue->cap;
+//    return queue->sz == queue->cap;
+	return 1;
 }
 
 static inline int q_is_empty(Queue *queue) {
