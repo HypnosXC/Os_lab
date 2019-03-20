@@ -66,22 +66,23 @@ struct co* co_start(const char *name, func_t func, void *arg) {
 void co_yield() {
 	struct co *rc=current;
 	if(!setjmp(current->buf))	{//first return , change current
-/*		for(int i=1;i<MAX_CO;i++)	{
+		for(int i=1;i<MAX_CO;i++)	{
 			if(&runtines[i]==current)	{
 				continue;
 			}
 			if(!runtines[i].sleep&&!runtines[i].dead)	{
 				current=&runtines[i];
-				assert(current!=NULL);
-				if(current->start)
+				if(current->start){
 					longjmp(current->buf,1);
+					current->start=0;
+				}
 				else	{
 				   	current->start=1;	
 				 	co_func(current);
 				}
 				break;
 			}
-		}*/
+		}
 	}
 	current=rc;
 }
