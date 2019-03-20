@@ -23,7 +23,7 @@ struct co {
 	void* SP __attribute__((aligned(SIZE_align)));
 	jmp_buf *buf;
 	func_t func;
-	char argc[100];
+	char argc[100] __attribute__((aligned(SIZE_align)));
 	int sleep;
 	int dead;
 }runtines[MAX_CO];
