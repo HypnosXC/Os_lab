@@ -46,6 +46,7 @@ static void do_produce(Queue *queue) {
     assert(!q_is_full(queue));
     printf("1");
     Item *item = (Item*)malloc(sizeof(Item));
+  
     if (!item) {
         fprintf(stderr, "New item failure\n");
         return;
@@ -72,7 +73,7 @@ static void producer(void *arg) {
             do_produce(queue);
             i += 1;
         }
-        co_yield();
+  //      co_yield();
     }
 }
 
