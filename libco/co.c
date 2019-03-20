@@ -104,13 +104,13 @@ void co_wait(struct co *thd) {
 	struct co * rc=current;
 	current->sleep=1;
 	if(thd->sleep||thd->back!=NULL)	{
-		printf("wait for dead  or sleeping %d thd!",thd->sleep);			
+		//printf("wait for dead  or sleeping %d thd!",thd->sleep);			
 		assert(0);
 	}
 	thd->back=current;
 	current=thd;			
 	if(!thd->start)	{
-		printf("goes to func");
+	//	printf("goes to func");
 		thd->start=1;				
 		thd->par=rc;
 		co_func(thd);
