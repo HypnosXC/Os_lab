@@ -44,7 +44,7 @@ void co_init() {
 		runtines[i].par=NULL;
 		runtines[i].start=0;
 		runtines[i].SP=malloc(sizeof(char)*4096);//(void *)runtines[i].stack;
-		runtines[i].SP-=runtines[i].SP%SIZE_align;
+		runtines[i].SP=(void *)((uintptr_t)runtines[i].SP-runtines[i].SP%SIZE_align);
 		rec_sta[rec_top++]=MAX_CO-i;
 	}
 }
