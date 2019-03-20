@@ -46,11 +46,11 @@ void co_init() {
 }
 void co_func(struct co *thd)  {
 	printf("statr!");
-//	asm volatile ("mov " _SP ",%0;mov %1, " _SP :
-//		  	"=g"(thd->ori_SP) :
-//			"g"(thd->SP));
+	asm volatile ("mov " _SP ",%0;mov %1, " _SP :
+		  	"=g"(thd->ori_SP) :
+			"g"(thd->SP));
 	printf("dmped");
-	(*(thd->func))(thd->argc);
+//	(*(thd->func))(thd->argc);
 	asm volatile("mov %0," _SP : :"g"(thd->ori_SP));
 }
 struct co* co_start(const char *name, func_t func, void *arg) {
