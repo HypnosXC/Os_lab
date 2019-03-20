@@ -83,6 +83,7 @@ void co_wait(struct co *thd) {
 				printf("wait for dead %d or sleeping %d thd!",thd->dead,thd->sleep);
 				assert(0);
 			}
+			printf("here??\n");
 			if(thd->buf==NULL)
 				co_func(thd);
 			else
