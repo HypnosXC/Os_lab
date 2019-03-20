@@ -33,7 +33,7 @@ struct co {
 }runtines[MAX_CO*2];
 struct co * current;
 int rec_sta[MAX_CO*2],rec_top;
-co_change(struct co* target) {//only use for one context over
+void co_change(struct co* target) {//only use for one context over
 	if(target->sleep)//invaild operation
 		assert("wrong op"&& 0);
 	if(target->dead)
