@@ -57,11 +57,11 @@ void co_func(struct co *thd)  {
 //	printf("teminated here!");
 	current->back->sleep=0;//wake the thd in wait
 	current->dead=1;//thd ends
-	for(int i=1;i<MAX_CO;i++)
-		if(current==&runtines[i]) {
-			rec_sta[rec_top++]=i;
-			break;
-		}
+//	for(int i=1;i<MAX_CO;i++)
+//		if(current==&runtines[i]) {
+//			rec_sta[rec_top++]=i;
+//			break;
+//		}
 	assert(current->par!=NULL);
 	while(current->par->dead)
 		current->par=thd->par->par;
