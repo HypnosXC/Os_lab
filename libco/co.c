@@ -70,7 +70,7 @@ void co_yield() {
 	//	printf("nofindin\n");
 		for(int i=1;i<MAX_CO;i++)	{
 			if(&runtines[i]==current)	{
-				printf("%s\n",current->name);
+			//	printf("%s\n",current->name);
 				continue;
 			}
 			if(!runtines[i].sleep&&!runtines[i].dead)	{
