@@ -44,21 +44,17 @@ static int g_running = 1;
 
 static void do_produce(Queue *queue) {
    assert(!q_is_full(queue));
-   printf("1");
    Item *item = (Item*)malloc(sizeof(Item));
    if (!item) {
         fprintf(stderr, "New item failure\n");
         return;
     }
-    printf("2");
     item->data = (char*)malloc(10);
-    printf("3");
     if (!item->data) {
         fprintf(stderr, "New data failure\n");
         free(item);
         return;
     }
-    printf("4");
     memset(item->data, 0, 10);
     sprintf(item->data, "libco-%d", g_count++);
     q_push(queue, item);
@@ -100,7 +96,7 @@ static void consumer(void *arg) {
 static void test_2() {
 
     Queue *queue = q_new(); 
-    struct co *thd1 = co_start("producer-1", producer, queue);
+    /*struct co *thd1 = co_start("producer-1", producer, queue);
     struct co *thd2 = co_start("producer-2", producer, queue);
     struct co *thd3 = co_start("consumer-1", consumer, queue);
     struct co *thd4 = co_start("consumer-2", consumer, queue);
@@ -114,8 +110,9 @@ static void test_2() {
     while (!q_is_empty(queue)) {
         do_consume(queue);
     }
-
-    q_free(queue);
+   
+    q_free(queue);*/
+    producer(queue);
 }
 
 int main() {
