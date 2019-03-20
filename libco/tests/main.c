@@ -25,7 +25,7 @@ static void work_loop(void *arg) {
         add_count();
 	void *ps;
 	asm volatile ("mov "PS",%0":"=g"(ps):);
-	printf("reach here at work_loop%p\n",ps);
+//	printf("reach here at work_loop%p\n",ps);
         co_yield();
     }
 }
