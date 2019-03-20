@@ -81,6 +81,7 @@ void co_yield() {
 				   current->start=1;	
 					co_func(current);
 				}
+				break;
 			}
 		}
 	}
