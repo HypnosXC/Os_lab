@@ -55,8 +55,8 @@ void co_func(struct co *thd)  {
 	thd->back->sleep=0;//wake the thd in wait
 	thd->dead=1;//thd ends
 	for(int i=1;i<MAX_CO;i++)
-		if(&routines[i]==thd) {
-			rec_sta[tec_top++]=i;
+		if(thd==&routines[i]) {
+			rec_sta[rec_top++]=i;
 			break;
 		}
 	while(thd->par->dead)
