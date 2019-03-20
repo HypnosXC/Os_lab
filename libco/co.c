@@ -89,7 +89,7 @@ void co_wait(struct co *thd) {
 				assert(0);
 			}
 			if(thd->buf==NULL)	{
-				printf("here?\n");
+//				printf("here?\n");
 				co_func(thd);
 			}
 			else
