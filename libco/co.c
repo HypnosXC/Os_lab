@@ -75,7 +75,7 @@ void co_yield() {
 			}
 			if(!runtines[i].sleep&&!runtines[i].dead)	{
 				current=&runtines[i];
-				printf("i=%d,yield at %s\n",i,runtines[i].name);
+		//		printf("i=%d,yield at %s\n",i,runtines[i].name);
 				if(current->start)
 					longjmp(current->buf,1);
 				else	{
