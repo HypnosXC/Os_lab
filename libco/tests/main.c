@@ -67,14 +67,14 @@ static void do_produce(Queue *queue) {
 
 static void producer(void *arg) {
     Queue *queue = (Queue*)arg;
- /*   for (int i = 0; i < 100; ) {
-        if (!q_is_full(queue)) {
+    for (int i = 0; i < 100; ) {
+ /*       if (!q_is_full(queue)) {
             // co_yield();
-   //         do_produce(queue);
+            do_produce(queue);*/
             i += 1;
         }
   //      co_yield();
-    }*/
+    }
 }
 
 static void do_consume(Queue *queue) {
