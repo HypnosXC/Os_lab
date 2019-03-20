@@ -13,14 +13,18 @@ static void add_count() {
 static int get_count() {
     return g_count;
 }
-
+#ifdef(__i386__)
+	#define PS "%%esp"
+#else 
+	#define PS "%%rsp"
+#endif
 static void work_loop(void *arg) {
     const char *s = (const char*)arg;
     for (int i = 0; i < 100; ++i) {
         printf("%s%d  ", s, get_count());
         add_count();
 	void *ps;
-	asm volatile ("mov %%rsp,%0":"=g"(ps):);
+	asm volatile ("mov "PS",%0":"=g"(ps):);
 	printf("reach here at work_loop%p\n",ps);
         co_yield();
     }
