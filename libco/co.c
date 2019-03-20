@@ -18,8 +18,8 @@
 	
 
 struct co {
-	void* ori_SP __attribute(align(SIZE_align));
-	void* SP __attribute__(align(SIZE_align));
+	void* ori_SP __attribute((aligned(SIZE_align)));
+	void* SP __attribute__((aligned(SIZE_align)));
 	jmp_buf *buf;
 	func_t func;
 	void * argc;
