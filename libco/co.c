@@ -116,5 +116,6 @@ void co_wait(struct co *thd) {
 				longjmp(current->buf,1);
 			}
 		}
+	printf("here reach at co_wait!\n");
 }
 
