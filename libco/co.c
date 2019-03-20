@@ -24,7 +24,7 @@ struct co {
 	func_t func;
 	char argc[100] __attribute__((aligned(SIZE_align)));
 	char name[100];
-	char stack[MAX_HEAP_SIZE] __attribute__ ((aligned(SIZE_align)));
+//	char stack[MAX_HEAP_SIZE] __attribute__ ((aligned(SIZE_align)));
 	int sleep;
 	int start;
 	int dead;
@@ -44,7 +44,7 @@ void co_init() {
 		runtines[i].back=NULL;
 		runtines[i].par=NULL;
 		runtines[i].start=0;
-		runtines[i].SP=(void *)runtines[i].stack;
+		runtines[i].SP=malloc(sizeof(char)*4096);//(void *)runtines[i].stack;
 //		printf("%p\n",runtines[i].SP);
 		rec_sta[rec_top++]=MAX_CO-i;
 	}
