@@ -44,17 +44,21 @@ static int g_running = 1;
 
 static void do_produce(Queue *queue) {
     assert(!q_is_full(queue));
+    printf("1");
     Item *item = (Item*)malloc(sizeof(Item));
     if (!item) {
         fprintf(stderr, "New item failure\n");
         return;
     }
+    printf("2");
     item->data = (char*)malloc(10);
+    printf("3");
     if (!item->data) {
         fprintf(stderr, "New data failure\n");
         free(item);
         return;
     }
+    printf("4");
     memset(item->data, 0, 10);
     sprintf(item->data, "libco-%d", g_count++);
     q_push(queue, item);
