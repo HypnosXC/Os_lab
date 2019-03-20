@@ -47,30 +47,28 @@ void co_init() {
 		runtines[i].back=NULL;
 		runtines[i].par=NULL;
 		runtines[i].start=0;
-		runtines[i].SP=malloc(sizeof(char)*4096);
 		rec_sta[rec_top++]=MAX_CO-i;
 	}
 	current=&runtines[0];
 	current->sleep=0;
 	current->dead=0;
 }
-void co_func(struct co *thd)  {
-	current=thd;
+void co_func()  {
 	asm volatile ("mov %0," _SP :	:"g"(thd->SP));
 	(*(current->func))((void *)current->argc);
 	if(current->back!=NULL)
 		current->back->sleep=0;//wake the thd in wait
 	current->dead=1;//thd ends
-	assert(current->par!=NULL);//the parent is impossible
+	assert(current->par!=NULL);//no parent is impossible
 	co_change(current->par);
 }
 struct co* co_start(const char *name, func_t func, void *arg) {
   struct co* new_co=&runtines[rec_sta[--rec_top]];
   new_co->func=func;
-  asm volatile ("mov " _SP ",%0"  : "=g" (new_co->RSP) : );
   strcpy(new_co->name,name);
   strcpy(new_co->argc,(char *)arg);
   new_co->dead=0;
+  new_co->SP=malloc(MAX_HEAP_SIZE*sizeof(char));
   new_co->sleep=0;
   return new_co;
 }
@@ -85,11 +83,12 @@ void co_yield() {
 				current=&runtines[i];
 				if(current->start){
 					longjmp(current->buf,1);
-		 		}
+		 			assert(0);//never reach
+				}
 				else	{
 				   	current->start=1;
 					current->par=rc;	
-				 	co_func(current);
+				 	co_func();
 		 		}
 				break;
 		 	}
@@ -109,7 +108,7 @@ void co_wait(struct co *thd) {
 		if(!thd->start)	{
 			thd->start=1;				
 			thd->par=rc;
-			co_func(thd);
+			co_func();
 		}
 		else {
 			longjmp(current->buf,1);
