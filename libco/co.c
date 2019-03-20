@@ -81,7 +81,7 @@ void co_yield() {
 			}
 		}
 	}
-	printf("reach here\n");
+
 	current=rc;
 }
 
