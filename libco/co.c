@@ -67,6 +67,8 @@ struct co* co_start(const char *name, func_t func, void *arg) {
 void co_yield() {
 	struct co *rc=current;
 	printf("yiedld once at current=%p",current);
+	if(current->buf==NULL)
+		printf("fk!");
 /*	if(!setjmp(*current->buf))	{//first return , change current
 		for(int i=1;i<=MAX_CO;i++)	{
 			if(!runtines[i].sleep&&!runtines[i].dead)	{
