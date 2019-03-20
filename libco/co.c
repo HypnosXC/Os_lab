@@ -21,11 +21,12 @@
 struct co {
 	void* ori_SP __attribute((aligned(SIZE_align)));
 	void* SP __attribute__((aligned(SIZE_align)));
-	jmp_buf *buf;
+	jmp_buf buf;
 	func_t func;
 	char argc[100] __attribute__((aligned(SIZE_align)));
 	char name[100];
 	int sleep;
+	int start;
 	int dead;
 }runtines[MAX_CO];
 struct co * current;
@@ -37,7 +38,7 @@ void co_init() {
 	for(int i=1;i<=MAX_CO;i++)	{
 		runtines[i].sleep=1;
 		runtines[i].dead=1;
-		runtines[i].buf=NULL;
+		runtines[i].start=0;
 		runtines[i].SP=malloc(MAX_HEAP_SIZE*sizeof(char));
 		runtines[i].SP+=MAX_HEAP_SIZE/2*sizeof(char);
 //		printf("%p\n",runtines[i].SP);
@@ -67,19 +68,19 @@ struct co* co_start(const char *name, func_t func, void *arg) {
 void co_yield() {
 	struct co *rc=current;
 	printf("yiedld once at current=%p",current);
-	if(current->buf==NULL)
-		printf("fk!");
-/*	if(!setjmp(*current->buf))	{//first return , change current
+	if(!setjmp(current->buf))	{//first return , change current
 		for(int i=1;i<=MAX_CO;i++)	{
 			if(!runtines[i].sleep&&!runtines[i].dead)	{
 				current=&runtines[i];
-				if(current->buf!=NULL)
-					longjmp(*current->buf,1);
-				else 
+				if(current->start)
+					longjmp(current->buf,1);
+				else	{
+				   current->start=1;	
 					co_func(current);
+				}
 			}
 		}
-	}*/
+	}
 	current=rc;
 }
 
@@ -93,11 +94,12 @@ void co_wait(struct co *thd) {
 				assert(0);
 			}
 			current=thd;
-			if(thd->buf==NULL)	{
+			if(!thd->start)	{
+				thd->start=1;
 				co_func(thd);
 			}
 			else
-				longjmp(*thd->buf,1);
+				longjmp(thd->buf,1);
 			thd->dead=1;
 			rec_sta[rec_top++]=i;
 			break;
