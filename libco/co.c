@@ -19,7 +19,7 @@
 
 struct co {
 	uintptr_t ori_SP __attribute(align(SIZE_align));
-	uintptr_t SP __attribute__(align(SIZE_align));
+	void* SP __attribute__(align(SIZE_align));
 	jmp_buf *buf;
 	func_t func;
 	void * argc;
@@ -29,7 +29,7 @@ struct co {
 struct co * current;
 int rec_sta[MAX_CO],rec_top;
 void co_init() {
-	current=&rutnines[0];
+	current=&runtines[0];
 	current->sleep=0;
 	current->dead=0;
 	for(int i=1;i<=MAX_CO;i++)	{
