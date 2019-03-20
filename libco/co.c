@@ -49,7 +49,6 @@ void co_func(struct co *thd)  {
 	asm volatile ("mov " _SP ",%0;mov %1, " _SP :
 		  	"=g"(thd->ori_SP) :
 			"g"(thd->SP));
-	//printf("%p %s\n",thd->SP,thd->name);
 	(*(thd->func))((void *)thd->argc);
 	asm volatile("mov %0," _SP : :"g"(thd->ori_SP));
 }
@@ -65,22 +64,18 @@ struct co* co_start(const char *name, func_t func, void *arg) {
 }
 void co_yield() {
 	struct co *rc=current;
-//	printf("yiedld once at current=%p\n",current);
 	if(!setjmp(current->buf))	{//first return , change current
-	//	printf("nofindin\n");
 		for(int i=1;i<MAX_CO;i++)	{
 			if(&runtines[i]==current)	{
-			//	printf("%s\n",current->name);
 				continue;
 			}
 			if(!runtines[i].sleep&&!runtines[i].dead)	{
 				current=&runtines[i];
-		//		printf("i=%d,yield at %s\n",i,runtines[i].name);
 				if(current->start)
 					longjmp(current->buf,1);
 				else	{
-				   current->start=1;	
-					co_func(current);
+				   	current->start=1;	
+				 	co_func(current);
 				}
 				break;
 			}
