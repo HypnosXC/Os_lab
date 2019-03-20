@@ -73,8 +73,8 @@ void co_yield() {
 			if(!runtines[i].sleep&&!runtines[i].dead)	{
 				current=&runtines[i];
 				if(current->start){
-					longjmp(current->buf,1);
 					current->start=0;
+					longjmp(current->buf,1);
 				}
 				else	{
 				   	current->start=1;	
