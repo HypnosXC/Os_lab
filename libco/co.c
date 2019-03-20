@@ -6,7 +6,7 @@
 #define MAX_CO 1024
 #define MAX_HEAP_SIZE 4096
 #if define(__i386__)
-	define SP "%%esp"
+	#define SP "%%esp"
 #elif define(__x86_64__)
 	#define SP "%%rsp"
 #endif
@@ -18,7 +18,7 @@
 	
 
 struct co {
-	uintptr_t ori_SP __attribute(align(SIZE_align));
+	void* ori_SP __attribute(align(SIZE_align));
 	void* SP __attribute__(align(SIZE_align));
 	jmp_buf *buf;
 	func_t func;
