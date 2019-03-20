@@ -12,9 +12,9 @@
 	#define _SP "%%rsp"
 #endif
 #if defined(__i386__)
-	#define  SIZE_align 4
+	#define  SIZE_align 8
 #elif defined(__x86_64__)
-	#define SIZE_align 8
+	#define SIZE_align 16
 #endif
 	
 
@@ -44,7 +44,7 @@ void co_init() {
 		runtines[i].par=NULL;
 		runtines[i].start=0;
 		runtines[i].SP=malloc(MAX_HEAP_SIZE*sizeof(char));
-		runtines[i].SP+=MAX_HEAP_SIZE/2*sizeof(char);
+		runtines[i].SP+=MAX_HEAP_SIZE/2*sizeof(char)+SIZE_align/2;
 //		printf("%p\n",runtines[i].SP);
 		rec_sta[rec_top++]=MAX_CO-i;
 	}
