@@ -45,6 +45,7 @@ void co_init() {
 	rec_top=MAX_CO;
 }
 void co_func(struct co *thd)  {
+	printf("statr!");
 	asm volatile ("mov " _SP ",%0;mov %1, " _SP :
 		  	"=g"(thd->ori_SP) :
 			"g"(thd->SP));
