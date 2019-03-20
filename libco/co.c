@@ -98,12 +98,12 @@ void co_yield() {
 }
 void co_wait(struct co *thd) {
 	struct co *rc=current;
-	if(!setjmp(thd->buf))	{
-		current->sleep=1;
+	if(!setjmp(rc->buf))	{
+		rc->sleep=1;
 		if(thd->sleep||thd->back!=NULL)	{
 			assert(0);
 		}
-		thd->back=current;
+		thd->back=rc;
 		current=thd;			
 		if(!thd->start)	{
 			thd->start=1;				
