@@ -17,7 +17,6 @@
 	#define SIZE_align 16
 #endif
 	
-
 struct co {
 	void *RSP __attribute__ ((aligned(SIZE_align)));
 	void* SP __attribute__((aligned(SIZE_align)));
@@ -40,17 +39,9 @@ void co_change(struct co* target) {//only use for one context over
 	if(target->dead)
 		co_change(target->par);
 	current=target;
-	longjmp(target->buf,1);/*
-	for(int i=1;i<MAX_CO;i++)
-		if(!runtines[i].dead && !runtines[i].sleep&&current!=&runtines[i])	{
-			if(runtines[i].start)	{
-				current=&runtines[i];
-				longjmp(current->buf,1);
-				assert(0);
-			}
-		}
-	current=&runtines[0];
-	longjmp(current->buf,1);*/
+	printf("gg simida\n");
+	fflush(stdout);
+	longjmp(target->buf,1);
 }
 void co_init() {
 	for(int i=0;i<MAX_CO;i++)	{ 
