@@ -112,6 +112,7 @@ void co_wait(struct co *thd) {
 	int t=0;
 	do{
 		t=setjmp(rc->buf);
+	}
 	while(t);
 	if(!t)	{
 		rc->sleep=1;
