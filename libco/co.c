@@ -41,7 +41,7 @@ void co_change() {//only use for one context over
 		co_change(target->par);
 	longjmp(target->buf,1);*/
 	for(int i=1;i<=MAX_CO;i++)
-		if(!runtines[i].dead&&!runtines[i].sleep)	{
+		if(!runtines[i].dead&&!runtines[i].sleep&&current!=&runtines[i])	{
 			if(runtines[i].start)	{
 				current=&runtines[i];
 				longjmp(current->buf,1);
