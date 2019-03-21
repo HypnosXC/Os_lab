@@ -72,7 +72,7 @@ void co_func()  {
 	if(current->back!=NULL)
 		current->back->sleep=0;//wake the thd in wait
 	current->dead=1;//thd ends
-	free(current->SP);
+	free(current->SP-MAX_HEAP_SIZE*sizeof(char));
 	assert(current->par!=NULL);//no parent is impossible
 	co_change(current->par);
 }
