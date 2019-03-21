@@ -277,7 +277,6 @@ static inline void q_free(Queue *queue) {
 }
 
 static inline int q_is_full(Queue *queue) {
-    printf("%p\n",queue);
     return queue->sz == queue->cap;
 }
 
