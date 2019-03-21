@@ -39,7 +39,7 @@ void co_change(struct co* target) {//only use for one context over
 	if(target->dead)
 		co_change(target->par);
 	current=target;
-	printf("gg simida\n");
+	printf("\ngg simida\n");
 	fflush(stdout);
 	longjmp(target->buf,1);
 }
