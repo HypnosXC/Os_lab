@@ -70,7 +70,6 @@ struct co* co_start(const char *name, func_t func, void *arg) {
   strcpy(new_co->name,name);
   //strcpy(new_co->argc,(char *)arg);
   new_co->arg=arg;
-  printf("%p\n",arg);
   new_co->dead=0;
   new_co->start=0;
   new_co->par=new_co->back=NULL;
