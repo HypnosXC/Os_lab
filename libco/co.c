@@ -35,11 +35,11 @@ struct co {
 struct co * current;
 int rec_sta[MAX_CO*2],rec_top;
 void co_change() {//only use for one context over
-/*	if(target->sleep)//invaild operation
+	if(target->sleep)//invaild operation
 		assert("wrong op"&& 0);
 	if(target->dead)
 		co_change(target->par);
-	longjmp(target->buf,1);*/
+	longjmp(target->buf,1);/*
 	for(int i=1;i<MAX_CO;i++)
 		if(!runtines[i].dead && !runtines[i].sleep&&current!=&runtines[i])	{
 			if(runtines[i].start)	{
@@ -49,7 +49,7 @@ void co_change() {//only use for one context over
 			}
 		}
 	current=&runtines[0];
-	longjmp(current->buf,1);
+	longjmp(current->buf,1);*/
 }
 void co_init() {
 	for(int i=0;i<MAX_CO;i++)	{ 
@@ -71,8 +71,8 @@ void co_func()  {
 	if(current->back!=NULL)
 		current->back->sleep=0;//wake the thd in wait
 	current->dead=1;//thd ends
-//	assert(current->par!=NULL);//no parent is impossible
-	co_change();
+	assert(current->par!=NULL);//no parent is impossible
+	co_change(current->par);
 }
 struct co* co_start(const char *name, func_t func, void *arg) {
   struct co* new_co=&runtines[++rec_top];
