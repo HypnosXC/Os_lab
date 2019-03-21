@@ -72,7 +72,7 @@ struct co* co_start(const char *name, func_t func, void *arg) {
   new_co->start=0;
   new_co->par=new_co->back=NULL;
   new_co->SP=malloc(MAX_HEAP_SIZE*sizeof(char));
-  new_co->SP+=MAX_HEAP_SIZE/2*sizeof(char);
+  new_co->SP+=MAX_HEAP_SIZE*sizeof(char);
   new_co->sleep=0;
   return new_co;
 }
