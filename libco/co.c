@@ -49,7 +49,7 @@ void co_init() {
 		runtines[i].start=0;
 		rec_sta[rec_top++]=MAX_CO-i;
 	}
-	MAX_CO=1;	
+	rec_top=1;	
 	current=&runtines[0];
 	current->sleep=0;
 	current->dead=0;
