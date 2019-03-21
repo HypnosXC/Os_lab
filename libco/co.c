@@ -70,8 +70,8 @@ void co_func()  {
 	if(current->back!=NULL)
 		current->back->sleep=0;//wake the thd in wait
 	current->dead=1;//thd ends
-	assert(current->par!=NULL);//no parent is impossible
-	co_change(current->par);
+//	assert(current->par!=NULL);//no parent is impossible
+	co_change();
 }
 struct co* co_start(const char *name, func_t func, void *arg) {
   struct co* new_co=&runtines[++rec_top];
