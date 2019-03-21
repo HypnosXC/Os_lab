@@ -82,7 +82,7 @@ void co_yield() {
 		for(int i=1;i<MAX_CO;i++)	{
 			if(&runtines[i]==current)	{
 				continue;
-	 	}
+	 		}
 			if(!runtines[i].sleep&&!runtines[i].dead)	{
 				current=&runtines[i];
 				if(current->start){
@@ -96,7 +96,7 @@ void co_yield() {
 		 		}
 				break;
 		 	}
-		} 
+		}
 	}
 	current=rc;
 }
