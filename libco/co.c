@@ -69,7 +69,7 @@ struct co* co_start(const char *name, func_t func, void *arg) {
   strcpy(new_co->argc,(char *)arg);
   new_co->dead=0;
   new_co->SP=malloc(MAX_HEAP_SIZE*sizeof(char));
-  new_co->SP+=MAX_HEAP_SIZE*sizeof(char);
+ // new_co->SP+=MAX_HEAP_SIZE*sizeof(char);
   new_co->sleep=0;
   return new_co;
 }
