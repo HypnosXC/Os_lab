@@ -23,7 +23,8 @@ struct co {
 	void* SP __attribute__((aligned(SIZE_align)));
 	jmp_buf buf;
 	func_t func;
-	char argc[100] __attribute__((aligned(SIZE_align)));
+	//argc[100] __attribute__((aligned(SIZE_align)));
+	void *arg;
 	char name[100];
 	int sleep;
 	int start;
@@ -57,7 +58,7 @@ void co_init() {
 void co_func()  {
 	asm volatile ("mov %0," _SP :	:"g"(current->SP));
 	printf("ha %p",current->argc);
-	(*(current->func))((void *)current->argc);
+	(*(current->func))((void *)current->arg);
 	if(current->back!=NULL)
 		current->back->sleep=0;//wake the thd in wait
 	current->dead=1;//thd ends
@@ -68,7 +69,8 @@ struct co* co_start(const char *name, func_t func, void *arg) {
   struct co* new_co=&runtines[++rec_top];
   new_co->func=func;
   strcpy(new_co->name,name);
-  strcpy(new_co->argc,(char *)arg);
+  //strcpy(new_co->argc,(char *)arg);
+  new_co->arg=arg;
   printf("%p\n",arg);
   new_co->dead=0;
   new_co->start=0;
