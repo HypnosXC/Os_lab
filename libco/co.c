@@ -45,6 +45,7 @@ void co_change() {//only use for one context over
 			if(runtines[i].start)	{
 				current=&runtines[i];
 				longjmp(current->buf,1);
+				assert(0);
 			}
 		}
 	current=&runtines[0];
