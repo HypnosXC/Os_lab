@@ -40,8 +40,6 @@ void co_change(struct co* target) {//only use for one context over
 		co_change(target->par);
 		assert(0);
 	}
-	printf("\ngg simida at %s,to %s\n",current->name,target->name);
-	fflush(stdout);
 	current=target;
 	longjmp(target->buf,1);
 }
