@@ -38,9 +38,9 @@ void co_change(struct co* target) {//only use for one context over
 		assert("wrong op"&& 0);
 	if(target->dead)
 		co_change(target->par);
-	current=target;
-	printf("\ngg simida\n");
+	printf("\ngg simida at %s\n",current->name);
 	fflush(stdout);
+	current=target;
 	longjmp(target->buf,1);
 }
 void co_init() {
