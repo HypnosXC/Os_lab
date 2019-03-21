@@ -111,7 +111,8 @@ void co_wait(struct co *thd) {
 			assert(0);
 		}
 		thd->back=rc;
-		current=thd;			
+		current=thd;
+		printf("here at %p",current->argc);		
 		if(!thd->start)	{
 			thd->start=1;				
 			thd->par=rc;
