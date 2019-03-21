@@ -49,7 +49,7 @@ void co_init() {
 		runtines[i].start=0;
 		rec_sta[rec_top++]=MAX_CO-i;
 	}
-	rec_top=1;	
+	rec_top=0;	
 	current=&runtines[0];
 	current->sleep=0;
 	current->dead=0;
@@ -64,7 +64,7 @@ void co_func()  {
 	co_change(current->par);
 }
 struct co* co_start(const char *name, func_t func, void *arg) {
- /* struct co* new_co=&runtines[rec_top++];
+  struct co* new_co=&runtine s[++rec_top];
   new_co->func=func;
   strcpy(new_co->name,name);
   strcpy(new_co->argc,(char *)arg);
@@ -74,14 +74,15 @@ struct co* co_start(const char *name, func_t func, void *arg) {
   new_co->SP=malloc(MAX_HEAP_SIZE*sizeof(char));
   new_co->SP+=MAX_HEAP_SIZE*sizeof(char);
   new_co->sleep=0;
-  return new_co;*/
+  return new_co;
 	(*(func))(arg);
   return NULL;
 }
 void co_yield() {
-/*	struct co *rc=current;
+	struct co * rc=current;
 	if(!setjmp(current->buf))	{//first return , change  current
-		for(int i=1;i<MAX_CO;i++)	{
+		for(int j=1;j<MAX_CO;j++)	{
+			int i=rand()%rec_top+1;
 			if(&runtines[i]==current)	{
 				continue;
 	 		}
@@ -100,10 +101,10 @@ void co_yield() {
 		 	}
 		}
 	}
-	current=rc;*/
+	current=rc;
 }
 void co_wait(struct co *thd) {
-/*	struct co *rc=current;
+	struct co *rc=current;
 	if(!setjmp(rc->buf))	{
 		rc->sleep=1;
 		if(thd->sleep||thd->back!=NULL)	{
@@ -120,6 +121,6 @@ void co_wait(struct co *thd) {
 			longjmp(current->buf,1);
 		}
 	}
-	current=rc;*/
+	current=rc;
 }
 
