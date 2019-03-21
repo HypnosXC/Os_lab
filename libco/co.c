@@ -93,8 +93,8 @@ struct co* co_start(const char *name, func_t func, void *arg) {
 void co_yield() {
 	struct co * rc=current;
 	if(!setjmp(current->buf))	{//first return , change  current
-		for(int i=1;i<MAX_CO;i++)	{
-			//int i=rand()%rec_top+1;
+		for(int j=1;j<MAX_CO;j++)	{
+			int i=rand()%rec_top+1;
 			if(&runtines[i]==current)	{
 				continue;
 	 		}
