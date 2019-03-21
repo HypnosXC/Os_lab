@@ -109,12 +109,7 @@ void co_yield() {
 }
 void co_wait(struct co *thd) {
 	struct co *rc=current;
-	int t=0;
-	do{
-		t=setjmp(rc->buf);
-	}
-	while(t);
-	if(!t)	{
+	if(!setjmp(rc->buf))	{
 		rc->sleep=1;
 		if(thd->sleep||thd->back!=NULL)	{
 			assert(0);
