@@ -126,6 +126,8 @@ void co_wait(struct co *thd) {
 			longjmp(current->buf,1);
 		}
 	}
+	printf("now get! %s",rc->name);
+	fflush(stdout);
 	current=rc;
 }
 
