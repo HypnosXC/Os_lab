@@ -57,7 +57,6 @@ void co_init() {
 }
 void co_func()  {
 	asm volatile ("mov %0," _SP :	:"g"(current->SP));
-	printf("ha %p",current->argc);
 	(*(current->func))((void *)current->arg);
 	if(current->back!=NULL)
 		current->back->sleep=0;//wake the thd in wait
@@ -113,8 +112,7 @@ void co_wait(struct co *thd) {
 			assert(0);
 		}
 		thd->back=rc;
-		current=thd;
-		printf("here at %p",current->argc);		
+		current=thd;		
 		if(!thd->start)	{
 			thd->start=1;				
 			thd->par=rc;
