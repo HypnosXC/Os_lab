@@ -56,7 +56,7 @@ void co_init() {
 	current=&runtines[0];
 	current->sleep=0;
 	current->dead=0;
-	current->name="cmd";
+	strcpy(current->name,"cmd");
 }
 void co_func()  {
 	asm volatile ("mov %0," _SP :	:"m"(current->SP) : "%esp");
