@@ -77,6 +77,7 @@ static void do_consume(Queue *queue) {
 
     Item *item = q_pop(queue);
     if (item) {
+		assert(item->data!=NULL);
         printf("%s  ", (char *)item->data);
         free(item->data);
         free(item);
