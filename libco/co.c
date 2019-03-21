@@ -76,6 +76,7 @@ struct co* co_start(const char *name, func_t func, void *arg) {
   new_co->sleep=0;
   return new_co;*/
 	(*(func))(arg);
+  return NULL;
 }
 void co_yield() {
 /*	struct co *rc=current;
