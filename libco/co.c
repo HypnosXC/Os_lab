@@ -103,7 +103,7 @@ void co_yield() {
 	current=rc;*/
 }
 void co_wait(struct co *thd) {
-	struct co *rc=current;
+/*	struct co *rc=current;
 	if(!setjmp(rc->buf))	{
 		rc->sleep=1;
 		if(thd->sleep||thd->back!=NULL)	{
@@ -120,6 +120,6 @@ void co_wait(struct co *thd) {
 			longjmp(current->buf,1);
 		}
 	}
-	current=rc;
+	current=rc;*/
 }
 
