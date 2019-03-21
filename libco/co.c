@@ -36,8 +36,10 @@ int rec_top;
 void co_change(struct co* target) {//only use for one context over
 	if(target->sleep)//invaild operation
 		assert("wrong op"&& 0);
-	if(target->dead)
+	if(target->dead)	{
 		co_change(target->par);
+		assert(0);
+	}
 	printf("\ngg simida at %s,to %s\n",current->name,target->name);
 	fflush(stdout);
 	current=target;
