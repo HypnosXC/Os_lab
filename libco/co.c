@@ -48,7 +48,7 @@ void co_init() {
 		runtines[i].par=NULL;
 		runtines[i].start=0;
 		rec_sta[rec_top++]=MAX_CO-i;
-	}
+	} 
 	current=&runtines[0];
 	current->sleep=0;
 	current->dead=0;
@@ -68,6 +68,8 @@ struct co* co_start(const char *name, func_t func, void *arg) {
   strcpy(new_co->name,name);
   strcpy(new_co->argc,(char *)arg);
   new_co->dead=0;
+  new_co->start=0;
+  new_co->par=new_co->back=NULL;
   new_co->SP=malloc(MAX_HEAP_SIZE*sizeof(char));
   new_co->SP+=MAX_HEAP_SIZE/2*sizeof(char);
   new_co->sleep=0;
