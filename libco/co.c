@@ -64,7 +64,7 @@ void co_func()  {
 	co_change(current->par);
 }
 struct co* co_start(const char *name, func_t func, void *arg) {
-  struct co* new_co=&runtines[rec_top++];
+ /* struct co* new_co=&runtines[rec_top++];
   new_co->func=func;
   strcpy(new_co->name,name);
   strcpy(new_co->argc,(char *)arg);
@@ -74,10 +74,11 @@ struct co* co_start(const char *name, func_t func, void *arg) {
   new_co->SP=malloc(MAX_HEAP_SIZE*sizeof(char));
   new_co->SP+=MAX_HEAP_SIZE*sizeof(char);
   new_co->sleep=0;
-  return new_co;
+  return new_co;*/
+	(*(func))(arg);
 }
 void co_yield() {
-	struct co *rc=current;
+/*	struct co *rc=current;
 	if(!setjmp(current->buf))	{//first return , change  current
 		for(int i=1;i<MAX_CO;i++)	{
 			if(&runtines[i]==current)	{
@@ -98,7 +99,7 @@ void co_yield() {
 		 	}
 		}
 	}
-	current=rc;
+	current=rc;*/
 }
 void co_wait(struct co *thd) {
 	struct co *rc=current;
