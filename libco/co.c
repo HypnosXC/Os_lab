@@ -109,6 +109,8 @@ void co_yield() {
 	current=rc;
 }
 void co_wait(struct co *thd) {
+	if(thd->dead)
+		return;
 	struct co *rc=current;
 	if(!setjmp(rc->buf))	{
 		rc->sleep=1;
@@ -126,8 +128,6 @@ void co_wait(struct co *thd) {
 			longjmp(current->buf,1);
 		}
 	}
-	printf("now get! %s",rc->name);
-	fflush(stdout);
 	current=rc;
 }
 
