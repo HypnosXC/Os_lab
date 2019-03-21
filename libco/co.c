@@ -64,7 +64,7 @@ void co_func()  {
 	co_change(current->par);
 }
 struct co* co_start(const char *name, func_t func, void *arg) {
-  struct co* new_co=&runtine s[++rec_top];
+  struct co* new_co=&runtines[++rec_top];
   new_co->func=func;
   strcpy(new_co->name,name);
   strcpy(new_co->argc,(char *)arg);
