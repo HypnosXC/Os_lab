@@ -32,13 +32,13 @@ struct co {
 	struct co * par;
 }runtines[MAX_CO*2];
 struct co * current;
-int rec_sta[MAX_CO*2],rec_top;
+int rec_top;
 void co_change(struct co* target) {//only use for one context over
 	if(target->sleep)//invaild operation
 		assert("wrong op"&& 0);
 	if(target->dead)
 		co_change(target->par);
-	printf("\ngg simida at %s,to%s\n",current->name,target->name);
+	printf("\ngg simida at %s,to %s\n",current->name,target->name);
 	fflush(stdout);
 	current=target;
 	longjmp(target->buf,1);
@@ -50,7 +50,6 @@ void co_init() {
 		runtines[i].back=NULL;
 		runtines[i].par=NULL;
 		runtines[i].start=0;
-		rec_sta[rec_top++]=MAX_CO-i;
 	}
 	rec_top=0;	
 	current=&runtines[0];
