@@ -109,7 +109,7 @@ void test() {
 }
 static void os_run() {
   hello();
-  test_big_or_small();
+  test_big_small();
 //  test();
   _intr_write(1);
   while (1) {
