@@ -1,6 +1,5 @@
 #include <common.h>
 #include <klib.h>
-#include <my_os.h>
 #include <alloc.h>
 #define BLOCK_SIZE 128// basic block for every malloc
 static uintptr_t pm_start, pm_end,pm_size;
@@ -19,12 +18,17 @@ static void pmm_init() {
 static void *kalloc(size_t size) {
  printf("alloc %d block\n",size);
  lock(alloc_lk);
- pm_start+=size; 
- return (void *)(pm_start-size);
+ size=size+(BLOCK_SIZE-size%BLOCK_SIZE);
+ size/=BLOCK_SIZE;
+ int pos=bt_alloc(size);
+ return (void *)(pm_end-pos*BLOCK_SIZE);
 }
 
 static void kfree(void *ptr) {
-	printf("free %p\n",ptr);
+	int pos=pm_end-(intptr_t)ptr;
+	pos/=BLOCK_SIZE;
+	printf("free %p at %d",ptr,pos);
+	bt_free(pos);
 	unlock(alloc_lk);
 }
 
