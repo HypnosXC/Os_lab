@@ -21,7 +21,7 @@ static void* kalloc(size_t size) {
  size/=BLOCK_SIZE;
  int pos=bt_alloc(size);
  lock(printf_lk);
- printf("alloc %d block at%d\n",size,pos);
+ printf("alloc %d block at%d\n",size,pm_end-pos*BLOCK_SIZE);
  unlock(printf_lk);
  unlock(alloc_lk);
  return (void *)(pm_end-pos*BLOCK_SIZE);
