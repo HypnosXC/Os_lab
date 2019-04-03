@@ -31,7 +31,7 @@ static void kfree(void *ptr) {
 	int pos=pm_end-(intptr_t)ptr;
 	pos/=BLOCK_SIZE;
 	lock(printf_lk);
-	lock(alloc_lock);
+	lock(alloc_lk);
 	printf("free %p at %d",ptr,pos);
 	unlock(printf_lk);
 	bt_free(pos);
