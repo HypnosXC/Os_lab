@@ -14,9 +14,25 @@ static void hello() {
   }
   _putc("12345678"[_cpu()]); _putc('\n');
 }
-
+static void test() {
+    char q[1009];
+	int top=0;
+	for(int i=1;i<=1000;i++){
+		int len=rand()%1000*128;
+		int f=rand()%5;
+		if(!top||!f)	{
+			q[top++]=pmm->alloc(len);
+			sprintf(q[top-1],"alloc mem with %d",len);
+		}
+		else {
+			printf("%s\n",q[top-1]);
+			pmm->free(q[--top]);
+		}
+	}
+}
 static void os_run() {
   hello();
+  test();
   _intr_write(1);
   while (1) {
     _yield();
