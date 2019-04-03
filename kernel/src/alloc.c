@@ -23,7 +23,7 @@ static void *kalloc(size_t size) {
 
 static void kfree(void *ptr) {
 	printf("free %p\n",ptr);
-	unlock(allock_lk);
+	unlock(alloc_lk);
 }
 
 MODULE_DEF(pmm) {
