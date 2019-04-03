@@ -8,11 +8,10 @@ static void os_init() {
 
 static void hello() {
   for (const char *ptr = "Hello from CPU #"; *ptr; ptr++) {
-    _putc(*ptr);
-    _putc('\n');
+   /* _putc(*ptr);
+    _putc('\n');*/
     char *mm=pmm->alloc(100);
     mm="maybe the alloc func is not right\n";
-    printf("lc is%p\n",printf_lk);
     lock(printf_lk);
     printf("%s",mm);
     unlock(printf_lk);
