@@ -28,3 +28,6 @@ void  bt_init(intptr_t *addr,int size)	{// each with 128,originally ,then used t
     head=size+1;
     tail=size+2;
 }
+int bt_alloc(size_t size) {//find a consecutive block with length size
+    return 1;
+}
