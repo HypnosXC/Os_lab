@@ -1,6 +1,7 @@
 #include <common.h>
 #include <my_os.h>
 int printf(const char * tmf,...);
+int sprintf(char * g,const char *tmf,...);
 static void os_init() {
   pmm->init();
   printf_lk->name="printf";
