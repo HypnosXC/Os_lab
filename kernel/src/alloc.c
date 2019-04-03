@@ -19,6 +19,7 @@ static void pmm_init() {
 static void *kalloc(size_t size) {
  printf("alloc %d block\n",size);
  lock(alloc_lk); 
+ return;
 }
 
 static void kfree(void *ptr) {
