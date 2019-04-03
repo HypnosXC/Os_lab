@@ -27,7 +27,9 @@ void test_full(){
     if(p_old != NULL){
       for(int i=0;i < 1000;i++){
 	if(p_old[i]!=i)	{
+		lock(printf_lk);
 		printf("test_full: 旧值被改变");
+		unlock(printf_lk);
 		assert(0);	
 	}
       }
