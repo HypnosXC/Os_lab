@@ -28,7 +28,7 @@ static void* kalloc(size_t size) {
 }
 
 static void kfree(void *ptr) {
-	lock(alloc_lock);
+	lock(alloc_lk);
 	int pos=pm_end-(intptr_t)ptr;
 	pos/=BLOCK_SIZE;
 	lock(printf_lk);
