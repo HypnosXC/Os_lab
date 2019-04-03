@@ -1,6 +1,5 @@
 #include <common.h>
-#include <klib.h>
-
+int printf(const char * tmf,...);
 static void os_init() {
   pmm->init();
 }
