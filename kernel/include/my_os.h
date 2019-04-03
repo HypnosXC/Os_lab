@@ -19,7 +19,7 @@ void unlock(lc *lk) {
 }
 static int *btmp;
 static int mpsize,head,tail;
-int bt_init(intptr_t *addr,int size)	{// each with 128,originally ,then used to point to the linked blocked.(head size+1,tail size+2)
+void  bt_init(intptr_t *addr,int size)	{// each with 128,originally ,then used to point to the linked blocked.(head size+1,tail size+2)
     btmp=addr;
     mpsize=size;
     for(int i=0;i<size;i++)
