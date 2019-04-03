@@ -13,9 +13,9 @@ static void hello() {
     char *mm=pmm->alloc(100);
     mm="maybe the alloc func is not right\n";
     printf("lc is%p\n",printf_lk);
-   // lock(printf_lk);
+    lock(printf_lk);
     printf("%s",mm);
-   // unlock(printf_lk);
+    unlock(printf_lk);
   }
   _putc("12345678"[_cpu()]); _putc('\n');
 }
