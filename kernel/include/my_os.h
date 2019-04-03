@@ -10,6 +10,7 @@ typedef struct _lock{
 }lc;
 lc bas_lc[1000];
 #define allc_lc (bas_lc+1)
+#define printf_lk (bas_lc+2)
 static void lock(lc * lk) {
 	printf("locked %s\n",lk->name);
 	while(atomic_xchg(&lk->state,1));

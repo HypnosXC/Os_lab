@@ -1,7 +1,9 @@
 #include <common.h>
+#include <my_os.h>
 int printf(const char * tmf,...);
 static void os_init() {
   pmm->init();
+  printf_lk->name="printf";
 }
 
 static void hello() {
@@ -9,8 +11,7 @@ static void hello() {
     _putc(*ptr);
     char *mm=pmm->alloc(100);
     mm="maybe the alloc func is not right\n";
-    _putc(*mm);
-	mm++;
+    printf("%s");
   }
   _putc("12345678"[_cpu()]); _putc('\n');
 }
