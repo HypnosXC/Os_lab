@@ -1,6 +1,5 @@
 #include <common.h>
 #include <my_os.h>
-#include <klib.h>
 int rand();
 int printf(const char * tmf,...);
 int sprintf(char * g,const char *tmf,...);
@@ -25,14 +24,14 @@ static void test() {
 		if(!top||!f)	{
 			q[top++]=pmm->alloc(len);
 			sprintf(q[top-1],"alloc mem with %d",len);
-		}
+	 	}
 		else {
 //			lock(printf_lk);
 			printf("%s\n",q[top-1]);
 //			unlock(printf_lk);
 			pmm->free(q[--top]);
 		}
-	}
+	} 
 }
 
 void test_full(){
@@ -49,12 +48,15 @@ void test_full(){
     for(int i=0;i < 1000;i++){
       //printf("test_full: I'm at %p, %d\n", p, i);
       p[i] = i;
-     }
+     } 
     if(p_old != NULL){
       for(int i=0;i < 1000;i++){
-        assert(p_old[i] == i, "test_full: 旧值被改变");
-       }
-    } 
+		  if(p_old[i]!=i)	{
+        	  printf("test_full: 旧值被改变");
+			  assert(0);
+        	}
+	  }
+    }  
     if(p_old != NULL)
       pmm->free(p_old);
     p_old = p;
@@ -63,7 +65,7 @@ void test_full(){
     if(term >= 5)
       break;
 	  */
-  } 
+  }  
 }
 
 void test_big_small(){
@@ -86,10 +88,12 @@ void test_big_small(){
     //printf("test_big_small: %d %d\n", (uintptr_t)p, (uintptr_t)p_old);
 
     if(p_old != NULL){
-      for(int j=0;j < size[(i-1)%num];j++){
-        assert(p_old[j] == j, "test_big_smal: 值被改变");
-      }
-    }
+    for(int j=0;j < size[(i-1)%num];j++){
+         if(p_old[j]!=j)	{
+        	  printf("test_full: 旧值被改变");
+			  assert(0);
+        	}   
+   	 }
     if(p_old != NULL)
       pmm->free(p_old);
     p_old = p;
