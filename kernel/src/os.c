@@ -15,7 +15,11 @@ static void hello() {
     printf("mm is %p\n,with cpu %d \n",mm,_cpu());
 	unlock(printf_lk);
     mm="maybe the alloc func is not right\n";
+    lock(printf_lk);
+    printf("mm is %p\n,with cpu %d \n",mm,_cpu());
+    unlock(printf_lk);
     pmm->free(mm);
+
   }
   _putc("12345678"[_cpu()]); _putc('\n');
 }
