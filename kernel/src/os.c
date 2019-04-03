@@ -8,7 +8,7 @@ static void os_init() {
 static void hello() {
   for (const char *ptr = "Hello from CPU #"; *ptr; ptr++) {
     _putc(*ptr);
-    char *mm=kalloc(100);
+    char *mm=pmm.alloc(100);
     mm="maybe the alloc func is not right\n";
     _putc(*mm);
 	mm++;
