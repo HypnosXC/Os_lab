@@ -17,7 +17,7 @@ void test_full(){
   int term = 0;
   while((p = pmm->alloc(1000*sizeof(int)))){
     //spin_lock(&test_lock);
-   // printf("\33[1;35mtest_full: I'm at %#x, %d\n\33[0m", (uintptr_t)p,_cpu());
+    printf("\33[1;35mtest_full: I'm at %#x, %d\n\33[0m", (uintptr_t)p,_cpu());
     //Assert(test_lock.slock == 1, "test_full: test_lock.slock值为0");
     //spin_unlock(&test_lock);
     for(int i=0;i < 1000;i++){
@@ -27,9 +27,7 @@ void test_full(){
     if(p_old != NULL){
       for(int i=0;i < 1000;i++){
 	if(p_old[i]!=i)	{
-		lock(printf_lk);
 		printf("test_full: 旧值被改变");
-		unlock(printf_lk);
 		assert(0);	
 	}
       }
@@ -88,8 +86,8 @@ static void hello() {
 
   }
   _putc("12345678"[_cpu()]); _putc('\n');
-} 
-void test() {
+}
+static void test() {
     char* q[1009];
 	int top=0;
 	for( int i=1;i<=1000;i++){
@@ -109,8 +107,8 @@ void test() {
 }
 static void os_run() {
   hello();
-  test_big_small();
-//  test();
+  test_full();
+  test();
   _intr_write(1);
   while (1) {
     _yield();
