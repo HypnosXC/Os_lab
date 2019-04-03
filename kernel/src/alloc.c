@@ -19,9 +19,9 @@ static void* kalloc(size_t size) {
  size=size+(BLOCK_SIZE-size%BLOCK_SIZE);
  size/=BLOCK_SIZE;
  int pos=bt_alloc(size);
- lock(printf_lk);
- printf("alloc %d block at%x,with cpu %d\n",size,pm_end-pos*BLOCK_SIZE,_cpu());
- unlock(printf_lk);
+// lock(printf_lk);
+// printf("alloc %d block at%x,with cpu %d\n",size,pm_end-pos*BLOCK_SIZE,_cpu());
+// unlock(printf_lk);
  unlock(alloc_lk);
  return (void *)(pm_end-pos*BLOCK_SIZE);
 }
@@ -30,9 +30,9 @@ static void kfree(void *ptr) {
 	lock(alloc_lk);
 	int pos=pm_end-(intptr_t)ptr;
 	pos/=BLOCK_SIZE;
-	lock(printf_lk);
-	printf("free %p at %d with cpu %d\n",ptr,pos,_cpu());
-	unlock(printf_lk);
+//	lock(printf_lk);
+///	printf("free %p at %d with cpu %d\n",ptr,pos,_cpu());
+//	unlock(printf_lk);
 	bt_free(pos);
 	unlock(alloc_lk);
 }
