@@ -16,7 +16,9 @@ static void pmm_init() {
 }
 
 static void* kalloc(size_t size) {
+ lock(printf_lk);
  printf("alloc %d block\n",size);
+ unlock(printf_lk);
  lock(alloc_lk);
  size=size+(BLOCK_SIZE-size%BLOCK_SIZE);
  size/=BLOCK_SIZE;
@@ -27,7 +29,9 @@ static void* kalloc(size_t size) {
 static void kfree(void *ptr) {
 	int pos=pm_end-(intptr_t)ptr;
 	pos/=BLOCK_SIZE;
+	lock(printf_lk);
 	printf("free %p at %d",ptr,pos);
+	unlock(printf_lk);
 	bt_free(pos);
 	unlock(alloc_lk);
 }
