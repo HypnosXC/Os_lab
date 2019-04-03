@@ -16,10 +16,14 @@ static void pmm_init() {
 }
 
 static void *kalloc(size_t size) {
-  return NULL;
+ printf("alloc %d block\n",size);
+ lock(alloc_lk);
+ 
 }
 
 static void kfree(void *ptr) {
+	printf("free %p\n",ptr);
+	unlock(allock_lk);
 }
 
 MODULE_DEF(pmm) {
