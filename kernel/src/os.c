@@ -8,9 +8,10 @@ static void os_init() {
 static void hello() {
   for (const char *ptr = "Hello from CPU #"; *ptr; ptr++) {
     _putc(*ptr);
-    char *mm=kalloc(10);
-    mm="123456\n";
-    _putc(mm);
+    char *mm=kalloc(100);
+    mm="maybe the alloc func is not right\n";
+    _putc(*mm);
+	m++;
   }
   _putc("12345678"[_cpu()]); _putc('\n');
 }
