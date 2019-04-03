@@ -1,4 +1,4 @@
-#include<klib.h>
+int printf(const char *mtf,...);
 intptr_t atomic_xchg(volatile intptr_t *addr,intptr_t newval) {
 	intptr_t result;
 	asm volatile ("lock xchg %0,%1": "+m"(*addr),"=a"(result):"1"(newval):"cc");
