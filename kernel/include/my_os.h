@@ -15,7 +15,7 @@ int tot=2;
 static void lock(lc * lk) {
 	while(atomic_xchg(&lk->state,1));
 }
-#define newlk(char *name) {\
+#define newlk(name) {\
 	bas_lc[++tot].name=name;\
 	return bas_lc+tot;\
 }
