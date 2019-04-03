@@ -12,6 +12,7 @@ static void hello() {
     _putc('\n');
     char *mm=pmm->alloc(100);
     mm="maybe the alloc func is not right\n";
+    printf("lc is%p\n",printf_lk);
     lock(printf_lk);
     printf("%s",mm);
     unlock(printf_lk);

@@ -1,4 +1,4 @@
-/*int printf(const char *mtf,...);
+int printf(const char *mtf,...);
 static intptr_t atomic_xchg(volatile intptr_t *addr,intptr_t newval) {
 	intptr_t result;
 	asm volatile ("lock xchg %0,%1": "+m"(*addr),"=a"(result):"1"(newval):"cc");
@@ -21,4 +21,4 @@ static void lock(lc * lk) {
 static void unlock(lc *lk) {
 	atomic_xchg(&lk->state,0);
 }
-*/
+
