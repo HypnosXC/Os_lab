@@ -19,7 +19,6 @@ int bt_alloc(size_t size) {//find a consecutive block with length size
 	while(bit_size<=mpsize) {
 		btmp[bit_size]=1;
 		bit_size+=lb(bit_size);
-		printf("%d\n",bit_size);
 	}
 	return ans;
 }
