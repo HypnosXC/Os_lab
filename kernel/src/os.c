@@ -11,7 +11,7 @@ static void hello() {
     char *mm=kalloc(100);
     mm="maybe the alloc func is not right\n";
     _putc(*mm);
-	m++;
+	mm++;
   }
   _putc("12345678"[_cpu()]); _putc('\n');
 }
