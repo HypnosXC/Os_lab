@@ -26,9 +26,9 @@ static void test() {
 			sprintf(q[top-1],"alloc mem with %d",len);
 		}
 		else {
-			lock(printf_lk);
+//			lock(printf_lk);
 			printf("%s\n",q[top-1]);
-			unlock(printf_lk);
+//			unlock(printf_lk);
 			pmm->free(q[--top]);
 		}
 	}
