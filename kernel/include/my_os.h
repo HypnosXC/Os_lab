@@ -12,6 +12,7 @@ lc bas_lc[1000];
 #define allc_lc (bas_lc+1)
 #define printf_lk (bas_lc+2)
 inline void lock(lc * lk) {
+	printf("goes lock");
 	while(atomic_xchg(&lk->state,1));
 }
 #define newlk(name) {\
