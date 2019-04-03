@@ -4,7 +4,6 @@
 #define BLOCK_SIZE 128// basic block for every malloc
 static uintptr_t pm_start, pm_end,pm_size;
 lc* alloc_lk;
-int printf(char *mtf,...);
 static void pmm_init() {
   pm_start = (uintptr_t)_heap.start;
   pm_end   = (uintptr_t)_heap.end;
@@ -16,7 +15,7 @@ static void pmm_init() {
   alloc_lk->name="alloc";
 }
 
-static void *kalloc(size_t size) {
+static void* kalloc(size_t size) {
  printf("alloc %d block\n",size);
  lock(alloc_lk);
  size=size+(BLOCK_SIZE-size%BLOCK_SIZE);
