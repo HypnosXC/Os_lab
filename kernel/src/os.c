@@ -14,7 +14,7 @@ static void hello() {
     lock(printf_lk);
     printf("mm is %p\n,with cpu %d \n",mm,_cpu());
 	unlock(printf_lk);
-    mm="maybe the alloc func is not right\n";
+    *mm="maybe the alloc func is not right\n";
     lock(printf_lk);
     printf("mm is %p\n,with cpu %d \n",mm,_cpu());
     unlock(printf_lk);
