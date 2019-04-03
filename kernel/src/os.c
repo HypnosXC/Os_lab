@@ -1,5 +1,6 @@
 #include <common.h>
 #include <my_os.h>
+#include <klib.h>
 int rand();
 int printf(const char * tmf,...);
 int sprintf(char * g,const char *tmf,...);
