@@ -1,11 +1,13 @@
 #include <common.h>
 #include <klib.h>
-
+#include <my_os.h>
 static uintptr_t pm_start, pm_end;
-
+*lc alloc_lk;
 static void pmm_init() {
   pm_start = (uintptr_t)_heap.start;
   pm_end   = (uintptr_t)_heap.end;
+  printf("heap size=%d\n",_heap.end-_heap.start);
+  alloc_lk=allc_lc;
 }
 
 static void *kalloc(size_t size) {
