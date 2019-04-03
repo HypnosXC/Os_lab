@@ -9,10 +9,15 @@ typedef struct _lock{
 	int state;
 }lc;
 lc bas_lc[1000];
+int tot=2;
 #define allc_lc (bas_lc+1)
 #define printf_lk (bas_lc+2)
 static void lock(lc * lk) {
 	while(atomic_xchg(&lk->state,1));
+}
+static lc * newlk(char *name){
+	bas_lc[++tot].name=name;
+	return bas_lc+tot;
 }
 static void unlock(lc *lk) {
 	atomic_xchg(&lk->state,0);
