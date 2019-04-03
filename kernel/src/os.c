@@ -1,5 +1,6 @@
 #include <common.h>
 #include <my_os.h>
+int rand();
 int printf(const char * tmf,...);
 int sprintf(char * g,const char *tmf,...);
 static void os_init() {
@@ -15,14 +16,14 @@ static void hello() {
   _putc("12345678"[_cpu()]); _putc('\n');
 }
 static void test() {
-    char q[1009];
+    char* q[1009];
 	int top=0;
 	for(int i=1;i<=1000;i++){
 		int len=rand()%1000*128;
 		int f=rand()%5;
 		if(!top||!f)	{
 			q[top++]=pmm->alloc(len);
-			sprintf(q+top-1,"alloc mem with %d",len);
+			sprintf(q[top-1],"alloc mem with %d",len);
 		}
 		else {
 			printf("%s\n",q[top-1]);
