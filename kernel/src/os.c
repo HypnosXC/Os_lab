@@ -12,9 +12,7 @@ static void hello() {
     _putc('\n');*/
     char *mm=pmm->alloc(100);
     mm="maybe the alloc func is not right\n";
-    lock(printf_lk);
-    printf("%s",mm);
-    unlock(printf_lk);
+   	free(mm);
   }
   _putc("12345678"[_cpu()]); _putc('\n');
 }
