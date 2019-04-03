@@ -22,7 +22,7 @@ int bt_alloc(size_t size) {//find a consecutive block with length size
 }
 void bt_free(intptr_t pos) {
 	assert(btmp[pos]==1);
-	while(pos<=size) {
+	while(pos<=mpsize) {
 		btmp[pos]=0;
 		pos+=lb(bit_size);
 	}
