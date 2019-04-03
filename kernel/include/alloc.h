@@ -1,6 +1,7 @@
 static int *btmp;
 static int mpsize;
 #define lb(x) (x&(-x))
+int printf(const char *tmf,...);
 void  bt_init(intptr_t *addr,int size)  {// each with 128,originally ,then used to point to the linked blocked.(head size+1,tail size+2)
 	btmp=addr;
 	mpsize=size;
@@ -17,6 +18,7 @@ int bt_alloc(size_t size) {//find a consecutive block with length size
 	while(bit_size<=mpsize) {
 		btmp[bit_size]=1;
 		bit_size+=lb(bit_size);
+		printf("%d\n",bit_size);
 	}
 	return bit_size;
 }
