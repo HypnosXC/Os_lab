@@ -12,7 +12,7 @@ static void pmm_init() {
   pm_start+=pm_size/(BLOCK_SIZE+1);
   printf("%d and %d\n",pm_start+pm_size/(BLOCK_SIZE+1)*BLOCK_SIZE,pm_end);
   alloc_lk=allc_lc;
-  alloc_lc->name="alloc";
+  alloc_lk->name="alloc";
 }
 
 static void *kalloc(size_t size) {
