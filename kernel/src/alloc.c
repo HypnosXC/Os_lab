@@ -1,5 +1,6 @@
 #include <common.h>
 #include <klib.h>
+#include <my_os.h>
 #include <alloc.h>
 #define BLOCK_SIZE 128// basic block for every malloc
 static uintptr_t pm_start, pm_end,pm_size;
