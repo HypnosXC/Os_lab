@@ -18,7 +18,7 @@ static void hello() {
 static void test() {
     char* q[1009];
 	int top=0;
-	for(int i=1;i<=1000;i++){
+	for( int i=1;i<=1000;i++){
 		int len=rand()%1000;
 		int f=rand()%5;
 		if(!top||!f)	{
@@ -48,12 +48,12 @@ void test_full(){
     for(int i=0;i < 1000;i++){
       //printf("test_full: I'm at %p, %d\n", p, i);
       p[i] = i;
-    }
+     }
     if(p_old != NULL){
       for(int i=0;i < 1000;i++){
-        Assert(p_old[i] == i, "test_full: 旧值被改变");
-      }
-    }
+        assert(p_old[i] == i, "test_full: 旧值被改变");
+       }
+    } 
     if(p_old != NULL)
       pmm->free(p_old);
     p_old = p;
@@ -61,16 +61,16 @@ void test_full(){
     /*
     if(term >= 5)
       break;
-      */
-  }
+	  */
+  } 
 }
 
 void test_big_small(){
   int *p = NULL;
   int *p_old = NULL;
   size_t size[] = {
-    KALLOC_BLOCK/sizeof(int)/10*3,
-    KALLOC_BLOCK/sizeof(int)/10*1
+    10000/sizeof(int)/10*3,
+    10000/sizeof(int)/10*1
   };
   int num = sizeof(size)/sizeof(size[0]);
   for(int i=0;;i++){
@@ -86,7 +86,7 @@ void test_big_small(){
 
     if(p_old != NULL){
       for(int j=0;j < size[(i-1)%num];j++){
-        Assert(p_old[j] == j, "test_big_smal: 值被改变");
+        assert(p_old[j] == j, "test_big_smal: 值被改变");
       }
     }
     if(p_old != NULL)
