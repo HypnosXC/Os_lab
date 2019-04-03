@@ -11,7 +11,8 @@ static void hello() {
   for (const char *ptr = "Hello from CPU #"; *ptr; ptr++) {
    /* _putc(*ptr);
     _putc('\n');*/
-    char *mm=pmm->alloc(100);
+    int len=(intptr_t)ptr%1007*81;
+    char *mm=pmm->alloc(len);
     lock(printf_lk);
     printf("mm is %p\n,with cpu %d \n",mm,_cpu());
 	unlock(printf_lk);
