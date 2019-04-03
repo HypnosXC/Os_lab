@@ -16,13 +16,13 @@ static void pmm_init() {
 }
 
 static void* kalloc(size_t size) {
- lock(printf_lk);
- printf("alloc %d block\n",size);
- unlock(printf_lk);
  lock(alloc_lk);
  size=size+(BLOCK_SIZE-size%BLOCK_SIZE);
  size/=BLOCK_SIZE;
  int pos=bt_alloc(size);
+ lock(printf_lk);
+ printf("alloc %d block at%d\n",size,pos);
+ unlock(printf_lk);
  return (void *)(pm_end-pos*BLOCK_SIZE);
 }
 
