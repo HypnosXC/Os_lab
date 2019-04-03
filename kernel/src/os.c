@@ -22,7 +22,7 @@ static void test() {
 		int f=rand()%5;
 		if(!top||!f)	{
 			q[top++]=pmm->alloc(len);
-			sprintf(q[top-1],"alloc mem with %d",len);
+			sprintf(q+top-1,"alloc mem with %d",len);
 		}
 		else {
 			printf("%s\n",q[top-1]);
