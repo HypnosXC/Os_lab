@@ -15,12 +15,13 @@ int bt_alloc(size_t size) {//find a consecutive block with length size
 	int barbit=bit_size<<1;
 	while(bit_size<mpsize&&btmp[bit_size]) bit_size+=barbit;
 	assert(bit_size<=mpsize);
+	int ans=bit_size;
 	while(bit_size<=mpsize) {
 		btmp[bit_size]=1;
 		bit_size+=lb(bit_size);
 		printf("%d\n",bit_size);
 	}
-	return bit_size;
+	return ans;
 }
 void bt_free(intptr_t pos) {
 	assert(btmp[pos]==1);
