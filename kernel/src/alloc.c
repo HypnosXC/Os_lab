@@ -27,6 +27,7 @@ static void* kalloc(size_t size) {
 	return (void *)(pm_end-pos*BLOCK_SIZE);
  }
  else {
+	size=size+base_sz-size%base_sz;
  	if(!current_ptr||off_set+size>=BLOCK_SIZE) {
 		lock(alloc_lk);
 		cu_pos=bt_alloc(1);
