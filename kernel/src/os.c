@@ -103,7 +103,9 @@ void test() {
 			unlock(printf_lk);
 			pmm->free(q[--top]);
 		}
-	} 
+	}
+        while(top)
+	  pmm->free(q[--top]);	
 }
 static void os_run() {
   hello();
