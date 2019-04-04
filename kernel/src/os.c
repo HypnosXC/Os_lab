@@ -108,7 +108,8 @@ void test() {
 	  lock(printf_lk);
 	  printf("start empty\n");
 	  unlock(printf_lk);
-	  pmm->free(q[--top]);	
+	  pmm->free(q[--top]);
+	}	  
 }
 static void os_run() {
   hello();
