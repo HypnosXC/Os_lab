@@ -32,7 +32,7 @@ static void* kalloc(size_t size) {
 		cu_pos=bt_alloc(1);
 		bt_eas(cu_pos);
 		current_ptr=pm_end-cu_pos*BLOCK_SIZE;
-		printf("small mem required at %d",cu_pos);
+		printf("small mem required at %d\n",cu_pos);
 		off_set=0;
 		// lock(printf_lk);
 		// printf("alloc %d block at%x,with cpu %d\n",size,pm_end-pos*BLOCK_SIZE,_cpu());
