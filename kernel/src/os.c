@@ -91,7 +91,7 @@ void test() {
     char* q[1009];
 	int top=0;
 	for( int i=1;i<=1000;i++){
-		int len=rand()%1000*10+23;
+		int len=rand()%1000*10+100;
 		int f=rand()%5;
 		if(!top||f)	{
 			q[top++]=pmm->alloc(len);
@@ -113,8 +113,8 @@ void test() {
 }
 static void os_run() {
   hello();
-  test_big_small();
- // test();
+ // test_big_small();
+  test();
   _intr_write(1);
   while (1) {
     _yield();
