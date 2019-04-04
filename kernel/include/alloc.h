@@ -46,7 +46,7 @@ void bt_add(int pos){
 }
 void bt_eas(int pos){
 	while(pos<=mpsize) {
-		btmp[pos]--；
+		btmp[pos]--;
 		pos+=lb(pos);
 	}
 }
