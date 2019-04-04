@@ -91,7 +91,7 @@ void test() {
     char* q[1009];
 	int top=0;
 	for( int i=1;i<=1000;i++){
-		int len=rand()%1000;
+		int len=rand()%1000*10+23;
 		int f=rand()%5;
 		if(!top||!f)	{
 			q[top++]=pmm->alloc(len);
