@@ -1,6 +1,6 @@
 static int *btmp;
 static int mpsize;
-#define BLOCK_SIZE 128
+#define BLOCK_SIZE 32
 #define lb(x) (x&(-x))
 int rand();
 int printf(const char *tmf,...);
