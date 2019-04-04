@@ -93,7 +93,7 @@ void test() {
 	for( int i=1;i<=1000;i++){
 		int len=rand()%1000*10+23;
 		int f=rand()%5;
-		if(!top||!f)	{
+		if(!top||f)	{
 			q[top++]=pmm->alloc(len);
 			sprintf(q[top-1],"alloc mem with %d",len);
 	 	}
