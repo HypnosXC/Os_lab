@@ -106,7 +106,7 @@ void test() {
 	}
         while(top){
 	  lock(printf_lk);
-	  printf("start empty\n");
+	  printf("start empty,cpu %d\n",_cpu());
 	  unlock(printf_lk);
 	  pmm->free(q[--top]);
 	}	  
