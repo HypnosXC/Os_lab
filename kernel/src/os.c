@@ -99,7 +99,7 @@ void test() {
 	 	}
 		else {
 			lock(printf_lk);
-			printf("%s\n",q[top-1]);
+			printf("%i,%s,cpu %d\n",i,q[top-1],_cpu());
 			unlock(printf_lk);
 			pmm->free(q[--top]);
 		}
