@@ -52,9 +52,9 @@ static void kfree(void *ptr) {
 		pos+=BLOCK_SIZE-pos%BLOCK_SIZE;
 	}
 	pos/=BLOCK_SIZE;
-//	lock(printf_lk);
-///	printf("free %p at %d with cpu %d\n",ptr,pos,_cpu());
-//	unlock(printf_lk);
+	lock(printf_lk);
+	printf("free %p at %d with cpu %d\n",ptr,pos,_cpu());
+	unlock(printf_lk);
 	bt_free(pos);
 	unlock(alloc_lk);
 }
