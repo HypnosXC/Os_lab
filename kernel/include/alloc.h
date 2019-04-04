@@ -31,7 +31,7 @@ int bt_alloc(size_t size) {//find a consecutive block with length size
 void bt_free(intptr_t pos) {
 	assert(btmp[pos]!=0);
 	for(int i=lb(pos)-1;i>=1;i--)	{ 
-		btmp[pos-i]=0;
+		btmp[pos-i]--;
 	}
 	while(pos<=mpsize) { 
 		btmp[pos]--;
