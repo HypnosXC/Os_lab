@@ -101,7 +101,8 @@ void test() {
 			lock(printf_lk);
 			printf("\n%d,pop=%d,cpu%d\n",i,q[top-1][0],_cpu());
 			unlock(printf_lk);
-			pmm->free(q[--top]);
+			pmm->free(q[top-1]);
+			top--;
 		}
 	}
         while(top){
