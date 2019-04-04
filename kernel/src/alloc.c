@@ -8,8 +8,8 @@ static void pmm_init() {
   pm_start = (uintptr_t)_heap.start;
   pm_end   = (uintptr_t)_heap.end;
   pm_size=pm_end-pm_start;
-  bt_init((intptr_t *)pm_start,pm_size/(BLOCK_SIZE+2));//block used
-  pm_start+=pm_size/(BLOCK_SIZE+2)*2;
+  bt_init((intptr_t *)pm_start,pm_size/(BLOCK_SIZE+32));//block used
+  pm_start+=pm_size/(BLOCK_SIZE+32)*32;
   alloc_lk=allc_lc;
   alloc_lk->name="alloc";
 }
