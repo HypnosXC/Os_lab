@@ -99,10 +99,6 @@ void test() {
 	 	}
 		else {
 			lock(printf_lk);
-			if(bi>=i) 	{
-				printf("fky\n");
-				assert(0);
-			}
 			printf("%d,%s,cpu%d\n",i,q[top-1],_cpu());
 			unlock(printf_lk);
 			pmm->free(q[--top]);
