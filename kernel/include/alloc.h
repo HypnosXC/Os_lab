@@ -15,14 +15,13 @@ int bt_alloc(size_t size) {//find a consecutive block with length size
  	int bit_size=1;
 	while(bit_size<size) bit_size<<=1;//000..10.. for the original one
 	int barbit=bit_size<<1;
-	while(barbit+bit_size<=mpsize&&btmp[barbit+bit_size]) bit_size+=barbit;
-	bit_size+=barbit;
+	while(bit_size<=mpsize&&btmp[bit_size]) bit_size+=barbit;
 	assert(bit_size<=mpsize);
 	int ans=bit_size;
-	for(int i=lb(bit_size)-1;i>=1;i--)	{
+	for(int i=lb(bit_size)-1;i>=1;i--)	{ 
 		btmp[ans-i]=1;
 	}
-	while(bit_size<=mpsize) {
+	while(bit_size<=mpsize) { 
 		btmp[bit_size]++;
 		bit_size+=lb(bit_size);
 	}
@@ -30,10 +29,10 @@ int bt_alloc(size_t size) {//find a consecutive block with length size
 }
 void bt_free(intptr_t pos) {
 	assert(btmp[pos]==1);
-	for(int i=lb(pos)-1;i>=1;i--)	{
+	for(int i=lb(pos)-1;i>=1;i--)	{ 
 		btmp[pos-i]=0;
 	}
-	while(pos<=mpsize) {
+	while(pos<=mpsize) { 
 		btmp[pos]--;
 		pos+=lb(pos);
 	}
