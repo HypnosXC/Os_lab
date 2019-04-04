@@ -30,7 +30,7 @@ static void* kalloc(size_t size) {
  	if(!current_ptr||off_set+size>=BLOCK_SIZE) {
 		lock(alloc_lk);
 		cu_pos=bt_alloc(1);
-		bt_eas(cu_pos);
+		bt_free(cu_pos);
 		current_ptr=pm_end-cu_pos*BLOCK_SIZE;
 		printf("small mem required at %d\n",cu_pos);
 		off_set=0;
