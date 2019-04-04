@@ -104,7 +104,10 @@ void test() {
 			pmm->free(q[--top]);
 		}
 	}
-        while(top)
+        while(top){
+	  lock(printf_lk);
+	  printf("start empty\n");
+	  unlock(printf_lk);
 	  pmm->free(q[--top]);	
 }
 static void os_run() {
