@@ -29,7 +29,10 @@ int bt_alloc(size_t size) {//find a consecutive block with length size
 	return ans;
 }
 void bt_free(intptr_t pos) {
-	assert(btmp[pos]!=0);
+	if(btmp[pos]==0)	{
+		printf("fk wrong pos at %d\n",pos);
+		assert(0);
+	}
 	for(int i=lb(pos)-1;i>=1;i--)	{ 
 		btmp[pos-i]--;
 	}
