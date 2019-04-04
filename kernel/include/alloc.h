@@ -1,6 +1,7 @@
 static int *btmp;
 static int mpsize;
-#define BLOCK_SIZE 1024
+#define BLOCK_SIZE 4096
+#define base_sz 16
 #define lb(x) (x&(-x))
 int rand();
 int printf(const char *tmf,...);
@@ -34,6 +35,18 @@ void bt_free(intptr_t pos) {
 	}
 	while(pos<=mpsize) { 
 		btmp[pos]--;
+		pos+=lb(pos);
+	}
+}
+void bt_add(int pos){
+	while(pos<=mpsize)	{
+		btmp[pos]++;
+		pos+=lb(pos);
+	}
+}
+void bt_eas(int pos){
+	while(pos<=mpsize) {
+		btmp[pos]--；
 		pos+=lb(pos);
 	}
 }

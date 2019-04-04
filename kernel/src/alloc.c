@@ -2,7 +2,7 @@
 #include <klib.h>
 #include <my_os.h>
 #include <alloc.h>
-static uintptr_t pm_start, pm_end,pm_size;
+static uintptr_t pm_start, pm_end,pm_size,current_ptr=0,cu_pos,off_set=0;
 lc* alloc_lk;
 static void pmm_init() {
   pm_start = (uintptr_t)_heap.start;
@@ -15,20 +15,41 @@ static void pmm_init() {
 }
 
 static void* kalloc(size_t size) {
- lock(alloc_lk);
- size=size+(BLOCK_SIZE-size%BLOCK_SIZE);
- size/=BLOCK_SIZE;
- int pos=bt_alloc(size);
+ if(size>=BLOCK_SIZE) {
+ 	lock(alloc_lk);
+ 	size=size+(BLOCK_SIZE-size%BLOCK_SIZE);
+	size/=BLOCK_SIZE;
+	int pos=bt_alloc(size);
 // lock(printf_lk);
 // printf("alloc %d block at%x,with cpu %d\n",size,pm_end-pos*BLOCK_SIZE,_cpu());
 // unlock(printf_lk);
- unlock(alloc_lk);
- return (void *)(pm_end-pos*BLOCK_SIZE);
+ 	unlock(alloc_lk);
+	return (void *)(pm_end-pos*BLOCK_SIZE);
+ }
+ else {
+ 	if(!current_ptr||offset+size>=BLOCK_SIZE) {
+		lock(alloc_lk);
+		cu_pos=bt_alloc(1);
+		bt_eas(cu_pos);
+		current_ptr=pm_end-cu_pos*BLOCK_SIZE;
+		off_set=0;
+		// lock(printf_lk);
+		// printf("alloc %d block at%x,with cpu %d\n",size,pm_end-pos*BLOCK_SIZE,_cpu());
+		// unlock(printf_lk);
+ 		unlock(alloc_lk);
+	}
+	off_set+=size;
+	bt_add(cu_pos);
+	return (void *)(current_ptr+off_set-size);
+ }
 }
 
 static void kfree(void *ptr) {
 	lock(alloc_lk);
 	int pos=pm_end-(intptr_t)ptr;
+	while(pos%BLOCK_SIZE)	{
+		pos+=BLOCK_SIZE-pos%BLOCK_SIZE;
+	}
 	pos/=BLOCK_SIZE;
 //	lock(printf_lk);
 ///	printf("free %p at %d with cpu %d\n",ptr,pos,_cpu());
