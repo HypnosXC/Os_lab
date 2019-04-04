@@ -113,7 +113,7 @@ void test() {
 }
 static void os_run() {
   hello();
-  test_full();
+ // test_full();
   test();
   _intr_write(1);
   while (1) {
