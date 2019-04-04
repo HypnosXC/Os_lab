@@ -20,7 +20,7 @@ int bt_alloc(size_t size) {//find a consecutive block with length size
 	assert(bit_size<=mpsize);
 	int ans=bit_size;
 	for(int i=lb(bit_size)-1;i>=1;i--)	{ 
-		btmp[ans-i]=1;
+		btmp[ans-i]++;
 	}
 	while(bit_size<=mpsize) { 
 		btmp[bit_size]++;
@@ -41,12 +41,6 @@ void bt_free(intptr_t pos) {
 void bt_add(int pos){
 	while(pos<=mpsize)	{
 		btmp[pos]++;
-		pos+=lb(pos);
-	}
-}
-void bt_eas(int pos){
-	while(pos<=mpsize) {
-		btmp[pos]--;
 		pos+=lb(pos);
 	}
 }
