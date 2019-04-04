@@ -15,7 +15,7 @@ int bt_alloc(size_t size) {//find a consecutive block with length size
  	int bit_size=1;
 	while(bit_size<size) bit_size<<=1;//000..10.. for the original one
 	int barbit=bit_size<<1;
-	while(btmp[barbit+bit_size]) bit_size+=barbit;
+	while(barbit+bit_size<=mpsize&&btmp[barbit+bit_size]) bit_size+=barbit;
 	bit_size+=barbit;
 	assert(bit_size<=mpsize);
 	int ans=bit_size;
