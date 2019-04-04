@@ -88,18 +88,18 @@ static void hello() {
   _putc("12345678"[_cpu()]); _putc('\n');
 }
 void test() {
-    char* q[1009];
+    int* q[1009];
 	int top=0;
 	for( int i=1;i<=1000;i++){
 		int len=rand()%1000*10+100;
 		int f=rand()%5;
 		if(!top||f)	{
 			q[top++]=pmm->alloc(len);
-			sprintf(q[top-1],"alloc mem with %d",len);
+			*q[top-1]=len;
 	 	}
 		else {
 			lock(printf_lk);
-			printf("\n%d,%s,cpu%d\n",i,q[top-1],_cpu());
+			printf("\n%d,pop=%d,cpu%d\n",i,q[top-1][0],_cpu());
 			unlock(printf_lk);
 			pmm->free(q[--top]);
 		}
