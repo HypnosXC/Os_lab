@@ -87,7 +87,7 @@ static void hello() {
   }
   _putc("12345678"[_cpu()]); _putc('\n');
 }
-static void test() {
+void test() {
     char* q[1009];
 	int top=0;
 	for( int i=1;i<=1000;i++){
