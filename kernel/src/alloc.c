@@ -11,7 +11,7 @@ static void pmm_init() {
   printf("origianl drr=%p\n",(void *)pm_start);
   bt_init((intptr_t *)pm_start,pm_size/(BLOCK_SIZE+32));//block used
   pm_start+=pm_size/(BLOCK_SIZE+32)*32;
-  printf("total mem %x end=%x",pm_start,pm_end-pm_size/(BLOCK_SIZE+32)*BLOCK_SIZE);
+  printf("total mem %x end=%x",pm_start,pm_end);
   alloc_lk=allc_lc;
   alloc_lk->name="alloc";
 }
