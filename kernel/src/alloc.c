@@ -20,9 +20,9 @@ static void* kalloc(size_t size) {
  	size=size+(BLOCK_SIZE-size%BLOCK_SIZE);
 	size/=BLOCK_SIZE;
 	int pos=bt_alloc(size);
- lock(printf_lk);
- printf("alloc %p block at %d,with cpu %d\n",(void *)(pm_end-pos*BLOCK_SIZE),pos,_cpu());
- unlock(printf_lk);
+// lock(printf_lk);
+// printf("alloc %p block at %d,with cpu %d\n",(void *)(pm_end-pos*BLOCK_SIZE),pos,_cpu());
+// unlock(printf_lk);
  	unlock(alloc_lk);
 	return (void *)(pm_end-pos*BLOCK_SIZE);
  }
@@ -33,15 +33,15 @@ static void* kalloc(size_t size) {
 		cu_pos=bt_alloc(1);
 		current_ptr=pm_end-cu_pos*BLOCK_SIZE;	
 		off_set=size;
-		 lock(printf_lk);
-		 printf("alloc %p block at%d,with cpu %d\n",pm_end-cu_pos*BLOCK_SIZE,cu_pos,_cpu());
-		 unlock(printf_lk);
+//		 lock(printf_lk);
+//		 printf("alloc %p block at%d,with cpu %d\n",pm_end-cu_pos*BLOCK_SIZE,cu_pos,_cpu());
+//		 unlock(printf_lk);
  		unlock(alloc_lk);
 	}
 	else {
-		lock(printf_lk);
-		printf("small mem required at %p\n",current_ptr+off_set);
-		unlock(printf_lk);
+//		lock(printf_lk);
+//		printf("small mem required at %p\n",current_ptr+off_set);
+//		unlock(printf_lk);
 		off_set+=size;
 		bt_add(cu_pos);
 	}
@@ -57,9 +57,9 @@ static void kfree(void *ptr) {
 	}
 	pos=pm_end-pos;
 	pos/=BLOCK_SIZE;
-	lock(printf_lk);
-	printf("free %p at %d with cpu %d\n",ptr,pos,_cpu());
-	unlock(printf_lk);
+//	lock(printf_lk);
+//	printf("free %p at %d with cpu %d\n",ptr,pos,_cpu());
+//	unlock(printf_lk);
 	bt_free(pos);
 	unlock(alloc_lk);
 }
