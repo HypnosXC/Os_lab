@@ -11,7 +11,7 @@ void  bt_init(intptr_t *addr,int size)  {// each with 128,originally ,then used 
 	for(int i=0;i<size;i++)
 		btmp[i]=0;//unused.
 	mpsize=size;
-	printf("btmp.%p\n",btmp+mpsize);
+	printf("btmp.%p\n",addr+mpsize);
 }
 int bt_alloc(size_t size) {//find a consecutive block with length size
  	int bit_size=1;
