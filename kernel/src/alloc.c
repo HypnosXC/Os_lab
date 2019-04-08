@@ -40,7 +40,7 @@ static void* kalloc(size_t size) {
 	}
 	else {
 		lock(printf_lk);
-		printf("small mem required at %d\n",cu_pos);
+		printf("small mem required at %p\n",current_ptr+off_set);
 		unlock(printf_lk);
 		off_set+=size;
 		bt_add(cu_pos);
