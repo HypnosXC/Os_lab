@@ -51,10 +51,11 @@ static void* kalloc(size_t size) {
 
 static void kfree(void *ptr) {
 	lock(alloc_lk);
-	int pos=pm_end-(intptr_t)ptr;
-	while(pos%BLOCK_SIZE)	{
+	intptr_t pos=(intptr_t)ptr;
+	while(pos%BLOCK_SIZE)	{ 
 		pos-=pos%BLOCK_SIZE;
 	}
+	pos=pm_end-pos;
 	pos/=BLOCK_SIZE;
 	lock(printf_lk);
 	printf("free %p at %d with cpu %d\n",ptr,pos,_cpu());
