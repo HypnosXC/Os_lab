@@ -31,19 +31,20 @@ static void* kalloc(size_t size) {
  	if(!current_ptr||off_set+size>=BLOCK_SIZE) {
 		lock(alloc_lk);
 		cu_pos=bt_alloc(1);
-		bt_free(cu_pos);
 		current_ptr=pm_end-cu_pos*BLOCK_SIZE;	
-		off_set=0;
+		off_set=size;
 		// lock(printf_lk);
 		// printf("alloc %d block at%x,with cpu %d\n",size,pm_end-pos*BLOCK_SIZE,_cpu());
 		// unlock(printf_lk);
  		unlock(alloc_lk);
 	}
+	else {
 	lock(printf_lk);
 	printf("small mem required at %d\n",cu_pos);
 	unlock(printf_lk);
 	off_set+=size;
 	bt_add(cu_pos);
+	}
 	return (void *)(current_ptr+off_set-size);
  }
 }
