@@ -39,11 +39,11 @@ static void* kalloc(size_t size) {
  		unlock(alloc_lk);
 	}
 	else {
-	lock(printf_lk);
-	printf("small mem required at %d\n",cu_pos);
-	unlock(printf_lk);
-	off_set+=size;
-	bt_add(cu_pos);
+		lock(printf_lk);
+		printf("small mem required at %d\n",cu_pos);
+		unlock(printf_lk);
+		off_set+=size;
+		bt_add(cu_pos);
 	}
 	return (void *)(current_ptr+off_set-size);
  }
@@ -53,7 +53,7 @@ static void kfree(void *ptr) {
 	lock(alloc_lk);
 	int pos=pm_end-(intptr_t)ptr;
 	while(pos%BLOCK_SIZE)	{
-		pos+=BLOCK_SIZE-pos%BLOCK_SIZE;
+		pos-=pos%BLOCK_SIZE;
 	}
 	pos/=BLOCK_SIZE;
 	lock(printf_lk);
