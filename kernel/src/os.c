@@ -96,7 +96,10 @@ void test() {
 		if(!top||f)	{
 			q[top++]=pmm->alloc(len);
 			*q[top-1]=len;
-	 	}
+			lock(printf_lock);
+				printf("alloc %p with len %d".q[top-1].len);
+			ulock(printf_lock);
+		}
 		else {
 			lock(printf_lk);
 			printf("\n%d,pop=%p,cpu%d\n",i,q[top-1],_cpu());
