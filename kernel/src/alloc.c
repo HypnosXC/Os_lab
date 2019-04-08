@@ -57,7 +57,7 @@ static void kfree(void *ptr) {
 	}
 	pos/=BLOCK_SIZE;
 	lock(printf_lk);
-	printf("free %p at %d with cpu %p\n",ptr,pos,&(_cpu()));
+	printf("free %p at %d with cpu %d\n",ptr,pos,_cpu());
 	unlock(printf_lk);
 	bt_free(pos);
 	unlock(alloc_lk);
