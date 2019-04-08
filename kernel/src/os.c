@@ -97,7 +97,7 @@ void test() {
 			q[top++]=pmm->alloc(len);
 			*q[top-1]=len;
 			lock(printf_lk);
-				printf("alloc %p with len %d",q[top-1].len);
+				printf("alloc %p with len %d",q[top-1],len);
 			unlock(printf_lk);
 		}
 		else {
