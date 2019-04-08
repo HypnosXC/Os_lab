@@ -34,7 +34,7 @@ static void* kalloc(size_t size) {
 		current_ptr=pm_end-cu_pos*BLOCK_SIZE;	
 		off_set=size;
 		 lock(printf_lk);
-		 printf("alloc %p block at%d,with cpu %d\n",pm_end-pos*BLOCK_SIZE,cu_pos,_cpu());
+		 printf("alloc %p block at%d,with cpu %d\n",pm_end-cu_pos*BLOCK_SIZE,cu_pos,_cpu());
 		 unlock(printf_lk);
  		unlock(alloc_lk);
 	}
