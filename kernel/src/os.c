@@ -98,7 +98,7 @@ void test() {
 			*q[top-1]=len;
 			lock(printf_lock);
 				printf("alloc %p with len %d".q[top-1].len);
-			ulock(printf_lock);
+			unlock(printf_lock);
 		}
 		else {
 			lock(printf_lk);
