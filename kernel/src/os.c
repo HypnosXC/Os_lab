@@ -99,7 +99,7 @@ void test() {
 	 	}
 		else {
 			lock(printf_lk);
-			printf("\n%d,pop=%d,cpu%d\n",i,q[top-1][0],_cpu());
+			printf("\n%d,pop=%p,cpu%d\n",i,q[top-1],_cpu());
 			unlock(printf_lk);
 			pmm->free(q[top-1]);
 			top--;
@@ -107,7 +107,7 @@ void test() {
 	}
         while(top){
 	  lock(printf_lk);
-	  printf("start empty,cpu %d\n",_cpu());
+	  printf("start empty at %p,cpu %d\n",q[top-1],_cpu());
 	  unlock(printf_lk);
 	  pmm->free(q[--top]);
 	}	  
