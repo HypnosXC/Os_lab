@@ -114,8 +114,8 @@ void test() {
 }
 static void os_run() {
   hello();
-  test_full();
-//  test();
+//  test_full();
+  test();
   _intr_write(1);
   while (1) {
     _yield();
