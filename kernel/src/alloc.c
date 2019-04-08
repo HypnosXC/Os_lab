@@ -8,6 +8,7 @@ static void pmm_init() {
   pm_start = (uintptr_t)_heap.start;
   pm_end   = (uintptr_t)_heap.end;
   pm_size=pm_end-pm_start;
+  printf("origianl drr=%p\n",(void *)pm_start);
   bt_init((intptr_t *)pm_start,pm_size/(BLOCK_SIZE+32));//block used
   pm_start+=pm_size/(BLOCK_SIZE+32)*32;
   printf("total mem %x end=%x",pm_start,pm_end-pm_size/(BLOCK_SIZE+32)*BLOCK_SIZE);
