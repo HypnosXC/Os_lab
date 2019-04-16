@@ -7,10 +7,10 @@ int filedes[2];
 char path[100];
 char localpath[100];
 int main(int argc, char *argv[]) {
-  if(pipe(filedes)!=0) {
-  	printf("wrong pipe operation\n");
-	assert(0);
-  }
+ // if(pipe(filedes)!=0) {
+  //	printf("wrong pipe operation\n");
+	//assert(0);
+ // }
   int l=readlink("/proc/self/exe",localpath,99);
 //  while(localpath[l]!='/')
 //	  	l--;
