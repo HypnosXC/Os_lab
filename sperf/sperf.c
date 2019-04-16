@@ -28,7 +28,6 @@ int main(int argc, char *argv[]) {
 		printf("wrong file redirection!\n");
 		assert(0);
 	}
-	fake_loc=1;
 	for(int i=0;i<argc+2;i++)
 		printf("%s ",subargv[i]);
 	char * envp[]={0,NULL};
@@ -36,12 +35,10 @@ int main(int argc, char *argv[]) {
 	assert(0);
   }
   else {
-	  while(!fake_loc);
 	  if(fnul<0){
 	  	printf("panic /dev/null!\n");
 	  	assert(0);
 	  }
-	  close(fnul);
 	  close(filedes[0]);
 	  close(filedes[1]);
   }
