@@ -22,7 +22,7 @@ void new_pd() {
 int get_line(char s[]) {
 	char x=getchar();
 	int i=0;
-	while(x!='\n'&&x!=EOF)	{
+	while(x!=0&&x!='\n'&&x!=EOF)	{
 		s[i++]=x;
 		x=getchar();
 	}
