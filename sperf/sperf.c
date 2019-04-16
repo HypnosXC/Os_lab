@@ -15,24 +15,24 @@ int main(int argc, char *argv[]) {
   int pid=fork();
   printf("pid is %d\n",pid);
   if(pid==0)	{
-	int l=readlink("/proc/self/exe",localpath,99);
- 	localpath[l]=0;
-  	assert(l>0);
+//	int l=readlink("/proc/self/exe",localpath,99);
+ //	localpath[l]=0;
+  //	assert(l>0);
   	char *subargv[100];
 	subargv[0]=strdup("strace");
 	subargv[1]=strdup("-o");
 	subargv[2]=strdup("ss");
-	subargv[3]=strdup(localpath);
+	//subargv[3]=strdup(localpath);
 	for(int i=1;i<argc;i++){
-		subargv[i+3]=strdup(argv[i]);
+		subargv[i+2]=strdup(argv[i]);
 	}
 //	subargv[argc+2]=">/dev/null";
 	subargv[argc+4]=(char*)0;
 	for(int i=0;i<argc+3;i++)
 		printf("%s ",subargv[i]);
 	printf("\n");
-	char * envp[]={0,NULL};
-	execve("/usr/bin/strace",subargv,envp);
+//	char * envp[]={0,NULL};
+	execvp("strace",subargv);
 	assert(0);
   }
   else
