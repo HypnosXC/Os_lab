@@ -8,6 +8,16 @@ char name[100];
 char cost[100];
 char localpath[100];
 char data_inline[100009];
+struct item{
+	char name[100];
+	double ct;
+}pthd[1000];
+int tot;
+void new_pd() {
+	strcpy(pthd[tot].name,name);
+	pthd[tot].ct=atof(cost);
+	tot++;
+}
 int get_line(char s[]) {
 	char x=getchar();
 	int i=0;
@@ -57,6 +67,15 @@ int main(int argc, char *argv[]) {
 		 strncpy(cost,data_inline+el+1,strlen(data_inline)-el-2);
 		 printf("%s\n%s : %s\n",data_inline,name,cost);
 		 total_time+=atof(cost);
+		 int matc=0;
+		 for(int i=0;i<tot;i++)	{
+		 	if(!strcmp(pthd[i].name,name)) {
+				matc=1;
+				pthd[i].ct+=atof(cost);
+			}
+		 }
+		 if(!matc)
+			 new_pd();
 		 memset(name,0,sizeof(name));
 		 memset(cost,0,sizeof(cost));
 	  }
