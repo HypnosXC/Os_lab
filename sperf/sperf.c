@@ -16,7 +16,7 @@ int get_line(char s[]) {
 		x=getchar();
 	}
 	s[i]=0;
-	if(x==EOF)
+	if(i==0||x==EOF)
 		return 0;
 	return 1;
 }
