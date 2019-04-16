@@ -17,7 +17,7 @@ int main(int argc, char *argv[]) {
   localpath[l]=0;
   assert(l>0);
 //  printf("local=%s\n",localpath);
-  int pid=fork(
+  int pid=fork();
   if(pid==0)	{
   	char *subargv[100];
 	subargv[0]="strace";
@@ -28,6 +28,9 @@ int main(int argc, char *argv[]) {
 	}
 	subargv[argc+2]=">/dev/null";
 	subargv[argc+3]=(char*)0;
+	for(int i=0;i<argc+3;i++)
+		printf("%s ",subargv[i]);
+	printf("\n");
 	char * envp[]={0,NULL};
 	execve("/usr/bin/strace",subargv,envp);
 	assert(0);
