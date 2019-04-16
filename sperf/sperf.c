@@ -67,7 +67,7 @@ int main(int argc, char *argv[]) {
 	     int tl=strchr(data_inline,'(')-data_inline;
 		 int el=strrchr(data_inline,'<')-data_inline;
 		 if(tl<0||el<0) {
-		 	printf("fkis =%c\n",*data_inline);
+		 	printf("fkis =%s\n",data_inline);
 			break;
 		 }
 		 printf("%d %d\n",tl,el);
