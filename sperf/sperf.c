@@ -10,7 +10,7 @@ int main(int argc, char *argv[]) {
 	assert(0);
   }
   int pid=fork();
-  sprintf(path,"/proc/%s/exe".itoa(pid));
+  sprintf(path,"/proc/%s/exe",itoa(pid));
   printf("path=%s",path);
   int l=readlink(path,localpath,1024);
   assert(l<0);
