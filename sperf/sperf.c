@@ -4,7 +4,8 @@
 #include<stdlib.h>
 #include<assert.h>
 int filedes[2];
-char path[100];
+char name[100];
+char cost[100];
 char localpath[100];
 char data_inline[100009];
 int get_line(char s[]) {
@@ -13,7 +14,6 @@ int get_line(char s[]) {
 	while(x!='\n'&&x!=EOF)	{
 		s[i++]=x;
 		x=getchar();
-		putchar(x);
 	}
 	s[i]=0;
 	if(x==EOF)
@@ -50,7 +50,11 @@ int main(int argc, char *argv[]) {
 	  if(dup2(filedes[0],STDIN_FILENO)<0)
 		  assert(0);
 	  while(get_line(data_inline)) {
-	     printf("%s",data_inline);	
+	     int tl=strchr(data_inline,'(')-data_inline;
+		 int el=strrchr(data_inline,'<')-data_inline;
+		 strncpy(name,data_inline,tl);
+		 strncpy(cost,data_inline+el,strlen(data_inline)-el);
+		 printf("%s : %s\n",name,cost);
 	  }
 	  printf("over!");
 	  close(filedes[0]);
