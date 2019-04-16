@@ -64,8 +64,8 @@ int main(int argc, char *argv[]) {
 	  while(get_line(data_inline)) {
 	     int tl=strchr(data_inline,'(')-data_inline;
 		 int el=strrchr(data_inline,'<')-data_inline;
-		 strncpy(name,data_inline,tl);
-		 strncpy(cost,data_inline+el+1,strlen(data_inline)-el-2);
+	//	 strncpy(name,data_inline,tl);
+	//	 strncpy(cost,data_inline+el+1,strlen(data_inline)-el-2);
 		// printf("%s\n%s : %s\n",data_inline,name,cost);
 		 total_time+=atof(cost);
 		 int matc=0;
@@ -79,7 +79,7 @@ int main(int argc, char *argv[]) {
 			 new_pd();
 		 memset(name,0,sizeof(name));
 		 memset(cost,0,sizeof(cost));
-		 if((clock()-ts)/CLOCKS_PER_SEC>0.5) {
+		 if((clock()-ts)/CLOCKS_PER_SEC>0.1) {
 		 	for(int i=0;i<tot;i++)	{
 				printf("%s : %lf\n",pthd[i].name,pthd[i].ct);
 			}
