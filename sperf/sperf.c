@@ -3,7 +3,7 @@
 #include<assert.h>
 int filedes[2];
 int main(int argc, char *argv[]) {
-  if(pipe(fildes)!=0) {
+  if(pipe(filedes)!=0) {
   	printf("wrong pipe operation\n");
 	assert(0);
   }
