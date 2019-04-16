@@ -12,7 +12,6 @@ int main(int argc, char *argv[]) {
 	assert(0);
   }
   int pid=fork();
-  printf("pid is %d\n",pid);
   if(pid==0)	{
   	char *subargv[100];
 	subargv[0]=strdup("strace");
@@ -21,6 +20,11 @@ int main(int argc, char *argv[]) {
 		subargv[i+1]=strdup(argv[i]);
 	}
 	subargv[argc+1]=(char*)0;
+	int fnull=open("/dev/null",O_WRONLY);
+	if(dup2(filedes[1],STDERR_FIFENO)<0||dup2(fnull,STDOUT_FILENO)<0) {
+		printf("wrong file redirection!\n");
+		assert(0);
+	}
 	for(int i=0;i<argc+2;i++)
 		printf("%s ",subargv[i]);
 	char * envp[]={0,NULL};
