@@ -52,8 +52,8 @@ int main(int argc, char *argv[]) {
 	  while(get_line(data_inline)) {
 	     int tl=strchr(data_inline,'(')-data_inline;
 		 int el=strrchr(data_inline,'<')-data_inline;
-		 strncpy(name,data_inline,tl);
-		 strncpy(cost,data_inline+el,strlen(data_inline)-el);
+		// strncpy(name,data_inline,tl);
+		// strncpy(cost,data_inline+el,strlen(data_inline)-el);
 		 printf("%s\n,%s : %s\n",data_inline,name,cost);
 	  }
 	  printf("over!");
