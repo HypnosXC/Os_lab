@@ -41,9 +41,10 @@ int main(int argc, char *argv[]) {
 	  }
 	  int i=0;
 	  while(fgets(data_inline,1024,fd)!=NULL&&strlen(data_inline)!=0)	{
-	  	printf("%d=%s\n",i++,data_inline);
+	  	printf("%d=%s,%d",i++,data_inline,strlen(data_inline));
 	  }
 	  close(filedes[0]);
 	  close(filedes[1]);
+	  return 0;
   }
 }
