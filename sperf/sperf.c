@@ -21,8 +21,8 @@ int main(int argc, char *argv[]) {
   if(pid==0)	{
   	char *subargv[100];
 	subargv[0]="strace";
-	subargv[1]="-T";
-//	subargv[2]=localpath;
+//	subargv[1]="-T";
+	subargv[1]=localpath;
 	for(int i=1;i<argc;i++){
 		subargv[i+1]=argv[i];
 	}
