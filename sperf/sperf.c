@@ -28,7 +28,7 @@ int main(int argc, char *argv[]) {
 		printf("%s ",subargv[i]);
 	}
 	subargv[argc+2]="/dev/null";
-	subargc[argc+3]=(char*)0;
+	subargv[argc+3]=(char*)0;
 	char * envp[]={0,NULL};
 	execve("/usr/bin/strace",subargv,envp);
 	assert(0);
