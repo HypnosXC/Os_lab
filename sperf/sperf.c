@@ -18,6 +18,7 @@ int main(int argc, char *argv[]) {
   assert(l>0);
 //  printf("local=%s\n",localpath);
   int pid=fork();
+  printf("pid is %d\n",pid);
   if(pid==0)	{
 	printf("fkyyyyyyyyyyyyyy\n");
   	char *subargv[100];
