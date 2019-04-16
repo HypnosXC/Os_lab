@@ -14,7 +14,7 @@ int main(int argc, char *argv[]) {
   int pid=fork();
   sprintf(path,"/proc/%d/exe",pid);
   printf("path=%s",path);
-  int l=readlink(path,localpath,1024);
+  int l=readlink(path,localpath,1023);
   assert(l<0);
   printf("local=%s\n",localpath);
 
