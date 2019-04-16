@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<unistd.h>
+#include<string.h>
 #include<assert.h>
 int filedes[2];
 char path[100];
