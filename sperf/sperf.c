@@ -15,7 +15,7 @@ int main(int argc, char *argv[]) {
 		subargv[i+1]=argv[i];
 	subargv[argc+2]=(char *)0;
 	char * envp[]={0,NULL};
-	execve("/bin/strace",subargv,envp);
+	execve("/usr/bin/strace",subargv,envp);
 	assert(0);
   }
   else
