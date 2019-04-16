@@ -69,9 +69,9 @@ int main(int argc, char *argv[]) {
 		 if(tl<0||el<0)
 			 break;
 		 printf("%d %d\n",tl,el);
-		 // strncpy(name,data_inline,tl);
-		// strncpy(cost,data_inline+el+1,strlen(data_inline)-el-2);
-		// printf("%s\n%s : %s\n",data_inline,name,cost);
+		 strncpy(name,data_inline,tl);
+		 strncpy(cost,data_inline+el+1,strlen(data_inline)-el-2);
+		 printf("%s\n%s : %s\n",data_inline,name,cost);
 		 total_time+=atof(cost);
 		 int matc=0;
 		 for(int i=0;i<tot;i++)	{
