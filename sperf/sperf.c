@@ -62,8 +62,8 @@ int main(int argc, char *argv[]) {
 		  assert(0);
 	  double total_time=0,ts=clock(); 
 	  while(get_line(data_inline)) {
-	     int tl=strchr(data_inline,'(')-data_inline;
-		 int el=strrchr(data_inline,'<')-data_inline;
+	 //    int tl=strchr(data_inline,'(')-data_inline;
+//		 int el=strrchr(data_inline,'<')-data_inline;
 	//	 strncpy(name,data_inline,tl);
 	//	 strncpy(cost,data_inline+el+1,strlen(data_inline)-el-2);
 		// printf("%s\n%s : %s\n",data_inline,name,cost);
