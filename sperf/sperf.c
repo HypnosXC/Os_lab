@@ -7,6 +7,18 @@ int filedes[2];
 char path[100];
 char localpath[100];
 char data_inline[100009];
+int get_line(char s[]) {
+	char x=getchar();
+	int i=0;
+	while(x!='\n'&&x!=EOF)	{
+		s[i++]=x;
+		x=getchar();
+	}
+	s[i]=0;
+	if(x==EOF)
+		return 0;
+	return 1;
+}
 int main(int argc, char *argv[]) {
   if(pipe(filedes)!=0) {
   	printf("wrong pipe operation\n");
@@ -34,14 +46,10 @@ int main(int argc, char *argv[]) {
 	assert(0);
   }
   else {
-	  FILE *fd=fdopen(filedes[0],"r");
-	  if(fd==NULL)	{
-	  	printf("panic: no reading file!\n");
-		assert(0);
-	  }
-	  int i=0;
-	  while(fgets(data_inline,1024,fd)!=NULL&&!ferror(fd))	{
-	  	printf("%d=%s",i++,data_inline);
+	  if(dup2(filedes[0],STDIN_FILENO)<0)
+		  assert(0);
+	  while(getline(data_inline)) {
+	     print("%s",data_inline);	
 	  }
 	  close(filedes[0]);
 	  close(filedes[1]);
