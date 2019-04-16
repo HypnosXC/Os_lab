@@ -13,7 +13,7 @@ int get_line(char s[]) {
 	while(x!='\n'&&x!=EOF)	{
 		s[i++]=x;
 		x=getchar();
-		putc(x);
+		putchar(x);
 	}
 	s[i]=0;
 	if(x==EOF)
