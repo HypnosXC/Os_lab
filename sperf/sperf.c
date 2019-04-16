@@ -4,8 +4,8 @@
 #include<stdlib.h>
 #include<assert.h>
 int filedes[2];
-char name[10000];
-char cost[10000];
+char name[100];
+char cost[100];
 char localpath[100];
 char data_inline[100009];
 int get_line(char s[]) {
@@ -53,9 +53,10 @@ int main(int argc, char *argv[]) {
 	     int tl=strchr(data_inline,'(')-data_inline;
 		 int el=strrchr(data_inline,'<')-data_inline;
 		 strncpy(name,data_inline,tl);
-		 name[tl]=0;
 		 strncpy(cost,data_inline+el,strlen(data_inline)-el);
 		 printf("%s\n,%s : %s\n",data_inline,name,cost);
+		 memset(name,0,sizeof(name));
+		 memset(cost,0,sizeof(cost));
 	  }
 	  printf("over!");
 	  close(filedes[0]);
