@@ -21,7 +21,7 @@ int main(int argc, char *argv[]) {
 	}
 	subargv[argc+1]=(char*)0;
 	int fnull=open("/dev/null",O_WRONLY);
-	if(dup2(filedes[1],STDERR_FIFENO)<0||dup2(fnull,STDOUT_FILENO)<0) {
+	if(dup2(filedes[1],STDERR_FILENO)<0||dup2(fnull,STDOUT_FILENO)<0) {
 		printf("wrong file redirection!\n");
 		assert(0);
 	}
