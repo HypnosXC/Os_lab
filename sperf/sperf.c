@@ -63,11 +63,13 @@ int main(int argc, char *argv[]) {
 	  double total_time=0,ts=clock(); 
 	  int i=100000;
 	  while(get_line(data_inline)&&i) {
-		  i--;
+		 i--;
 	     int tl=strchr(data_inline,'(')-data_inline;
 		 int el=strrchr(data_inline,'<')-data_inline;
-		 if(tl<0||el<0)
-			 break;
+		 if(tl<0||el<0) {
+		 	printf("fkis =%c\n",*data_inline);
+			break;
+		 }
 		 printf("%d %d\n",tl,el);
 		 strncpy(name,data_inline,tl);
 		 strncpy(cost,data_inline+el+1,strlen(data_inline)-el-2);
