@@ -50,10 +50,11 @@ int main(int argc, char *argv[]) {
 	  if(dup2(filedes[0],STDIN_FILENO)<0)
 		  assert(0);
 	  while(get_line(data_inline)) {
-	     //int tl=strchr(data_inline,'(')-data_inline;
-		// int el=strrchr(data_inline,'<')-data_inline;
-		// strncpy(name,data_inline,tl);
-		// strncpy(cost,data_inline+el,strlen(data_inline)-el);
+	     int tl=strchr(data_inline,'(')-data_inline;
+		 int el=strrchr(data_inline,'<')-data_inline;
+		 strncpy(name,data_inline,tl);
+		 name[tl]=0;
+		 strncpy(cost,data_inline+el,strlen(data_inline)-el);
 		 printf("%s\n,%s : %s\n",data_inline,name,cost);
 	  }
 	  printf("over!");
