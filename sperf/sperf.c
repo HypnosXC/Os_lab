@@ -20,13 +20,12 @@ int main(int argc, char *argv[]) {
   int pid=fork();
   if(pid==0)	{
   	char *subargv[100];
-	subargv[0]="strace";
-//	subargv[1]="-T";
-	subargv[1]=localpath;
+	subargv[0]=strdup("strace");
+//	subargv[1]=strdup("-T");
+	subargv[1]=strdup(localpath);
 	for(int i=1;i<argc;i++){
-		subargv[i+1]=argv[i];
+		subargv[i+1]=strdup(argv[i]);
 	}
-	subargv[argc+2]=localpath;
 //	subargv[argc+2]=">/dev/null";
 	subargv[argc+3]=(char*)0;
 	for(int i=0;i<argc+3;i++)
