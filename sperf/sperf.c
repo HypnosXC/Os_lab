@@ -20,7 +20,7 @@ int main(int argc, char *argv[]) {
   int pid=fork();
   if(pid==0)	{
   	char *subargv[100];
-//	subargv[0]="strace";
+	subargv[0]="ls";
 	subargv[1]="-T";
 	subargv[2]=localpath;
 	for(int i=1;i<argc;i++){
