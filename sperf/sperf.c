@@ -13,10 +13,11 @@ int main(int argc, char *argv[]) {
   }
   int pid=fork();
   int l=readlink("/proc/self/exe",localpath,99);
+  while(localpath[l]!='/')
+	  	l--;
   localpath[l]=0;
   assert(l>0);
   printf("local=%s\n",localpath);
-
 
   if(pid==0)	{
   	char *subargv[100];
