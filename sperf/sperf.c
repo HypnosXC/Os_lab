@@ -66,6 +66,8 @@ int main(int argc, char *argv[]) {
 		  i--;
 	     int tl=strchr(data_inline,'(')-data_inline;
 		 int el=strrchr(data_inline,'<')-data_inline;
+		 if(tl<0||el<0)
+			 break;
 		 printf("%d %d\n",tl,el);
 		 // strncpy(name,data_inline,tl);
 		// strncpy(cost,data_inline+el+1,strlen(data_inline)-el-2);
