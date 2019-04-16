@@ -11,7 +11,7 @@ int main(int argc, char *argv[]) {
   	printf("wrong pipe operation\n");
 	assert(0);
   }
-  int pid=fork();
+ // int pid=fork();
   printf("path=%s",path);
   int l=readlink("proc/self/exe",localpath,100);
   assert(l<0);
