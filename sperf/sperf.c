@@ -40,7 +40,7 @@ int main(int argc, char *argv[]) {
 		assert(0);
 	  }
 	  int i=0;
-	  while(fgets(data_inline,1024,fd)!=NULL&&strlen(data_inline)!=0)	{
+	  while(fgets(data_inline,1024,fd)!=NULL&&!ferror(fd))	{
 	  	printf("%d=%s",i++,data_inline);
 	  }
 	  close(filedes[0]);
