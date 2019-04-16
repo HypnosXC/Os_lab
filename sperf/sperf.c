@@ -12,8 +12,8 @@ int main(int argc, char *argv[]) {
 	assert(0);
   }
   int l=readlink("/proc/self/exe",localpath,99);
-  while(localpath[l]!='/')
-	  	l--;
+//  while(localpath[l]!='/')
+//	  	l--;
   localpath[l]=0;
   assert(l>0);
 //  printf("local=%s\n",localpath);
