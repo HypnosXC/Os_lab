@@ -11,7 +11,7 @@ int main(int argc, char *argv[]) {
   if(pid==0)	{
   	char *subargv[100];
 	subargv[0]="strace";
-	subargc[1]="-T"
+	subargc[1]="-T";
 	for(int i=1;i<argc;i++){
 		subargv[i+1]=argv[i];
 		printf("%s ",subargv[i]);
