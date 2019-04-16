@@ -17,12 +17,11 @@ int main(int argc, char *argv[]) {
 	  	l--;
   localpath[l]=0;
   assert(l>0);
-  printf("local=%s\n",localpath);
-
+//  printf("local=%s\n",localpath);
   if(pid==0)	{
   	char *subargv[100];
-	subargv[0]="ls";
-	subargv[1]="-a";
+	subargv[0]="strace";
+	subargv[1]="-T";
 	for(int i=1;i<argc;i++){
 		subargv[i+1]=argv[i];
 		printf("%s ",subargv[i]);
@@ -31,7 +30,7 @@ int main(int argc, char *argv[]) {
 	subargv[argc+1]=localpath;
 	subargv[argc+2]=(char *)0;
 	char * envp[]={0,NULL};
-	execve("/bin/ls",subargv,envp);
+	execve("/usr/bin/strace",subargv,envp);
 	assert(0);
   }
   else
