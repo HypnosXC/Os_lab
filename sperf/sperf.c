@@ -1,4 +1,5 @@
 #include<stdio.h>
+#include<time.h>
 #include<unistd.h>
 #include<string.h>
 #include<stdlib.h>
@@ -59,7 +60,7 @@ int main(int argc, char *argv[]) {
   else {
 	  if(dup2(filedes[0],STDIN_FILENO)<0)
 		  assert(0);
-	 double total_time=0; 
+	  double total_time=0,ts=clock(); 
 	  while(get_line(data_inline)) {
 	     int tl=strchr(data_inline,'(')-data_inline;
 		 int el=strrchr(data_inline,'<')-data_inline;
@@ -78,6 +79,11 @@ int main(int argc, char *argv[]) {
 			 new_pd();
 		 memset(name,0,sizeof(name));
 		 memset(cost,0,sizeof(cost));
+		 if((clock()-ts)/CLOCKS_PER_SEC>0.5) {
+		 	for(int i=0;i<tot;i++)	{
+				printf("%s : %lf\n",pthd[i].name,pthd[i].ct);
+			}
+		 }
 	  }
 	  printf("over!");
 	  close(filedes[0]);
