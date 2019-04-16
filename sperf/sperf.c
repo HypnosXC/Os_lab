@@ -48,13 +48,13 @@ int main(int argc, char *argv[]) {
   }
   else {
 	  if(dup2(filedes[0],STDIN_FILENO)<0)
-		  assert(0);
+		  assert(0); 
 	  while(get_line(data_inline)) {
 	     int tl=strchr(data_inline,'(')-data_inline;
 		 int el=strrchr(data_inline,'<')-data_inline;
 		 printf("%d %d",tl,el);
 		 strncpy(name,data_inline,tl);
-		 strncpy(cost,data_inline+el,strlen(data_inline)-el);
+		 strncpy(cost,data_inline+el+1,strlen(data_inline)-el-1);
 		 printf("%s\n%s : %s\n",data_inline,name,cost);
 		 memset(name,0,sizeof(name));
 		 memset(cost,0,sizeof(cost));
