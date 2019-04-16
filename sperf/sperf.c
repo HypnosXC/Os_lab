@@ -55,7 +55,7 @@ int main(int argc, char *argv[]) {
 		 printf("%d %d",tl,el);
 		 strncpy(name,data_inline,tl);
 		 strncpy(cost,data_inline+el,strlen(data_inline)-el);
-		 printf("%s\n,%s : %s\n",data_inline,name,cost);
+		 printf("%s\n%s : %s\n",data_inline,name,cost);
 		 memset(name,0,sizeof(name));
 		 memset(cost,0,sizeof(cost));
 	  }
