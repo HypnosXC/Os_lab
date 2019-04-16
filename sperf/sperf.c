@@ -4,8 +4,8 @@
 #include<stdlib.h>
 #include<assert.h>
 int filedes[2];
-char name[1000];
-char cost[1000];
+char name[10000];
+char cost[10000];
 char localpath[100];
 char data_inline[100009];
 int get_line(char s[]) {
