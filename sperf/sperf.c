@@ -32,7 +32,7 @@ int main(int argc, char *argv[]) {
 		printf("%s ",subargv[i]);
 	printf("\n");
 	char * envp[]={0,NULL};
-	execve("/usr/bin/strace",subargv,envp);
+//	execve("/usr/bin/strace",subargv,envp);
 	assert(0);
   }
   else
