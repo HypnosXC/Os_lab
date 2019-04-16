@@ -1,5 +1,5 @@
 #include<stdio.h>
-#include<unistr,h>
+#include<unistd.h>
 int filedes[2];
 int main(int argc, char *argv[]) {
   if(pipe(fildes)!=0) {
