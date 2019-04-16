@@ -15,6 +15,7 @@ int main(int argc, char *argv[]) {
 		subargv[i+1]=argv[i];
 		printf("%s",subargv[i+1]);
 	}
+	printf("\n");
 	subargv[argc+2]=(char *)0;
 //	char * envp[]={0,NULL};
 //	execve("/usr/bin/strace",subargv,envp);
