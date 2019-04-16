@@ -22,7 +22,7 @@ int main(int argc, char *argv[]) {
   	char *subargv[100];
 	subargv[0]="strace";
 	subargv[1]="-T";
-	shuargv[2]=localpath;
+	subargv[2]=localpath;
 	for(int i=1;i<argc;i++){
 		subargv[i+2]=argv[i];
 		printf("%s ",subargv[i]);
