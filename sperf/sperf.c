@@ -13,10 +13,10 @@ int main(int argc, char *argv[]) {
 	subargv[0]="-T -o rt";
 	for(int i=0;i<argc;i++){
 		subargv[i+1]=argv[i];
-		printf("%s",argv[i]);
+		printf("%s",subargv[i+1]);
 	}
 	subargv[argc+2]=(char *)0;
-	char * envp[]={0,NULL};
+//	char * envp[]={0,NULL};
 //	execve("/usr/bin/strace",subargv,envp);
 	assert(0);
   }
