@@ -19,6 +19,7 @@ int main(int argc, char *argv[]) {
 //  printf("local=%s\n",localpath);
   int pid=fork();
   if(pid==0)	{
+	printf("fkyyyyyyyyyyyyyy\n");
   	char *subargv[100];
 	subargv[0]=strdup("strace");
 //	subargv[1]=strdup("-T");
