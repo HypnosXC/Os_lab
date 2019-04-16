@@ -20,8 +20,9 @@ int main(int argc, char *argv[]) {
 		subargv[i+1]=strdup(argv[i]);
 	}
 	subargv[argc+1]=(char*)0;
-	int fnull=fopen("/dev/null","w");
-	if(dup2(filedes[1],STDERR_FILENO)<0||dup2(fnull,STDOUT_FILENO)<0) {
+	FILE* fnull=fopen("/dev/null","w");
+	int fnul=fileno(fnull);
+	if(dup2(filedes[1],STDERR_FILENO)<0||dup2(fnul,STDOUT_FILENO)<0) {
 		printf("wrong file redirection!\n");
 		assert(0);
 	}
