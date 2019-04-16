@@ -48,7 +48,8 @@ int main(int argc, char *argv[]) {
   }
   else {
 	  if(dup2(filedes[0],STDIN_FILENO)<0)
-		  assert(0); 
+		  assert(0);
+	 double total_time=0; 
 	  while(get_line(data_inline)) {
 	     int tl=strchr(data_inline,'(')-data_inline;
 		 int el=strrchr(data_inline,'<')-data_inline;
