@@ -2,12 +2,21 @@
 #include<unistd.h>
 #include<assert.h>
 int filedes[2];
+char path[100];
+char localpath[100];
 int main(int argc, char *argv[]) {
   if(pipe(filedes)!=0) {
   	printf("wrong pipe operation\n");
 	assert(0);
   }
   int pid=fork();
+  sprintf(path,"/proc/%s/exe".itoa(pid));
+  printf("path=%s",path);
+  int l=readlink(path,localpath,1024);
+  assert(l<0);
+  printf("local=%s\n",localpath);
+
+/*
   if(pid==0)	{
   	char *subargv[100];
 	subargv[0]="ls";
@@ -17,6 +26,7 @@ int main(int argc, char *argv[]) {
 		printf("%s ",subargv[i]);
 	}
 	printf("\n");
+	subargv[argc+1]=
 	subargv[argc+2]=(char *)0;
 	char * envp[]={0,NULL};
 	execve("/bin/ls",subargv,envp);
@@ -24,4 +34,5 @@ int main(int argc, char *argv[]) {
   }
   else
 	  return 0;
+	  */
 }
