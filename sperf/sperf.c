@@ -11,13 +11,13 @@ int main(int argc, char *argv[]) {
   	printf("wrong pipe operation\n");
 	assert(0);
   }
-  int pid=fork();
   int l=readlink("/proc/self/exe",localpath,99);
   while(localpath[l]!='/')
 	  	l--;
   localpath[l]=0;
   assert(l>0);
 //  printf("local=%s\n",localpath);
+  int pid=fork();
   if(pid==0)	{
   	char *subargv[100];
 	subargv[0]="strace";
