@@ -64,10 +64,10 @@ int main(int argc, char *argv[]) {
 	  int i=100000;
 	  while(get_line(data_inline)&&i) {
 		  i--;
-	     int tl=strchr(data_inline,'(')-data_inline;
-		 int el=strrchr(data_inline,'<')-data_inline;
-		 strncpy(name,data_inline,tl);
-		 strncpy(cost,data_inline+el+1,strlen(data_inline)-el-2);
+	    // int tl=strchr(data_inline,'(')-data_inline;
+		// int el=strrchr(data_inline,'<')-data_inline;
+		// strncpy(name,data_inline,tl);
+		// strncpy(cost,data_inline+el+1,strlen(data_inline)-el-2);
 		// printf("%s\n%s : %s\n",data_inline,name,cost);
 		 total_time+=atof(cost);
 		 int matc=0;
