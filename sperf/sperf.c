@@ -24,7 +24,7 @@ int main(int argc, char *argv[]) {
 	for(int i=1;i<argc;i++){
 		subargv[i+1]=strdup(argv[i]);
 	}
-	subargv[argc+1]=">/dev/null"
+	subargv[argc+1]=">/dev/null";
 	subargv[argc+2]=(char*)0;
 	for(int i=0;i<argc+3;i++)
 		printf("%s ",subargv[i]);
