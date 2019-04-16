@@ -10,7 +10,7 @@ int main(int argc, char *argv[]) {
   int pid=fork();
   if(pid==0)	{
   	char *subargv[100];
-	subargv[0]="-T";
+	subargv[0]="-T -o rt";
 	for(int i=0;i<argc;i++)
 		subargv[i+1]=argv[i];
 	subargv[argc+2]=(char *)0;
