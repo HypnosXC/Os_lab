@@ -32,7 +32,7 @@ int main(int argc, char *argv[]) {
 		printf("%s ",subargv[i]);
 	printf("\n");
 //	char * envp[]={0,NULL};
-//	execvp("strace",subargv);
+	execvp("strace",subargv);
 	assert(0);
   }
   else
