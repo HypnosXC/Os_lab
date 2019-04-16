@@ -20,13 +20,14 @@ int main(int argc, char *argv[]) {
   //	assert(l>0);
   	char *subargv[100];
 	subargv[0]=strdup("strace");
-	subargv[1]=strdup("-T");
+	subargv[1]=strdup("-o");
+	subargv[2]=strdup("ss");
 	for(int i=1;i<argc;i++){
-		subargv[i+1]=strdup(argv[i]);
+		subargv[i+2]=strdup(argv[i]);
 	}
-	subargv[argc+1]=">";
-	subargv[argc+2]="/dev/null";
-	subargv[argc+3]=(char*)0;
+	subargv[argc+2]=">";
+	subargv[argc+3]="/dev/null";
+	subargv[argc+4]=(char*)0;
 	for(int i=0;i<argc+3;i++)
 		printf("%s ",subargv[i]);
 	printf("\n");
