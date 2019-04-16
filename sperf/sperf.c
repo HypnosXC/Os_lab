@@ -23,12 +23,11 @@ int main(int argc, char *argv[]) {
 	subargv[0]="strace";
 	subargv[1]="-C";
 	subargv[2]=localpath;
-	for(int i=1;i<argc;i++){
-		subargv[i+2]=argv[i];
-		printf("%s ",subargv[i]);
-	}
 	subargv[argc+2]=">/dev/null";
 	subargv[argc+3]=(char*)0;
+	for(int i=0;i<argc+3;i++)
+		printf("%s ",subargv[i]);
+	printf("\n");
 //	char * envp[]={0,NULL};
 //	execve("/usr/bin/strace",subargv,envp);
 //	assert(0);
