@@ -10,15 +10,16 @@ int main(int argc, char *argv[]) {
   int pid=fork();
   if(pid==0)	{
   	char *subargv[100];
-	subargv[0]="-T";
+	subargv[0]="strace";
+	subargc[1]="-T"
 	for(int i=1;i<argc;i++){
-		subargv[i]=argv[i];
+		subargv[i+1]=argv[i];
 		printf("%s ",subargv[i]);
 	}
 	printf("\n");
 	subargv[argc+2]=(char *)0;
 	char * envp[]={0,NULL};
-	execve("/bin/ls",subargv,envp);
+	execve("/usr/bin/strace",subargv,envp);
 	assert(0);
   }
   else
