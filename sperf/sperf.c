@@ -13,7 +13,7 @@ int main(int argc, char *argv[]) {
 	subargv[0]="-T -o rt";
 	for(int i=0;i<argc;i++){
 		subargv[i+1]=argv[i];
-		printf("%s",subargv[i+1]);
+		printf("%s ",subargv[i+1]);
 	}
 	printf("\n");
 	subargv[argc+2]=(char *)0;
