@@ -12,7 +12,6 @@ int main(int argc, char *argv[]) {
 	assert(0);
   }
  // int pid=fork();
-  printf("path=%s",path);
   int l=readlink("proc/self/exe",localpath,100);
   assert(l<0);
   printf("local=%s\n",localpath);
