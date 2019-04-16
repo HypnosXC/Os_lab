@@ -12,7 +12,7 @@ int main(int argc, char *argv[]) {
 	assert(0);
   }
   int pid=fork();
-  int fnul;
+  int fnul=-1;
   if(pid==0)	{
   	char *subargv[100];
 	subargv[0]=strdup("strace");
@@ -34,6 +34,10 @@ int main(int argc, char *argv[]) {
 	assert(0);
   }
   else {
+	  if(fnul<0){
+	  	printf("panic /dev/null!\n");
+	  	assert(0);
+	  }
 	  close(fnul);
 	  close(filedes[0]);
 	  close(filedes[1]);
