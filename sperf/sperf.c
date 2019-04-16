@@ -11,13 +11,13 @@ int main(int argc, char *argv[]) {
   	printf("wrong pipe operation\n");
 	assert(0);
   }
- // int pid=fork();
+  int pid=fork();
   int l=readlink("/proc/self/exe",localpath,99);
   localpath[l]=0;
   assert(l>0);
   printf("local=%s\n",localpath);
 
-/*
+
   if(pid==0)	{
   	char *subargv[100];
 	subargv[0]="ls";
@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
 		printf("%s ",subargv[i]);
 	}
 	printf("\n");
-	subargv[argc+1]=
+	subargv[argc+1]=localpath;
 	subargv[argc+2]=(char *)0;
 	char * envp[]={0,NULL};
 	execve("/bin/ls",subargv,envp);
@@ -35,5 +35,4 @@ int main(int argc, char *argv[]) {
   }
   else
 	  return 0;
-	  */
 }
