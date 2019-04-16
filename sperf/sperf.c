@@ -27,12 +27,13 @@ int main(int argc, char *argv[]) {
 		subargv[i+2]=strdup(argv[i]);
 	}
 //	subargv[argc+2]=">/dev/null";
-	subargv[argc+2]=(char*)0;
+	subargv[argc+3]=(char*)0;
 	for(int i=0;i<argc+3;i++)
 		printf("%s ",subargv[i]);
 	printf("\n");
 //	char * envp[]={0,NULL};
-	execvp("strace",subargv);
+	execve("/usr/bin/strace",subargv,envp);
+//	execvp("strace",subargv);
 	assert(0);
   }
   else
