@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<unistd.h>
 #include<string.h>
+#include<stdlib.h>
 #include<assert.h>
 int filedes[2];
 char path[100];
@@ -11,7 +12,9 @@ int main(int argc, char *argv[]) {
 	assert(0);
   }
   int pid=fork();
-  sprintf(path,"/proc/%s/exe",itoa(pid));
+  char pre[10];
+  itoa(pid,pre,10);
+  sprintf(path,"/proc/%s/exe",pre);
   printf("path=%s",path);
   int l=readlink(path,localpath,1024);
   assert(l<0);
