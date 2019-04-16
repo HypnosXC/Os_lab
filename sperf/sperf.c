@@ -31,8 +31,8 @@ int main(int argc, char *argv[]) {
 	for(int i=0;i<argc+3;i++)
 		printf("%s ",subargv[i]);
 	printf("\n");
-	char * envp[]={0,NULL};
-	execve(STRACE_BIN,subargv,envp);
+//	char * envp[]={0,NULL};
+	execl("/usr/bin/strace",subargv);
 	assert(0);
   }
   else
