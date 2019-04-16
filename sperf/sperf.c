@@ -12,6 +12,7 @@ int main(int argc, char *argv[]) {
 	assert(0);
   }
   int pid=fork();
+  int fnul;
   if(pid==0)	{
   	char *subargv[100];
 	subargv[0]=strdup("strace");
@@ -21,7 +22,7 @@ int main(int argc, char *argv[]) {
 	}
 	subargv[argc+1]=(char*)0;
 	FILE* fnull=fopen("/dev/null","w");
-	int fnul=fileno(fnull);
+	fnul=fileno(fnull);
 	if(dup2(filedes[1],STDERR_FILENO)<0||dup2(fnul,STDOUT_FILENO)<0) {
 		printf("wrong file redirection!\n");
 		assert(0);
@@ -32,6 +33,9 @@ int main(int argc, char *argv[]) {
 	execve("/usr/bin/strace",subargv,envp);
 	assert(0);
   }
-  else
-	  return 0;
+  else {
+	  close(fnul);
+	  close(filedes[0]);
+	  close(filedes[1]);
+  }
 }
