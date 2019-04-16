@@ -33,10 +33,6 @@ int main(int argc, char *argv[]) {
 	assert(0);
   }
   else {
-	  if(fnul<0){
-	  	printf("panic /dev/null!\n");
-	  	assert(0);
-	  }
 	  close(filedes[0]);
 	  close(filedes[1]);
   }
