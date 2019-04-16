@@ -48,10 +48,10 @@ int main(int argc, char *argv[]) {
   else {
 	  if(dup2(filedes[0],STDIN_FILENO)<0)
 		  assert(0);
-	  int len=1000;
-	  while(getline(&data_inline,&len,stdin)) {
+	  while(get_line(data_inline)) {
 	     printf("%s",data_inline);	
 	  }
+	  printf("over!");
 	  close(filedes[0]);
 	  close(filedes[1]);
 	  return 0;
