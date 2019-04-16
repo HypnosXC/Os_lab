@@ -11,9 +11,9 @@ int main(int argc, char *argv[]) {
   if(pid==0)	{
   	char *subargv[100];
 	subargv[0]="-T -o rt";
-	for(int i=0;i<argc;i++){
-		subargv[i+1]=argv[i+1];
-		printf("%s ",subargv[i+1]);
+	for(int i=1;i<argc;i++){
+		subargv[i]=argv[i];
+		printf("%s ",subargv[i]);
 	}
 	printf("\n");
 	subargv[argc+2]=(char *)0;
