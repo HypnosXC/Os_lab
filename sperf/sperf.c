@@ -54,7 +54,7 @@ int main(int argc, char *argv[]) {
 		 int el=strrchr(data_inline,'<')-data_inline;
 		 strncpy(name,data_inline,tl);
 		 strncpy(cost,data_inline+el,strlen(data_inline)-el);
-		 printf("%s : %s\n",name,cost);
+		 printf("%s\n,%s : %s\n",data_inline,name,cost);
 	  }
 	  printf("over!");
 	  close(filedes[0]);
