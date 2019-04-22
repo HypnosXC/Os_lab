@@ -69,22 +69,25 @@ int main(int argc, char *argv[]) {
 	     int tl=strchr(data_inline,'(')-data_inline;
 		 int el=strrchr(data_inline,'<')-data_inline;
 		 printf("%d %d\n",tl,el);
-		 strncpy(name,data_inline,tl);
+		 if(0<=tl&&tl<=strlen(data_inline))
+			 strncpy(name,data_inline,tl);
 		 if(!strcmp("exit_group",name))
 			 break;
-		 strncpy(cost,data_inline+el+1,strlen(data_inline)-el-2);
-		 total_time+=atof(cost);
-		 int matc=0;
-		 for(int i=0;i<tot;i++)	{
-		 	if(!strcmp(pthd[i].name,name)) {
-				matc=1;
-				pthd[i].ct+=atof(cost);
-			}
+		 if(0<=el&&el<=strlen(data_inline)) {
+			 strncpy(cost,data_inline+el+1,strlen(data_inline)-el-2);
+			 total_time+=atof(cost);
+			 int matc=0;
+			 for(int i=0;i<tot;i++)	{
+		 		 if(!strcmp(pthd[i].name,name)) {
+				 matc=1;
+				 pthd[i].ct+=atof(cost);
+			 	 }
+		     }
+			 if(!matc)
+				 new_pd();
+			 memset(name,0,sizeof(name));
+		 	memset(cost,0,sizeof(cost));
 		 }
-		 if(!matc)
-			 new_pd();
-		 memset(name,0,sizeof(name));
-		 memset(cost,0,sizeof(cost));
 		 ts=clock();
 		 if((ts-bts)/CLOCKS_PER_SEC>0.5) {
 		 	 bts=ts;
