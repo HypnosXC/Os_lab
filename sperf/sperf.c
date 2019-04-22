@@ -66,7 +66,7 @@ int main(int argc, char *argv[]) {
 		 int el=strrchr(data_inline,'<')-data_inline;
 		 if(0<=tl&&tl<=strlen(data_inline))
 			 strncpy(name,data_inline,tl);
-		 if(!strcmp("exit_group",name)){
+		 if(!strcmp("+++ exited with 0 +++",data_inline)){
 			 printf("finished");
 			 fflush(stdout);
 			 break;
