@@ -64,8 +64,8 @@ int main(int argc, char *argv[]) {
 	  int i=100000;
 	  while(get_line(data_inline)&&i) {
 		 i--;
-		 printf("%s\n",data_inline);
 		 fflush(stdout);
+		 printf("%s\n",data_inline);
 	     int tl=strchr(data_inline,'(')-data_inline;
 		 int el=strrchr(data_inline,'<')-data_inline;
 		 //printf("%d %d\n",tl,el);
