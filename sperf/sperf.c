@@ -62,14 +62,15 @@ int main(int argc, char *argv[]) {
 		  assert(0);
 	  double total_time=0,ts=clock(),bts=ts; 
 	  while(get_line(data_inline)) {
-		// printf("%s\n",data_inline);
-		// fflush(stdout);
 	     int tl=strchr(data_inline,'(')-data_inline;
 		 int el=strrchr(data_inline,'<')-data_inline;
 		 if(0<=tl&&tl<=strlen(data_inline))
 			 strncpy(name,data_inline,tl);
-		 if(!strcmp("exit_group",name))
+		 if(!strcmp("exit_group",name)){
+			 printf("finished");
+			 fflush(stdout);
 			 break;
+	     }
 		 if(0<=el&&el<=strlen(data_inline)) {
 			 strncpy(cost,data_inline+el+1,strlen(data_inline)-el-2);
 			 total_time+=atof(cost);
