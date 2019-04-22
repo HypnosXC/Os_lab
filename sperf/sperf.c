@@ -93,6 +93,7 @@ int main(int argc, char *argv[]) {
 	  for(int i=0;i<tot;i++)	{
 		printf("\033[%dm%s : %.2lf%%\n\033[0m",i%10+30,pthd[i].name,pthd[i].ct/total_time*100);
 	 	int d=pthd[i].ct/total_time*100;
+		printf("%d",d);
 		for(int j=1;j<=d;j++)
 			printf("\033[%dm ",i%10+40);
 		printf("\033[0m\n");
