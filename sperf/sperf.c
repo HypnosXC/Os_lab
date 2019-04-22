@@ -12,7 +12,7 @@ char data_inline[100009];
 struct item{
 	char name[100];
 	double ct;
-}pthd[1000];
+}pthd[100000];
 int tot;
 void new_pd() {
 	strcpy(pthd[tot].name,name);
@@ -61,11 +61,9 @@ int main(int argc, char *argv[]) {
 	  if(dup2(filedes[0],STDIN_FILENO)<0)
 		  assert(0);
 	  double total_time=0,ts=clock(),bts=ts; 
-	  int i=100000;
-	  while(get_line(data_inline)&&i) {
-		 i--;
-		 printf("%s\n",data_inline);
-		 fflush(stdout);
+	  while(get_line(data_inline)) {
+		// printf("%s\n",data_inline);
+		// fflush(stdout);
 	     int tl=strchr(data_inline,'(')-data_inline;
 		 int el=strrchr(data_inline,'<')-data_inline;
 		 if(0<=tl&&tl<=strlen(data_inline))
