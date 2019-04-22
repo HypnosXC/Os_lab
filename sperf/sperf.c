@@ -60,7 +60,7 @@ int main(int argc, char *argv[]) {
   else {
 	  if(dup2(filedes[0],STDIN_FILENO)<0)
 		  assert(0);
-	  double total_time=0,ts=clock(); 
+	  double total_time=0,ts=clock(),bts=ts; 
 	  int i=100000;
 	  while(get_line(data_inline)&&i) {
 		 i--;
@@ -83,11 +83,18 @@ int main(int argc, char *argv[]) {
 			 new_pd();
 		 memset(name,0,sizeof(name));
 		 memset(cost,0,sizeof(cost));
-		 if((clock()-ts)/CLOCKS_PER_SEC>0.1) {
-		 	for(int i=0;i<tot;i++)	{
-				printf("%s : %lf\n",pthd[i].name,pthd[i].ct);
-			}
-		 }
+		 ts=clock();
+		 if((ts-bts)/CLOCKS_PER_SEC>0.5) {
+		 	 bts=ts;
+			 printf("\033[2J");
+			 for(int i=0;i<tot;i++)	{
+				printf("\033[%dm%s : %.2lf%%\n\033[0m",i%7+31,pthd[i].name,pthd[i].ct/total_time*100);
+		 	 int d=pthd[i].ct/total_time*100+1;
+			 for(int j=1;j<=d;j++)
+				printf("\033[%dm ",i%7+41);
+			 printf("\033[0m\n");
+	  	  	 }
+	  	 }
 	  }
 	  printf("\033[2J");
 	  for(int i=0;i<tot;i++)	{
