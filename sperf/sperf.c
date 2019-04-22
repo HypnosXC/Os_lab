@@ -90,7 +90,7 @@ int main(int argc, char *argv[]) {
 		 }
 	  }
 	  for(int i=0;i<tot;i++)	{
-		printf("%s : %.2lf%%\n",pthd[i].name,pthd[i].ct/total_time*100);
+		printf("\033[33m%s : %.2lf%%\n",pthd[i].name,pthd[i].ct/total_time*100);
 	  }
 	  printf("over!");
 	  close(filedes[0]);
