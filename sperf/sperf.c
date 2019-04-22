@@ -89,6 +89,9 @@ int main(int argc, char *argv[]) {
 			}
 		 }
 	  }
+	  for(int i=0;i<tot;i++)	{
+		printf("%s : %lf\n",pthd[i].name,pthd[i].ct);
+	  }
 	  printf("over!");
 	  close(filedes[0]);
 	  close(filedes[1]);
