@@ -88,7 +88,7 @@ int main(int argc, char *argv[]) {
 		 	memset(cost,0,sizeof(cost));
 		 }
 		 ts=clock();
-		 if((ts-bts)/CLOCKS_PER_SEC>0.05) {
+		 if((ts-bts)/CLOCKS_PER_SEC>0.01) {
 		 	 bts=ts;
 			 printf("\033[2J");
 			 for(int i=0;i<tot;i++)	{
