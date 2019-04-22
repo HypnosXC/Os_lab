@@ -66,14 +66,11 @@ int main(int argc, char *argv[]) {
 		 i--;
 	     int tl=strchr(data_inline,'(')-data_inline;
 		 int el=strrchr(data_inline,'<')-data_inline;
-		 if(tl<0||el<0||el>strlen(data_inline)) {
-		 	printf("fkis =%s   end\n",data_inline);
-			break;
-		 }
 		 //printf("%d %d\n",tl,el);
 		 strncpy(name,data_inline,tl);
+		 if(!strcmp("exit_group",name))
+			 break;
 		 strncpy(cost,data_inline+el+1,strlen(data_inline)-el-2);
-		// printf("%s\n%s : %s\n",data_inline,name,cost);
 		 total_time+=atof(cost);
 		 int matc=0;
 		 for(int i=0;i<tot;i++)	{
