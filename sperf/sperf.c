@@ -94,7 +94,7 @@ int main(int argc, char *argv[]) {
 		printf("\033[%dm%s : %.2lf%%\n\033[0m",i%10+30,pthd[i].name,pthd[i].ct/total_time*100);
 	 	int d=pthd[i].ct/total_time*100;
 		for(int j=1;j<=d;j++)
-			printf(" ");
+			printf("\033[%dm ",i);
 	  }
 	  close(filedes[0]);
 	  close(filedes[1]);
