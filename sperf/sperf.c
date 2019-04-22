@@ -91,9 +91,8 @@ int main(int argc, char *argv[]) {
 	  }
 	  printf("\033[2J");
 	  for(int i=0;i<tot;i++)	{
-		printf("\033[%dm%s : %.2lf%%\n",40+i%10,pthd[i].name,pthd[i].ct/total_time*100);
+		printf("\033[%dm%s : %.2lf%%\n\033[0m",i%10+40,pthd[i].name,pthd[i].ct/total_time*100);
 	  }
-	  printf("\033[0m");
 	  close(filedes[0]);
 	  close(filedes[1]);
 	  return 0;
