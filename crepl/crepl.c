@@ -6,7 +6,7 @@
 char dat_inline[1000];
 int main(int argc, char *argv[]) {
   while(1) {
- 	gets_s(dat_inline,1000);
+ 	gets(dat_inline);
 	char *func=strstr(dat_inline,"int");
 	if(func==NULL||func!=dat_inline) {//expression
 		
