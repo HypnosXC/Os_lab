@@ -69,8 +69,8 @@ int main(int argc, char *argv[]) {
 	else { 
 		dyn_reload(dat_inline);//function
 		printf("Added:%s\n",dat_inline);
-		sprintf(gccode,"%s.so",dlstore);
-  		remove(gccode);
+	//	sprintf(gccode,"%s.so",dlstore);
+  	//	remove(gccode);
 	}
    	  	
   }
