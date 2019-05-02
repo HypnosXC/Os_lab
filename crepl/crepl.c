@@ -17,6 +17,7 @@ void sgetline()	{
 }
 char dlstore[]="dl-XXXXXX";
 char gccode[1000];
+char expr[1000];
 void dyn_reload(char *func){
   FILE* fd=fopen("dl-XXXXXX.c","a+");	
   fprintf(fd,"%s\n",dat_inline);
