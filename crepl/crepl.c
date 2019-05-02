@@ -30,7 +30,7 @@ void dyn_reload(char *func){
 }
 int main(int argc, char *argv[]) {
  // dlstore=mktemp(dlstore);
-  int i;
+  int i=0;
   while(1) {
 	i++;
 	sgetline();
