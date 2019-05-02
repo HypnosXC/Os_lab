@@ -40,7 +40,11 @@ void dyn_reload(char *func){
   }
 }
 void* func_find(char *func) {
-	return dlsym(dlp,func);
+	void* p=dlsym(dlp,func);
+	char *wr=dlerror();
+	if(wr==NULL)
+		printf("%s\n",wr);
+	return p;
 }
 int main(int argc, char *argv[]) {
  // dlstore=mktemp(dlstore);
@@ -57,7 +61,7 @@ int main(int argc, char *argv[]) {
 		memset(expr,0,strlen(expr));
 		sprintf(expr,"expr_%d",i);
 		int (*func)()= func_find(expr);
-		printf("%p,%p",dlp,func);
+		printf("%p,%p\n",dlp,func);
 		fflush(stdout);
 		int value=func();
 		printf("[crepl] = %d\n",value);
