@@ -29,7 +29,7 @@ void dyn_reload(char *func){
   sprintf(gccode,"./%s.so",dlstore);
 //  if(dlp!=NULL) 
 //	  dlclose(dlp);
-  dlp=dlopen(gccode,RTLD_LAZY|RTLD_GLOBAL); 
+  dlp=dlopen(gccode,RTLD_LAZY|RTLD_GLOBAL|RTLD_NODELETE); 
   sprintf(gccode,"%s.c",dlstore);
   remove(gccode);
   char *wr=dlerror();
