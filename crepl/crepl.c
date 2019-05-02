@@ -42,7 +42,7 @@ void dyn_reload(char *func){
 void* func_find(char *func) {
 	void* p=dlsym(dlp,func);
 	char *wr=dlerror();
-	if(wr==NULL) {
+	if(wr!=NULL) {
 		printf("%s havs problem:\n %s\n",func,wr);
 		fflush(stdout);
 	}
