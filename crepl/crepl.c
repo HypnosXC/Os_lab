@@ -31,9 +31,7 @@ void dyn_reload(char *func){
  	// dlclose(dlp);
   dlp=dlopen(gccode,RTLD_NOW|RTLD_GLOBAL);
   printf(">>>>");
-  fflush(stdout);
-  sprintf(gccode,"%s.so",dlstore);
-  remove(gccode);
+  fflush(stdout); 
   sprintf(gccode,"%s.c",dlstore);
   remove(gccode);
   char *wr=dlerror();
@@ -63,10 +61,14 @@ int main(int argc, char *argv[]) {
 		fflush(stdout);
 		int value=func();
 		printf("[crepl] = %d\n",value);
+		sprintf(gccode,"%s.so",dlstore);
+		remove(gccode);
 	}
 	else { 
 		dyn_reload(dat_inline);//function
 		printf("Added:%s\n",dat_inline);
+		sprintf(gccode,"%s.so",dlstore);
+  		remove(gccode);
 	}
    	  	
   }
