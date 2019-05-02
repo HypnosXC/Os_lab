@@ -30,7 +30,9 @@ void dyn_reload(char *func){
 }
 int main(int argc, char *argv[]) {
  // dlstore=mktemp(dlstore);
+  int i;
   while(1) {
+	i++;
 	sgetline();
 	char *func=strstr(dat_inline,"int");
 	if(func ==NULL||func!=dat_inline) {//expression
