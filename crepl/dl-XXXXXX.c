@@ -1,1 +1,2 @@
-int expr_1() { return (1+1); }
+int gcd(int i) {return i;}
+int expr_2() { return ("sdasa"[gcd(2)]); }

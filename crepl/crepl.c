@@ -55,10 +55,12 @@ int main(int argc, char *argv[]) {
 		sprintf(expr,"expr_%d",i);
 		int (*func)()= func_find(expr);
 		int value=func();
-		printf("answer is %d\n",value);
+		printf("[crepl] = %d\n",value);
 	}
-	else 
+	else { 
 		dyn_reload(dat_inline);//function
+		printf("Added:%s\n",dat_inline);
+	}
    	  	
   }
 //  system("gcc a.c -shared -fPIC -o test.so");
