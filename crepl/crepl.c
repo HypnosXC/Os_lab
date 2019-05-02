@@ -18,6 +18,7 @@ void sgetline()	{
 char dlstore[]="dl-XXXXXX";
 char gccode[1000];
 char expr[1000];
+void *dlp;
 void dyn_reload(char *func){
   FILE* fd=fopen("dl-XXXXXX.c","a+");	
   fprintf(fd,"%s\n",func);
@@ -26,7 +27,11 @@ void dyn_reload(char *func){
   system(gccode);
   memset(gccode,0,strlen(gccode));
   sprintf(gccode,"%s.so",dlstore);
-  dlopen(gccode,RTLD_LAZY|RTLD_GLOBAL);
+  dlclose(dlp);
+  dlp=dlopen(gccode,RTLD_LAZY|RTLD_GLOBAL);
+}
+void* func_find(char *func) {
+	return dlsym(dlp,func);
 }
 int main(int argc, char *argv[]) {
  // dlstore=mktemp(dlstore);
