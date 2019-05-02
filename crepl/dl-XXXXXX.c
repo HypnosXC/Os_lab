@@ -1,1 +1,1 @@
-int gcd() {return 1;}
+int gcd(){return 1;}
