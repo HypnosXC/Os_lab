@@ -27,7 +27,7 @@ void* dyn_reload(char *func){
   system(gccode);
   memset(gccode,0,strlen(gccode));
   sprintf(gccode,"./%s.so",dlstore);
-  void *p=dlp=dlopen(gccode,RTLD_NOW|RTLD_GLOBAL); 
+  void *p=dlopen(gccode,RTLD_NOW|RTLD_GLOBAL); 
   sprintf(gccode,"%s.c",dlstore);
   remove(gccode);
   char *wr=dlerror();
