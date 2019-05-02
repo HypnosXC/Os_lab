@@ -34,9 +34,9 @@ int main(int argc, char *argv[]) {
   while(1) {
 	i++;
 	sgetline();
-	char *func=strstr(dat_inline,"int");
+	int func=strstr(dat_inline,"int")-dat_inline;
 	printf("%p  %p\n",func,dat_inline);
-	if(func ==NULL||func!=dat_inline) {//expression
+	if(func!=0) {//expression
 		sprintf(expr,"int expr_%d() { return (%s); }",i,dat_inline);		
 		dyn_reload(expr);
 		memset(expr,0,strlen(expr));
