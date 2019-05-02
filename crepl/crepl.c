@@ -19,25 +19,26 @@ char dlstore[]="dl-XXXXXX";
 char gccode[1000];
 char expr[1000];
 void *dlp;
-void* dyn_reload(char *func){
+void dyn_reload(char *func){
   FILE* fd=fopen("dl-XXXXXX.c","w");	
   fprintf(fd,"%s\n",func);
   fclose(fd);
-  sprintf(gccode,"gcc %s.c -shared -ldl -fPIC -o %s.so",dlstore,dlstore);
+  sprintf(gccode,"gcc %s.c -shared -fPIC -o %s.so",dlstore,dlstore);
   system(gccode);
   memset(gccode,0,strlen(gccode));
   sprintf(gccode,"./%s.so",dlstore);
-  void *p=dlopen(gccode,RTLD_NOW|RTLD_GLOBAL); 
+  dlp=dlopen(gccode,RTLD_NOW|RTLD_GLOBAL);
+  printf(">>>>");
+  fflush(stdout); 
   sprintf(gccode,"%s.c",dlstore);
   remove(gccode);
   char *wr=dlerror();
   if(wr!=NULL) {
 	  printf("%s\n",wr);
   }
-  return p;
 }
-void* func_find(char *func,void *dp) {
-	void* p=dlsym(dp,func);
+void* func_find(char *func) {
+	void* p=dlsym(dlp,func);
 	char *wr=dlerror();
 	if(wr!=NULL) {
 		printf("%s havs problem:\n %s\n",func,wr);
@@ -48,16 +49,18 @@ void* func_find(char *func,void *dp) {
 int main(int argc, char *argv[]) {
  // dlstore=mktemp(dlstore);
   int i=0;
+  FILE* fd=fopen("dl-XXXXXX.c","w");	
+  fclose(fd);
   while(1) {
 	i++;
 	sgetline();
 	int func=strstr(dat_inline,"int")-dat_inline;
 	if(func!=0) {//expression
 		sprintf(expr,"int expr_%d() { return (%s); }",i,dat_inline);		
-		void *dp=dyn_reload(expr);
+		dyn_reload(expr);
 		memset(expr,0,strlen(expr));
 		sprintf(expr,"expr_%d",i);
-		int (*func)()= func_find(expr,dp);
+		int (*func)()= func_find(expr);
 		printf("%p,%p\n",dlp,func);
 		fflush(stdout);
 		int value=func();
