@@ -30,7 +30,8 @@ void dyn_reload(char *func){
   if(dlp!=NULL)
  	 dlclose(dlp);
   dlp=dlopen(gccode,RTLD_LAZY|RTLD_GLOBAL);
-  if(dlerror()!=NULL) {
+  char *wr=dlerror();
+  if(wr!=NULL) {
 	  printf("%s\n",dlerror());
   }
 }
