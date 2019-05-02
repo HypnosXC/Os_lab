@@ -29,10 +29,10 @@ int main(int argc, char *argv[]) {
    	    FILE* fd=fopen("dl-XXXXXX.c","a+");	
 		fprintf(fd,"%s\n",dat_inline);
 		fclose(fd);
-		fprintf(gccode,"gcc %s.c -shared -fPIC -o %s.so",dlstore,dlstore);
+		sprintf(gccode,"gcc %s.c -shared -fPIC -o %s.so",dlstore,dlstore);
 		system(gccode);
 		memset(gccode,0,strlen(gccode));
-		fprintf(gccode,"%s.so",dlstore);
+		sprintf(gccode,"%s.so",dlstore);
 		dlopen(gccode,RTLD_LAZY|RTLD_GLOBAL)
 	}
   }
