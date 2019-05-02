@@ -54,7 +54,6 @@ int main(int argc, char *argv[]) {
 		memset(expr,0,strlen(expr));
 		sprintf(expr,"expr_%d",i);
 		int (*func)()= func_find(expr);
-		printf("%s ?? %p ?? %p\n",expr,dlp,func);
 		int value=func();
 		printf("answer is %d\n",value);
 	}
