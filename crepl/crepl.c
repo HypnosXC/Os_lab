@@ -55,6 +55,7 @@ int main(int argc, char *argv[]) {
   while(1) {
 	i++;
 	sgetline();
+	sprintf(dlstore,"dl%d",i);
 	int func=strstr(dat_inline,"int")-dat_inline;
 	if(func!=0) {//expression
 		sprintf(expr,"int expr_%d() { return (%s); }",i,dat_inline);		
