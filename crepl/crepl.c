@@ -63,14 +63,10 @@ int main(int argc, char *argv[]) {
 		fflush(stdout);
 		int value=func();
 		printf("[crepl] = %d\n",value);
-		sprintf(gccode,"%s.so",dlstore);
-		remove(gccode);
 	}
 	else { 
 		dyn_reload(dat_inline);//function
 		printf("Added:%s\n",dat_inline);
-	//	sprintf(gccode,"%s.so",dlstore);
-  	//	remove(gccode);
 	}
    	  	
   }
