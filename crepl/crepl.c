@@ -59,6 +59,7 @@ int main(int argc, char *argv[]) {
 		memset(expr,0,strlen(expr));
 		sprintf(expr,"expr_%d",i);
 		int (*func)()= func_find(expr);
+		printf("%p,%p",dlp,func);
 		int value=func();
 		printf("[crepl] = %d\n",value);
 	}
