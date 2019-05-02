@@ -20,7 +20,7 @@ char gccode[1000];
 char expr[1000];
 void dyn_reload(char *func){
   FILE* fd=fopen("dl-XXXXXX.c","a+");	
-  fprintf(fd,"%s\n",dat_inline);
+  fprintf(fd,"%s\n",func);
   fclose(fd);
   sprintf(gccode,"gcc %s.c -shared -fPIC -o %s.so",dlstore,dlstore);
   system(gccode);
