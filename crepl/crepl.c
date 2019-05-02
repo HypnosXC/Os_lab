@@ -21,7 +21,7 @@ char expr[1000];
 void *dlp;
 void dyn_reload(char *func){
   sprintf(gccode,"%s.c",dlstore);
-  FILE* fd=fopen("dl.c","w");	
+  FILE* fd=fopen(gccode,"w");	
   fprintf(fd,"%s\n",func);
   fclose(fd);
   sprintf(gccode,"gcc %s.c -shared -ldl -fPIC -o %s.so",dlstore,dlstore);
