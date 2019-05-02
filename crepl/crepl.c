@@ -20,7 +20,7 @@ char gccode[1000];
 char expr[1000];
 void *dlp;
 void dyn_reload(char *func){
-  FILE* fd=fopen("dl-XXXXXX.c","a+");	
+  FILE* fd=fopen("dl-XXXXXX.c","w");	
   fprintf(fd,"%s\n",func);
   fclose(fd);
   sprintf(gccode,"gcc %s.c -shared -fPIC -o %s.so",dlstore,dlstore);
@@ -29,7 +29,11 @@ void dyn_reload(char *func){
   sprintf(gccode,"./%s.so",dlstore);
   if(dlp!=NULL)
  	 dlclose(dlp);
-  dlp=dlopen(gccode,RTLD_LAZY|RTLD_GLOBAL);
+  dlp=dlopen(gccode,RTLD_NOW|RTLD_GLOBAL);
+  sprintf(gccode,"%s.so",dlstore);
+  remove(gccode);
+  sprintf(gccode,"%s.c",dlstore);
+  remove(gccode);
   char *wr=dlerror();
   if(wr!=NULL) {
 	  printf("%s\n",wr);
