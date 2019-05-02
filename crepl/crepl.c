@@ -12,7 +12,7 @@ int main(int argc, char *argv[]) {
 		
 	}
 	else {//function
-		FILE* fd=fopen("a.c",O_RDWR|O_APPEND);
+		FILE* fd=fopen("a.c","ab+");
 		fprintf(fd,dat_inline);
 
 		fclose(fd);
