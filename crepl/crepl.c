@@ -49,8 +49,6 @@ void* func_find(char *func) {
 int main(int argc, char *argv[]) {
  // dlstore=mktemp(dlstore);
   int i=0;
-  FILE* fd=fopen("dl-XXXXXX.c","w");	
-  fclose(fd);
   while(1) {
 	i++;
 	sgetline();
