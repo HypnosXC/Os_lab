@@ -4,7 +4,7 @@
 #include<dlfcn.h>
 #include<sys/types.h>
 char dat_inline[1000];
-void getline()	{
+void sgetline()	{
 	char x=getchar();
 	char *p=dat_inline;
 	while(x!='\n')	{
@@ -15,8 +15,8 @@ void getline()	{
 	*p='\0';
 }
 int main(int argc, char *argv[]) {
-  while(1) {
-	getline();
+  whil e(1) {
+	sgetline();
 	char *func=strstr(dat_inline,"int");
 	if(func==NULL||func!=dat_inline) {//expression
 		
