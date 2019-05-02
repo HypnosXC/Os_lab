@@ -13,8 +13,7 @@ int main(int argc, char *argv[]) {
 	}
 	else {//function
 		FILE* fd=fopen("a.c","ab+");
-		fprintf(fd,dat_inline);
-
+		fprintf(fd,"%s\n",dat_inline);
 		fclose(fd);
 	}
   }
