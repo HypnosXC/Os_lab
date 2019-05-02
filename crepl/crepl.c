@@ -34,7 +34,7 @@ void dyn_reload(char *func){
   remove(gccode);
   char *wr=dlerror();
   if(wr!=NULL) {
-	  printf("%s\n",wr);
+	  printf("openfault:\n %s\n",wr);
   }
 }
 void* func_find(char *func) {
