@@ -15,12 +15,13 @@ void sgetline()	{
 	}
 	*p='\0';
 }
-char dlstore[]="dl-XXXXXX";
+char dlstore[]="dl";
 char gccode[1000];
 char expr[1000];
 void *dlp;
 void dyn_reload(char *func){
-  FILE* fd=fopen("dl-XXXXXX.c","w");	
+  fprintf(gccode,"%s.c",dlstore);
+  FILE* fd=fopen("dl.c","w");	
   fprintf(fd,"%s\n",func);
   fclose(fd);
   sprintf(gccode,"gcc %s.c -shared -ldl -fPIC -o %s.so",dlstore,dlstore);
@@ -31,6 +32,8 @@ void dyn_reload(char *func){
 //	  dlclose(dlp);
   dlp=dlopen(gccode,RTLD_LAZY|RTLD_GLOBAL); 
   sprintf(gccode,"%s.c",dlstore);
+  remove(gccode);
+  sprintf(gccode,"%s.so",dlstore);
   remove(gccode);
   char *wr=dlerror();
   if(wr!=NULL) {
