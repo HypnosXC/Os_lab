@@ -25,13 +25,13 @@ void dyn_reload(char *func){
   fclose(fd);
   sprintf(gccode,"gcc %s.c -shared -fPIC -o %s.so",dlstore,dlstore);
   system(gccode);
-  printf(">>>>");
-  fflush(stdout);
   memset(gccode,0,strlen(gccode));
   sprintf(gccode,"./%s.so",dlstore);
  // if(dlp!=NULL)
  	// dlclose(dlp);
   dlp=dlopen(gccode,RTLD_NOW|RTLD_GLOBAL);
+  printf(">>>>");
+  fflush(stdout);
   sprintf(gccode,"%s.so",dlstore);
   remove(gccode);
   sprintf(gccode,"%s.c",dlstore);
