@@ -15,7 +15,7 @@ void sgetline()	{
 	*p='\0';
 }
 int main(int argc, char *argv[]) {
-  whil e(1) {
+  while(1) {
 	sgetline();
 	char *func=strstr(dat_inline,"int");
 	if(func==NULL||func!=dat_inline) {//expression
