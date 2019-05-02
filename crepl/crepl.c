@@ -35,6 +35,7 @@ int main(int argc, char *argv[]) {
 	i++;
 	sgetline();
 	char *func=strstr(dat_inline,"int");
+	printf("%p  %p\n",func,dat_inline);
 	if(func ==NULL||func!=dat_inline) {//expression
 		sprintf(expr,"int expr_%d() { return (%s); }",i,dat_inline);		
 		dyn_reload(expr);
