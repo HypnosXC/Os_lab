@@ -24,7 +24,7 @@ void dyn_reload(char *func){
   FILE* fd=fopen(gccode,"w");	
   fprintf(fd,"%s\n",func);
   fclose(fd);
-  sprintf(gccode,"gcc %s.c -shared -ldl -fPIC -o %s.so",dlstore,dlstore);
+  sprintf(gccode,"gcc %s.c -shared -ldl -fPIC -o %s.so 2>/dev/null",dlstore,dlstore);
   system(gccode);
   memset(gccode,0,strlen(gccode));
   sprintf(gccode,"./%s.so",dlstore);
