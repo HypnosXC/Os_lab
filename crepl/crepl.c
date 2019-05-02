@@ -30,6 +30,9 @@ void dyn_reload(char *func){
   if(dlp!=NULL)
  	 dlclose(dlp);
   dlp=dlopen(gccode,RTLD_LAZY|RTLD_GLOBAL);
+  if(dlerror()!=NULL) {
+	  printf("%s\n",dlerror());
+  }
 }
 void* func_find(char *func) {
 	return dlsym(dlp,func);
