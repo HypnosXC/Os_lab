@@ -20,7 +20,7 @@ char gccode[1000];
 char expr[1000];
 void *dlp;
 void dyn_reload(char *func){
-  fprintf(gccode,"%s.c",dlstore);
+  sprintf(gccode,"%s.c",dlstore);
   FILE* fd=fopen("dl.c","w");	
   fprintf(fd,"%s\n",func);
   fclose(fd);
