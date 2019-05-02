@@ -47,7 +47,6 @@ int main(int argc, char *argv[]) {
 	i++;
 	sgetline();
 	int func=strstr(dat_inline,"int")-dat_inline;
-	printf("%d\n",func);
 	if(func!=0) {//expression
 		sprintf(expr,"int expr_%d() { return (%s); }",i,dat_inline);		
 		dyn_reload(expr);
