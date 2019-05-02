@@ -33,7 +33,7 @@ int main(int argc, char *argv[]) {
 		system(gccode);
 		memset(gccode,0,strlen(gccode));
 		sprintf(gccode,"%s.so",dlstore);
-		dlopen(gccode,RTLD_LAZY|RTLD_GLOBAL)
+		dlopen(gccode,RTLD_LAZY|RTLD_GLOBAL);
 	}
   }
 //  system("gcc a.c -shared -fPIC -o test.so");
