@@ -32,7 +32,7 @@ void dyn_reload(char *func){
   dlp=dlopen(gccode,RTLD_LAZY|RTLD_GLOBAL);
   char *wr=dlerror();
   if(wr!=NULL) {
-	  printf("%s\n",dlerror());
+	  printf("%s\n",wr);
   }
 }
 void* func_find(char *func) {
