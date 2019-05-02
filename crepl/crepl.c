@@ -25,6 +25,8 @@ void dyn_reload(char *func){
   fclose(fd);
   sprintf(gccode,"gcc %s.c -shared -fPIC -o %s.so",dlstore,dlstore);
   system(gccode);
+  printf(">>>>");
+  fflush();
   memset(gccode,0,strlen(gccode));
   sprintf(gccode,"./%s.so",dlstore);
  // if(dlp!=NULL)
