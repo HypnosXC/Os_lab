@@ -15,7 +15,7 @@ void sgetline()	{
 	}
 	*p='\0';
 }
-char dlstore[]="dl";
+char dlstore[100];
 char gccode[1000];
 char expr[1000];
 void *dlp;
