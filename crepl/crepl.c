@@ -4,9 +4,19 @@
 #include<dlfcn.h>
 #include<sys/types.h>
 char dat_inline[1000];
+void getline()	{
+	char x=getchar();
+	char *p=dat_inline;
+	while(x!='\n')	{
+		*p=x;
+		p++;
+		x=getchar();
+	}
+	*p='\0';
+}
 int main(int argc, char *argv[]) {
   while(1) {
- 	fgets(stdin,dat_inline);
+	getline();
 	char *func=strstr(dat_inline,"int");
 	if(func==NULL||func!=dat_inline) {//expression
 		
