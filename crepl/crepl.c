@@ -47,6 +47,10 @@ int main(int argc, char *argv[]) {
 		sprintf(expr,"int expr_%d() { return (%s); }",i,dat_inline);		
 		dyn_reload(expr);
 		memset(expr,0,strlen(expr));
+		sprintf(expr,"expr_%d",i);
+		int (*func)()= func_find(expr);
+		int value=func();
+		printf("answer is %d\n",value);
 	}
 	else 
 		dyn_reload(dat_inline);//function
