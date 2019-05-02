@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include<string.h>
 #include<stdlib.h>
-#include<dir.h>
+//#include<dir.h>
 #include<dlfcn.h>
 #include<sys/types.h>
 char dat_inline[1000];
