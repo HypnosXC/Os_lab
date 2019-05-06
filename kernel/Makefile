@@ -1,5 +1,5 @@
 NAME           := kernel
-SRCS           := framework/main.c $(shell find -L ./src/ -name "*.c")
+SRCS           := framework/main.c $(shell find -L ./src/ -name "*.c" -o -name "*.S")
 INC_DIR        := include/ framework/
 export AM_HOME := $(PWD)/../abstract-machine
 export TASK := L1
@@ -7,9 +7,14 @@ ifeq ($(ARCH),)
 export ARCH := x86-qemu
 endif
 
-PREBUILD := git
+PREBUILD := git initrd
 include $(AM_HOME)/Makefile.app
 include ../Makefile.lab
+
+.PHONY: initrd
+
+initrd:
+	@seq 1 8192 > build/ramdisk.img
 
 QEMU_FLAGS := -serial stdio -machine accel=kvm:tcg -drive format=raw,file=$(BINARY)
 
