@@ -22,13 +22,9 @@ typedef struct _snake{
 snake used[109];
 snake *head;
 body rand_bl[1009];
-char fix[4][100]={"RIGHT","LEFT","DOWN","UP"};
-vec f_ch[4];
-char *now_fix;
 int tot,rtot,inc;
 char pre[100];
 int w,h;
-int strcmp(const char *s1,const char *s2);
 uint32_t rand();
 uint32_t srand(int seed);
 uint32_t uptime();
@@ -74,8 +70,8 @@ body cal_motion(snake *a,int k)	{
 	body bx;
 	bx.x=a->block.x+k*a->dir.x;
 	bx.y=a->block.y+k*a->dir.y;
-	bx.x=(bx.x+w)%w;
-	bx.y=(bx.y+h)%h;
+	bx.x%=w;
+	bx.y%=h;
 	return bx;
 }
 vec vec_update(snake *a,const snake *fa) {
@@ -106,15 +102,6 @@ void init_snake()	{
 	head->block.x=head->block.y=1;
 	head->dir.x=16;
 	head->dir.y=0;
-	f_ch[0].x=16;
-	f_ch[0].y=0;
-	f_ch[1].x=-16;
-	f_ch[1].y=0;
-	f_ch[2].x=0;
-	f_ch[2].y=16;
-	f_ch[3].x=0;
-	f_ch[3].y=-16;
-	now_fix=NULL;
 }
 snake* f_tail(snake *a){
 	if(a->next==NULL)
@@ -125,68 +112,50 @@ void redraw_snake()	{
 	snake *Tail=f_tail(head);
     draw_blo(Tail->block.x/SIDE,Tail->block.y/SIDE,0);
 	loc_update(head);
-	if(inc)
+	if(inc){
+		puts("draw");
+		puts(itoa(Tail->block.x));
+		puts("ad");
+	
 		draw_blo(Tail->block.x/SIDE,Tail->block.y/SIDE,0xffffff);
+	}
 	head->block=cal_motion(head,1);
+	puts(itoa(head->block.x));
 	draw_blo(head->block.x/SIDE,head->block.y/SIDE,0xffffff);
 
-}
-void dir_change()	{
-	if(now_fix==NULL)
-		return;
-	for(int i=0;i<4;i++)	{
-		if(!strcmp(now_fix,fix[i]))
-			head->dir=f_ch[i];
-	}
-	return;
-}
-void new_blo()	{
-	int x=rand();
-	if(x&1)
-		return;
-	rand_bl[rtot++].x=(rand()%w)/SIDE;
-	rand_bl[rtot-1].y=(rand()%h)/SIDE;
-	draw_blo(rand_bl[rtot-1].x,rand_bl[rtot-1].y,0xffffff);
-}
-void inc_confirm()	{
-	int dx=head->block.x/SIDE,dy=head->block.y/SIDE;
-	for(int i=0;i<rtot;i++)
-		if(dx==rand_bl[i].x&&dy==rand_bl[i].y)	{
-			inc=1;
-			draw_blo(rand_bl[i].x,rand_bl[i].y,0);
-			for(int j=i;j<rtot-1;j++)
-				rand_bl[i]=rand_bl[i+1];
-			rtot--;
-			return;
-		}
-	inc=0;
 }
 int main() {
   // Operating system is a C program
   _ioe_init();
   init_screen();
   srand(uptime());
+//  splash();
   init_time();
   init_snake();
   int i=0;
   while (1) {
-    now_fix=read_key();
-	if(now_fix!=NULL)
-		puts(now_fix);
-	dir_change();
+    read_key();
 	time_update();
+//	for(int i=1;i<=1000000;i++)
+//		for(int j=1;j<=1000;j++)
+//			if(i>=1000000)
+//				puts(itoa(uptime()));
 	if(update_enable()) {
 		i++;
-		if(i==10)	{
-			new_blo();
-			i=0;
-		}
-		inc_confirm();
-		if(inc)	{
+		puts(itoa(i));
+		if(i>60)	{
 			inc_snake(head);
+			int t=head->dir.x;
+			head->dir.x=head->dir.y;
+			head->dir.y=t;
+			i=0;
+			inc=1;
 		}
+		else
+			inc=0;
+		puts(itoa(tot));
+		puts("\n");
 		redraw_snake();
-
 	}
   }
   return 0;
@@ -207,11 +176,9 @@ char* read_key() {
   if (event.keycode != _KEY_NONE && event.keydown) {
     puts("Key pressed: ");
     puts(key_names[event.keycode]);
-	puts("\n");
 	return (char *)key_names[event.keycode];
-    
+    puts("\n");
   }
-  return NULL;
 }
 void init_screen() {
   _DEV_VIDEO_INFO_t info = {0};
