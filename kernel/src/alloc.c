@@ -2,7 +2,7 @@
 #include <klib.h>
 #include <alloc.h>
 static uintptr_t pm_start, pm_end,pm_size,current_ptr=0,cu_pos,off_set=0;
-lc* alloc_lk;
+struct spinlock* alloc_lk;
 static void pmm_init() {
   pm_start = (uintptr_t)_heap.start;
   pm_end   = (uintptr_t)_heap.end;
