@@ -1,6 +1,5 @@
 #include "common.h"
 #include <assert.h>
-#include <stdio.h>
 static int cpu_cnt[100];
 void cli();
 void sti();
