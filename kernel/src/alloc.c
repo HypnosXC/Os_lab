@@ -9,7 +9,7 @@ static void pmm_init() {
   pm_size=pm_end-pm_start;
   bt_init((intptr_t *)pm_start,pm_size/(BLOCK_SIZE+32));//block used
   pm_start+=pm_size/(BLOCK_SIZE+32)*32;
-  alloc_lk=&allc_lc;
+  alloc_lk=&alloc_lc;
   alloc_lk->name="alloc";
 }
 
@@ -35,7 +35,7 @@ static void* kalloc(size_t size) {
 //		 lock(printf_lk);
 //		 printf("alloc %p block at%d,with cpu %d\n",pm_end-cu_pos*BLOCK_SIZE,cu_pos,_cpu());
 //		 unlock(printf_lk);
- 		unlock(alloc_lk);
+ 		spin_unlock(alloc_lk);
 	}
 	else {
 //		lock(printf_lk);
