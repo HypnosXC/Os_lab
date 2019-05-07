@@ -1,5 +1,7 @@
 #include "common.h"
 static int cpu_cnt[100];
+void cli();
+void sti();
 void spin_init(struct spinlock *lk,char *name) {
 	lk->locked=0;
 	lk->name=name;
