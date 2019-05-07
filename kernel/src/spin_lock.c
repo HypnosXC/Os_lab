@@ -1,6 +1,13 @@
 #include "common.h"
 #include "kernel.h"
-#include "x86-qemu.h"
+#define panic(s) \
+  do { \
+    puts("AM Panic: "); puts(s); \
+    puts(" @ " __FILE__ ":" TOSTRING(__LINE__) "  \n"); \
+    _halt(1); \
+  } while(0)
+
+
 static int cpu_cnt[100];
 void cli();
 void sti();
