@@ -3,12 +3,12 @@
 
 #include <kernel.h>
 #include <nanos.h>
-<<<<<<< HEAD
-=======
+//<<<<<<< HEAD
+//=======
 
 struct task {};
 struct spinlock {};
 struct semaphore {};
 
->>>>>>> dad0034cd442046d9cc407654dce68cdc0fd783e
+//>>>>>>> dad0034cd442046d9cc407654dce68cdc0fd783e
 #endif
