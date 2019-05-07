@@ -1,4 +1,5 @@
 #include "common.h"
+#include "kernel.h"
 static int cpu_cnt[100];
 void cli();
 void sti();
