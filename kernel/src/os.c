@@ -1,12 +1,10 @@
 #include <common.h>
-#include <my_os.h>
 #include <klib.h>
 int rand();
 int printf(const char * tmf,...);
 int sprintf(char * g,const char *tmf,...);
 static void os_init() {
   pmm->init();
-  printf_lk->name="printf";
 }
 static void hello() {
   for (const char *ptr = "Hello from CPU #"; *ptr; ptr++) {
