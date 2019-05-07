@@ -1,5 +1,4 @@
 #include "common.h"
-#include "kernel.h"
 #include <assert.h>
 #include <stdio.h>
 static int cpu_cnt[100];
@@ -21,7 +20,7 @@ void spin_unlock(struct spinlock *lk) {
 		assert(0);
 	}
 	if(_cpu()!=lk->hcpu){
-		printf("%s: wrong cpu unlock!\n".lk->name);// different cpu ,one hold, but another unlock
+		printf("%s: wrong cpu unlock!\n",lk->name);// different cpu ,one hold, but another unlock
 		assert(0);
 	}
 	cpu_cnt[lk->hcpu]--;
