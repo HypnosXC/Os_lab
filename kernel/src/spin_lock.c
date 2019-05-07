@@ -1,6 +1,7 @@
 #include "common.h"
 #include "kernel.h"
 #include <assert.h>
+#include <stdio.h>
 static int cpu_cnt[100];
 void cli();
 void sti();
@@ -16,11 +17,13 @@ void spin_lock(struct spinlock *lk) {
 }
 void spin_unlock(struct spinlock *lk) {
 	if(_atomic_xchg(&lk->locked,0)!=1) {
+		printf("%s: unlock but no hold!\n",lk->name);
 		assert(0);
-		panic("unlock but no hold!");
 	}
-	if(_cpu()!=lk->hcpu)
-		panic("wrong cpu unlock!");// different cpu ,one hold, but another unlock
+	if(_cpu()!=lk->hcpu){
+		printf("%s: wrong cpu unlock!\n".lk->name);// different cpu ,one hold, but another unlock
+		assert(0);
+	}
 	cpu_cnt[lk->hcpu]--;
 	if(cpu_cnt[lk->hcpu]==0)
 		sti();//enable intertupt when no lock
