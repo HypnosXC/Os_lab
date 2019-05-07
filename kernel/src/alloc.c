@@ -10,20 +10,20 @@ static void pmm_init() {
   pm_size=pm_end-pm_start;
   bt_init((intptr_t *)pm_start,pm_size/(BLOCK_SIZE+32));//block used
   pm_start+=pm_size/(BLOCK_SIZE+32)*32;
-  alloc_lk=allc_lc;
+  alloc_lk=&allc_lc;
   alloc_lk->name="alloc";
 }
 
 static void* kalloc(size_t size) {
  if(size>=BLOCK_SIZE) {
- 	lock(alloc_lk);
+ 	spin_lock(alloc_lk);
  	size=size+(BLOCK_SIZE-size%BLOCK_SIZE);
 	size/=BLOCK_SIZE;
 	int pos=bt_alloc(size);
 // lock(printf_lk);
 // printf("alloc %p block at %d,with cpu %d\n",(void *)(pm_end-pos*BLOCK_SIZE),pos,_cpu());
 // unlock(printf_lk);
- 	unlock(alloc_lk);
+    spin_unlock(alloc_lk);
 	return (void *)(pm_end-pos*BLOCK_SIZE);
  }
  else {
@@ -50,7 +50,7 @@ static void* kalloc(size_t size) {
 }
 
 static void kfree(void *ptr) {
-	lock(alloc_lk);
+	spin_lock(alloc_lk);
 	intptr_t pos=(intptr_t)ptr;
 	while(pos%BLOCK_SIZE)	{ 
 		pos-=pos%BLOCK_SIZE;
@@ -61,7 +61,7 @@ static void kfree(void *ptr) {
 //	printf("free %p at %d with cpu %d\n",ptr,pos,_cpu());
 //	unlock(printf_lk);
 	bt_free(pos);
-	unlock(alloc_lk);
+	spin_unlock(alloc_lk);
 }
 
 MODULE_DEF(pmm) {
