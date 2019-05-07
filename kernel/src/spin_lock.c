@@ -1,5 +1,6 @@
 #include "common.h"
 #include "kernel.h"
+#include "x86-qemu.h"
 static int cpu_cnt[100];
 void cli();
 void sti();
