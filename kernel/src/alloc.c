@@ -2,7 +2,7 @@
 #include <klib.h>
 #include <alloc.h>
 static uintptr_t pm_start, pm_end,pm_size,current_ptr=0,cu_pos,off_set=0;
-struct spinlock* alloc_lk;
+struct spinlock alloc_lc={0,0,"alloc"};
 static void pmm_init() {
   pm_start = (uintptr_t)_heap.start;
   pm_end   = (uintptr_t)_heap.end;
@@ -10,7 +10,6 @@ static void pmm_init() {
   bt_init((intptr_t *)pm_start,pm_size/(BLOCK_SIZE+32));//block used
   pm_start+=pm_size/(BLOCK_SIZE+32)*32;
   alloc_lk=&alloc_lc;
-  alloc_lk->name="alloc";
 }
 
 static void* kalloc(size_t size) {
