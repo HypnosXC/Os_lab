@@ -7,7 +7,11 @@
 //=======
 
 struct task {};
-struct spinlock {};
+struct spinlock {
+	int locked;
+	int hcpu;
+	char *name;
+};
 struct semaphore {};
 
 //>>>>>>> dad0034cd442046d9cc407654dce68cdc0fd783e
