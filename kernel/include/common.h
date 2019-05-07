@@ -3,6 +3,7 @@
 
 #include <kernel.h>
 #include <nanos.h>
+#include <defs.h>
 //<<<<<<< HEAD
 //=======
 
