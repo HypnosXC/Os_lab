@@ -1,5 +1,6 @@
 #include "common.h"
 #include <assert.h>
+int printf(char* tmf,...);
 static int cpu_cnt[100];
 void cli();
 void sti();
