@@ -2,7 +2,7 @@ NAME           := kernel
 SRCS           := framework/main.c $(shell find -L ./src/ -name "*.c" -o -name "*.S")
 INC_DIR        := include/ framework/
 export AM_HOME := $(PWD)/../abstract-machine
-export TASK := L1
+export TASK := L2
 ifeq ($(ARCH),)
 export ARCH := x86-qemu
 endif
