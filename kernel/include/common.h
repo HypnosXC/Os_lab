@@ -22,7 +22,7 @@ struct spinlock {
 struct semaphore {
 	int value;
 	spinlock sem_lk;
-	task* sem_st[100];
+	task_t * sem_st[100];
 	int top;
 	char *name;
 };
