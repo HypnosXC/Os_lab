@@ -1,5 +1,5 @@
 #include<common.h>
-#include<kilb.h>
+#include<klib.h>
 void sem_init(sem_t *sem,const char *name,int value){
 	spin_init(&sem->sem_lk,name);
 	sem->value=value;
