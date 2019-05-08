@@ -3,7 +3,7 @@
 void sem_init(sem_t *sem,const char *name,int value){
 	spin_init(&sem->sem_lk,name);
 	sem->value=value;
-	sem->name=pmm->alloce(sizeof(name));
+	sem->name=pmm->alloc(sizeof(name));
     strcpy(sem->name,name);
 	sem->top=0;
 }
