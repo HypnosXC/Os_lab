@@ -2,7 +2,7 @@
 #include<klib.h>
 #define STACK_SIZE 4096
 task_t *current[32];
-spinlock tsk_lk;
+spinlock_t tsk_lk;
 void noreach() {
 	printf("never been here!\n");
 	while(1){
@@ -16,7 +16,7 @@ _Context* context_switch(_Event e,_Context* c) {
 	spin_lock(&tsk_lk);
 	for(int i=_ncpu();i<32;i++)	{
 		if(current[i]!=NULL&&current[i]->state==0)	{
-		   task* t=current[_cpu()];
+		   task_t* t=current[_cpu()];
 		   current[_cpu()]=current[i];
 	       current[i]=t;
 		   break;	   
@@ -47,7 +47,7 @@ int create(task_t *task,const char *name,void (*entry)(void *arg),void *arg) {
 }
 void teardown(task_t *task) {
 	spin_lock(&tsk_lk);
-	for(innt i=0;i<32;i++)
+	for(int i=0;i<32;i++)
 		if(current[i]==task)
 				current[i]=NULL;
 	pmm->free(task->stack.start);
