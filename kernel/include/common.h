@@ -21,7 +21,7 @@ struct spinlock {
 //struct spinlock alloc_lc={0,0,"alloc"};
 struct semaphore {
 	int value;
-	spinlock sem_lk;
+	spinlock_t sem_lk;
 	task_t * sem_st[100];
 	int top;
 	char *name;
