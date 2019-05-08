@@ -33,7 +33,7 @@ _Context* context_save(_Event e,_Context *c) {
 }
 int create(task_t *task,const char *name,void (*entry)(void *arg),void *arg) {
 	spin_lock(&tsk_lk);
-	task->name=name;
+	memcpy(task->name,name);
 	task->state=0;
 	task->stack.start=pmm->alloc(STACK_SIZE);
 	task->stack.end=(void *)((intptr_t)task->stack.start+STACK_SIZE);
