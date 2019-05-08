@@ -13,7 +13,7 @@ task_t* current_task() {
 	return current[_cpu()];
 }
 _Context* context_switch(_Event e,_Context* c) {
-	spin_lock(&tsk_lk);
+	kmt->spin_lock(&tsk_lk);
 	for(int i=_ncpu();i<32;i++)	{
 		if(current[i]!=NULL&&current[i]->state==0)	{
 		   task_t* t=current[_cpu()];
@@ -22,17 +22,17 @@ _Context* context_switch(_Event e,_Context* c) {
 		   break;	   
 		}
 	}
-	spin_unlock(&tsk_lk);
+	kmt->spin_unlock(&tsk_lk);
 	return current[_cpu()]->context;
 }
 _Context* context_save(_Event e,_Context *c) {
-	spin_lock(&tsk_lk);
+	kmt->spin_lock(&tsk_lk);
     current[_cpu()]->context=c;
-	spin_unlock(&tsk_lk);
+	kmt->spin_unlock(&tsk_lk);
 	return NULL;
 }
 int create(task_t *task,const char *name,void (*entry)(void *arg),void *arg) {
-	spin_lock(&tsk_lk);
+	kmt->spin_lock(&tsk_lk);
 	task->name=name;
 	task->state=0;
 	task->stack.start=pmm->alloc(STACK_SIZE);
@@ -42,17 +42,17 @@ int create(task_t *task,const char *name,void (*entry)(void *arg),void *arg) {
 	for(int i=0;i<32;i++)
 		if(current[i]==NULL)
 			current[i]=task;
-	spin_unlock(&tsk_lk);
+	kmt->spin_unlock(&tsk_lk);
 	return 1;
 }
 void teardown(task_t *task) {
-	spin_lock(&tsk_lk);
+	kmt->spin_lock(&tsk_lk);
 	for(int i=0;i<32;i++)
 		if(current[i]==task)
 				current[i]=NULL;
 	pmm->free(task->stack.start);
 	pmm->free(task);
-	spin_unlock(&tsk_lk);
+	kmt->spin_unlock(&tsk_lk);
 }
 void kmt_init() {
 	os->on_irq(-19999,_EVENT_NULL,context_save);
