@@ -59,12 +59,12 @@ static _Context *os_trap(_Event ev, _Context *context) {
 static void os_on_irq(int seq, int event, handler_t handler) {
 	printf("irq set started");
 	kmt->spin_lock(&irq_lk);
-	printf("1");
 	hlen++;
 	int i=hlen-1;
 	handlers[i].func=handler;
 	handlers[i].seq=seq;
 	handlers[i].event=event;
+	printf("1");
 	for(i=hlen-2;i>=0;i--)	{
 		if(handlers[i].seq>handlers[i+1].seq)	{
 			rem_handler t=handlers[i];
