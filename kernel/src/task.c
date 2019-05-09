@@ -88,7 +88,7 @@ void noreach() {
 //	printf("never been here!\n");
  	while(1){
 		spin_lock(&prf_lk);
-		printf("cpu=%d\n",_cpu());
+//		printf("cpu=%d\n",_cpu());
 		spin_unlock(&prf_lk);
 		_yield();
 	}
