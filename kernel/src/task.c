@@ -193,7 +193,7 @@ _Context* context_switch(_Event e,_Context* c) {
 	while(1)	{
 		cnt++;
 		if(cnt>100000)	{
-			printf("\033[41m No runalbe task!\n\033[0m");
+			printf("\033[41m No runalbe task!\033[0m\n");
 			assert(0);
 		}
 		int i=(rand()%ind)*_ncpu()+_cpu();
