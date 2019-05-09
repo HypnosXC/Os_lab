@@ -13,6 +13,7 @@ rem_handler handlers[1000];
 int hlen;
 static void os_init() {
   pmm->init();
+  printf("pmm finished\n");
   kmt->init();
   _vme_init(pmm->alloc,pmm->free);
   dev->init();

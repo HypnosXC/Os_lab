@@ -3,9 +3,7 @@
 
 int main() {
   _ioe_init();
-  printf("1\n");
   _cte_init(os->trap);
-  printf("2\n");
   // call sequential init code
   os->init();
   printf("3\n");
