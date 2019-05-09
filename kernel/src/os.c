@@ -50,7 +50,7 @@ static _Context *os_trap(_Event ev, _Context *context) {
 	}
   }
   if(ret==NULL) { 
-  	printf("\033[31m fk trap no recurse!,hlen=%d,cpu=%d\n\033[0m",hlen,_cpu());
+  	printf("\033[31m fk trap%d no recurse!,hlen=%d,cpu=%d\n\033[0m",ev.event,hlen,_cpu());
 	assert(0);
   }
   kmt->spin_unlock(&trap_lk);
