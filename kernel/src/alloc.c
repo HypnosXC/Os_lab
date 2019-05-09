@@ -14,7 +14,7 @@ static void pmm_init() {
   	printf("gg uninit for alloc's kmt!\n");
 	assert(0);
   }
-  kmt->spin_init(alloc_lc,"alloc");
+  kmt->spin_init(&alloc_lc,"alloc");
   alloc_lk=&alloc_lc;
 }
 
