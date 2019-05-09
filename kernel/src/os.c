@@ -57,6 +57,7 @@ static _Context *os_trap(_Event ev, _Context *context) {
 }
 
 static void os_on_irq(int seq, int event, handler_t handler) {
+	printf("irq set started");
 	kmt->spin_lock(&irq_lk);
 	hlen++;
 	int i=hlen-1;
