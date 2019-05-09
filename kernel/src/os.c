@@ -3,7 +3,7 @@
 int rand();
 int printf(const char * tmf,...);
 int sprintf(char * g,const char *tmf,...);
-spin_lock irq_lk={0,0,"irq"},trap_lk={0,0,"trap"};
+spin_lock irq_lk,trap_lk;
 typedef struct _rem_handler{
 	handler func;
 	int seq;
@@ -17,6 +17,8 @@ static void os_init() {
   _vme_init(pmm->alloc,pmm->free);
   dev->init();
   vfs->init();
+  kmt->spin_init(trap_lk);
+  kmt->spin_init(irq_lk);
 }
 static void hello() {
   for (const char *ptr = "Hello from CPU #"; *ptr; ptr++) {
