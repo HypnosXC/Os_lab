@@ -125,7 +125,7 @@ void sem_signal(sem_t *sem) {
 	sem->value++;
 	printf("\n\033[31m sem_signal: \033[32m cpu%d for %s\n\033[0m",_cpu(),sem->name);
 	if(sem->value>=0)
-		sem->sem_st[sem->top--]->park=0;//runable
+		sem->sem_st[--sem->top]->park=0;//runable
 	spin_unlock(&sem->sem_lk);
 }
 // sem over
