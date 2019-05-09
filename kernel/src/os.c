@@ -16,7 +16,7 @@ static void os_init() {
   kmt->init();
   _vme_init(pmm->alloc,pmm->free);
   dev->init();
-  vfs->init();
+ // vfs->init();
   kmt->spin_init(&trap_lk,"trap");
   kmt->spin_init(&irq_lk,"irq");
 }
