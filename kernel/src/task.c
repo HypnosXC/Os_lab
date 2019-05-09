@@ -2,7 +2,7 @@
 #include<klib.h>
 #define STACK_SIZE 4096
 task_t *current[32];
-spinlock_t tsk_lk,ptf_lk;
+spinlock_t tsk_lk,prf_lk;
 
 // spin_lock started
 static int cpu_cnt[100];
