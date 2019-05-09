@@ -215,7 +215,7 @@ void kmt_init() {
 		create(pmm->alloc(sizeof(task_t)),pre,noreach,NULL);
 	} */
 	spin_init(&tsk_lk,"task");
-	spin_init(&prf_lk,"printf");
+	spin_init(&yield_lk,"yield");
 }
 MODULE_DEF(kmt) {
 	.init = kmt_init,
