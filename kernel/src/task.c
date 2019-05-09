@@ -102,8 +102,10 @@ _Context* context_switch(_Event e,_Context* c) {
 			continue;
 		if(current[i]!=NULL&&current[i]->state==0)	{
 		   task_t* t=current[_cpu()];
+		   t->state=0;//runable now
 		   current[_cpu()]=current[i];
 	       current[i]=t;
+		   current[_cpu()].state=2;//running
 		   break;	   
 		}
 	}
