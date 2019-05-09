@@ -218,6 +218,7 @@ _Context* context_switch(_Event e,_Context* c) {
 		}
 	}
 	spin_unlock(&tsk_lk);
+	printf("\nreturn task=%s\n",current[_cpu()]->name);
 	return current[_cpu()]->context;
 }
 // task over
