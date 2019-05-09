@@ -4,7 +4,7 @@
 #define STACK_SIZE 4096
 task_t *current[32];
 spinlock_t tsk_lk,prf_lk;
-
+int rand();
 // spin_lock started
 static int cpu_cnt[100];
 static int cpu_intr[100];
@@ -145,7 +145,11 @@ task_t* current_task() {
 }
 _Context* context_switch(_Event e,_Context* c) {
 	spin_lock(&tsk_lk);
-	for(int i=_cpu();i<32;i+=_ncpu())	{
+	int ind=32/_ncpu();
+	while(1)	{
+		int i=(rand()%ind)*_ncpu()+_cpu();
+		if(i>=32)
+			continue;
 		if(current[i]!=NULL&&current[i]->state==0)	{
 		   task_t* t=current[_cpu()];
 		   t->state=0;//runable now
@@ -160,6 +164,11 @@ _Context* context_switch(_Event e,_Context* c) {
 }
 _Context* context_save(_Event e,_Context *c) {
 	spin_lock(&tsk_lk);
+	if(current[_cpu()]==NULL) {
+		int pid=create(pmm->alloc(sizeof(task_t)),"null",NULL);
+		 current[_cpu()]=current[pid];
+		 current[_cpu()]->state=2;//running
+	}
     current[_cpu()]->context=c;
 	spin_unlock(&tsk_lk);
 	return NULL;
@@ -172,14 +181,15 @@ int create(task_t *task,const char *name,void (*entry)(void *arg),void *arg) {
 	task->stack.end=(void *)((intptr_t)task->stack.start+STACK_SIZE);
 	task->context=_kcontext(task->stack,entry,arg);
 	printf("new task:%s\n",name);
-	for(int i=0;i<32;i++)
+	int i=0;
+	for(;i<32;i++)
 		if(current[i]==NULL) {
 			current[i]=task;
 			printf("\033[task%d\n\033[0m",i);
 			break;
 		}
 	spin_unlock(&tsk_lk);
-	return 1;
+	return i;
 }
 void teardown(task_t *task) {
 	spin_lock(&tsk_lk);
@@ -197,11 +207,11 @@ void kmt_init() {
 //	printf("!!!!\n");
 	os->on_irq(19999,_EVENT_NULL,context_switch);
 //	printf("set over\n");
- 	for(int i=0;i<8;i++) 	{
+ /*	for(int i=0;i<8;i++) 	{
 		char pre[100];
 		sprintf(pre,"empty%d",i);
 		create(pmm->alloc(sizeof(task_t)),pre,noreach,NULL);
-	} 
+	} */
 	spin_init(&tsk_lk,"task");
 	spin_init(&prf_lk,"printf");
 }
