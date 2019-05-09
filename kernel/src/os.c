@@ -4,11 +4,12 @@ int rand();
 int printf(const char * tmf,...);
 int sprintf(char * g,const char *tmf,...);
 spin_lock irq_lk={0,0,"irq"},trap_lk={0,0,"trap"};
-struct rem_handler{
+typedef struct _rem_handler{
 	handler func;
 	int seq;
 	int event;
-}handlers[1000];
+}rem_handler;
+rem_handler handlers[1000];
 int hlen;
 static void os_init() {
   pmm->init();
