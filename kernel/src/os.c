@@ -13,13 +13,13 @@ rem_handler handlers[1000];
 int hlen;
 static void os_init() {
   pmm->init();
+  kmt->spin_init(&trap_lk,"trap");
+  kmt->spin_init(&irq_lk,"irq");
   kmt->init();
   printf("kmt finished\n");
   _vme_init(pmm->alloc,pmm->free);
   dev->init();
  // vfs->init();
-  kmt->spin_init(&trap_lk,"trap");
-  kmt->spin_init(&irq_lk,"irq");
   printf("\033[31m kmt finished!\n\033[0m");
 }
 static void hello() {
