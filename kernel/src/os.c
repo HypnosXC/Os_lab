@@ -48,8 +48,8 @@ static _Context *os_trap(_Event ev, _Context *context) {
 		if(next!=NULL)	ret=next;
 	}
   }
-  if(ret==NULL) {
-  	printf("\033[31m fk trap no recurse!,hlen=%d\n\033[0m",hlen);
+  if(ret==NULL) { 
+  	printf("\033[31m fk trap no recurse!,hlen=%d,cpu=%d\n\033[0m",hlen,_cpu());
 	assert(0);
   }
   kmt->spin_unlock(&trap_lk);
@@ -71,7 +71,7 @@ static void os_on_irq(int seq, int event, handler_t handler) {
 			handlers[i+1]=t;
 		}
 	}
-	printf("1,hlen=%d\n",hlen);
+	printf("1,hlen=%d\n,cpu=%d",hlen,_cpu());
 	kmt->spin_unlock(&irq_lk);
 	printf("irq set!\n");
 }
