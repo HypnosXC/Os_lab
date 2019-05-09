@@ -148,4 +148,4 @@ MODULE_DEF(kmt) {
 	.sem_signal=sem_signal,
 	.create=create,
 	.teardown=teardown,
-}
+};
