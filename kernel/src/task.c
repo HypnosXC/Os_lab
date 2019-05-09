@@ -107,7 +107,7 @@ void sem_wait(sem_t *sem) {
 	sem->value--;
 	printf("\n\033[31m sem_wait : \033[32m cpu%d for %s,task %s\n\033[0m",_cpu(),sem->name,cur->name);
 	while(sem->value<0) {
-		if(cur->state!=1)//no sleeped before or waken but no resourse
+		if(cur->park!=1)//no sleeped before or waken but no resourse
 			sem->sem_st[sem->top++]=cur;
 		cur->park=1;//sleep;
 //		printf("no hanlded yet for sem yield");
