@@ -203,7 +203,7 @@ _Context* context_switch(_Event e,_Context* c) {
 			continue;
 		if(current[i]->park)//sleep
 			continue;
-		printf("current is %d\n".current[i]->state);
+		printf("current is %d\n",current[i]->state);
 		if(current[i]->state==0)	{
 		   task_t* t=current[_cpu()];
 		   t->state=0;//runable now
