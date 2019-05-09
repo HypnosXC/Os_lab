@@ -42,9 +42,9 @@ static void os_run() {
 
 static _Context *os_trap(_Event ev, _Context *context) {
   kmt->spin_lock(&trap_lk);
-  printf("\033[32mtrap in cpu=%d?\n\033[0m",_cpu());
+//  printf("\033[32mtrap in cpu=%d?\n\033[0m",_cpu());
   task_t *cur=current_task();
-  printf("\ncpu#%d hold task %s\n",_cpu(),cur->name);
+  //printf("\ncpu#%d hold task %s\n",_cpu(),cur->name);
   cur->context=context;
   _Context *ret=NULL;
   for(int i=0;i<hlen;i++) {
@@ -57,7 +57,7 @@ static _Context *os_trap(_Event ev, _Context *context) {
   	printf("\033[31m fk trap%d no recurse!,hlen=%d,cpu=%d\n\033[0m",ev.event,hlen,_cpu());
 	assert(0);
   }
-  printf("\nIn trap now for cpu#%d, cnt is %d\n",_cpu(),cnt_cpu()); 
+ // printf("\nIn trap now for cpu#%d, cnt is %d\n",_cpu(),cnt_cpu()); 
   if(cnt_cpu()<=0)	{
   	printf("?????");
 	assert(0);
