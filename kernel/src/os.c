@@ -12,7 +12,6 @@ typedef struct _rem_handler{
 rem_handler handlers[1000];
 int hlen;
 static void os_init() {
-  cli();
   pmm->init();
   kmt->spin_init(&trap_lk,"trap");
   kmt->spin_init(&irq_lk,"irq");
@@ -22,7 +21,6 @@ static void os_init() {
   dev->init();
  // vfs->init();
   printf("\033[31m kmt finished!\n\033[0m");
-  sti();
 }
 static void hello() {
   for (const char *ptr = "Hello from CPU #"; *ptr; ptr++) {

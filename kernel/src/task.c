@@ -133,6 +133,7 @@ void teardown(task_t *task) {
 }
 // task over
 void kmt_init() {
+	cli();
 	printf("set started\n");
 	os->on_irq(-19999,_EVENT_NULL,context_save);
 	printf("!!!!\n");
@@ -142,6 +143,7 @@ void kmt_init() {
 		create(pmm->alloc(sizeof(task_t)),"empty",noreach,NULL);
 	} 
 	spin_init(&tsk_lk,"task");
+	sti();
 }
 MODULE_DEF(kmt) {
 	.init = kmt_init,
