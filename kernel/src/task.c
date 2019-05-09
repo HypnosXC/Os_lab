@@ -36,7 +36,7 @@ void popcli() {
 	if(!cpu_cnt[_cpu()]&&cpu_intr[_cpu()])
 		sti();
 }
-int holding(spinlock_t &lk) {
+int holding(spinlock_t *lk) {
 	int r;
 	pushcli();
 	r=lk->locked&& lk->hcpu=_cpu();
