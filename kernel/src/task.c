@@ -143,36 +143,6 @@ void noreach() {
 task_t* current_task() {
 	return current[_cpu()];
 }
-_Context* context_switch(_Event e,_Context* c) {
-	spin_lock(&tsk_lk);
-	int ind=32/_ncpu();
-	while(1)	{
-		int i=(rand()%ind)*_ncpu()+_cpu();
-		if(i>=32)
-			continue;
-		if(current[i]!=NULL&&current[i]->state==0)	{
-		   task_t* t=current[_cpu()];
-		   t->state=0;//runable now
-		   current[_cpu()]=current[i];
-	       current[i]=t;
-		   current[_cpu()]->state=2;//running
-		   break;	   
-		}
-	}
-	spin_unlock(&tsk_lk);
-	return current[_cpu()]->context;
-}
-_Context* context_save(_Event e,_Context *c) {
-	spin_lock(&tsk_lk);
-	if(current[_cpu()]==NULL) {
-		int pid=create(pmm->alloc(sizeof(task_t)),"null",NULL);
-		 current[_cpu()]=current[pid];
-		 current[_cpu()]->state=2;//running
-	}
-    current[_cpu()]->context=c;
-	spin_unlock(&tsk_lk);
-	return NULL;
-}
 int create(task_t *task,const char *name,void (*entry)(void *arg),void *arg) {
 	spin_lock(&tsk_lk);
 	strcpy(task->name,name);
@@ -199,6 +169,36 @@ void teardown(task_t *task) {
 	pmm->free(task->stack.start);
 	pmm->free(task);
 	spin_unlock(&tsk_lk);
+}
+_Context* context_save(_Event e,_Context *c) {
+	spin_lock(&tsk_lk);
+	if(current[_cpu()]==NULL) {
+		int pid=create(pmm->alloc(sizeof(task_t)),"null",NULL);
+		 current[_cpu()]=current[pid];
+		 current[_cpu()]->state=2;//running
+	}
+    current[_cpu()]->context=c;
+	spin_unlock(&tsk_lk);
+	return NULL;
+}
+_Context* context_switch(_Event e,_Context* c) {
+	spin_lock(&tsk_lk);
+	int ind=32/_ncpu();
+	while(1)	{
+		int i=(rand()%ind)*_ncpu()+_cpu();
+		if(i>=32)
+			continue;
+		if(current[i]!=NULL&&current[i]->state==0)	{
+		   task_t* t=current[_cpu()];
+		   t->state=0;//runable now
+		   current[_cpu()]=current[i];
+	       current[i]=t;
+		   current[_cpu()]->state=2;//running
+		   break;	   
+		}
+	}
+	spin_unlock(&tsk_lk);
+	return current[_cpu()]->context;
 }
 // task over
 void kmt_init() {
