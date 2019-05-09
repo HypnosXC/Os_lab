@@ -133,6 +133,7 @@ void teardown(task_t *task) {
 void kmt_init() {
 	os->on_irq(-19999,_EVENT_NULL,context_save);
 	os->on_irq(19999,_EVENT_NULL,context_switch);
+	printf("set over\n");
 	for(int i=0;i<8;i++)	{
 		create(pmm->alloc(sizeof(task_t)),"empty",noreach,NULL);
 	} 
