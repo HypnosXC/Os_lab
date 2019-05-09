@@ -19,6 +19,7 @@ static void os_init() {
  // vfs->init();
   kmt->spin_init(&trap_lk,"trap");
   kmt->spin_init(&irq_lk,"irq");
+  printf("kmt finished!\n");
 }
 static void hello() {
   for (const char *ptr = "Hello from CPU #"; *ptr; ptr++) {
