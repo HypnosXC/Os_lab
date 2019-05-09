@@ -201,7 +201,7 @@ _Context* context_switch(_Event e,_Context* c) {
 			continue;
 	 	if(current[i]==NULL)//empty
 			continue;
-		printf("\033[41m task :\033[42m num %d, park %d,state %d\033[0m\n",i,current[i]->park,current[i]->state);
+//		printf("\033[41m task :\033[42m num %d, park %d,state %d\033[0m\n",i,current[i]->park,current[i]->state);
 		if(current[i]->park)//sleep
 			continue;
 	//	printf("current is %d\n",current[i]->state);
