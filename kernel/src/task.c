@@ -12,7 +12,7 @@ void cli(){
 void sti() {
 	asm volatile ("sti");
 }
-void spin_init(struct spinlock *lk,char *name) {
+void spin_init(struct spinlock *lk,const char *name) {
 	lk->locked=0;
 	lk->name=name;
 }
