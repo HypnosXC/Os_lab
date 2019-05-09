@@ -142,7 +142,9 @@ void kmt_init() {
 	os->on_irq(19999,_EVENT_NULL,context_switch);
 	printf("set over\n");
 	for(int i=0;i<8;i++)	{
-		create(pmm->alloc(sizeof(task_t)),"empty",noreach,NULL);
+		char pre[100];
+		sprintf(pre,"empty%d",i);
+		create(pmm->alloc(sizeof(task_t)),pre,noreach,NULL);
 	} 
 	spin_init(&tsk_lk,"task");
 }
