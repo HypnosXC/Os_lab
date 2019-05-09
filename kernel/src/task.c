@@ -119,6 +119,7 @@ void sem_wait(sem_t *sem) {
 		spin_lock(&sem->sem_lk);
 //		spin_unlock(&yield_lk);
 	}
+	cur->park=0;
 	spin_unlock(&sem->sem_lk);
 }
 void sem_signal(sem_t *sem) {
