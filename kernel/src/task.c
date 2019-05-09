@@ -20,7 +20,7 @@ void spin_init(struct spinlock *lk,const char *name) {
 void spin_lock(struct spinlock *lk) {
 	cli();//disable interrupts
 	if(lk->locked&&lk->hcpu==_cpu()) {
-		printf("\n\033[31m fk lock reholding ,cpu#%d for %s\n",_cpu(),lk->name);
+		printf("\n\033[31m fk lock reholding ,cpu#%d for %s\n\033[0m",_cpu(),lk->name);
 		assert(0);
 	}
 	while(_atomic_xchg(&lk->locked,1)!=0);
