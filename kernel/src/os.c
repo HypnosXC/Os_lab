@@ -44,7 +44,7 @@ static _Context *os_trap(_Event ev, _Context *context) {
   kmt->spin_lock(&trap_lk);
   printf("\033[32mtrap in cpu=%d?\n\033[0m",_cpu());
   task_t *cur=current_task();
- // printf("\n%s\n",cur->name);
+  printf("\ncpu#%d hold task %s\n",_cpu(),cur->name);
   cur->context=context;
   _Context *ret=NULL;
   for(int i=0;i<hlen;i++) {
