@@ -1,5 +1,6 @@
 #include <common.h>
 #include <klib.h>
+#include <devices.h>
 int rand();
 void echo_task(void *name);
 int printf(const char * tmf,...);
@@ -38,9 +39,9 @@ static void os_run() {
   _intr_write(1);
   while (1) {
     _yield();
-  } 
+  }  
 }
-/*
+
 device_t *dev_lookup (const char* name);
 void echo_task(void *name) {
 	device_t *tty= dev_lookup(name);
@@ -53,7 +54,7 @@ void echo_task(void *name) {
 		sprintf(text,"Echo: %s,\n",line);
 		tty->ops->write(tty,0,text,strlen(text));
 	}
-}*/
+}
 static _Context *os_trap(_Event ev, _Context *context) {
   kmt->spin_lock(&trap_lk);
 //  printf("\033[32mtrap in cpu=%d?\n\033[0m",_cpu());
