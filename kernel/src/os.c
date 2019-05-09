@@ -12,8 +12,8 @@ typedef struct _rem_handler{
 rem_handler handlers[1000];
 int hlen;
 static void os_init() {
-  kmt->spin_init(&init_lk,"os_init");
-  kmt->spin_lock(&init_lk);
+ // kmt->spin_init(&init_lk,"os_init");
+//  kmt->spin_lock(&init_lk);
   pmm->init();
   kmt->spin_init(&trap_lk,"trap");
   kmt->spin_init(&irq_lk,"irq");
@@ -22,7 +22,7 @@ static void os_init() {
   _vme_init(pmm->alloc,pmm->free);
   dev->init();
  // vfs->init();
-  kmt->spin_unlock(&init_lk);
+ // kmt->spin_unlock(&init_lk);
   //printf("\033[31m kmt finished!\n\033[0m");
 }
 static void hello() {
