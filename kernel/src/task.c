@@ -105,7 +105,7 @@ _Context* context_switch(_Event e,_Context* c) {
 		   t->state=0;//runable now
 		   current[_cpu()]=current[i];
 	       current[i]=t;
-		   current[_cpu()].state=2;//running
+		   current[_cpu()]->state=2;//running
 		   break;	   
 		}
 	}
