@@ -189,7 +189,13 @@ _Context* context_save(_Event e,_Context *c) {
 _Context* context_switch(_Event e,_Context* c) {
 	spin_lock(&tsk_lk);
 	int ind=32/_ncpu();
+	int cnt=0;
 	while(1)	{
+		cnt++;
+		if(cnt>100000)	{
+			printf("\033[41m No runalbe task!\n\033[0m");
+			assert(0);
+		}
 		int i=(rand()%ind)*_ncpu()+_cpu();
 		if(i>=32)//too large random
 			continue;
