@@ -38,6 +38,7 @@ static void os_run() {
 }
 
 static _Context *os_trap(_Event ev, _Context *context) {
+  printf("trap?\n");
   kmt->spin_lock(&trap_lk);
   task_t *cur=current_task();
   cur->context=context;
