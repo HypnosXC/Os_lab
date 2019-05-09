@@ -140,13 +140,13 @@ void kmt_init() {
 	spin_init(&tsk_lk,"task");
 }
 MODULE_DEF(kmt) {
-	.init = kmt_init(),
-	.spin_init=spin_init(),
-	.sem_init=sem_init(),
-	.spin_lock=spin_lock(),
-	.spin_unlock=spin_unlock(),
-	.sem_wait=sem_wait(),
-	.sem_signal=sem_signal(),
-	.create=create(),
-	.teardown=teardown(),
+	.init = kmt_init,
+	.spin_init=spin_init,
+	.sem_init=sem_init,
+	.spin_lock=spin_lock,
+	.spin_unlock=spin_unlock,
+	.sem_wait=sem_wait,
+	.sem_signal=sem_signal,
+	.create=create,
+	.teardown=teardown,
 }
