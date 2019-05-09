@@ -12,9 +12,9 @@ void cli(){
 void sti() {
 	asm volatile ("sti");
 }
-void spin_init(struct spinlock *lk, char *name) {
+void spin_init(struct spinlock *lk,const char *name) {
 	lk->locked=0;
-	lk->name=name;
+	strcpy(lk->name,name);
 }
 void spin_lock(struct spinlock *lk) {
 	cli();//disable interrupts
@@ -42,10 +42,9 @@ void spin_unlock(struct spinlock *lk) {
 
 
 //sem started
-void sem_init(sem_t *sem, char *name,int value){
+void sem_init(sem_t *sem, const char *name,int value){
 	spin_init(&sem->sem_lk,name);
 	sem->value=value;
-	sem->name=pmm->alloc(sizeof(name));
     strcpy(sem->name,name);
 	sem->top=0;
 }

@@ -10,7 +10,7 @@
 //#define spin_unlock(c) kmt->spin_unlock(c)
 //#define spin_init(c,name) kmt->spin_init(c,name)
 struct task {
-	char * name;
+	char name[30];
 	_Context *context;
 	_Area stack;
 	int state;//sleep,dead or some 
@@ -18,7 +18,7 @@ struct task {
 struct spinlock {
 	int locked;
 	int hcpu;
-	char *name;
+	char name[30];
 };
 //struct spinlock alloc_lc={0,0,"alloc"};
 struct semaphore {
@@ -26,7 +26,7 @@ struct semaphore {
 	spinlock_t sem_lk;
 	task_t * sem_st[100];
 	int top;
-	char *name;
+	char name[30];
 };
 
 //>>>>>>> dad0034cd442046d9cc407654dce68cdc0fd783e
