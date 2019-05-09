@@ -33,7 +33,7 @@ void spin_unlock(struct spinlock *lk) {
 		assert(0);
 	}
 	cpu_cnt[lk->hcpu]--;
-	printf("lk=%s,cpu%d,lkcnt=%d\n",lk->name,lk->hcpu,cpu_cnt[lk->hcpu]);
+//	printf("lk=%s,cpu%d,lkcnt=%d\n",lk->name,lk->hcpu,cpu_cnt[lk->hcpu]);
 	if(cpu_cnt[lk->hcpu]==0)
 		sti();//enable intertupt when no lock
 }
