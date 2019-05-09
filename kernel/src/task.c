@@ -131,6 +131,7 @@ void teardown(task_t *task) {
 }
 // task over
 void kmt_init() {
+	printf("set started\n");
 	os->on_irq(-19999,_EVENT_NULL,context_save);
 	os->on_irq(19999,_EVENT_NULL,context_switch);
 	printf("set over\n");
