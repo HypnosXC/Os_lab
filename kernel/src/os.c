@@ -63,7 +63,7 @@ static void os_on_irq(int seq, int event, handler_t handler) {
 	handlers[i].event=event;
 	for(i=hlen-2;i>=0;i--)	{
 		if(handlers[i].seq>handlers[i+1].seq)	{
-			rem_handler t=handler[i];
+			rem_handler t=handlers[i];
 			handlers[i]=handlers[i+1];
 			handlers[i+1]=t;
 		}
