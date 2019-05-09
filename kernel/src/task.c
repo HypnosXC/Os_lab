@@ -25,11 +25,11 @@ void spin_lock(struct spinlock *lk) {
 }
 void spin_unlock(struct spinlock *lk) {
 	if(_atomic_xchg(&lk->locked,0)!=1) {
-		printf("%s: unlock but no hold!\n",lk->name);
+		printf("\033[31m%s: unlock but no hold!\n\033[0m",lk->name);
 		assert(0);
 	}
 	if(_cpu()!=lk->hcpu){
-		printf("%s: wrong cpu unlock!\n",lk->name);// different cpu ,one hold, but another unlock
+		printf("\033[31m%s: wrong cpu unlock!\n\033m",lk->name);// different cpu ,one hold, but another unlock
 		assert(0);
 	}
 	cpu_cnt[lk->hcpu]--;
