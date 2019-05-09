@@ -173,7 +173,7 @@ void teardown(task_t *task) {
 _Context* context_save(_Event e,_Context *c) {
 	spin_lock(&tsk_lk);
 	if(current[_cpu()]==NULL) {
-		int pid=create(pmm->alloc(sizeof(task_t)),"null",NULL);
+		int pid=create(pmm->alloc(sizeof(task_t)),"null",noreach,NULL);
 		 current[_cpu()]=current[pid];
 		 current[_cpu()]->state=2;//running
 	}
