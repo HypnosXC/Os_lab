@@ -124,7 +124,7 @@ esevoid sem_wait(sem_t *sem) {
 	cur->park=0;
 	spin_unlock(&sem->sem_lk);
 }
-voidm_signal(sem_t *sem) {
+void sem_signal(sem_t *sem) {
 	spin_lock(&sem->sem_lk);
 	sem->value++;
 	printf("\n\033[41m sem_signal: \033[42m cpu%d for %s\033[0m\n",_cpu(),sem->name);
