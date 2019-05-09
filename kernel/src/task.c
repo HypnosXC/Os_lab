@@ -15,6 +15,7 @@ void sti() {
 void spin_init(struct spinlock *lk,const char *name) {
 	lk->locked=0;
 	strcpy(lk->name,name);
+	printf("lk %s=%s\n",name,lk->name);
 }
 void spin_lock(struct spinlock *lk) {
 	cli();//disable interrupts
