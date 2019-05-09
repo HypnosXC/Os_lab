@@ -64,6 +64,7 @@ static _Context *os_trap(_Event ev, _Context *context) {
   _Context *ret=NULL;
   for(int i=0;i<hlen;i++) {
  	if(handlers[i].event==_EVENT_NULL||handlers[i].event==ev.event) {
+		printf(" trap used %d\n",i);
 		_Context *next =handlers[i].func(ev,context);
 		if(next!=NULL)	ret=next;
 	 }
