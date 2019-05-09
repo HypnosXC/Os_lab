@@ -28,5 +28,5 @@ void spin_unlock(struct spinlock *lk) {
 		sti();//enable intertupt when no lock
 }*/
 void ss(){
-	return 0;
+	return ;
 }
