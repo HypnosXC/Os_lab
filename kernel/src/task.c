@@ -27,6 +27,7 @@ void spin_lock(struct spinlock *lk) {
 	lk->hcpu=_cpu();
 	cpu_cnt[lk->hcpu]++;
 	printf("\ncpu#%d holding the lock %s\n",_cpu(),lk->name);
+	__sync_synchronize();
 }
 int cnt_cpu() {
 	return cpu_cnt[_cpu()];
