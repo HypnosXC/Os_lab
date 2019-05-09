@@ -1,6 +1,6 @@
 #include <devices.h>
 #define TTY_COOK_BUF_SZ 1024
-//void *memmove(void *out,const void* in,int length);
+void *memmove(void *out,const void* in,int length);
 struct character tty_defaultch() {
   return (struct character) { .metadata = 0, .ch = '\0' };
 }
