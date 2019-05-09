@@ -23,6 +23,9 @@ void spin_lock(struct spinlock *lk) {
 	lk->hcpu=_cpu();
 	cpu_cnt[lk->hcpu]++;
 }
+int cnt_cpu() {
+	return cpu_cnt[_cpu()];
+}
 void spin_unlock(struct spinlock *lk) {
 	if(_atomic_xchg(&lk->locked,0)!=1) {
 		printf("\033[31m%s: unlock but no hold!\n\033[0m",lk->name);
