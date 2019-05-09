@@ -1,6 +1,6 @@
 #include <kernel.h>
 #include <klib.h>
-
+device_t *dev_lookup(const char *name);
 int main() {
   _ioe_init();
   _cte_init(os->trap);
