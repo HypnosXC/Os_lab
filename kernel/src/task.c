@@ -22,6 +22,7 @@ void spin_lock(struct spinlock *lk) {
 	while(_atomic_xchg(&lk->locked,1)!=0);
 	lk->hcpu=_cpu();
 	cpu_cnt[lk->hcpu]++;
+	printf("cpu#%d holding the lock %s",_cpu(),lk->name);
 }
 int cnt_cpu() {
 	return cpu_cnt[_cpu()];
