@@ -109,7 +109,7 @@ void sem_wait(sem_t *sem) {
 		if(cur->state!=1)//no sleeped before or waken but no resourse
 			sem->sem_st[sem->top++]=cur;
 		cur->state=1;//sleep;
-		printf("no hanlded yet for sem yield");
+//		printf("no hanlded yet for sem yield");
 //		assert(0);
 		spin_lock(&yield_lk);
 		spin_unlock(&sem->sem_lk);
