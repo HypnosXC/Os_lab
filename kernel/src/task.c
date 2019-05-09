@@ -1,39 +1,69 @@
 #include<common.h>
 #include<klib.h>
+#define FL_IF 0x00000200  
 #define STACK_SIZE 4096
 task_t *current[32];
 spinlock_t tsk_lk,prf_lk;
 
 // spin_lock started
 static int cpu_cnt[100];
+static int cpu_intr[100];
 void cli(){
 	asm volatile ("cli"); 
 }
 void sti() {
 	asm volatile ("sti");
 }
+int readeflags(){
+  int eflags;
+  asm volatile("pushfl; popl %0" : "=r" (eflags));
+  return eflags;
+};
 void spin_init(struct spinlock *lk,const char *name) {
 	lk->locked=0;
 	strcpy(lk->name,name);
 	printf("lk %s=%s\n",name,lk->name);
 }
+void pushcli() {
+	int eflags=readeflags();
+	cli();
+	if(cpu_cnt[_cpu()]==0)
+		cpu_intr[_cpu()]=eflags&FL_IF;
+	cpu_cnt[_cpu()]++;
+}
+void popcli() {
+	cpu_cnt[_cpu()]--;
+	if(!cpu_cnt[_cpu()]&&cpu_intr[_cpu()])
+		sti();
+}
+int holding(spinlock_t &lk) {
+	int r;
+	pushcli();
+	r=lk->locked&& lk->hcpu=_cpu();
+	popcli();
+	return r;
+}
 void spin_lock(struct spinlock *lk) {
-	cli();//disable interrupts
+	/*cli();//disable interrupts
 	if(lk->locked&&lk->hcpu==_cpu()) {
+		printf("\n\033[31m fk lock reholding ,cpu#%d for %s\n\033[0m",_cpu(),lk->name);
+		assert(0);
+	}*/
+	pushcli();
+	if(holding(lk)) {
 		printf("\n\033[31m fk lock reholding ,cpu#%d for %s\n\033[0m",_cpu(),lk->name);
 		assert(0);
 	}
 	while(_atomic_xchg(&lk->locked,1)!=0);
-	lk->hcpu=_cpu();
-	cpu_cnt[lk->hcpu]++;
 	printf("\ncpu#%d holding the lock %s\n",_cpu(),lk->name);
 	__sync_synchronize();
+	lk->hcpu=_cpu();
 }
 int cnt_cpu() {
 	return cpu_cnt[_cpu()];
 }
 void spin_unlock(struct spinlock *lk) {
-	if(_atomic_xchg(&lk->locked,0)!=1) {
+/*	if(_atomic_xchg(&lk->locked,0)!=1) {
 		printf("\033[31m%s: unlock but no hold!\n\033[0m",lk->name);
 		assert(0);
 	}
@@ -47,7 +77,15 @@ void spin_unlock(struct spinlock *lk) {
 //	printf("lk=%s,cpu%d,lkcnt=%d\n",lk->name,lk->hcpu,cpu_cnt[lk->hcpu]);
 	__sync_synchronize();
 	if(cpu_cnt[lk->hcpu]==0)
-		sti();//enable intertupt when no lock
+		sti();//enable intertupt when no lock*/
+	if(!holding(lk)) {
+			printf("\033[31m%s: wrong cpu unlock at%d,original %d\n\033m",lk->name,cpu_n,lk->hcpu);// different cpu ,one hold, but another unlock
+		assert(0);
+	}
+	lk->hcpu=0;
+	__sync_synchronize();
+	asm volatile("movl $0, %0" : "+m"(lk->locked) : );
+	popcli();
 }
 // spin_lock finished
 
