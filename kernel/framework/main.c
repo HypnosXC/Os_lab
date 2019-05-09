@@ -1,4 +1,5 @@
 #include <kernel.h>
+#include<device.h>
 #include <klib.h>
 device_t *dev_lookup(const char *name);
 int main() {
