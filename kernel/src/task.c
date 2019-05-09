@@ -123,6 +123,7 @@ int create(task_t *task,const char *name,void (*entry)(void *arg),void *arg) {
 		if(current[i]==NULL) {
 			current[i]=task;
 			printf("\033[task%d\n\033[0m",i);
+			break;
 		}
 	spin_unlock(&tsk_lk);
 	return 1;
