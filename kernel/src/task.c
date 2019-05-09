@@ -39,7 +39,7 @@ void popcli() {
 int holding(spinlock_t *lk) {
 	int r;
 	pushcli();
-	r=lk->locked&& lk->hcpu=_cpu();
+	r= lk->locked && lk->hcpu==_cpu();
 	popcli();
 	return r;
 }
@@ -79,7 +79,7 @@ void spin_unlock(struct spinlock *lk) {
 	if(cpu_cnt[lk->hcpu]==0)
 		sti();//enable intertupt when no lock*/
 	if(!holding(lk)) {
-			printf("\033[31m%s: wrong cpu unlock at%d,original %d\n\033m",lk->name,cpu_n,lk->hcpu);// different cpu ,one hold, but another unlock
+			printf("\033[31m%s: wrong cpu unlock at%d,original %d\n\033m",lk->name,_cpu(),lk->hcpu);// different cpu ,one hold, but another unlock
 		assert(0);
 	}
 	lk->hcpu=0;
