@@ -3,7 +3,7 @@
 int rand();
 int printf(const char * tmf,...);
 int sprintf(char * g,const char *tmf,...);
-spinlock_t irq_lk,trap_lk,init_lk;
+spinlock_t irq_lk,trap_lk;
 typedef struct _rem_handler{
 	handler_t func;
 	int seq;
@@ -12,17 +12,17 @@ typedef struct _rem_handler{
 rem_handler handlers[1000];
 int hlen;
 static void os_init() {
- // kmt->spin_init(&init_lk,"os_init");
-//  kmt->spin_lock(&init_lk);
   pmm->init();
   kmt->spin_init(&trap_lk,"trap");
   kmt->spin_init(&irq_lk,"irq");
   kmt->init();
-//  printf("kmt finished\n");
   _vme_init(pmm->alloc,pmm->free);
   dev->init();
- // vfs->init();
- // kmt->spin_unlock(&init_lk);
+  kmt->create(pmm->alloc(sizeof(task_t)),"print",echo_task,"tty1");
+  kmt->create(pmm->alloc(sizeof(task_t)),"print",echo_task,"tty2");
+  kmt->create(pmm->alloc(sizeof(task_t)),"print",echo_task,"tty3");
+  kmt->create(pmm->alloc(sizeof(task_t)),"print",echo_task,"tty4");
+  // vfs->init();
   //printf("\033[31m kmt finished!\n\033[0m");
 }
 static void hello() {
@@ -39,7 +39,18 @@ static void os_run() {
     _yield();
   } 
 }
-
+void echo_task(void *name) {
+	device_t *tty= dev_lookup(name);
+	while(1) {
+		char line[128],test[128];
+		sprintf(text,"(%s) $ ", name);
+		tty_write(tty,text);
+		int nread = tty->ops->read(tty,0,line,sizeof(line));
+		line[nread-1]='\0';
+		sprintf(text,"Echo: %s,\n",line);
+		tty_write(tty,text);
+	}
+}
 static _Context *os_trap(_Event ev, _Context *context) {
   kmt->spin_lock(&trap_lk);
 //  printf("\033[32mtrap in cpu=%d?\n\033[0m",_cpu());
