@@ -145,9 +145,7 @@ task_t* current_task() {
 }
 _Context* context_switch(_Event e,_Context* c) {
 	spin_lock(&tsk_lk);
-	for(int i=_ncpu();i<32;i++)	{
-		if(i%_ncpu()!=_cpu())
-			continue;
+	for(int i=_cpu();i<32;i+=_ncpu())	{
 		if(current[i]!=NULL&&current[i]->state==0)	{
 		   task_t* t=current[_cpu()];
 		   t->state=0;//runable now
