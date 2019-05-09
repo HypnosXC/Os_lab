@@ -18,12 +18,12 @@ static void os_init() {
   kmt->spin_init(&trap_lk,"trap");
   kmt->spin_init(&irq_lk,"irq");
   kmt->init();
-  printf("kmt finished\n");
+//  printf("kmt finished\n");
   _vme_init(pmm->alloc,pmm->free);
   dev->init();
  // vfs->init();
   kmt->spin_unlock(&init_lk);
-  printf("\033[31m kmt finished!\n\033[0m");
+  //printf("\033[31m kmt finished!\n\033[0m");
 }
 static void hello() {
   for (const char *ptr = "Hello from CPU #"; *ptr; ptr++) {
@@ -37,11 +37,11 @@ static void os_run() {
   _intr_write(1);
   while (1) {
     _yield();
-  }
+  } 
 }
 
 static _Context *os_trap(_Event ev, _Context *context) {
-  printf("trap?\n");
+  //printf("trap?\n");
   kmt->spin_lock(&trap_lk);
   task_t *cur=current_task();
   cur->context=context;
@@ -50,18 +50,18 @@ static _Context *os_trap(_Event ev, _Context *context) {
  	if(handlers[i].event==_EVENT_NULL||handlers[i].event==ev.event) {
 		_Context *next =handlers[i].func(ev,context);
 		if(next!=NULL)	ret=next;
-	}
-  }
+	 }
+  } 
   if(ret==NULL) { 
   	printf("\033[31m fk trap%d no recurse!,hlen=%d,cpu=%d\n\033[0m",ev.event,hlen,_cpu());
 	assert(0);
-  }
+  } 
   kmt->spin_unlock(&trap_lk);
   return ret;
 }
 
 static void os_on_irq(int seq, int event, handler_t handler) {
-	printf("irq set started");
+//	printf("irq set started");
 	kmt->spin_lock(&irq_lk);
 	hlen++;
 	int i=hlen-1;
@@ -75,9 +75,9 @@ static void os_on_irq(int seq, int event, handler_t handler) {
 			handlers[i+1]=t;
 		}
 	}
-	printf("1,hlen=%d\n,cpu=%d,seq=%d\n",hlen,_cpu(),seq);
+	//printf("1,hlen=%d\n,cpu=%d,seq=%d\n",hlen,_cpu(),seq);
 	kmt->spin_unlock(&irq_lk);
-	printf("irq set!\n");
+//	printf("irq set!\n");
 	return;
 }
 
