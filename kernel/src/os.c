@@ -5,7 +5,7 @@ int printf(const char * tmf,...);
 int sprintf(char * g,const char *tmf,...);
 spin_lock_t irq_lk,trap_lk;
 typedef struct _rem_handler{
-	handler func;
+	handler_t func;
 	int seq;
 	int event;
 }rem_handler;
