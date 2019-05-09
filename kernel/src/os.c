@@ -57,7 +57,7 @@ void echo_task(void *name) {
 }
 static _Context *os_trap(_Event ev, _Context *context) {
   kmt->spin_lock(&trap_lk);
-//  printf("\033[32mtrap in cpu=%d?\n\033[0m",_cpu());
+  printf("\033[32mtrap in cpu=%d?\n\033[0m",_cpu());
   task_t *cur=current_task();
   //printf("\ncpu#%d hold task %s\n",_cpu(),cur->name);
   cur->context=context;
