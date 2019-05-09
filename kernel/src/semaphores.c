@@ -1,14 +1,14 @@
 #include<common.h>
 #include<klib.h>
 void sem_init(sem_t *sem,const char *name,int value){
-	spin_init(&sem->sem_lk,name);
+	kmt->spin_init(&sem->sem_lk,name);
 	sem->value=value;
 	sem->name=pmm->alloc(sizeof(name));
     strcpy(sem->name,name);
 	sem->top=0;
 }
 void sem_wait(sem_t *sem) {
-	spin_lock(&sem->sem_lk);
+	kmt->spin_lock(&sem->sem_lk);
 	sem->value--;
 	while(sem->value<0) {
 	  	task_t* cur=current_task();
@@ -21,12 +21,12 @@ void sem_wait(sem_t *sem) {
 		_yield();
 		spin_lock(&sem->sem_lk);
 	}
-	spin_unlock(&sem->sem_lk);
+	kmt->spin_unlock(&sem->sem_lk);
 }
 void sem_signal(sem_t *sem) {
-	spin_lock(&sem->sem_lk);
+	kmt->spin_lock(&sem->sem_lk);
 	sem->value++;
 	if(sem->value>=0)
 		sem->sem_st[sem->top--]->state=0;//runable
-	spin_unlock(&sem->sem_lk);
+	kmt->spin_unlock(&sem->sem_lk);
 }
