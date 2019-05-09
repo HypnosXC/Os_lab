@@ -34,7 +34,7 @@ static void os_run() {
 }
 
 static _Context *os_trap(_Event ev, _Context *context) {
-  spin_lock(&trap_lk);
+  kmt->spin_lock(&trap_lk);
   task_t *cur=current_task();
   cur->context=context;
   _Context *ret=NULL;
@@ -48,12 +48,12 @@ static _Context *os_trap(_Event ev, _Context *context) {
   	printf("fk trap no recurse!\n");
 	assert(0);
   }
-  spin_unlock(&trap_lk);
+  kmt->spin_unlock(&trap_lk);
   return ret;
 }
 
 static void os_on_irq(int seq, int event, handler_t handler) {
-	spin_lock(&irq_lk);
+	kmt->spin_lock(&irq_lk);
 	hlen++;
 	int i=hlen-1;
 	handlers[i].func=handler;
@@ -66,7 +66,7 @@ static void os_on_irq(int seq, int event, handler_t handler) {
 			handlers[i+1]=t;
 		}
 	}
-	spin_unlock(&irq_lk);
+	kmt->spin_unlock(&irq_lk);
 }
 
 MODULE_DEF(os) {
