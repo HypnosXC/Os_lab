@@ -15,6 +15,7 @@ static void os_init() {
   pmm->init();
   printf("pmm finished\n");
   kmt->init();
+  printf("kmt finished\n");
   _vme_init(pmm->alloc,pmm->free);
   dev->init();
  // vfs->init();
