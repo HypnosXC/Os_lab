@@ -153,12 +153,12 @@ void teardown(task_t *task) {
 }
 // task over
 void kmt_init() {
-	printf("set started\n");
+//	printf("set started\n");
 	os->on_irq(-19999,_EVENT_NULL,context_save);
-	printf("!!!!\n");
+//	printf("!!!!\n");
 	os->on_irq(19999,_EVENT_NULL,context_switch);
-	printf("set over\n");
-	for(int i=0;i<8;i++) 	{
+//	printf("set over\n");
+ 	for(int i=0;i<8;i++) 	{
 		char pre[100];
 		sprintf(pre,"empty%d",i);
 		create(pmm->alloc(sizeof(task_t)),pre,noreach,NULL);
