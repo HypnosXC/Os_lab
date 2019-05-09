@@ -40,7 +40,7 @@ static void os_run() {
     _yield();
   } 
 }
-
+device_t *dev_lookup (const char* name);
 void echo_task(void *name) {
 	device_t *tty= dev_lookup(name);
 	while(1) {
