@@ -102,7 +102,7 @@ void sem_init(sem_t *sem, const char *name,int value){
 	sem->top=0;
 	printf("\n\033[41m sem init:\033[43 name=%s,value=%d\n",name,value);
 }
-void sem_wait(sem_t *sem) {
+esevoid sem_wait(sem_t *sem) {
 	spin_lock(&sem->sem_lk);
 	task_t* cur=current_task();
 	sem->value--;
@@ -119,10 +119,12 @@ void sem_wait(sem_t *sem) {
 		spin_lock(&sem->sem_lk);
 //		spin_unlock(&yield_lk);
 	}
+	printf("\n\033[41m sem_wait : cpu#%d ,name= %s over! \033[0m\n",_cpu(),sem->name);
+
 	cur->park=0;
 	spin_unlock(&sem->sem_lk);
 }
-void sem_signal(sem_t *sem) {
+voidm_signal(sem_t *sem) {
 	spin_lock(&sem->sem_lk);
 	sem->value++;
 	printf("\n\033[41m sem_signal: \033[42m cpu%d for %s\033[0m\n",_cpu(),sem->name);
