@@ -19,7 +19,7 @@ static void os_init() {
  // vfs->init();
   kmt->spin_init(&trap_lk,"trap");
   kmt->spin_init(&irq_lk,"irq");
-  printf("kmt finished!\n");
+  printf("\033[31m kmt finished!\n\033[0m");
 }
 static void hello() {
   for (const char *ptr = "Hello from CPU #"; *ptr; ptr++) {
@@ -48,7 +48,7 @@ static _Context *os_trap(_Event ev, _Context *context) {
 	}
   }
   if(ret==NULL) {
-  	printf("\033[34m fk trap no recurse!,hlen=%d\n\033[0m",hlen);
+  	printf("\033[31m fk trap no recurse!,hlen=%d\n\033[0m",hlen);
 	assert(0);
   }
   kmt->spin_unlock(&trap_lk);
