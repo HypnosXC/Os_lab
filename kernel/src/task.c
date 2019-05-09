@@ -45,6 +45,7 @@ void spin_unlock(struct spinlock *lk) {
 	printf("\ncpu#%d realse the lock %s\n",_cpu(),lk->name);
 	cpu_cnt[lk->hcpu]--;
 //	printf("lk=%s,cpu%d,lkcnt=%d\n",lk->name,lk->hcpu,cpu_cnt[lk->hcpu]);
+	__sync_synchronize();
 	if(cpu_cnt[lk->hcpu]==0)
 		sti();//enable intertupt when no lock
 }
