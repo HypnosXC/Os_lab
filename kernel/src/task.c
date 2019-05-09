@@ -2,7 +2,7 @@
 #include<klib.h>
 #define STACK_SIZE 4096
 task_t *current[32];
-spinlock_t tsk_lk;
+spinlock_t tsk_lk,ptf_lk;
 
 // spin_lock started
 static int cpu_cnt[100];
@@ -86,7 +86,9 @@ void sem_signal(sem_t *sem) {
 void noreach() {
 //	printf("never been here!\n");
  	while(1){
+		spin_lock(&prf_lk);
 		printf("cpu=%d\n",_cpu());
+		spin_unlock(&prf_lk);
 		_yield();
 	}
 }
@@ -147,12 +149,13 @@ void kmt_init() {
 	printf("!!!!\n");
 	os->on_irq(19999,_EVENT_NULL,context_switch);
 	printf("set over\n");
-	for(int i=0;i<8;i++)	{
+	for(int i=0;i<8;i++) 	{
 		char pre[100];
 		sprintf(pre,"empty%d",i);
 		create(pmm->alloc(sizeof(task_t)),pre,noreach,NULL);
 	} 
 	spin_init(&tsk_lk,"task");
+	spin_init(&prf_lk,"printf");
 }
 MODULE_DEF(kmt) {
 	.init = kmt_init,
