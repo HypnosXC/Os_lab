@@ -3,7 +3,7 @@
 #define FL_IF 0x00000200  
 #define STACK_SIZE 4096
 task_t *current[32];
-spinlock_t tsk_lk,prf_lk;
+spinlock_t tsk_lk,yield_lk;
 int rand();
 // spin_lock started
 static int cpu_cnt[100];
@@ -111,9 +111,11 @@ void sem_wait(sem_t *sem) {
 		cur->state=1;//sleep;
 		printf("no hanlded yet for sem yield");
 //		assert(0);
+		spin_lock(&yield_lk);
 		spin_unlock(&sem->sem_lk);
 		_yield();
 		spin_lock(&sem->sem_lk);
+		spin_unlock(&yield_lk);
 	}
 	spin_unlock(&sem->sem_lk);
 }
