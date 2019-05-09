@@ -100,6 +100,7 @@ void sem_init(sem_t *sem, const char *name,int value){
 	sem->value=value;
     strcpy(sem->name,name);
 	sem->top=0;
+	printf("\n\033[41m sem init:\033[43 name=%s,value=%d\n",name,value);
 }
 void sem_wait(sem_t *sem) {
 	spin_lock(&sem->sem_lk);
