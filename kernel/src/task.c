@@ -4,8 +4,12 @@
 task_t *current[32];
 spinlock_t tsk_lk;
 static int cpu_cnt[100];
-void cli();
-void sti();
+void cli(){
+	asm volatile ("cli"); 
+}
+void sti() {
+	asm volatile ("sti");
+}
 void spin_init(struct spinlock *lk,char *name) {
 	lk->locked=0;
 	lk->name=name;
@@ -39,7 +43,7 @@ task_t* current_task() {
 	return current[_cpu()];
 }
 _Context* context_switch(_Event e,_Context* c) {
-	kmt->spin_lock(&tsk_lk);
+	spin_lock(&tsk_lk);
 	for(int i=_ncpu();i<32;i++)	{
 		if(current[i]!=NULL&&current[i]->state==0)	{
 		   task_t* t=current[_cpu()];
@@ -48,17 +52,17 @@ _Context* context_switch(_Event e,_Context* c) {
 		   break;	   
 		}
 	}
-	kmt->spin_unlock(&tsk_lk);
+	spin_unlock(&tsk_lk);
 	return current[_cpu()]->context;
 }
 _Context* context_save(_Event e,_Context *c) {
-	kmt->spin_lock(&tsk_lk);
+	spin_lock(&tsk_lk);
     current[_cpu()]->context=c;
-	kmt->spin_unlock(&tsk_lk);
+	spin_unlock(&tsk_lk);
 	return NULL;
 }
 int create(task_t *task,const char *name,void (*entry)(void *arg),void *arg) {
-	kmt->spin_lock(&tsk_lk);
+	spin_lock(&tsk_lk);
 	strcpy(task->name,name);
 	task->state=0;
 	task->stack.start=pmm->alloc(STACK_SIZE);
@@ -68,17 +72,17 @@ int create(task_t *task,const char *name,void (*entry)(void *arg),void *arg) {
 	for(int i=0;i<32;i++)
 		if(current[i]==NULL)
 			current[i]=task;
-	kmt->spin_unlock(&tsk_lk);
+	spin_unlock(&tsk_lk);
 	return 1;
 }
 void teardown(task_t *task) {
-	kmt->spin_lock(&tsk_lk);
+	spin_lock(&tsk_lk);
 	for(int i=0;i<32;i++)
 		if(current[i]==task)
 				current[i]=NULL;
 	pmm->free(task->stack.start);
 	pmm->free(task);
-	kmt->spin_unlock(&tsk_lk);
+	spin_unlock(&tsk_lk);
 }
 void kmt_init() {
 	os->on_irq(-19999,_EVENT_NULL,context_save);
