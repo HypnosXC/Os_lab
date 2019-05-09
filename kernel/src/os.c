@@ -13,7 +13,7 @@ rem_handler handlers[1000];
 int hlen;
 static void os_init() {
   kmt->spin_init(&init_lk,"os_init");
-  kmt->spin_lock(init_lk);
+  kmt->spin_lock(&init_lk);
   pmm->init();
   kmt->spin_init(&trap_lk,"trap");
   kmt->spin_init(&irq_lk,"irq");
