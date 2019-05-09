@@ -85,6 +85,7 @@ void spin_unlock(struct spinlock *lk) {
 	lk->hcpu=0;
 	__sync_synchronize();
 	asm volatile("movl $0, %0" : "+m"(lk->locked) : );
+	printf("cpu#%d realse the lock %s",_cpu(),lk->name;
 	popcli();
 }
 // spin_lock finished
