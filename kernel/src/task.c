@@ -86,7 +86,7 @@ void sem_signal(sem_t *sem) {
 void noreach() {
 //	printf("never been here!\n");
  	while(1){
-		printf("\033[31m cpu=%d\n",_cpu());
+		printf("cpu=%d\n",_cpu());
 		_yield();
 	}
 }
