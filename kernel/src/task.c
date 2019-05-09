@@ -90,5 +90,5 @@ void kmt_init() {
 	for(int i=0;i<8;i++)	{
 		create(pmm->alloc(sizeof(task_t)),"empty",noreach,NULL);
 	}
-	kmt->spin_init(&tsk_lk,"task");
+	spin_init(&tsk_lk,"task");
 }
