@@ -1,6 +1,7 @@
 #include <common.h>
 #include <klib.h>
 int rand();
+void echo_task(void *name);
 int printf(const char * tmf,...);
 int sprintf(char * g,const char *tmf,...);
 spinlock_t irq_lk,trap_lk;
