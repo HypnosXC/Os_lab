@@ -13,7 +13,8 @@ struct task {
 	char name[30];
 	_Context *context;
 	_Area stack;
-	int state;//sleep,dead or some 
+	int state;//running or some 
+	int park;//sleep or not
 }tasks[32]; 
 struct spinlock {
 	int locked;

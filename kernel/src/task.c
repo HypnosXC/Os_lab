@@ -109,7 +109,7 @@ void sem_wait(sem_t *sem) {
 	  	task_t* cur=current_task();
 		if(cur->state!=1)//no sleeped before or waken but no resourse
 			sem->sem_st[sem->top++]=cur;
-		cur->state=1;//sleep;
+		cur->park=1;//sleep;
 //		printf("no hanlded yet for sem yield");
 //		assert(0);
 		spin_lock(&yield_lk);
@@ -150,6 +150,7 @@ int create(task_t *task,const char *name,void (*entry)(void *arg),void *arg) {
 	spin_lock(&tsk_lk);
 	strcpy(task->name,name);
 	task->state=0;
+	task->park=0;
 	task->stack.start=pmm->alloc(STACK_SIZE);
 	task->stack.end=(void *)((intptr_t)task->stack.start+STACK_SIZE);
 	task->context=_kcontext(task->stack,entry,arg);
@@ -189,9 +190,13 @@ _Context* context_switch(_Event e,_Context* c) {
 	int ind=32/_ncpu();
 	while(1)	{
 		int i=(rand()%ind)*_ncpu()+_cpu();
-		if(i>=32)
+		if(i>=32)//too large random
 			continue;
-		if(current[i]!=NULL&&current[i]->state==0)	{
+	 	if(current[i]==NULL)//empty
+			continue;
+		if(current[i].park)//sleep
+			continue;
+		if(current[i]->state==0)	{
 		   task_t* t=current[_cpu()];
 		   t->state=0;//runable now
 		   current[_cpu()]=current[i];
