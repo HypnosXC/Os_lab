@@ -82,7 +82,7 @@ void spin_unlock(struct spinlock *lk) {
 			printf("\033[31m%s: wrong cpu unlock at%d,original %d\n\033m",lk->name,_cpu(),lk->hcpu);// different cpu ,one hold, but another unlock
 		assert(0);
 	}
-	lk->hcpu=0;
+	lk->hcpu=-1;
 	__sync_synchronize();
 	asm volatile("movl $0, %0" : "+m"(lk->locked) : );
 	printf("cpu#%d realse the lock %s",_cpu(),lk->name);
