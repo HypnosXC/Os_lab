@@ -1,4 +1,4 @@
-#include "common.h"
+/*#include "common.h"
 #include <assert.h>
 int printf(char* tmf,...);
 static int cpu_cnt[100];
@@ -26,4 +26,7 @@ void spin_unlock(struct spinlock *lk) {
 	cpu_cnt[lk->hcpu]--;
 	if(cpu_cnt[lk->hcpu]==0)
 		sti();//enable intertupt when no lock
+}*/
+void ss(){
+	return 0;
 }
