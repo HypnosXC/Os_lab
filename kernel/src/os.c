@@ -57,7 +57,7 @@ static _Context *os_trap(_Event ev, _Context *context) {
 	assert(0);
   } 
   kmt->spin_unlock(&trap_lk);
-  printf("\033[32mtrap finished\n\033[0m")
+  printf("\033[32mtrap finished\n\033[0m");
   return ret;
 }
 
