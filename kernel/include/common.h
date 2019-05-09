@@ -6,9 +6,9 @@
 #include <def.h>
 //<<<<<<< HEAD
 //=======
-#define spin_lock(c) kmt->spin_lock(c)
-#define spin_unlock(c) kmt->spin_unlock(c)
-#define spin_init(c,name) kmt->spin_init(c,name)
+//#define spin_lock(c) kmt->spin_lock(c)
+//#define spin_unlock(c) kmt->spin_unlock(c)
+//#define spin_init(c,name) kmt->spin_init(c,name)
 struct task {
 	char * name;
 	_Context *context;
