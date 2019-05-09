@@ -31,8 +31,9 @@ void spin_unlock(struct spinlock *lk) {
 		printf("\033[31m%s: unlock but no hold!\n\033[0m",lk->name);
 		assert(0);
 	}
-	if(_cpu()!=lk->hcpu){
-		printf("\033[31m%s: wrong cpu unlock at%d,original %d\n\033m",lk->name,_cpu(),lk->hcpu);// different cpu ,one hold, but another unlock
+	int cpu_n=_cpu();
+	if(cpu_n!=lk->hcpu){
+		printf("\033[31m%s: wrong cpu unlock at%d,original %d\n\033m",lk->name,cpu_n,lk->hcpu);// different cpu ,one hold, but another unlock
 		assert(0);
 	}
 	cpu_cnt[lk->hcpu]--;
