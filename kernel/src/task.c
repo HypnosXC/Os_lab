@@ -194,7 +194,7 @@ _Context* context_switch(_Event e,_Context* c) {
 			continue;
 	 	if(current[i]==NULL)//empty
 			continue;
-		if(current[i].park)//sleep
+		if(current[i]->park)//sleep
 			continue;
 		if(current[i]->state==0)	{
 		   task_t* t=current[_cpu()];
