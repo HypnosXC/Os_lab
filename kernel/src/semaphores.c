@@ -17,9 +17,9 @@ void sem_wait(sem_t *sem) {
 		cur->state=1;//sleep;
 		printf("no hanlded yet for sem yield");
 		assert(0);
-		spin_unlock(&sem->sem_lk);
+		kmt->spin_unlock(&sem->sem_lk);
 		_yield();
-		spin_lock(&sem->sem_lk);
+		kmt->spin_lock(&sem->sem_lk);
 	}
 	kmt->spin_unlock(&sem->sem_lk);
 }
