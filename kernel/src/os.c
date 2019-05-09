@@ -17,8 +17,8 @@ static void os_init() {
   _vme_init(pmm->alloc,pmm->free);
   dev->init();
   vfs->init();
-  kmt->spin_init(trap_lk,"trap");
-  kmt->spin_init(irq_lk,"irq");
+  kmt->spin_init(&trap_lk,"trap");
+  kmt->spin_init(&irq_lk,"irq");
 }
 static void hello() {
   for (const char *ptr = "Hello from CPU #"; *ptr; ptr++) {
