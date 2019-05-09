@@ -120,8 +120,10 @@ int create(task_t *task,const char *name,void (*entry)(void *arg),void *arg) {
 	task->context=_kcontext(task->stack,entry,arg);
 	printf("new task:%s\n",name);
 	for(int i=0;i<32;i++)
-		if(current[i]==NULL)
+		if(current[i]==NULL) {
 			current[i]=task;
+			printf("\033[task%d\n\033[0m",i);
+		}
 	spin_unlock(&tsk_lk);
 	return 1;
 }
