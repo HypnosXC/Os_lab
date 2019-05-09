@@ -22,7 +22,7 @@ static void os_init() {
   _vme_init(pmm->alloc,pmm->free);
   dev->init();
  // vfs->init();
-  kmt->spin_unlock(&init_lock);
+  kmt->spin_unlock(&init_lk);
   printf("\033[31m kmt finished!\n\033[0m");
 }
 static void hello() {
