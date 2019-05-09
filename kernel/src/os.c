@@ -75,6 +75,7 @@ static void os_on_irq(int seq, int event, handler_t handler) {
 	printf("1,hlen=%d\n,cpu=%d",hlen,_cpu());
 	kmt->spin_unlock(&irq_lk);
 	printf("irq set!\n");
+	return;
 }
 
 MODULE_DEF(os) {
