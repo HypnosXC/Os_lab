@@ -42,7 +42,7 @@ static void os_run() {
 
 static _Context *os_trap(_Event ev, _Context *context) {
   kmt->spin_lock(&trap_lk);
-  printf("trap in cpu=%d?\n",_cpu());
+  printf("\033[32mtrap in cpu=%d?\n\033[0m",_cpu());
   task_t *cur=current_task();
   cur->context=context;
   _Context *ret=NULL;
@@ -57,6 +57,7 @@ static _Context *os_trap(_Event ev, _Context *context) {
 	assert(0);
   } 
   kmt->spin_unlock(&trap_lk);
+  printf("\033[32mtrap finished\n\033[0m")
   return ret;
 }
 
