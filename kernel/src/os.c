@@ -69,14 +69,10 @@ static _Context *os_trap(_Event ev, _Context *context) {
 	 }
   } 
   if(ret==NULL) {  
-  	printf("\033[31m fk trap%d no recurse!,hlen=%d,cpu=%d\n\033[0m",ev.event,hlen,_cpu());
+  	printf("\033[31m fk trap%d no recurse!,task=%s,cpu=%d\n\033[0m",ev.event,current[_cpu()]->name,_cpu());
 	assert(0);
   }
  // printf("\nIn trap now for cpu#%d, cnt is %d\n",_cpu(),cnt_cpu()); 
-  if(cnt_cpu()<=0)	{
-  	printf("?????");
-	assert(0);
-  }
   kmt->spin_unlock(&trap_lk);
  // printf("\033[32mtrap finished\n\033[0m");
   if(ret==NULL) {
