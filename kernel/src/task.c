@@ -55,7 +55,7 @@ void spin_lock(struct spinlock *lk) {
 		assert(0);
  	}
 	while(_atomic_xchg(&lk->locked,1)!=0);
-	printf("\ncpu#%d holding the lock %s\n",_cpu(),lk->name);
+//	printf("\ncpu#%d holding the lock %s\n",_cpu(),lk->name);
 	__sync_synchronize();
 	lk->hcpu=_cpu();
 }
@@ -85,7 +85,7 @@ void spin_unlock(struct spinlock *lk) {
 	lk->hcpu=-1;
 	__sync_synchronize();
 	asm volatile("movl $0, %0" : "+m"(lk->locked) : );
-	printf("cpu#%d realse the lock %s",_cpu(),lk->name);
+//	printf("cpu#%d realse the lock %s",_cpu(),lk->name);
 	popcli();
 }
 // spin_lock finished
