@@ -227,11 +227,11 @@ void kmt_init() {
 //	printf("!!!!\n");
 	os->on_irq(19999,_EVENT_NULL,context_switch);
 //	printf("set over\n");
- /*	for(int i=0;i<8;i++) 	{
+ 	for(int i=0;i<8;i++) 	{
 		char pre[100];
 		sprintf(pre,"empty%d",i);
 		create(pmm->alloc(sizeof(task_t)),pre,noreach,NULL);
-	} */
+	} 
 	spin_init(&tsk_lk,"task");
 	spin_init(&yield_lk,"yield");
 }
