@@ -3,7 +3,7 @@
 int rand();
 int printf(const char * tmf,...);
 int sprintf(char * g,const char *tmf,...);
-spin_lock irq_lk,trap_lk;
+spin_lock_t irq_lk,trap_lk;
 typedef struct _rem_handler{
 	handler func;
 	int seq;
