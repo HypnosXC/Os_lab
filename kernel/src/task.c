@@ -23,7 +23,7 @@ int readeflags(){
 };
 void spin_init(struct spinlock *lk,const char *name) {
 	lk->locked=0;
-	lk->hcpu=-1;
+	lk->hcpu=1000;
 	strcpy(lk->name,name);
 	printf("lk %s=%s\n",name,lk->name);
 }
@@ -82,10 +82,10 @@ void spin_unlock(struct spinlock *lk) {
 	if(cpu_cnt[lk->hcpu]==0)
 		sti();//enable intertupt when no lock*/
 	if(!holding(lk)) {
-			printf("\033[31m%s: wrong cpu unlock at%d,original %d\n\033m",lk->name,_cpu(),lk->hcpu);// different cpu ,one hold, but another unlock
+			printf("\033[31mlock:%s,wrong cpu unlock at%d,original %d\n\033m",lk->name,_cpu(),lk->hcpu);// different cpu ,one hold, but another unlock
 		assert(0);
 	}
-	lk->hcpu=-1;
+	lk->hcpu=1000;
 	__sync_synchronize();
 	asm volatile("movl $0, %0" : "+m"(lk->locked) : );
 //	printf("cpu#%d realse the lock %s",_cpu(),lk->name);
