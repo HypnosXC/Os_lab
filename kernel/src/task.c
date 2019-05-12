@@ -5,7 +5,7 @@
 task_t *current[32];
 task_t *null[32];
 int no_run[32];
-spinlock_t tsk_lk,yield_lk;
+spinlock_t ct_lk,tsk_lk,yield_lk;
 int rand();
 // spin_lock started
 static int cpu_cnt[100];
@@ -214,18 +214,18 @@ void teardown(task_t *task) {
 	spin_unlock(&tsk_lk);
 }
 _Context* context_save(_Event e,_Context *c) {
-	spin_lock(&tsk_lk);
+	spin_lock(&ct_lk);
 	if(current[_cpu()]==NULL) {
 		int pid=create(pmm->alloc(sizeof(task_t)),"null",noreach,NULL);
 		 current[_cpu()]=current[pid];
 		 current[_cpu()]->state=2;//running
 	}
     current[_cpu()]->context=c;
-	spin_unlock(&tsk_lk);
+	spin_unlock(&ct_lk);
 	return NULL;
 }
 _Context* context_switch(_Event e,_Context* c) {
-	spin_lock(&tsk_lk);
+	spin_lock(&ct_lk);
 	_Context* ret=NULL;
 	for(int i=_cpu();i<32;i+=_ncpu()) {
 	 	if(current[i]==NULL||current[i]->park)//empty
@@ -254,7 +254,7 @@ _Context* context_switch(_Event e,_Context* c) {
 		current[_cpu()]->state=2;//running
 		ret=current[_cpu()]->context;
 	}
-	spin_unlock(&tsk_lk);
+	spin_unlock(&ct_lk);
 //	printf("\nreturn task=%s\n",current[_cpu()]->name);
 	return ret;
 }
@@ -272,7 +272,7 @@ void kmt_init() {
 //		null[i]=current[pid];
 //		current[pid]=NULL;
 //	}
- 
+	spin_init(&ct_lk,"save and switch"); 
 	spin_init(&tsk_lk,"task");
 	spin_init(&yield_lk,"yield");
 }
