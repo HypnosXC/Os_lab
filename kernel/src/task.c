@@ -143,9 +143,9 @@ void noreach() {
 //		spin_lock(&prf_lk);
 //		printf("cpu=%d\n",_cpu());
 //		spin_unlock(&prf_lk);
-		spin_lock(&yield_lk);
+	//	spin_lock(&yield_lk);
 		_yield();
-		spin_unlock(&yield_lk);
+	//	spin_unlock(&yield_lk);
 	}
 }
 task_t* current_task() {
