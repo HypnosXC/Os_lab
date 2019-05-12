@@ -3,8 +3,6 @@
 #define FL_IF 0x00000200  
 #define STACK_SIZE 4096
 task_t *current[32];
-task_t *null[32];
-int no_run[32];
 static spinlock_t ct_lk,tsk_lk,yield_lk;
 int rand();
 // spin_lock started
