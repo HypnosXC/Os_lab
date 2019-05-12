@@ -103,14 +103,35 @@ void sem_init(sem_t *sem, const char *name,int value){
 	sem->top=0;
 	printf("\n\033[41m sem init:\033[43 name=%s,value=%d\n",name,value);
 }
+void sem_append(task_t *tk,tasklist_t *ls) {
+	if(ls==NULL) {
+		ls=pmm->alloc(sizeof(tasklist_t));
+		ls->next=NULL;
+		ls->tk=tk;
+		return;
+	}
+	else {
+		while(ls->next!=NULL)
+			ls=ls->next;
+		ls->next=pmm->alloc(sizeof(tasklist_t));
+		ls->next->tk=tk;
+		ls->next->next=NULL;
+	}
+}
+tasklist_t* sem_decline(tasklist_t * ls) {
+	tasklist_t *nt=ls->next;
+	pmm->free(ls);
+	return nt;
+}
 void sem_wait(sem_t *sem) {
 	spin_lock(&sem->sem_lk);
 	task_t* cur=current_task();
 //	sem->value--;
 	printf("\n\033[41m sem_wait : \033[42m cpu%d for %s,value is%d\033[0m\n",_cpu(),sem->name,sem->value*-1);
-	while(sem->value<=0) {
+	sem->value--;
+	if(sem->value<0) {
 		if(cur->park!=1)//no sleeped before or waken but no resourse
-			sem->sem_st[sem->top++]=cur;
+			sem_append(cur,sem->tk_list);
 		cur->park=1;//sleep;
 //		printf("no hanlded yet for sem yield");
 //		assert(0);
@@ -119,7 +140,6 @@ void sem_wait(sem_t *sem) {
 		spin_lock(&sem->sem_lk);
 	}
 	printf("\n\033[41m sem_wait : cpu#%d ,name= %s over! \033[0m\n",_cpu(),sem->name);
-    sem->value--;
 	cur->park=0;
 	spin_unlock(&sem->sem_lk);
 }
@@ -127,7 +147,8 @@ void sem_signal(sem_t *sem) {
 	spin_lock(&sem->sem_lk);
 	sem->value++;
 	printf("\n\033[41m sem_signal: \033[42m cpu%d for %s\033[0m\n",_cpu(),sem->name);
-	sem->sem_st[--sem->top]->park=0;//runable
+	sem->tk_list->tk->park=0;//enrunable
+	sem->tk_list=sem_decline(sem->tk_list);
 	spin_unlock(&sem->sem_lk);
 }
 // sem over

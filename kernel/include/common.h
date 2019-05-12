@@ -22,11 +22,14 @@ struct spinlock {
 	char name[30];
 };
 //struct spinlock alloc_lc={0,0,"alloc"};
+typedef struct tasklist {
+	task_t * tk;
+	task_list * next;
+}tasklist_t;
 struct semaphore {
 	int value;
 	spinlock_t sem_lk;
-	task_t * sem_st[100];
-	int top;
+	tasklist_t* tk_list;
 	char name[30];
 };
 
