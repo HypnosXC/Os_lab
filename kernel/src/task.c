@@ -22,6 +22,8 @@ int readeflags(){
   return eflags;
 };
 void spin_init(struct spinlock *lk,const char *name) {
+	for(int i=0;i<10;i++)
+		lk->ff[i]=111,lk->bf[i]=222;
 	lk->locked=0;
 	lk->hcpu=1000;
 	strcpy(lk->name,name);
@@ -53,6 +55,12 @@ void spin_lock(struct spinlock *lk) {
 		assert(0);
 	}*/
 	pushcli();
+	for(int i=0;i<10;i++) {
+		if(lk->ff[i]!=111||lk->bf[i]!=222)	{
+			printf("\n shit lock changed in space coindently\n");
+			assert(0);
+		}
+	}
 	if(holding(lk)) {
 		printf("\n\033[31m fk lock reholding ,cpu#%d for %s\n\033[0m",_cpu(),lk->name);
 		assert(0);

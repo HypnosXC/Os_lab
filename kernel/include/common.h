@@ -17,9 +17,11 @@ struct task {
 	int park;//sleep or not
 }tasks[32]; 
 struct spinlock {
+	int ff[10];
 	int locked;
 	int hcpu;
 	char name[30];
+	int bf[10];
 };
 //struct spinlock alloc_lc={0,0,"alloc"};
 typedef struct tasklist {
