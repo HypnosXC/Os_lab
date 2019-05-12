@@ -4,6 +4,7 @@
 #define STACK_SIZE 4096
 task_t *current[32];
 task_t *null[32];
+int no_run[32];
 spinlock_t tsk_lk,yield_lk;
 int rand();
 // spin_lock started
@@ -225,7 +226,7 @@ _Context* context_switch(_Event e,_Context* c) {
 			continue;
 //		printf("\033[41m task :\033[42m num %d, park %d,state %d\033[0m\n",i,current[i]->park,current[i]->stat
 	//	printf("current is %d\n",current[i]->state);
-		if(current[i]->state==0)	{
+		if(current[i]->state==0||strcmp(current->name,"null"))	{
 		   task_t* t=current[_cpu()];
 		   t->state=0;//runable now
 		   current[_cpu()]=current[i];
@@ -249,13 +250,13 @@ void kmt_init() {
 //	printf("!!!!\n");
 	os->on_irq(19999,_EVENT_NULL,context_switch);
 //	printf("set over\n");
- 	for(int i=0;i<8;i++) 	{
-		char pre[100];
-		sprintf(pre,"empty%d",i);
-		int pid=create(pmm->alloc(sizeof(task_t)),pre,noreach,NULL);
-		null[i]=current[pid];
-		current[pid]=NULL;
-	}
+ //	for(int i=0;i<8;i++) 	{
+//		char pre[100];
+//		sprintf(pre,"empty%d",i);
+//		int pid=create(pmm->alloc(sizeof(task_t)),pre,noreach,NULL);
+//		null[i]=current[pid];
+//		current[pid]=NULL;
+//	}
  
 	spin_init(&tsk_lk,"task");
 	spin_init(&yield_lk,"yield");
