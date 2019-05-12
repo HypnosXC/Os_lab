@@ -18,8 +18,9 @@ static void pmm_init() {
   alloc_lk=&alloc_lc;
 }
 
-static void* kalloc(size_t size) {
- if(size>=BLOCK_SIZE) {
+static void* kalloc(size_t size) { 
+  size*=2;
+  if(size>=BLOCK_SIZE) {
  	kmt->spin_lock(alloc_lk);
  	size=size+(BLOCK_SIZE-size%BLOCK_SIZE);
 	size/=BLOCK_SIZE;
