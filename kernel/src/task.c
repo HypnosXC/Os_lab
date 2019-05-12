@@ -3,6 +3,7 @@
 #define FL_IF 0x00000200  
 #define STACK_SIZE 4096
 task_t *current[32];
+task_t *null[32];
 spinlock_t tsk_lk,yield_lk;
 int rand();
 // spin_lock started
@@ -213,22 +214,14 @@ _Context* context_save(_Event e,_Context *c) {
 }
 _Context* context_switch(_Event e,_Context* c) {
 	spin_lock(&tsk_lk);
-	int ind=32/_ncpu();
-	int cnt=0;
-	while(1)	{
-		cnt++;
-		if(cnt>100000)	{
-			printf("\033[41m No runable task!\033[0m\n");
-			assert(0);
-		}
+	_Context* ret=NULL;
+	for(int i=_cpu();i<32;i+=_ncpu()) {
 		int i=(rand()%ind)*_ncpu()+_cpu();
 		if(i>=32)//too large random
 			continue;
 	 	if(current[i]==NULL||current[i]->park)//empty
 			continue;
-//		printf("\033[41m task :\033[42m num %d, park %d,state %d\033[0m\n",i,current[i]->park,current[i]->state);
-//		if(current[i]->park)//sleep
-//			continue;
+//		printf("\033[41m task :\033[42m num %d, park %d,state %d\033[0m\n",i,current[i]->park,current[i]->stat
 	//	printf("current is %d\n",current[i]->state);
 		if(current[i]->state==0)	{
 		   task_t* t=current[_cpu()];
@@ -236,17 +229,16 @@ _Context* context_switch(_Event e,_Context* c) {
 		   current[_cpu()]=current[i];
 	       current[i]=t;
 		   current[_cpu()]->state=2;//running
+		   ret=current[_cpu()]->context;
 		   break;	   
 		}
 	}
-	if(current[_cpu()]->context==NULL) {
-		printf("wrong switch!\n");
-		assert(0);
+	if(ret==NULL) {
+		ret=null[_cpu()]->context;
 	}
-	_Context* re=current[_cpu()]->context;
 	spin_unlock(&tsk_lk);
 //	printf("\nreturn task=%s\n",current[_cpu()]->name);
-	return re;
+	return ret;
 }
 // task over
 void kmt_init() {
@@ -258,8 +250,11 @@ void kmt_init() {
  	for(int i=0;i<8;i++) 	{
 		char pre[100];
 		sprintf(pre,"empty%d",i);
-		create(pmm->alloc(sizeof(task_t)),pre,noreach,NULL);
-	} 
+		int pid=create(pmm->alloc(sizeof(task_t)),pre,noreach,NULL);
+		null[i]=current[pid];
+		current[pid]=NULL;
+	}
+ 
 	spin_init(&tsk_lk,"task");
 	spin_init(&yield_lk,"yield");
 }
