@@ -70,7 +70,7 @@ static _Context *os_trap(_Event ev, _Context *context) {
   }
   cur=current_task(); 
   if(ret==NULL) {  
-  	printf("\033[31m fk trap%d no recurse!,task=%s,cpu=%d\n\033[0m",ev.event,cur->name,_cpu());
+  	printf("\033[31m fk trap%d no recurse!,hlen=%d,task=%s,cpu=%d\n\033[0m",ev.event,hlen,cur->name,_cpu());
 	assert(0);
   }
  // printf("\nIn trap now for cpu#%d, cnt is %d\n",_cpu(),cnt_cpu()); 
