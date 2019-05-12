@@ -218,6 +218,10 @@ _Context* context_switch(_Event e,_Context* c) {
 		   break;	   
 		}
 	}
+	if(current[_cpu()]->context==NULL) {
+		printf("wrong switch!\n");
+		assert(0);
+	}
 	spin_unlock(&tsk_lk);
 //	printf("\nreturn task=%s\n",current[_cpu()]->name);
 	return current[_cpu()]->context;
