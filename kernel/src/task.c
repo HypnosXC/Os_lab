@@ -216,9 +216,6 @@ _Context* context_switch(_Event e,_Context* c) {
 	spin_lock(&tsk_lk);
 	_Context* ret=NULL;
 	for(int i=_cpu();i<32;i+=_ncpu()) {
-		int i=(rand()%ind)*_ncpu()+_cpu();
-		if(i>=32)//too large random
-			continue;
 	 	if(current[i]==NULL||current[i]->park)//empty
 			continue;
 //		printf("\033[41m task :\033[42m num %d, park %d,state %d\033[0m\n",i,current[i]->park,current[i]->stat
