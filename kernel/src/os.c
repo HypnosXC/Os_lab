@@ -62,12 +62,15 @@ static _Context *os_trap(_Event ev, _Context *context) {
   //printf("\ncpu#%d hold task %s\n",_cpu(),cur->name);
   cur->context=context;
   _Context *ret=NULL;
+  printf("\n goes as");
   for(int i=0;i<hlen;i++) {
  	if(handlers[i].event==_EVENT_NULL||handlers[i].event==ev.event) {
 		_Context *next =handlers[i].func(ev,context);
+		printf(" %d",i);
 		if(next!=NULL)	ret=next;
 	 }
   }
+  printf("\n");
   cur=current_task(); 
   if(ret==NULL) {  
   	printf("\033[31m fk trap%d no recurse!,hlen=%d,task=%s,cpu=%d\n\033[0m",ev.event,hlen,cur->name,_cpu());
