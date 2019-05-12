@@ -266,9 +266,9 @@ void kmt_init() {
  	for(int i=0;i<8;i++) 	{
 		char pre[100];
 		sprintf(pre,"empty%d",i);
-		int pid=create(pmm->alloc(sizeof(task_t)),pre,noreach,NULL);
-		null[i]=current[pid];
-		current[pid]=NULL;
+		create(pmm->alloc(sizeof(task_t)),pre,noreach,NULL);
+//		null[i]=current[pid];
+//		current[pid]=NULL;
 	}
 	spin_init(&ct_lk,"save and switch"); 
 	spin_init(&tsk_lk,"task");
