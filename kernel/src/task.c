@@ -161,9 +161,14 @@ void sem_signal(sem_t *sem) {
 //task started
 void noreach() {
 //	printf("never been here!\n");
+	int cnt=0;
  	while(1){
+		cnt++;
 //		spin_lock(&prf_lk);
-//		printf("cpu=%d\n",_cpu());
+		if(cnt>1e9) {
+			cnt=0;
+			printf("cpu=%d\n",_cpu());
+		}
 //		spin_unlock(&prf_lk);
 	//	spin_lock(&yield_lk);
 		_yield();
