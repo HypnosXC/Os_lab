@@ -5,7 +5,7 @@
 task_t *current[32];
 task_t *null[32];
 int no_run[32];
-spinlock_t ct_lk,tsk_lk,yield_lk;
+static spinlock_t ct_lk,tsk_lk,yield_lk;
 int rand();
 // spin_lock started
 static int cpu_cnt[100];
