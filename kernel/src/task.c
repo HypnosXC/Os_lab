@@ -114,11 +114,11 @@ void sem_wait(sem_t *sem) {
 		cur->park=1;//sleep;
 //		printf("no hanlded yet for sem yield");
 //		assert(0);
-//		spin_lock(&yield_lk);
 		spin_unlock(&sem->sem_lk);
+		spin_lock(&yield_lock);
 		_yield();
 		spin_lock(&sem->sem_lk);
-//		spin_unlock(&yield_lk);
+		spin_unlock(&yield_lk);
 	}
 	printf("\n\033[41m sem_wait : cpu#%d ,name= %s over! \033[0m\n",_cpu(),sem->name);
     sem->value--;
