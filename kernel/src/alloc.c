@@ -20,6 +20,7 @@ static void pmm_init() {
 
 static void* kalloc(size_t size) { 
   size*=2;
+  void *ret=NULL;
   if(size>=BLOCK_SIZE) {
  	kmt->spin_lock(alloc_lk);
  	size=size+(BLOCK_SIZE-size%BLOCK_SIZE);
@@ -29,7 +30,7 @@ static void* kalloc(size_t size) {
 // printf("alloc %p block at %d,with cpu %d\n",(void *)(pm_end-pos*BLOCK_SIZE),pos,_cpu());
 // unlock(printf_lk);
     kmt->spin_unlock(alloc_lk);
-	return (void *)(pm_end-pos*BLOCK_SIZE);
+	ret=(void *)(pm_end-pos*BLOCK_SIZE);
  }
  else {
 	size=size+base_sz-size%base_sz;
@@ -50,8 +51,10 @@ static void* kalloc(size_t size) {
 		off_set+=size;
 		bt_add(cu_pos);
 	}
-	return (void *)(current_ptr+off_set-size);
+	ret=(void *)(current_ptr+off_set-size);
  }
+ memset(ret,0,size);
+ return ret;
 }
 
 static void kfree(void *ptr) {
