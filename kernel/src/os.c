@@ -58,13 +58,11 @@ void echo_task(void *name) {
 static _Context *os_trap(_Event ev, _Context *context) {
   kmt->spin_lock(&trap_lk);
  // printf("\033[32mtrap in cpu=%d?\n\033[0m",_cpu());
-  task_t *cur=current_task();
   //printf("\ncpu#%d hold task %s\n",_cpu(),cur->name);
-  cur->context=context;
   _Context *ret=NULL;
 //  printf("\n goes as");
   for(int i=0;i<hlen;i++) {
- 	if(handlers[i].event==_EVENT_NULL||handlers[i].event==ev.event) {
+ 	if(handlers[i].event==_EVENT_NULL||handlers[i].eve nt==ev.event) {
 		_Context *next =handlers[i].func(ev,context);
 //		printf(" %d",i);
 		if(next!=NULL)	ret=next;
