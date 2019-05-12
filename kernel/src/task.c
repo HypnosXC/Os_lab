@@ -226,7 +226,7 @@ _Context* context_switch(_Event e,_Context* c) {
 			continue;
 //		printf("\033[41m task :\033[42m num %d, park %d,state %d\033[0m\n",i,current[i]->park,current[i]->stat
 	//	printf("current is %d\n",current[i]->state);
-		if(current[i]->state==0||strcmp(current[i]->name,"null"))	{
+		if(current[i]->state==0)	{
 		   task_t* t=current[_cpu()];
 		   t->state=0;//runable now
 		   current[_cpu()]=current[i];
@@ -237,7 +237,16 @@ _Context* context_switch(_Event e,_Context* c) {
 		}
 	}
 	if(ret==NULL) {
-		ret=null[_cpu()]->context;
+		int i=_cpu();
+		for(;i<32;i+=_ncpu())
+			if(!strcmp(current[i]->name,"null"))
+				break;
+		task_t* t=current[_cpu()];
+		t->state=0;//runable now
+		current[_cpu()]=current[i];
+	    current[i]=t;
+		current[_cpu()]->state=2;//running
+		ret=current[_cpu()]->context;
 	}
 	spin_unlock(&tsk_lk);
 //	printf("\nreturn task=%s\n",current[_cpu()]->name);
