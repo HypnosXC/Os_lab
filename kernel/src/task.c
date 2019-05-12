@@ -100,7 +100,7 @@ void sem_init(sem_t *sem, const char *name,int value){
 	spin_init(&sem->sem_lk,name);
 	sem->value=value;
     strcpy(sem->name,name);
-	sem->top=0;
+	sem->tk_list=NULL;
 	printf("\n\033[41m sem init:\033[43 name=%s,value=%d\n",name,value);
 }
 void sem_append(task_t *tk,tasklist_t *ls) {
