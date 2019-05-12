@@ -21,6 +21,7 @@ int readeflags(){
 };
 void spin_init(struct spinlock *lk,const char *name) {
 	lk->locked=0;
+	lk->hcpu=-1;
 	strcpy(lk->name,name);
 	printf("lk %s=%s\n",name,lk->name);
 }
