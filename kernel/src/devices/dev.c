@@ -46,7 +46,7 @@ void input_task(void *arg);
   devices[id]->ops->init(devices[id]);
 
 static void dev_init() {
-  DEVICES(CREATE);
+ // DEVICES(CREATE);
   DEVICES(INIT);
 
   kmt->create(pmm->alloc(sizeof(task_t)), "input-task", input_task, NULL);
