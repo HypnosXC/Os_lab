@@ -222,9 +222,10 @@ _Context* context_switch(_Event e,_Context* c) {
 		printf("wrong switch!\n");
 		assert(0);
 	}
+	_Context* re=current[_cpu()]->context;
 	spin_unlock(&tsk_lk);
 //	printf("\nreturn task=%s\n",current[_cpu()]->name);
-	return current[_cpu()]->context;
+	return re;
 }
 // task over
 void kmt_init() {
