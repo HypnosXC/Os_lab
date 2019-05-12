@@ -226,7 +226,7 @@ _Context* context_switch(_Event e,_Context* c) {
 			continue;
 //		printf("\033[41m task :\033[42m num %d, park %d,state %d\033[0m\n",i,current[i]->park,current[i]->stat
 	//	printf("current is %d\n",current[i]->state);
-		if(current[i]->state==0||strcmp(current->name,"null"))	{
+		if(current[i]->state==0||strcmp(current[i]->name,"null"))	{
 		   task_t* t=current[_cpu()];
 		   t->state=0;//runable now
 		   current[_cpu()]=current[i];
