@@ -24,7 +24,7 @@ struct spinlock {
 //struct spinlock alloc_lc={0,0,"alloc"};
 typedef struct tasklist {
 	task_t * tk;
-	tasklist * next;
+	struct tasklist * next;
 }tasklist_t;
 struct semaphore {
 	int value;
