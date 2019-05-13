@@ -22,10 +22,10 @@ static void os_init() {
 //  printf("kmt seated!\n");
   _vme_init(pmm->alloc,pmm->free);
   dev->init();
-  kmt->create(pmm->alloc(sizeof(task_t)),"print",echo_task,"tty1");
-  kmt->create(pmm->alloc(sizeof(task_t)),"print",echo_task,"tty2");
-  kmt->create(pmm->alloc(sizeof(task_t)),"print",echo_task,"tty3");
-  kmt->create(pmm->alloc(sizeof(task_t)),"print",echo_task,"tty4");
+//  kmt->create(pmm->alloc(sizeof(task_t)),"print",echo_task,"tty1");
+  //kmt->create(pmm->alloc(sizeof(task_t)),"print",echo_task,"tty2");
+ // kmt->create(pmm->alloc(sizeof(task_t)),"print",echo_task,"tty3");
+ // kmt->create(pmm->alloc(sizeof(task_t)),"print",echo_task,"tty4");
   // vfs->init();
   //printf("\033[31m kmt finished!\n\033[0m");
 }
