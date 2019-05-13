@@ -60,7 +60,7 @@ void fib(void *arg){
     kmt->sem_init(&f2->sem, f_name[f->n - 2], 0);
     kmt->create(pmm->alloc(sizeof(task_t)), f_name[f->n - 1], fib, f1);
     kmt->create(pmm->alloc(sizeof(task_t)), f_name[f->n - 2], fib, f2);
-
+	printf("f=%d\n",f->n);
     kmt->sem_wait(&f1->sem);
     kmt->sem_wait(&f2->sem);
 
