@@ -258,7 +258,7 @@ _Context* context_switch(_Event e,_Context* c) {
 			if(loader[i]!=NULL&&!strcmp(loader[i]->name,"null"))
 				break;
 		}
-//		printf("cpu#%d find %d task=%s,eip=%d\n",_cpu(),i,loader[i]->name,loader[i]->context->eip);
+
 		if(i!=_cpu()) {
 			task_t* t=current[_cpu()];
 			t->state=0;//runable now
@@ -268,8 +268,8 @@ _Context* context_switch(_Event e,_Context* c) {
 		ret=current[_cpu()]->context;
 	}
 //	spin_unlock(&ct_lk);
-//	printf("\nreturn task=%s\n",current[_cpu()]->name);
-	return ret;
+		printf("cpu#%d find %d task=%s,eip=%d\n",_cpu(),i,loader[i]->name,loader[i]->context->eip);
+	return ret;	
 }
 // task over
 void kmt_init() {
