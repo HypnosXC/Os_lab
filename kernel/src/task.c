@@ -250,7 +250,7 @@ _Context* context_switch(_Event e,_Context* c) {
 		for(;i<TASK_SIZE;i+=_ncpu())
 			if(current[i]!=NULL&&!strcmp(current[i]->name,"null"))
 				break;
-		printf("find task=%d,%s\n",i,current[i]->name);
+//		printf("find task=%d,%s\n",i,current[i]->name);
 		if(i!=_cpu()) {
 			task_t* t=current[_cpu()];
 			t->state=0;//runable now
