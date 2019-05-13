@@ -273,7 +273,7 @@ void kmt_init() {
 //		create(pmm->alloc(sizeof(task_t)),pre,noreach,NULL);
 //		null[i]=current[pid];
 //		current[pid]=NULL;
-	}
+//	}
 
 }
 MODULE_DEF(kmt) {
