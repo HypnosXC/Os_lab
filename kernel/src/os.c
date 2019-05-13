@@ -53,7 +53,7 @@ void echo_task(void *name) {
 		printf("ready write!\n");
 		tty->ops->write(tty,0,text,strlen(text));
 		printf("write over!\n");
-		int nread = tty->ops->read(tty,0,line,strlen(line));
+		int nread = tty->ops->read(tty,0,line,sizeof(line));
 		line[nread-1]='\0';
 		sprintf(text,"Echo: %s,\n",line);
 		tty->ops->write(tty,0,text,strlen(text));
