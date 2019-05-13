@@ -245,7 +245,7 @@ _Context* context_switch(_Event e,_Context* c) {
 	if(ret==NULL) {
 		printf("\nno runable task! cpu=%d,total=%d\n",_cpu(),_ncpu());
 		for(int i=_cpu();i<TASK_SIZE;i+=_ncpu()) {
-			if(laoder[i]!=NULL)
+			if(loader[i]!=NULL)
 			printf("task=%s,park=%d,state=%d   ",loader[i]->name,loader[i]->park,loader[i]->state);
 		}
 		printf("\n");
