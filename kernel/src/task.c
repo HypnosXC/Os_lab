@@ -2,7 +2,8 @@
 #include<klib.h>
 #define FL_IF 0x00000200  
 #define STACK_SIZE 4096
-task_t *current[32];
+#define TASK_SIZE 64
+task_t *current[TASK_SIZE];
 spinlock_t ct_lk,tsk_lk,yield_lk;
 int rand();
 // spin_lock started
@@ -192,8 +193,8 @@ int create(task_t *task,const char *name,void (*entry)(void *arg),void *arg) {
 	task->stack.end=(void *)((intptr_t)task->stack.start+STACK_SIZE);
 	task->context=_kcontext(task->stack,entry,arg);
 	printf("new task:%s\n",name);
-	int i=0;
-	for(;i<32;i++)
+	int i=8;
+	for(;i<TASK_SIZE;i++)
 		if(current[i]==NULL) {
 			current[i]=task;
 			printf("\033[task%d\n\033[0m",i);
@@ -204,7 +205,7 @@ int create(task_t *task,const char *name,void (*entry)(void *arg),void *arg) {
 }
 void teardown(task_t *task) {
 	spin_lock(&tsk_lk);
-	for(int i=0;i<32;i++)
+	for(int i=0;i<TASK_SIZE;i++)
 		if(current[i]==task)
 				current[i]=NULL;
 	pmm->free(task->stack.start);
@@ -228,7 +229,7 @@ _Context* context_save(_Event e,_Context *c) {
 _Context* context_switch(_Event e,_Context* c) {
 	spin_lock(&ct_lk);
 	_Context* ret=NULL;
-	for(int i=_cpu();i<32;i+=_ncpu()) {
+	for(int i=_cpu();i<TASK_SIZE;i+=_ncpu()) {
 	 	if(current[i]==NULL||current[i]->park)//empty
 			continue;
 //		printf("\033[41m task :\033[42m num %d, park %d,state %d\033[0m\n",i,current[i]->park,current[i]->stat
@@ -246,7 +247,7 @@ _Context* context_switch(_Event e,_Context* c) {
 	if(ret==NULL) {
 		printf("\nno runable task!\n");
 		int i=_cpu();
-		for(;i<32;i+=_ncpu())
+		for(;i<TASK_SIZE;i+=_ncpu())
 			if(current[i]!=NULL&&!strcmp(current[i]->name,"null"))
 				break;
 		printf("find task=%d,%s\n",i,current[i]->name);
