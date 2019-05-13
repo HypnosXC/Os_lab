@@ -3,7 +3,7 @@
 #define FL_IF 0x00000200  
 #define STACK_SIZE 4096
 task_t *current[32];
-static spinlock_t ct_lk,tsk_lk,yield_lk;
+spinlock_t ct_lk,tsk_lk,yield_lk;
 int rand();
 // spin_lock started
 static int cpu_cnt[100];
@@ -20,12 +20,10 @@ int readeflags(){
   return eflags;
 };
 void spin_init(spinlock_t *lk,const char *name) {
-	memset(lk,0,sizeof(spinlock_t));
 //	lk->ff=111;
 	lk->bf=222;
 	lk->locked=0;
 	lk->hcpu=1000;
-
 	strcpy(lk->name,name);
 	printf("lk %s=%s,ff=%d,bf=%d\n",lk->name,lk->ff,lk->bf);
 }
