@@ -218,7 +218,7 @@ void teardown(task_t *task) {
 	spin_unlock(&tsk_lk);
 }
 _Context* context_save(_Event e,_Context *c) {
-	spin_lock(&ct_lk);
+//	spin_lock(&ct_lk);
 	if(current[_cpu()]==NULL) {
 		int pid=create(pmm->alloc(sizeof(task_t)),"null",noreach,NULL);
 		printf("cpud %d got here!\n",_cpu());
@@ -227,11 +227,11 @@ _Context* context_save(_Event e,_Context *c) {
 	}
     current[_cpu()]->context=c;
 //	printf("save as %s,eip=%d\n",current[_cpu()]->name,c->eip);
-	spin_unlock(&ct_lk);
+//	spin_unlock(&ct_lk);
 	return NULL;
 }
 _Context* context_switch(_Event e,_Context* c) {
-	spin_lock(&ct_lk);
+//	spin_lock(&ct_lk);
 	_Context* ret=NULL;
 	for(int i=TASK_SIZE-_ncpu()+_cpu();i>=_cpu();i-=_ncpu()) { 
 	 	if(loader[i]==NULL||loader[i]->park)//empty
@@ -267,7 +267,7 @@ _Context* context_switch(_Event e,_Context* c) {
 		}
 		ret=current[_cpu()]->context;
 	}
-	spin_unlock(&ct_lk);
+//	spin_unlock(&ct_lk);
 //	printf("\nreturn task=%s\n",current[_cpu()]->name);
 	return ret;
 }
