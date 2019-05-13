@@ -171,19 +171,8 @@ void sem_signal(sem_t *sem) {
 //
 //task started
 void noreach() {
-//	printf("never been here!\n");
-	int cnt=0;
- 	while(1){
-		cnt++;
-//		spin_lock(&prf_lk);
-		if(cnt>1e9) {
-			cnt=0;
-			printf("cpu=%d\n",_cpu());
-		}
-//		spin_unlock(&prf_lk);
-	//	spin_lock(&yield_lk);
+	while(1){
 		_yield();
-	//	spin_unlock(&yield_lk);
 	}
 }
 task_t* current_task() {
@@ -197,12 +186,12 @@ int create(task_t *task,const char *name,void (*entry)(void *arg),void *arg) {
 	task->stack.start=pmm->alloc(STACK_SIZE);
 	task->stack.end=(void *)((intptr_t)task->stack.start+STACK_SIZE);
 	task->context=_kcontext(task->stack,entry,arg);
-	printf("new task:%s\n",name);
+//	printf("new task:%s\n",name);
 	int i=0;
 	for(;i<TASK_SIZE;i++)
 		if(loader[i]==NULL) {
 			loader[i]=task;
-			printf("\033[41m task%d\n\033[0m",i);
+	//		printf("\033[41m task%d\n\033[0m",i);
 			break;
 		}
 	spin_unlock(&tsk_lk);
@@ -221,7 +210,7 @@ _Context* context_save(_Event e,_Context *c) {
 //	spin_lock(&ct_lk);
 	if(current[_cpu()]==NULL) {
 		int pid=create(pmm->alloc(sizeof(task_t)),"null",noreach,NULL);
-		printf("cpud %d got here!\n",_cpu());
+	//	printf("cpud %d got here!\n",_cpu());
 		current[_cpu()]=loader[pid];
 		for(int i=_cpu();i<=TASK_SIZE;i+=_ncpu())
 			if(i!=pid&&loader[i]==NULL) {
@@ -277,7 +266,7 @@ _Context* context_switch(_Event e,_Context* c) {
 }
 // task over
 void kmt_init() {
-	printf("set started\n");
+
 	spin_init(&ct_lk,"save and switch"); 
 	spin_init(&tsk_lk,"task");
 	spin_init(&yield_lk,"yield");
