@@ -143,7 +143,7 @@ void sem_wait(sem_t *sem) {
 		cur->park=1;//sleep;
 //		assert(0);
 		spin_unlock(&sem->sem_lk);
-		printf("\n\033[41m sem:wait name=%s,cpu=#%dappend %s,sem_yield!\033[0m\n",sem->name,_cpu(),cur->name);
+		printf("\n\033[41m sem:wait name=%s,cpu=#%dappend %s,sem_yield!\033[0m\n",sem->name,_cpu(),sem->tk_list->tk->name);
 		_yield();
 		spin_lock(&sem->sem_lk);
 	}
