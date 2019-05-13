@@ -221,9 +221,9 @@ _Context* context_save(_Event e,_Context *c) {
 	spin_lock(&ct_lk);
 	if(current[_cpu()]==NULL) {
 		int pid=create(pmm->alloc(sizeof(task_t)),"null",noreach,NULL);
-		printf("got here!\n");
-		 current[_cpu()]=loader[pid];
-		 current[_cpu()]->state=2;//running
+		printf("cpud %d got here!\n"._cpu());
+		current[_cpu()]=loader[pid];
+		current[_cpu()]->state=2;//running
 	}
     current[_cpu()]->context=c;
 //	printf("save as %s,eip=%d\n",current[_cpu()]->name,c->eip);
@@ -258,7 +258,7 @@ _Context* context_switch(_Event e,_Context* c) {
 			if(loader[i]!=NULL&&!strcmp(loader[i]->name,"null"))
 				break;
 		}
-		printf("find task=%d,%s,eip=%d\n",i,current[i]->name,current[i]->context->eip);
+		printf("cpu#%d find task=%s,eip=%d\n",_cpu(),current[i]->name,current[i]->context->eip);
 		if(i!=_cpu()) {
 			task_t* t=current[_cpu()];
 			t->state=0;//runable now
