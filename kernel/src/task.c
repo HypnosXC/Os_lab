@@ -19,7 +19,7 @@ int readeflags(){
   asm volatile("pushfl; popl %0" : "=r" (eflags));
   return eflags;
 };
-void spin_init(struct spinlock *lk,const char *name) {
+void spin_init(spinlock_t *lk,const char *name) {
 //	lk->ff=111;
 	lk->bf=222;
 	lk->locked=0;
