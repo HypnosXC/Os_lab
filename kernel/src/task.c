@@ -24,6 +24,7 @@ void spin_init(struct spinlock *lk,const char *name) {
 	lk->bf=222;
 	lk->locked=0;
 	lk->hcpu=1000;
+	printf("lk %s=%s,ff=%d,bf=%d\n",lk->name,lk->ff,lk->bf);
 	strcpy(lk->name,name);
 	printf("lk %s=%s,ff=%d,bf=%d\n",lk->name,lk->ff,lk->bf);
 }
