@@ -19,15 +19,14 @@ static void os_init() {
   pmm->init();
   kmt->spin_init(&trap_lk,"trap");
   kmt->spin_init(&irq_lk,"irq");
-  printf("kmt set\n");
   kmt->init();
 //  printf("kmt seated!\n");
   _vme_init(pmm->alloc,pmm->free);
   dev->init();
   kmt->create(pmm->alloc(sizeof(task_t)),"print",echo_task,"tty1");
-  kmt->create(pmm->alloc(sizeof(task_t)),"print",echo_task,"tty2");
-  kmt->create(pmm->alloc(sizeof(task_t)),"print",echo_task,"tty3");
-  kmt->create(pmm->alloc(sizeof(task_t)),"print",echo_task,"tty4");  
+ // kmt->create(pmm->alloc(sizeof(task_t)),"print",echo_task,"tty2");
+ // kmt->create(pmm->alloc(sizeof(task_t)),"print",echo_task,"tty3");
+ // kmt->create(pmm->alloc(sizeof(task_t)),"print",echo_task,"tty4");
   // vfs->init();
   //printf("\033[31m kmt finished!\n\033[0m");
 }
@@ -52,9 +51,9 @@ void echo_task(void *name) {
 	while(1) {
 		char line[128],text[128];
 		sprintf(text,"(%s) $ ", name);
-//		printf("ready write!\n");
+		printf("ready write!\n");
 		tty->ops->write(tty,0,text,strlen(text));
-//		printf("write over!\n");
+		printf("write over!\n");
 		int nread = tty->ops->read(tty,0,line,sizeof(line));
 		line[nread-1]='\0';
 		sprintf(text,"Echo: %s,\n",line);
