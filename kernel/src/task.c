@@ -223,6 +223,12 @@ _Context* context_save(_Event e,_Context *c) {
 		int pid=create(pmm->alloc(sizeof(task_t)),"null",noreach,NULL);
 		printf("cpud %d got here!\n",_cpu());
 		current[_cpu()]=loader[pid];
+		for(int i=_cpu();i<=TASK_SIZE;i+=_ncpu())
+			if(i!=pid&&loader[i]=NULL) {
+				loader[i]=loader[pid];
+				loader[pid]=NULL;
+			    break;		
+			}
 		current[_cpu()]->state=2;//running
 	}
     current[_cpu()]->context=c;
