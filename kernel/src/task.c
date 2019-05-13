@@ -258,7 +258,7 @@ _Context* context_switch(_Event e,_Context* c) {
 			if(loader[i]!=NULL&&!strcmp(loader[i]->name,"null"))
 				break;
 		}
-		printf("cpu#%d find %d task=%s,eip=%d\n",_cpu(),i,current[i]->name,current[i]->context->eip);
+		printf("cpu#%d find %d task=%s,eip=%d\n",_cpu(),i,loader[i]->name,loader[i]->context->eip);
 		if(i!=_cpu()) {
 			task_t* t=current[_cpu()];
 			t->state=0;//runable now
