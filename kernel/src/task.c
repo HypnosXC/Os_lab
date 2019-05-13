@@ -224,7 +224,7 @@ _Context* context_save(_Event e,_Context *c) {
 		printf("cpud %d got here!\n",_cpu());
 		current[_cpu()]=loader[pid];
 		for(int i=_cpu();i<=TASK_SIZE;i+=_ncpu())
-			if(i!=pid&&loader[i]=NULL) {
+			if(i!=pid&&loader[i]==NULL) {
 				loader[i]=loader[pid];
 				loader[pid]=NULL;
 			    break;		
