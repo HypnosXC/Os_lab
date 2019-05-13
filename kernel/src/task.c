@@ -20,8 +20,8 @@ int readeflags(){
   return eflags;
 };
 void spin_init(struct spinlock *lk,const char *name) {
-	lk->ff=111;
-	lk->bf=222;
+//	lk->ff=111;
+//	lk->bf=222;
 	lk->locked=0;
 	lk->hcpu=1000;
 
