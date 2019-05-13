@@ -238,7 +238,7 @@ _Context* context_switch(_Event e,_Context* c) {
 	       current[i]=t;
 		   current[_cpu()]->state=2;//running
 		   ret=current[_cpu()]->context;
-		   break;	   
+		   break; 
 		}
 	}
 	if(ret==NULL) {
@@ -256,7 +256,7 @@ _Context* context_switch(_Event e,_Context* c) {
 		ret=current[_cpu()]->context;
 	}
 	spin_unlock(&ct_lk);
-//	printf("\nreturn task=%s\n",current[_cpu()]->name);
+	printf("\nreturn task=%s\n",current[_cpu()]->name);
 	return ret;
 }
 // task over
