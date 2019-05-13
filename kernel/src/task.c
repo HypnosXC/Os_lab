@@ -7,6 +7,7 @@ static spinlock_t ct_lk,tsk_lk,yield_lk;
 int rand();
 // spin_lock started
 static int cpu_cnt[100];
+static int cpu_intr[100];
 void cli(){
 	asm volatile ("cli"); 
 }
@@ -21,7 +22,6 @@ int readeflags(){
 void spin_init(struct spinlock *lk,const char *name) {
 	lk->ff=111;
 	lk->bf=222;
-	printf("lk %s=%s,ff=%d,bf=%d\n",lk->name,lk->ff,lk->bf);
 	lk->locked=0;
 	lk->hcpu=1000;
 
