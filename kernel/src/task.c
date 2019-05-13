@@ -258,9 +258,9 @@ _Context* context_switch(_Event e,_Context* c) {
 }
 // task over
 void kmt_init() {
-//	printf("set started\n");
+	printf("set started\n");
 	os->on_irq(-19999,_EVENT_NULL,context_save);
-//	printf("!!!!\n");
+	printf("!!!!\n");
 	os->on_irq(19999,_EVENT_NULL,context_switch);
 	printf("set over\n");
  	for(int i=0;i<8;i++) 	{

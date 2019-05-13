@@ -19,7 +19,7 @@ static void os_init() {
   kmt->spin_init(&irq_lk,"irq");
   printf("kmt set\n");
   kmt->init();
-  printf("kmt seated!\n");
+//  printf("kmt seated!\n");
   _vme_init(pmm->alloc,pmm->free);
   dev->init();
 //  kmt->create(pmm->alloc(sizeof(task_t)),"print",echo_task,"tty1");
