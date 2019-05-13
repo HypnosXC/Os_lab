@@ -91,7 +91,7 @@ int main() {
 
   // call sequential init code
   os->init();
-  kmt->create(pmm->alloc(sizeof(task_t)), "ff", fib_c, (void *)5l);
+  kmt->create(pmm->alloc(sizeof(task_t)), "ff", fib_c, (void *)3l);
   printf("thead??");
   kmt->sem_init(&sem_halt, "sem_halt", 0);
   _mpe_init(os->run); // all cores call os->run()
