@@ -20,7 +20,7 @@ int readeflags(){
   return eflags;
 };
 void spin_init(spinlock_t *lk,const char *name) {
-	memeset(lk,0,sizeof(spinlock_t));
+	memset(lk,0,sizeof(spinlock_t));
 //	lk->ff=111;
 	lk->bf=222;
 	lk->locked=0;
