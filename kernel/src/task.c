@@ -202,7 +202,7 @@ int create(task_t *task,const char *name,void (*entry)(void *arg),void *arg) {
 	for(;i<TASK_SIZE;i++)
 		if(loader[i]==NULL) {
 			loader[i]=task;
-			printf("\033[task%d\n\033[0m",i);
+			printf("\033[41m task%d\n\033[0m",i);
 			break;
 		}
 	spin_unlock(&tsk_lk);
