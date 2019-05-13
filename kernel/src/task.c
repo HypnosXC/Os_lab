@@ -243,10 +243,10 @@ _Context* context_switch(_Event e,_Context* c) {
 		}
 	}
 	if(ret==NULL) {
-		printf("\nno runable task! cpu=%d,total=%d\n",_cpu(),_ncpu());
+//		printf("\nno runable task! cpu=%d,total=%d\n",_cpu(),_ncpu());
 		for(int i=_cpu();i<TASK_SIZE;i+=_ncpu()) {
 			if(loader[i]!=NULL)
-			printf("task=%s,park=%d,state=%d   ",loader[i]->name,loader[i]->park,loader[i]->state);
+//			printf("task=%s,park=%d,state=%d   ",loader[i]->name,loader[i]->park,loader[i]->state);
 		}
 		printf("\n");
 		int i=_cpu();
@@ -264,7 +264,7 @@ _Context* context_switch(_Event e,_Context* c) {
 		ret=current[_cpu()]->context;
 	}
 	spin_unlock(&ct_lk);
-	printf("\nreturn task=%s\n",current[_cpu()]->name);
+//	printf("\nreturn task=%s\n",current[_cpu()]->name);
 	return ret;
 }
 // task over
