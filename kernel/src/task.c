@@ -135,7 +135,7 @@ void sem_wait(sem_t *sem) {
 	spin_lock(&sem->sem_lk);
 	task_t* cur=current_task();
 //	sem->value--;
-	printf("\n\033[41m sem_wait : \033[42m cpu%d for %s,value is%d\033[0m\n",_cpu(),sem->name,sem->value*-1);
+	printf("\n\033[41m sem_wait : task=%s\033[42m cpu%d for %s,value is%d\033[0m\n",cure->name,_cpu(),sem->name,sem->value*-1);
 	sem->value--;
 	if(sem->value<0) {
 		if(cur->park!=1)//no sleeped before or waken but no resourse
