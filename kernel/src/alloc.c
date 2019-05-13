@@ -21,30 +21,27 @@ static void pmm_init() {
 static void* kalloc(size_t size) { 
  // size*=2;
   void *ret=NULL;
+  kmt->spin_lock(alloc_lk);
   if(size>=BLOCK_SIZE) {
- 	kmt->spin_lock(alloc_lk);
  	size=size+(BLOCK_SIZE-size%BLOCK_SIZE);
 	size/=BLOCK_SIZE;
 	int pos=bt_alloc(size);
 // lock(printf_lk);
 // printf("alloc %p block at %d,with cpu %d\n",(void *)(pm_end-pos*BLOCK_SIZE),pos,_cpu());
 // unlock(printf_lk);
-    kmt->spin_unlock(alloc_lk);
 	ret=(void *)(pm_end-pos*BLOCK_SIZE);
  }
- else {
+ else { 
 	size=size+base_sz-size%base_sz;
- 	if(!current_ptr||off_set+size>=BLOCK_SIZE) {
-		kmt->spin_lock(alloc_lk);
+ 	if(! current_ptr||off_set+size>=BLOCK_SIZE) {
 		cu_pos=bt_alloc(1);
 		current_ptr=pm_end-cu_pos*BLOCK_SIZE;	
 		off_set=size;
 //		 lock(printf_lk);
 //		 printf("alloc %p block at%d,with cpu %d\n",pm_end-cu_pos*BLOCK_SIZE,cu_pos,_cpu());
-//		 unlock(printf_lk);
- 		kmt->spin_unlock(alloc_lk);
+//		 unlock(printf_lk)
 	}
-	else {
+	else { 
 //		lock(printf_lk);
 //		printf("small mem required at %p\n",current_ptr+off_set);
 //		unlock(printf_lk);
@@ -54,6 +51,7 @@ static void* kalloc(size_t size) {
 	ret=(void *)(current_ptr+off_set-size);
  }
  memset(ret,1,size);
+ kmt->spin_unlock(alloc_lk);
  return ret;
 }
 
