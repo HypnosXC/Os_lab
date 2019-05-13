@@ -28,6 +28,11 @@ static void os_init() {
   kmt->create(pmm->alloc(sizeof(task_t)),"print",echo_task,"tty2");
   kmt->create(pmm->alloc(sizeof(task_t)),"print",echo_task,"tty3");
   kmt->create(pmm->alloc(sizeof(task_t)),"print",echo_task,"tty4");
+  kmt->create(pmm->alloc(sizeof(task_t)),"print",echo_task,"tty5");
+  kmt->create(pmm->alloc(sizeof(task_t)),"print",echo_task,"tty6");
+  kmt->create(pmm->alloc(sizeof(task_t)),"print",echo_task,"tty7");
+  kmt->create(pmm->alloc(sizeof(task_t)),"print",echo_task,"tty8");
+  
   // vfs->init();
   //printf("\033[31m kmt finished!\n\033[0m");
 }
