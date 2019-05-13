@@ -27,7 +27,7 @@ void spin_init(spinlock_t *lk,const char *name) {
 	lk->locked=0;
 	lk->hcpu=1000;
 	strcpy(lk->name,name);
-	printf("lk %p=%s,ff=%d,bf=%d\n",lk,lk->name,lk->ff,lk->bf);
+//	printf("lk %p=%s,ff=%d,bf=%d\n",lk,lk->name,lk->ff,lk->bf);
 }
 void pushcli() {
 	int eflags=readeflags();
@@ -109,7 +109,7 @@ void sem_init(sem_t *sem, const char *name,int value){
 	sem->value=value;
     strcpy(sem->name,name);
 	sem->tk_list=NULL;
-	printf("\n\033[41m sem init:\033[43 name=%s,value=%d\n",name,value);
+//	printf("\n\033[41m sem init:\033[43 name=%s,value=%d\n",name,value);
 }
 tasklist_t* sem_append(task_t *tk,tasklist_t *ls) {
 	if(ls==NULL) {
