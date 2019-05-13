@@ -2,6 +2,8 @@
 #include <klib.h>
 #include <devices.h>
 int rand();
+void pushcli();
+void popcli();
 void echo_task(void *name);
 int printf(const char * tmf,...);
 int sprintf(char * g,const char *tmf,...);
