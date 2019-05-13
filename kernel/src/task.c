@@ -247,7 +247,7 @@ _Context* context_switch(_Event e,_Context* c) {
 		}
 	}
 	if(ret==NULL) {
-		printf("\nno runable task! cpu=%d,total=%d\n",_cpu(),_ncpu());
+//		printf("\nno runable task! cpu=%d,total=%d\n",_cpu(),_ncpu());
 		for(int i=_cpu();i<TASK_SIZE;i+=_ncpu()) {
 			if(loader[i]!=NULL)
 			printf("task=%s,park=%d,state=%d   ",loader[i]->name,loader[i]->park,loader[i]->state);
@@ -258,7 +258,7 @@ _Context* context_switch(_Event e,_Context* c) {
 			if(loader[i]!=NULL&&!strcmp(loader[i]->name,"null"))
 				break;
 		}
-		printf("cpu#%d find %d task=%s,eip=%d\n",_cpu(),i,loader[i]->name,loader[i]->context->eip);
+//		printf("cpu#%d find %d task=%s,eip=%d\n",_cpu(),i,loader[i]->name,loader[i]->context->eip);
 		if(i!=_cpu()) {
 			task_t* t=current[_cpu()];
 			t->state=0;//runable now
