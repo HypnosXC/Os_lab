@@ -4,6 +4,7 @@
 #define STACK_SIZE 4096
 #define TASK_SIZE 64
 task_t *current[TASK_SIZE];
+task_t *loader[TASK_SIZE];
 spinlock_t ct_lk,tsk_lk,yield_lk;
 int rand();
 // spin_lock started
@@ -193,10 +194,10 @@ int create(task_t *task,const char *name,void (*entry)(void *arg),void *arg) {
 	task->stack.end=(void *)((intptr_t)task->stack.start+STACK_SIZE);
 	task->context=_kcontext(task->stack,entry,arg);
 	printf("new task:%s\n",name);
-	int i=8;
+	int i=0;
 	for(;i<TASK_SIZE;i++)
-		if(current[i]==NULL) {
-			current[i]=task;
+		if(loader[i]==NULL) {
+			loader[i]=task;
 			printf("\033[task%d\n\033[0m",i);
 			break;
 		}
@@ -206,7 +207,7 @@ int create(task_t *task,const char *name,void (*entry)(void *arg),void *arg) {
 void teardown(task_t *task) {
 	spin_lock(&tsk_lk);
 	for(int i=0;i<TASK_SIZE;i++)
-		if(current[i]==task)
+		if(loader[i]==task)
 				current[i]=NULL;
 	pmm->free(task->stack.start);
 	pmm->free(task);
@@ -217,8 +218,7 @@ _Context* context_save(_Event e,_Context *c) {
 	if(current[_cpu()]==NULL) {
 		int pid=create(pmm->alloc(sizeof(task_t)),"null",noreach,NULL);
 		printf("got here!\n");
-		 current[_cpu()]=current[pid];
-		 current[pid]=NULL;
+		 current[_cpu()]=loader[pid];
 		 current[_cpu()]->state=2;//running
 	}
     current[_cpu()]->context=c;
@@ -230,15 +230,13 @@ _Context* context_switch(_Event e,_Context* c) {
 	spin_lock(&ct_lk);
 	_Context* ret=NULL;
 	for(int i=_cpu();i<TASK_SIZE;i+=_ncpu()) {
-	 	if(current[i]==NULL||current[i]->park)//empty
+	 	if(loader[i]==NULL||loader[i]->park)//empty
 			continue;
 //		printf("\033[41m task :\033[42m num %d, park %d,state %d\033[0m\n",i,current[i]->park,current[i]->stat
 	//	printf("current is %d\n",current[i]->state);
-		if(current[i]->state==0)	{
-		   task_t* t=current[_cpu()];
-		   t->state=0;//runable now
-		   current[_cpu()]=current[i];
-	       current[i]=t;
+		if(loader[i]->state==0)	{
+		   current[_cpu()]->state=0;//runable
+		   current[_cpu()]=loader[i];
 		   current[_cpu()]->state=2;//running
 		   ret=current[_cpu()]->context;
 		   break; 
@@ -248,14 +246,13 @@ _Context* context_switch(_Event e,_Context* c) {
 		printf("\nno runable task! cpu=%d,total=%d\n",_cpu(),_ncpu());
 		int i=_cpu();
 		for(;i<TASK_SIZE;i+=_ncpu())
-			if(current[i]!=NULL&&!strcmp(current[i]->name,"null"))
+			if(loader[i]!=NULL&&!strcmp(loader[i]->name,"null"))
 				break;
 //		printf("find task=%d,%s\n",i,current[i]->name);
 		if(i!=_cpu()) {
 			task_t* t=current[_cpu()];
 			t->state=0;//runable now
-			current[_cpu()]=current[i];
-	   		current[i]=t;
+			current[_cpu()]=loader[i];
 			current[_cpu()]->state=2;//running
 		}
 		ret=current[_cpu()]->context;
