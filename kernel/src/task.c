@@ -25,7 +25,7 @@ void spin_init(spinlock_t *lk,const char *name) {
 	lk->locked=0;
 	lk->hcpu=1000;
 	strcpy(lk->name,name);
-	printf("lk %s=%s,ff=%d,bf=%d\n",lk->name,lk->ff,lk->bf);
+	printf("lk %p=%s,ff=%d,bf=%d\n",lk,lk->name,lk->ff,lk->bf);
 }
 void pushcli() {
 	int eflags=readeflags();
