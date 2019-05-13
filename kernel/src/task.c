@@ -268,7 +268,7 @@ _Context* context_switch(_Event e,_Context* c) {
 		ret=current[_cpu()]->context;
 	}
 //	spin_unlock(&ct_lk);
-		printf("cpu#%d find %d task=%s,eip=%d\n",_cpu(),i,loader[i]->name,loader[i]->context->eip);
+		printf("cpu#%d find %d task=%s,eip=%d\n",_cpu(),loader[i]->name,loader[i]->context->eip);
 	return ret;	
 }
 // task over
