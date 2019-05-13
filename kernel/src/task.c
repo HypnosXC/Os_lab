@@ -154,8 +154,10 @@ void sem_signal(sem_t *sem) {
 	spin_lock(&sem->sem_lk);
 	sem->value++;
 	printf("\n\033[41m sem_signal: wake %s,\033[42m cpu%d for %s\033[0m\n",sem->tk_list->tk->name,_cpu(),sem->name);
-	sem->tk_list->tk->park=0;//enrunable
-	sem->tk_list=sem_decline(sem->tk_list);
+	if(sem->tk_list!=NULL) {
+		sem->tk_list->tk->park=0;//enrunable
+		sem->tk_list=sem_decline(sem->tk_list);
+	}
 	spin_unlock(&sem->sem_lk);
 }
 // sem over
