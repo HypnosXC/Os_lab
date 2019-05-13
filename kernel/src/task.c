@@ -242,6 +242,7 @@ _Context* context_switch(_Event e,_Context* c) {
 		}
 	}
 	if(ret==NULL) {
+		printf("no runable task!\n");
 		int i=_cpu();
 		for(;i<32;i+=_ncpu())
 			if(!strcmp(current[i]->name,"null"))
