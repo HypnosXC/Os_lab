@@ -259,6 +259,9 @@ _Context* context_switch(_Event e,_Context* c) {
 // task over
 void kmt_init() {
 	printf("set started\n");
+	spin_init(&ct_lk,"save and switch"); 
+	spin_init(&tsk_lk,"task");
+	spin_init(&yield_lk,"yield");
 	os->on_irq(-19999,_EVENT_NULL,context_save);
 	printf("!!!!\n");
 	os->on_irq(19999,_EVENT_NULL,context_switch);
@@ -271,9 +274,7 @@ void kmt_init() {
 //		null[i]=current[pid];
 //		current[pid]=NULL;
 	}
-	spin_init(&ct_lk,"save and switch"); 
-	spin_init(&tsk_lk,"task");
-	spin_init(&yield_lk,"yield");
+
 }
 MODULE_DEF(kmt) {
 	.init = kmt_init,
