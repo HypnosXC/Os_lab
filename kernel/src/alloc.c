@@ -50,7 +50,7 @@ static void* kalloc(size_t size) {
 	}
 	ret=(void *)(current_ptr+off_set-size);
  }
- memset(ret,0,size);
+ //memset(ret,0,size);
  kmt->spin_unlock(alloc_lk);
  return ret;
 }
