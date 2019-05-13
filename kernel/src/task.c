@@ -134,9 +134,8 @@ tasklist_t* sem_decline(tasklist_t * ls) {
 void sem_wait(sem_t *sem) {
 	spin_lock(&sem->sem_lk);
 	task_t* cur=current_task();
-//	sem->value--;
-	printf("\n\033[41m sem_wait : task=%s\033[42m cpu%d for %s,value is%d\033[0m\n",cur->name,_cpu(),sem->name,sem->value*-1);
 	sem->value--;
+	printf("\n\033[41m sem_wait : task=%s\033[42m cpu%d for %s,value is%d\033[0m\n",cur->name,_cpu(),sem->name,sem->value*-1);
 	if(sem->value<0) {
 		if(cur->park!=1)//no sleeped before or waken but no resourse
 			sem_append(cur,sem->tk_list);
