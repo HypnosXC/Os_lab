@@ -78,7 +78,7 @@ static _Context *os_trap(_Event ev, _Context *context) {
   }
  // printf("\nIn trap now for cpu#%d, cnt is %d\n",_cpu(),cnt_cpu()); 
   kmt->spin_unlock(&trap_lk);
- // printf("\033[32mtrap finished\n\033[0m");
+  printf("\033[32mtrap finished\n\033[0m");
   if(ret==NULL) {
   	printf("\n\033[32m panic \003[33m trap return NULL to revise\033[0m\n");
 	assert(0);
