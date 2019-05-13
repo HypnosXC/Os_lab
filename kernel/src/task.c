@@ -128,6 +128,7 @@ void sem_append(task_t *tk,tasklist_t *ls) {
 }
 tasklist_t* sem_decline(tasklist_t * ls) {
 	tasklist_t *nt=ls->next;
+	printf("task=%s,signaled!\n",ls->tk->name);
 	pmm->free(ls);
 	return nt;
 }
