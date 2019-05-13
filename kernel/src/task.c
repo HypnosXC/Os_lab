@@ -54,7 +54,7 @@ void spin_lock(struct spinlock *lk) {
 	}*/
 	pushcli();
 	if(lk->ff!=111|| lk->bf!=222)	{			
-		printf("\n shit lock changed in space coindently\n");
+		printf("\n lock:%s shit lock changed in space coindently,ff=%d,bf=%d\n",lk->name,lk->ff,lk->bf);
 		assert(0);
 	}
 	if(holding(lk)) {
