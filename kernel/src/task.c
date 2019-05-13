@@ -221,7 +221,7 @@ _Context* context_save(_Event e,_Context *c) {
 	spin_lock(&ct_lk);
 	if(current[_cpu()]==NULL) {
 		int pid=create(pmm->alloc(sizeof(task_t)),"null",noreach,NULL);
-		printf("cpud %d got here!\n"._cpu());
+		printf("cpud %d got here!\n",_cpu());
 		current[_cpu()]=loader[pid];
 		current[_cpu()]->state=2;//running
 	}
@@ -233,7 +233,7 @@ _Context* context_save(_Event e,_Context *c) {
 _Context* context_switch(_Event e,_Context* c) {
 	spin_lock(&ct_lk);
 	_Context* ret=NULL;
-	for(int i=_cpu();i<TASK_SIZE;i+=_ncpu()) {
+	for(int i=_cpu();i<TASK_SIZE;i+=_ncpu()) { 
 	 	if(loader[i]==NULL||loader[i]->park)//empty
 			continue;
 //		printf("\033[41m task :\033[42m num %d, park %d,state %d\033[0m\n",i,current[i]->park,current[i]->stat
