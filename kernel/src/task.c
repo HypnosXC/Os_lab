@@ -220,6 +220,7 @@ _Context* context_save(_Event e,_Context *c) {
 		 current[_cpu()]->state=2;//running
 	}
     current[_cpu()]->context=c;
+	printf("save as %s\n",current[_cpu()]->name);
 	spin_unlock(&ct_lk);
 	return NULL;
 }
