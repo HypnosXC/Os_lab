@@ -130,7 +130,7 @@ tasklist_t* sem_append(task_t *tk,tasklist_t *ls) {
 }
 tasklist_t* sem_decline(tasklist_t * ls) {
 	tasklist_t *nt=ls->next;
-	printf("task=%s,signaled!\n",ls->tk->name);
+//	printf("task=%s,signaled!\n",ls->tk->name);
 	pmm->free(ls);
 	return nt;
 }
@@ -138,25 +138,25 @@ void sem_wait(sem_t *sem) {
 	spin_lock(&sem->sem_lk);
 	task_t* cur=current_task();
 	sem->value--;
-	printf("\n\033[41m sem_wait : task=%s\033[42m cpu%d for %s,value is%d\033[0m\n",cur->name,_cpu(),sem->name,sem->value*-1);
+//	printf("\n\033[41m sem_wait : task=%s\033[42m cpu%d for %s,value is%d\033[0m\n",cur->name,_cpu(),sem->name,sem->value*-1);
 	if(sem->value<0) {
 		if(cur->park!=1)//no sleeped before or waken but no resourse
 			sem->tk_list=sem_append(cur,sem->tk_list);
 		cur->park=1;//sleep;
 //		assert(0);
 		spin_unlock(&sem->sem_lk);
-		printf("\n\033[41m sem:wait name=%s,cpu=#%dappend %s,sem_yield!\033[0m\n",sem->name,_cpu(),sem->tk_list->tk->name);
+//		printf("\n\033[41m sem:wait name=%s,cpu=#%dappend %s,sem_yield!\033[0m\n",sem->name,_cpu(),sem->tk_list->tk->name);
 		_yield();
 		spin_lock(&sem->sem_lk);
 	}
-	printf("\n\033[41m sem_wait : cpu#%d ,name= %s over! \033[0m\n",_cpu(),sem->name);
+//	printf("\n\033[41m sem_wait : cpu#%d ,name= %s over! \033[0m\n",_cpu(),sem->name);
 	cur->park=0;
 	spin_unlock(&sem->sem_lk);
 }
 void sem_signal(sem_t *sem) {
 	spin_lock(&sem->sem_lk);
 	sem->value++;
-	printf("\n\033[41m sem_signal: wake %s,\033[42m cpu%d for %s\033[0m\n",sem->tk_list->tk->name,_cpu(),sem->name);
+///	printf("\n\033[41m sem_signal: wake %s,\033[42m cpu%d for %s\033[0m\n",sem->tk_list->tk->name,_cpu(),sem->name);
 	if(sem->tk_list!=NULL) {
 		sem->tk_list->tk->park=0;//enrunable
 		sem->tk_list=sem_decline(sem->tk_list);
