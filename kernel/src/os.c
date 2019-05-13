@@ -51,10 +51,11 @@ void echo_task(void *name) {
 		char line[128],text[128];
 		sprintf(text,"(%s) $ ", name);
 		tty->ops->write(tty,0,text,sizeof(text));
-		int nread = tty->ops->read(tty,0,line,sizeof(line));
+		printf("write!\n");
 		line[nread-1]='\0';
 		sprintf(text,"Echo: %s,\n",line);
 		tty->ops->write(tty,0,text,strlen(text));
+		printf("next");
 	}
 }
 static _Context *os_trap(_Event ev, _Context *context) {
