@@ -116,14 +116,16 @@ void sem_append(task_t *tk,tasklist_t *ls) {
 		ls=pmm->alloc(sizeof(tasklist_t));
 		ls->next=NULL;
 		ls->tk=tk;
-		return;
+		return ls;
 	}
 	else {
+		tasklist_t * head=ls;
 		while(ls->next!=NULL)
 			ls=ls->next;
 		ls->next=pmm->alloc(sizeof(tasklist_t));
 		ls->next->tk=tk;
 		ls->next->next=NULL;
+		return head;
 	}
 }
 tasklist_t* sem_decline(tasklist_t * ls) {
@@ -139,7 +141,7 @@ void sem_wait(sem_t *sem) {
 	printf("\n\033[41m sem_wait : task=%s\033[42m cpu%d for %s,value is%d\033[0m\n",cur->name,_cpu(),sem->name,sem->value*-1);
 	if(sem->value<0) {
 		if(cur->park!=1)//no sleeped before or waken but no resourse
-			sem_append(cur,sem->tk_list);
+			sem->tk_list=sem_append(cur,sem->tk_list);
 		cur->park=1;//sleep;
 //		assert(0);
 		spin_unlock(&sem->sem_lk);
