@@ -62,15 +62,15 @@ static _Context *os_trap(_Event ev, _Context *context) {
  // printf("\033[32mtrap in cpu=%d?\n\033[0m",_cpu());
   //printf("\ncpu#%d hold task %s\n",_cpu(),cur->name);
   _Context *ret=NULL;
-  printf("\n goes as");
-  for(int i=0;i<hlen;i++) {
+//  printf("\n goes as");
+   for(int i=0;i<hlen;i++) {
  	if(handlers[i].event==_EVENT_NULL||handlers[i].event==ev.event) {
 		_Context *next =handlers[i].func(ev,context);
-		printf(" %d",i);
+//		printf(" %d",i);
 		if(next!=NULL)	ret=next;
-	 }
+ 	 }
   }
-  printf("\n");
+  //printf("\n");
   task_t *cur=current_task(); 
   if(ret==NULL) {  
   	printf("\033[31m fk trap%d no recurse!,hlen=%d,task=%s,cpu=%d\n\033[0m",ev.event,hlen,cur->name,_cpu());
@@ -78,11 +78,11 @@ static _Context *os_trap(_Event ev, _Context *context) {
   }
  // printf("\nIn trap now for cpu#%d, cnt is %d\n",_cpu(),cnt_cpu()); 
   kmt->spin_unlock(&trap_lk);
-  printf("\033[32mtrap finished,with task=%s,eip=%d\n\033[0m",cur->name,ret->eip);
+  //printf("\033[32mtrap finished,with task=%s,eip=%d\n\033[0m",cur->name,ret->eip);
   if(ret==NULL) {
   	printf("\n\033[32m panic \003[33m trap return NULL to revise\033[0m\n");
 	assert(0);
-  }
+  } 
   return ret;
 }
 

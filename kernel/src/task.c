@@ -271,9 +271,9 @@ void kmt_init() {
 	spin_init(&tsk_lk,"task");
 	spin_init(&yield_lk,"yield");
 	os->on_irq(-19999,_EVENT_NULL,context_save);
-	printf("!!!!\n");
+//	printf("!!!!\n");
 	os->on_irq(19999,_EVENT_NULL,context_switch);
-	printf("set over\n");
+//	printf("set over\n");
  //	for(int i=0;i<8;i++) 	{
 //		char pre[100];
 //		sprintf(pre,"empty%d",i);
