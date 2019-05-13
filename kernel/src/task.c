@@ -259,12 +259,10 @@ _Context* context_switch(_Event e,_Context* c) {
 				break;
 		}
 		printf("cpu#%d find task=%d",_cpu(),i);
-		if(i!=_cpu()) {
-			task_t* t=current[_cpu()];
-			t->state=0;//runable now
-			current[_cpu()]=loader[i];
-			current[_cpu()]->state=2;//running
-		}
+		task_t* t=current[_cpu()];
+		t->state=0;//runable now
+		current[_cpu()]=loader[i];
+		current[_cpu()]->state=2;//running
 		ret=current[_cpu()]->context;
 	}
 //	spin_unlock(&ct_lk);
