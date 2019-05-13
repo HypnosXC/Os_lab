@@ -246,11 +246,13 @@ _Context* context_switch(_Event e,_Context* c) {
 		for(;i<32;i+=_ncpu())
 			if(!strcmp(current[i]->name,"null"))
 				break;
-		task_t* t=current[_cpu()];
-		t->state=0;//runable now
-		current[_cpu()]=current[i];
-	    current[i]=t;
-		current[_cpu()]->state=2;//running
+		if(i!=_cpu()) {
+			task_t* t=current[_cpu()];
+			t->state=0;//runable now
+			current[_cpu()]=current[i];
+	   		current[i]=t;
+			current[_cpu()]->state=2;//running
+		}
 		ret=current[_cpu()]->context;
 	}
 	spin_unlock(&ct_lk);
