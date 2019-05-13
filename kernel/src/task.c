@@ -22,9 +22,10 @@ int readeflags(){
 void spin_init(struct spinlock *lk,const char *name) {
 	lk->ff=111;
 	lk->bf=222;
+	printf("lk %s=%s,ff=%d,bf=%d\n",lk->name,lk->ff,lk->bf);
 	lk->locked=0;
 	lk->hcpu=1000;
-	printf("lk %s=%s,ff=%d,bf=%d\n",lk->name,lk->ff,lk->bf);
+
 	strcpy(lk->name,name);
 	printf("lk %s=%s,ff=%d,bf=%d\n",lk->name,lk->ff,lk->bf);
 }
