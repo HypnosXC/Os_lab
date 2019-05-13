@@ -16,10 +16,10 @@ include ../Makefile.lab
 initrd:
 	@seq 1 8192 > build/ramdisk.img
 
-QEMU_FLAGS := -serial stdio -machine accel=kvm:tcg -drive format=raw,file=$(BINARY)
+QEMU_FLAGS := -serial  stdio -machine accel=tcg -drive  format=raw,file=$(BINARY)
 
 run2: image
-	qemu-system-i386 -smp 2 $(QEMU_FLAGS)
+	qemu-system-i386 -smp  2 $(QEMU_FLAGS)
 
 run4: image
 	qemu-system-i386 -smp 4 $(QEMU_FLAGS)
