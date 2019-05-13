@@ -266,6 +266,7 @@ void kmt_init() {
  	for(int i=0;i<8;i++) 	{
 		char pre[100];
 		sprintf(pre,"empty%d",i);
+		printf("%d!\n",i);
 		create(pmm->alloc(sizeof(task_t)),pre,noreach,NULL);
 //		null[i]=current[pid];
 //		current[pid]=NULL;
