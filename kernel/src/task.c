@@ -217,6 +217,7 @@ _Context* context_save(_Event e,_Context *c) {
 		int pid=create(pmm->alloc(sizeof(task_t)),"null",noreach,NULL);
 		printf("got here!\n");
 		 current[_cpu()]=current[pid];
+		 current[pid]=NULL;
 		 current[_cpu()]->state=2;//running
 	}
     current[_cpu()]->context=c;
