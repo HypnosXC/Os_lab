@@ -264,15 +264,15 @@ _Context* context_switch(_Event e,_Context* c) {
 			if(loader[i]!=NULL&&!strcmp(loader[i]->name,"null"))
 				break;
 		}
-		printf("cpu#%d find task=%d\n",_cpu(),i);
+//		printf("cpu#%d find task=%d\n",_cpu(),i);
 		task_t* t=current[_cpu()];
 		t->state=0;//runable now
 		current[_cpu()]=loader[i];
 		current[_cpu()]->state=2;//running
 		ret=current[_cpu()]->context;
 	}
-//	spin_unlock(&ct_lk);
-		printf("cpu#%d find task=%s,eip=%d\n",_cpu(),current[_cpu()]->name,current[_cpu()]->context->eip);
+///	spin_unlock(&ct_lk);
+//		printf("cpu#%d find task=%s,eip=%d\n",_cpu(),current[_cpu()]->name,current[_cpu()]->context->eip);
 	return ret;	
 }
 // task over
