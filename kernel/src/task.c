@@ -248,7 +248,7 @@ _Context* context_switch(_Event e,_Context* c) {
 //			if(loader[i]!=NULL)
 //			printf("task=%s,park=%d,state=%d   ",loader[i]->name,loader[i]->park,loader[i]->state);
 //		}
-		printf("\n");
+//		printf("\n");
 		int i=_cpu();
 		for(;i<TASK_SIZE;i+=_ncpu()) {
 			if(loader[i]!=NULL&&!strcmp(loader[i]->name,"null"))
