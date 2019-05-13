@@ -7,7 +7,6 @@ static spinlock_t ct_lk,tsk_lk,yield_lk;
 int rand();
 // spin_lock started
 static int cpu_cnt[100];
-static int cpu_intr[100];
 void cli(){
 	asm volatile ("cli"); 
 }
