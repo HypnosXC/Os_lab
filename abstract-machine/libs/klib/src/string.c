@@ -64,8 +64,13 @@ void* memcpy(void* out, const void* in, size_t n) {
  for(int i=0;i<n;i++)
 	  *(oot+i)=*(iin+i);
  return out;
+ }
+char pre[10000];
+void *memmove(void *out,void *in,size_t n) {
+	memcpy(pre,in,n);
+	memcpy(out,pre,n);
+	return out;
 }
-
 int memcmp(const void* s1, const void* s2, size_t n){
  assert(s1!=NULL&&s2!=NULL);
  const unsigned char *oot=(unsigned char  *)s1;

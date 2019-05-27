@@ -68,6 +68,10 @@ int vsprintf(char *out, const char *fmt, va_list ext) {
 			int Gol=va_arg(ext,int);
 			char *tmp=out;
 			int j=0;
+			if(Gol==0) {
+			   *out='0';
+			   out++;
+			}
 			while(Gol>0)	{
 				*out=Gol%10+'0';
 				out++;
