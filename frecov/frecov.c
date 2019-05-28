@@ -24,10 +24,10 @@ struct file{
 }fl_tab[10000];
 wchar_t na[10][100];
 int num;
-void file_read(void *head) {
+void* file_read(void *head) {
 	int kd=(int)(*(char *)(head+0xB));
 	int rk=(int)(*(char *)(head));
-	if(kd==0xf&&rk!=6) {
+	if(kd==0xf) {
 		printf("Not the end of a file's name!\n");
 		assert(0);
 	}
@@ -49,6 +49,7 @@ void file_read(void *head) {
 	memcpy(fl_tab[num].name,head,8);
 	num++;
 	printf("got file:%ls,offset=%x\n",fl_tab[num-1].name,(int)(fl_tab[num-1].start-start));
+	return head+32;
 }
 void init(void *start) {
 	BLO_NUM=*((short*)(start+0x0e));
@@ -84,8 +85,9 @@ int main(int argc, char *argv[]) {
 	 int kd=(int )*((char *)(head+0xb));
 	 int tail=(int)*((char *)(head));
 	 printf("kd=%s,%d\n",pre,kd);
-	 if((!strcmp(pre,"BMP"))||(kd==0xf&&tail==6))
-		 file_read(head);
-	 head+=32;
+	 if((!strcmp(pre,"BMP"))||(kd==0xf))
+		head=file_read(head);
+	 else
+	 	head+=32;
   }
 }
