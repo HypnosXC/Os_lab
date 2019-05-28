@@ -50,8 +50,6 @@ void* file_read(void *head) {
 		p=namcpy(p,head+1,10);
 		p=namcpy(p,head+0xe,12);
 		p=namcpy(p,head+0x1c,4);
-		printf("head=%x,name is %ls\n",(int)(head-start),(wchar_t *)na[tot]);
-		fflush(stdout);
 		head+=0x20;
 		kd=(int)(*(char *)(head+0xb));
 	}
@@ -65,8 +63,8 @@ void* file_read(void *head) {
 		fl_tab[num].sz=*((int *)(head+0x1c));
 		num++;
 		printf("got file:");
-		for(int i=0;i<10;i++)
-			printf("%s",fl_tab[num-1].name[i]);
+//		for(int i=0;i<10;i++)
+			printf("%c",(char)fl_tab[num-1].name[i]);
 		printf(",offset=%x\n",(int)(fl_tab[num-1].start-start));
 	}
 	return head+32;
