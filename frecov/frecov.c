@@ -8,6 +8,9 @@
 #include<string.h>
 #include<sys/mman.h>
 char *start;
+int BLO_NUM;
+int BLO_SZ;
+
 int main(int argc, char *argv[]) {
   int p=open(argv[1],O_RDONLY);
   if(p==-1) {
@@ -16,5 +19,6 @@ int main(int argc, char *argv[]) {
   }
   int size=lseek(p,0,SEEK_END)-lseek(p,0,SEEK_SET);
   start=mmap(NULL,size,PROT_READ,MAP_SHARED,p,0);
-  printf("%s,%d\n",start+0x52,size);
+  BLO_NUM=*((short *)(start+0x0e));
+  printf("%d\n",BLO_NUM);
 }
