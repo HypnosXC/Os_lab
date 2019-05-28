@@ -83,7 +83,7 @@ int main(int argc, char *argv[]) {
 	 int kd=(int )*((char *)(head+0xb));
 	 printf("%d\n",kd);
 	 int tail=(int)*((char *)(head));
-	 if((kd!=0&&kd!=0xf)||tail==6)
+	 if((!strcmp(pre,"BM"))||(kd==0xf&&tail==6))
 		 file_read(head);
 	 head+=32;
   }
