@@ -78,6 +78,7 @@ int main(int argc, char *argv[]) {
 	  i++;
 	  if(i>10000000)
 		  break;
+	 printf("i=%d\n",i);
 	 snprintf(pre,3,"%s",(char *)(head+0x8));
 	 printf("%s\n",pre);
 	 int kd=(int )*((char *)(head+0xb));
