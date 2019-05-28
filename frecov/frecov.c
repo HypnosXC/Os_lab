@@ -39,7 +39,7 @@ void* file_read(void *head) {
 		memcpy(na[tot]+22,(head+0x1c),4);
 		printf("name is %ls\n",na[tot]);
 		head+=0x20;
-		kd=(int)(*(char *)(head+0x8));
+		kd=(int)(*(char *)(head+0xb));
 	}
 	char pre[10];
 	memset(pre,0,sizeof(pre));
