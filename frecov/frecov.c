@@ -6,6 +6,7 @@
 #include<unistd.h>
 #include<stdlib.h>
 #include<string.h>
+#include<sys/mman.h>
 char *start;
 int main(int argc, char *argv[]) {
   int p=open(argv[0],O_RDONLY);
@@ -14,7 +15,6 @@ int main(int argc, char *argv[]) {
 	assert(0);
   }
   int size=lseek(p,0,SEEK_END)-lseek(p,0,SEEK_SET);
-  start=alloc(size*sizeof(char));
   start=mmap(NULL,size,PROT_READ,MAP_SHARD,p,0);
   printf("%s,%d\n",(start+0x52),size);
 }
