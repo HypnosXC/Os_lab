@@ -21,7 +21,7 @@ void init(void *start) {
 	fat1=start+BLO_NUM*BLO_SZ;
 	fat2=fat1+FAT_BLO*BLO_SZ;
 	data=fat2+FAT_BLO*BLO_SZ;
-	printf("f1=%x,f2=%x,data=%x\n",fat1-start,fat2-start,data-start);
+	printf("f1=%x,f2=%x,data=%x\n",(int)(fat1-start),(int)(fat2-start),(int)(data-start));
 }
 int main(int argc, char *argv[]) {
   int p=open(argv[1],O_RDONLY);
