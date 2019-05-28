@@ -12,7 +12,9 @@ int BLO_NUM;
 int BLO_SZ;
 int FAT_NUM;
 int FAT_BLO;
-void* fat1,fat2,data;
+void* fat1;
+void *fat2;
+void *data;
 void init(void *start) {
 	BLO_NUM=*((short*)(start+0x0e));
 	BLO_SZ=*((short*)(start+0x0b));
