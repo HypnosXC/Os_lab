@@ -12,7 +12,7 @@ int BLO_NUM;
 int BLO_SZ;
 int BAS_GP;
 int FAT_NUM;
-int GP_BLO:
+int GP_BLO;
 int FAT_BLO;
 void* fat1;
 void *fat2;
