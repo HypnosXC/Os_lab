@@ -72,7 +72,11 @@ int main(int argc, char *argv[]) {
   start=mmap(NULL,size,PROT_READ,MAP_SHARED,p,0);
   init(start);
   void *head=data;
+  int i=1;
   while(1) {
+	  i++;
+	  if(i>10000000)
+		  break;
 	 int kd=(int )*((char *)(head+0xb));
 	 int tail=(int)*((char *)(head));
 	 if((kd!=0&&kd!=0xf)||tail==6)
