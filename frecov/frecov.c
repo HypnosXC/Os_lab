@@ -93,11 +93,11 @@ int main(int argc, char *argv[]) {
 	  i++;
 	  if(i>10000000)
 		  break;
-	 printf("i=%d,head=%x\n",i,(int)(head-start));
+//	 printf("i=%d,head=%x\n",i,(int)(head-start));
 	 memset(pre,0,sizeof(pre));
 	 memcpy(pre,(head+0x8),3);
 	 int kd=(int )*((char *)(head+0xb));
-	 printf("kd=%s,%d\n",pre,kd);
+//	 printf("kd=%s,%d\n",pre,kd);
 	 if(kd==0xf)
 		head=file_read(head);
 	 else
