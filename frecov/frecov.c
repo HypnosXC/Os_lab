@@ -38,6 +38,7 @@ void* file_read(void *head) {
 		memcpy(na[tot]+10,(head+0xe),12);
 		memcpy(na[tot]+22,(head+0x1c),4);
 		printf("name is %ls\n",na[tot]);
+		fflush(stdout);
 		head+=0x20;
 		kd=(int)(*(char *)(head+0xb));
 	}
