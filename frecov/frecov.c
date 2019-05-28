@@ -55,7 +55,7 @@ void* file_read(void *head) {
 		head+=0x20;
 		kd=(int)(*(char *)(head+0xb));
 	}
-	char pre[10];
+	char pre[100];
 	memset(pre,0,sizeof(pre));
 	memcpy(pre,head+0x8,3);
 	if(!strcmp(pre,"BMP")) {
@@ -67,7 +67,7 @@ void* file_read(void *head) {
 		printf("got file:");
 	//	for(int i=0;i<10;i++)
 	//		printf("%c",(char)fl_tab[num-1].name[i]);
-		printf("%s\n",(char *)fl_tab[num-1].name);
+		wcstombs(fl_tab[num-1].name.pre,90);
 		printf(",offset=%x\n",(int)(fl_tab[num-1].start-start));
 	}
 	return head+32;
