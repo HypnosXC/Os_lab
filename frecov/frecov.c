@@ -34,9 +34,9 @@ void file_read(void *head) {
 	int tot=0;
 	while(kd==0xf) {
 		tot++;
-		snprintf(na[tot],10,"%s",(char *)(head+0x1));
-		snprintf(na[tot]+10,12,"%s",(char *)(head+0xe));
-		snprintf(na[tot]+22,4,"%s",(char *)(head+0x1c));
+		memncpy(na[tot],(head+0x1),10);
+		memncpy(na[tot]+10,(head+0xe),12);
+		memncpy(na[tot]+22,(head+0x1c),4);
 		printf("name is %s\n",na[tot]);
 		head+=0x20;
 		kd=(int)(*(char *)(head+0x8));
@@ -46,9 +46,9 @@ void file_read(void *head) {
 	fl_tab[num].start=fat2+(pos-2)*GP_BLO*BLO_SZ;
 	fl_tab[num].sz=*((int *)(head+0x1c));
 	fl_tab[num].name=malloc(sizeof(char)*13*tot+8);
-	snprintf(fl_tab[num].name,8,"%s",(char *)(head));
+	memncpy(fl_tab[num].name,head,8);
 	num++;
-	printf("got file:%s,offset=%x\n",fl_tab[num-1].name,(int)(fl_tab[num-1].start-start));
+	printf("got file:%ls,offset=%x\n",fl_tab[num-1].name,(int)(fl_tab[num-1].start-start));
 }
 void init(void *start) {
 	BLO_NUM=*((short*)(start+0x0e));
@@ -74,7 +74,7 @@ int main(int argc, char *argv[]) {
   void *head=data;
   int i=1;
   char pre[10];
-  wh ile(1) {
+  while(1) {
 	  i++;
 	  if(i>10000000)
 		  break;
