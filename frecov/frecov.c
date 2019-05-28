@@ -61,7 +61,10 @@ void* file_read(void *head) {
 		fl_tab[num].start=fat2+(pos-2)*GP_BLO*BLO_SZ;
 		fl_tab[num].sz=*((int *)(head+0x1c));
 		num++;
-		printf("got file:%ls,offset=%x\n",fl_tab[num-1].name,(int)(fl_tab[num-1].start-start));
+		printf("got file:");
+		for(int i=0;i<10;i++)
+			printf("%lc",fl_tab[num-1].name[i]);
+		printf(",offset=%x\n",(int)(fl_tab[num-1].start-start));
 	}
 	return head+32;
 }
