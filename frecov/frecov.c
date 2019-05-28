@@ -51,7 +51,7 @@ void* file_read(void *head) {
 		*/
 		p=namcpy(p,head+1,10);
 		p=namcpy(p,head+0xe,12);
-		p=namcpy(p,head+0x1c,4);
+		p=namcpy(p,head+0x1c,2);
 		head+=0x20;
 		kd=(int)(*(char *)(head+0xb));
 	}
