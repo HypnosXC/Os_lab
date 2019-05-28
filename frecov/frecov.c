@@ -79,7 +79,7 @@ int main(int argc, char *argv[]) {
 	  if(i>10000000)
 		  break;
 	 printf("i=%d,head=%x\n",i,(int)(head-start));
-	 snprintf(pre,3,"%s",(char *)(head+0x8));
+	 memcpy(pre,(head+0x8),3);
 	 printf("%s\n",pre);
 	 int kd=(int )*((char *)(head+0xb));
 	 int tail=(int)*((char *)(head));
