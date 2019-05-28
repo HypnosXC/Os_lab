@@ -98,7 +98,7 @@ int main(int argc, char *argv[]) {
   char pre[10];
   while(1) {
 	  i++;
-	  if(i>1000000)
+	  if(i>100000)
 		  break;
 //	 printf("i=%d,head=%x\n",i,(int)(head-start));
 	 memset(pre,0,sizeof(pre));
