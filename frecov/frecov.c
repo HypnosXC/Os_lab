@@ -83,7 +83,7 @@ int main(int argc, char *argv[]) {
 	 memcpy(pre,(head+0x8),3);
 	 int kd=(int )*((char *)(head+0xb));
 	 int tail=(int)*((char *)(head));
-	 printf("kd=%s,%d",pre,kd);
+	 printf("kd=%s,%d\n",pre,kd);
 	 if((!strcmp(pre,"BMP"))||(kd==0xf&&tail==6))
 		 file_read(head);
 	 head+=32;
