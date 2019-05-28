@@ -26,7 +26,7 @@ wchar_t na[10][100];
 int num;
 void* file_read(void *head) {
 	int kd=(int)(*(char *)(head+0xB));
-	if(kd==0xf) {
+	if(kd!=0xf) {
 		printf("Not the end of a file's name!\n");
 		assert(0);
 	}
