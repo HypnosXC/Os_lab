@@ -81,9 +81,9 @@ int main(int argc, char *argv[]) {
 	 printf("i=%d,head=%x\n",i,(int)(head-start));
 	 memset(pre,0,sizeof(pre));
 	 memcpy(pre,(head+0x8),3);
-	 printf("%s\n",pre);
 	 int kd=(int )*((char *)(head+0xb));
 	 int tail=(int)*((char *)(head));
+	 printf("kd=%s,%d",pre,kd);
 	 if((!strcmp(pre,"BMP"))||(kd==0xf&&tail==6))
 		 file_read(head);
 	 head+=32;
