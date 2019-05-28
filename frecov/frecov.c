@@ -12,10 +12,8 @@ int main(int argc, char *argv[]) {
   	printf("\033[32m No such file to open! \033[0m \n");
 	assert(0);
   }
-  int of=lseek(p,0x52,SEEK_CUR);
-  printf("off=%d\n",of);
+  lseek(p,0x52,SEEK_CUR);
   char pre[100];
   read(p,pre,8);
-  for(int i=0;i<8;i++)
-  	printf("%c\n",pre[i]);
+  printf("%s\n",pre);
 }
