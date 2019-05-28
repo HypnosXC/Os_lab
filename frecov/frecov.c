@@ -28,6 +28,7 @@ void* file_read(void *head) {
 	int kd=(int)(*(char *)(head+0xB));
 	if(kd!=0xf) {
 		printf("Not the end of a file's name!\n");
+		fflush(stdout);
 		assert(0);
 	}
 	int tot=0;
