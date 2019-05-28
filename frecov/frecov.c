@@ -16,5 +16,6 @@ int main(int argc, char *argv[]) {
   lseek(p,0x52,SEEK_CUR);
   char pre[100];
   read(p,pre,8);
-  printf("%s\n",pre);
+  for(int i=0;i<8;i++)
+  	printf("%c\n",pre[i]);
 }
