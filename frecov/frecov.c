@@ -34,10 +34,10 @@ void file_read(void *head) {
 	int tot=0;
 	while(kd==0xf) {
 		tot++;
-		memncpy(na[tot],(head+0x1),10);
-		memncpy(na[tot]+10,(head+0xe),12);
-		memncpy(na[tot]+22,(head+0x1c),4);
-		printf("name is %s\n",na[tot]);
+		memcpy(na[tot],(head+0x1),10);
+		memcpy(na[tot]+10,(head+0xe),12);
+		memcpy(na[tot]+22,(head+0x1c),4);
+		printf("name is %ls\n",na[tot]);
 		head+=0x20;
 		kd=(int)(*(char *)(head+0x8));
 	}
@@ -46,7 +46,7 @@ void file_read(void *head) {
 	fl_tab[num].start=fat2+(pos-2)*GP_BLO*BLO_SZ;
 	fl_tab[num].sz=*((int *)(head+0x1c));
 	fl_tab[num].name=malloc(sizeof(char)*13*tot+8);
-	memncpy(fl_tab[num].name,head,8);
+	memcpy(fl_tab[num].name,head,8);
 	num++;
 	printf("got file:%ls,offset=%x\n",fl_tab[num-1].name,(int)(fl_tab[num-1].start-start));
 }
