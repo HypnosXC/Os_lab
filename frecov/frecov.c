@@ -26,7 +26,6 @@ wchar_t na[10][100];
 int num;
 void* file_read(void *head) {
 	int kd=(int)(*(char *)(head+0xB));
-	int rk=(int)(*(char *)(head));
 	if(kd==0xf) {
 		printf("Not the end of a file's name!\n");
 		assert(0);
@@ -83,7 +82,6 @@ int main(int argc, char *argv[]) {
 	 memset(pre,0,sizeof(pre));
 	 memcpy(pre,(head+0x8),3);
 	 int kd=(int )*((char *)(head+0xb));
-	 int tail=(int)*((char *)(head));
 	 printf("kd=%s,%d\n",pre,kd);
 	 if((!strcmp(pre,"BMP"))||(kd==0xf))
 		head=file_read(head);
