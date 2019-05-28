@@ -32,11 +32,21 @@ void* file_read(void *head) {
 		assert(0);
 	}
 	int tot=0;
+	char *p=fl_tab[num].name;
 	while(kd==0xf) {
 		tot++;
+		/*
 		memcpy(na[tot],(head+0x1),10);
 		memcpy(na[tot]+10,(head+0xe),12);
 		memcpy(na[tot]+22,(head+0x1c),4);
+		?????????
+		*/
+		*p=*((char *)(head+1));
+		p++;
+		*p=*((char *)(head+0xe));
+		p++;
+		*p=*((char *)(head+0x1c));
+		p++;
 		printf("head=%x,name is %ls\n",(int)(head-start),(wchar_t *)na[tot]);
 		fflush(stdout);
 		head+=0x20;
