@@ -7,12 +7,12 @@
 #include<stdlib.h>
 #include<string.h>
 #include<sys/mman.h>
-char *start;
+void *start;
 int BLO_NUM;
 int BLO_SZ;
 int FAT_NUM;
 int FAT_BLO;
-char *fat1,fat2,data;
+void *fat1,fat2,data;
 void init(void *start) {
 	BLO_NUM=*((short*)(start+0x0e));
 	BLO_SZ=*((short*)(start+0x0b));
