@@ -48,7 +48,7 @@ void file_read(void *head) {
 	fl_tab[num].name=malloc(sizeof(char)*13*tot+8);
 	snprintf(fl_tab[num].name,8,"%s",(char *)(head));
 	num++;
-	printf("got file:%s\n",fl_tab[num-1].name);
+	printf("got file:%s,offset=%d\n",fl_tab[num-1].name,fl_tab[num-1].start-start);
 }
 void init(void *start) {
 	BLO_NUM=*((short*)(start+0x0e));
