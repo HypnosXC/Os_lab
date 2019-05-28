@@ -7,7 +7,7 @@
 #include<stdlib.h>
 #include<string.h>
 int main(int argc, char *argv[]) {
-  int p=open(argv[0],O_RDONLY);
+  int p=open(argv[0],O_RDONLY|O_BINARY);
   if(p==-1) {
   	printf("\033[32m No such file to open! \033[0m \n");
 	assert(0);
