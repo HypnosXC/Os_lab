@@ -67,7 +67,7 @@ void* file_read(void *head) {
 		printf("got file:");
 	//	for(int i=0;i<10;i++)
 	//		printf("%c",(char)fl_tab[num-1].name[i]);
-		wcstombs(fl_tab[num-1].name.pre,90);
+		wcstombs(pre,fl_tab[num-1].name,90);
 		printf(",offset=%x\n",(int)(fl_tab[num-1].start-start));
 	}
 	return head+32;
