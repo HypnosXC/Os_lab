@@ -73,7 +73,7 @@ int main(int argc, char *argv[]) {
   init(start);
   void *head=data;
   while(1) {
-	 int kd=(int )*((char *)(head+0xB))；
+	 int kd=(int )*((char *)(head+0xb))；
 	 int tail=(int)*((char *)(head));
 	 if(kd!=0xf||tail==6)
 		 file_read(head);
