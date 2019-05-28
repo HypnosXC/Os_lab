@@ -26,7 +26,7 @@ char na[10][100];
 int num;
 void file_read(void *head) {
 	int kd=(int)(*(char *)(head+0xB));
-	int rk=(int)(*(char)(head));
+	int rk=(int)*(*(char)(head));
 	if(kd==0xf&&rk!=6) {
 		printf("Not the end of a file's name!\n");
 		assert(0);
@@ -34,9 +34,9 @@ void file_read(void *head) {
 	int tot=0;
 	while(kd==0xf) {
 		tot++;
-		sprintf(na[tot],"%s",(char *)(head+0x1),10);
-		sprintf(na[tot]+10,"%s",(char *)(head+0xe),12);
-		sprintf(na[tot]+22,"%s",(char *)(head+0x1c),4);
+		spnrintf(na[tot],"%s",(char *)(head+0x1),10);
+		spnrintf(na[tot]+10,"%s",(char *)(head+0xe),12);
+		spnrintf(na[tot]+22,"%s",(char *)(head+0x1c),4);
 		printf("name is %s\n",na[tot]);
 		head+=0x20;
 		kd=(int)(*(char *)(head+0x8));
