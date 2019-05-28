@@ -46,6 +46,7 @@ void file_read(void *head) {
 	fl_tab[num].start=fat2+(pos-2)*GP_BLO*BLO_SZ;
 	fl_tab[num].sz=*((int *)(head+0x1c));
 	fl_tab[num].name=malloc(sizeof(char)*13*tot+8);
+	memset(fl_tab[num].name.0,sizeof(char)*100);
 	memcpy(fl_tab[num].name,head,8);
 	num++;
 	printf("got file:%ls,offset=%x\n",fl_tab[num-1].name,(int)(fl_tab[num-1].start-start));
@@ -79,6 +80,7 @@ int main(int argc, char *argv[]) {
 	  if(i>10000000)
 		  break;
 	 printf("i=%d,head=%x\n",i,(int)(head-start));
+	 memset(pre,0,sizeof(pre));
 	 memcpy(pre,(head+0x8),3);
 	 printf("%s\n",pre);
 	 int kd=(int )*((char *)(head+0xb));
