@@ -34,9 +34,9 @@ void file_read(void *head) {
 	int tot=0;
 	while(kd==0xf) {
 		tot++;
-		spnrintf(na[tot],"%s",(char *)(head+0x1),10);
-		spnrintf(na[tot]+10,"%s",(char *)(head+0xe),12);
-		spnrintf(na[tot]+22,"%s",(char *)(head+0x1c),4);
+		snprintf(na[tot],"%s",(char *)(head+0x1),10);
+		snprintf(na[tot]+10,"%s",(char *)(head+0xe),12);
+		snprintf(na[tot]+22,"%s",(char *)(head+0x1c),4);
 		printf("name is %s\n",na[tot]);
 		head+=0x20;
 		kd=(int)(*(char *)(head+0x8));
