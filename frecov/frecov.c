@@ -85,7 +85,7 @@ int main(int argc, char *argv[]) {
 	 printf("%s\n",pre);
 	 int kd=(int )*((char *)(head+0xb));
 	 int tail=(int)*((char *)(head));
-	 if((!strcmp(pre,"BM"))||(kd==0xf&&tail==6))
+	 if((!strcmp(pre,"BMP"))||(kd==0xf&&tail==6))
 		 file_read(head);
 	 head+=32;
   }
