@@ -18,11 +18,11 @@ void* fat1;
 void *fat2;
 void *data;
 struct file{
-	char *name;
+	wchar_t *name;
 	void *start;
 	int sz;
 }fl_tab[10000];
-char na[10][100];
+wchar_t na[10][100];
 int num;
 void file_read(void *head) {
 	int kd=(int)(*(char *)(head+0xB));
@@ -67,14 +67,14 @@ int main(int argc, char *argv[]) {
   if(p==-1) {
   	printf("\033[32m No such file to open! \033[0m \n");
 	assert(0);
-  }
+  } 
   int size=lseek(p,0,SEEK_END)-lseek(p,0,SEEK_SET);
   start=mmap(NULL,size,PROT_READ,MAP_SHARED,p,0);
   init(start);
   void *head=data;
   int i=1;
   char pre[10];
-  while(1) {
+  wh ile(1) {
 	  i++;
 	  if(i>10000000)
 		  break;
