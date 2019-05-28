@@ -18,7 +18,7 @@ void* fat1;
 void *fat2;
 void *data;
 struct file{
-	wchar_t *name;
+	wchar_t name[100];
 	void *start;
 	int sz;
 }fl_tab[10000];
@@ -45,7 +45,6 @@ void file_read(void *head) {
 	pos=(pos<<16)+*((short*)(head+0x1a));
 	fl_tab[num].start=fat2+(pos-2)*GP_BLO*BLO_SZ;
 	fl_tab[num].sz=*((int *)(head+0x1c));
-	fl_tab[num].name=malloc(sizeof(char)*13*tot+8);
 	memset(fl_tab[num].name,0,sizeof(char)*100);
 	memcpy(fl_tab[num].name,head,8);
 	num++;
