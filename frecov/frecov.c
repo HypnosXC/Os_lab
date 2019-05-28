@@ -17,6 +17,39 @@ int FAT_BLO;
 void* fat1;
 void *fat2;
 void *data;
+struct file{
+	char *name;
+	void *start;
+	int sz;
+}fl_tab[10000];
+char na[10][100];
+int num;
+void file_read(void *head) {
+	int kd=(int)(*(char *)(head+0xB));
+	int rk=(int)(*(char)(head));
+	if(kd==0xf&&rk!=6) {
+		printf("Not the end of a file's name!\n");
+		assert(0);
+	}
+	int tot=0;
+	while(kd==0xf) {
+		tot++;
+		sprintf(na[tot],"%s",(char *)(head+0x1),10);
+		sprintf(na[tot]+10,"%s",(char *)(head+0xe),12);
+		sprintf(na[tot]+22,"%s",(char *)(head+0x1c),4);
+		printf("name is %s\n",na[tot]);
+		head+=0x20;
+		kd=(int)(*(char *)(head+0x8));
+	}
+	int pos=*((short *)(head+0x14));
+	pos=(pos<<16)+*((short*)(head+0x1a));
+	fl_tab[num].start=fat2+(pos-2)*GP_BLO*BLO_SZ;
+	fl_tab[num].sz=*((int *)(head+0x1c));
+	fl_tab[num].name=calloc(sizeof(char)*13*tot+8);
+	sprintf(fl_tab[num].name,"%s",(char *)(head),8);
+	num++;
+	printf("got file:%s\n",fl_tab[num].name);
+}
 void init(void *start) {
 	BLO_NUM=*((short*)(start+0x0e));
 	BLO_SZ=*((short*)(start+0x0b));
@@ -38,4 +71,12 @@ int main(int argc, char *argv[]) {
   int size=lseek(p,0,SEEK_END)-lseek(p,0,SEEK_SET);
   start=mmap(NULL,size,PROT_READ,MAP_SHARED,p,0);
   init(start);
+  void *head=data;
+  while(1) {
+	 int kd=(int )*((char *)(head+0xB))；
+	 int tail=(int)*((char *)(head));
+	 if(kd!=0xf||tail==6)
+		 file_read(head);
+	 head+=32;
+  }
 }
