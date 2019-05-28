@@ -18,7 +18,7 @@ void* fat1;
 void *fat2;
 void *data;
 struct file{
-	char name[100];
+	wchar_t name[100];
 	void *start;
 	int sz;
 }fl_tab[10000];
@@ -32,7 +32,7 @@ void* file_read(void *head) {
 		assert(0);
 	}
 	int tot=0;
-	char *p=fl_tab[num].name;
+	wchar_t *p=fl_tab[num].name;
 	while(kd==0xf) {
 		tot++;
 		/*
@@ -41,11 +41,11 @@ void* file_read(void *head) {
 		memcpy(na[tot]+22,(head+0x1c),4);
 		?????????
 		*/
-		*p=*((char *)(head+1));
+		*p=*((wchar_t *)(head+1));
 		p++;
-		*p=*((char *)(head+0xe));
+		*p=*((wchar_t *)(head+0xe));
 		p++;
-		*p=*((char *)(head+0x1c));
+		*p=*((wchar_t *)(head+0x1c));
 		p++;
 		printf("head=%x,name is %ls\n",(int)(head-start),(wchar_t *)na[tot]);
 		fflush(stdout);
@@ -61,7 +61,7 @@ void* file_read(void *head) {
 		fl_tab[num].start=fat2+(pos-2)*GP_BLO*BLO_SZ;
 		fl_tab[num].sz=*((int *)(head+0x1c));
 		num++;
-		printf("got file:%s,offset=%x\n",fl_tab[num-1].name,(int)(fl_tab[num-1].start-start));
+		printf("got file:%ls,offset=%x\n",fl_tab[num-1].name,(int)(fl_tab[num-1].start-start));
 	}
 	return head+32;
 }
