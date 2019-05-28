@@ -18,11 +18,11 @@ void* fat1;
 void *fat2;
 void *data;
 struct file{
-	wchar_t name[100];
+	char name[100];
 	void *start;
 	int sz;
 }fl_tab[10000];
-wchar_t na[10][100];
+char na[10][100];
 int num;
 void* file_read(void *head) {
 	int kd=(int)(*(char *)(head+0xB));
