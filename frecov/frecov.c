@@ -24,6 +24,12 @@ struct file{
 }fl_tab[10000];
 char na[10][100];
 int num;
+void* namcpy(void *buf,const void*in,int sz) {
+	for(int i=0;i<sz;i++) {
+		*(buf+i)=*(in+i);
+	}
+	return buf+sz;
+}	
 void* file_read(void *head) {
 	int kd=(int)(*(char *)(head+0xB));
 	if(kd!=0xf) {
@@ -41,12 +47,9 @@ void* file_read(void *head) {
 		memcpy(na[tot]+22,(head+0x1c),4);
 		?????????
 		*/
-		*p=*((wchar_t *)(head+1));
-		p++;
-		*p=*((wchar_t *)(head+0xe));
-		p++;
-		*p=*((wchar_t *)(head+0x1c));
-		p++;
+		p=namcpy(p,head+1,10);
+		p=namcpy(p,head+0xe,12);
+		p=namcpy(p,head+0x1c,4);
 		printf("head=%x,name is %ls\n",(int)(head-start),(wchar_t *)na[tot]);
 		fflush(stdout);
 		head+=0x20;
