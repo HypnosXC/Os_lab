@@ -63,7 +63,7 @@ void* file_read(void *head) {
 		fl_tab[num].sz=*((int *)(head+0x1c));
 		num++;
 		printf("got file:");
-//		for(int i=0;i<10;i++)
+		for(int i=0;i<10;i++)
 			printf("%c",(char)fl_tab[num-1].name[i]);
 		printf(",offset=%x\n",(int)(fl_tab[num-1].start-start));
 	}
