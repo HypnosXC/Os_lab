@@ -63,7 +63,7 @@ void* file_read(void *head) {
 		num++;
 		printf("got file:");
 		for(int i=0;i<10;i++)
-			printf("%lc",fl_tab[num-1].name[i]);
+			printf("%c",fl_tab[num-1].name[i]);
 		printf(",offset=%x\n",(int)(fl_tab[num-1].start-start));
 	}
 	return head+32;
