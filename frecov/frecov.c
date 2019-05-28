@@ -37,7 +37,7 @@ void* file_read(void *head) {
 		memcpy(na[tot],(head+0x1),10);
 		memcpy(na[tot]+10,(head+0xe),12);
 		memcpy(na[tot]+22,(head+0x1c),4);
-		printf("name is %ls\n",na[tot]);
+		printf("name is %s\n",na[tot]);
 		fflush(stdout);
 		head+=0x20;
 		kd=(int)(*(char *)(head+0xb));
@@ -50,8 +50,6 @@ void* file_read(void *head) {
 		pos=(pos<<16)+*((short*)(head+0x1a));
 		fl_tab[num].start=fat2+(pos-2)*GP_BLO*BLO_SZ;
 		fl_tab[num].sz=*((int *)(head+0x1c));
-		memset(fl_tab[num].name,0,sizeof(char)*90);
-		memcpy(fl_tab[num].name,head,8);
 		num++;
 		printf("got file:%ls,offset=%x\n",fl_tab[num-1].name,(int)(fl_tab[num-1].start-start));
 	}
