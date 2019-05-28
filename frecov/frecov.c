@@ -41,14 +41,19 @@ void* file_read(void *head) {
 		head+=0x20;
 		kd=(int)(*(char *)(head+0x8));
 	}
-	int pos=*((short *)(head+0x14));
-	pos=(pos<<16)+*((short*)(head+0x1a));
-	fl_tab[num].start=fat2+(pos-2)*GP_BLO*BLO_SZ;
-	fl_tab[num].sz=*((int *)(head+0x1c));
-	memset(fl_tab[num].name,0,sizeof(char)*90);
-	memcpy(fl_tab[num].name,head,8);
-	num++;
-	printf("got file:%ls,offset=%x\n",fl_tab[num-1].name,(int)(fl_tab[num-1].start-start));
+	char pre[10];
+	memset(pre,0,sizeof(pre));
+	memcpy(pre,head+0x8,3);
+	if(!strcmp(pre,"BMP")) {
+		int pos=*((short *)(head+0x14));
+		pos=(pos<<16)+*((short*)(head+0x1a));
+		fl_tab[num].start=fat2+(pos-2)*GP_BLO*BLO_SZ;
+		fl_tab[num].sz=*((int *)(head+0x1c));
+		memset(fl_tab[num].name,0,sizeof(char)*90);
+		memcpy(fl_tab[num].name,head,8);
+		num++;
+		printf("got file:%ls,offset=%x\n",fl_tab[num-1].name,(int)(fl_tab[num-1].start-start));
+	}
 	return head+32;
 }
 void init(void *start) {
@@ -84,7 +89,7 @@ int main(int argc, char *argv[]) {
 	 memcpy(pre,(head+0x8),3);
 	 int kd=(int )*((char *)(head+0xb));
 	 printf("kd=%s,%d\n",pre,kd);
-	 if((!strcmp(pre,"BMP"))||(kd==0xf))
+	 if(kd==0xf)
 		head=file_read(head);
 	 else
 	 	head+=32;
