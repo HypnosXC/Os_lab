@@ -79,9 +79,7 @@ int main(int argc, char *argv[]) {
 	  if(i>10000000)
 		  break;
 	 snprintf(pre,3,"%s",(char *)(head+0x8));
-	 printf("%s\n",pre);
 	 int kd=(int )*((char *)(head+0xb));
-	 printf("%d\n",kd);
 	 int tail=(int)*((char *)(head));
 	 if((!strcmp(pre,"BM"))||(kd==0xf&&tail==6))
 		 file_read(head);
