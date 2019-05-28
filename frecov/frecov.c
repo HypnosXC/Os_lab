@@ -15,5 +15,5 @@ int main(int argc, char *argv[]) {
   int size=lseek(p,0,SEEK_END)-lseek(p,0,SEEK_SET);
   char pre[100];
   read(p,pre,8);
-  printf("%s\n",pre);
+  printf("%s,%d\n",pre,size);
 }
