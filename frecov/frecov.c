@@ -18,7 +18,7 @@ void init(void *start) {
 	BLO_SZ=*((short*)(start+0x0b));
 	FAT_NUM=(int)(*((unsigned char *)(start+0x10)));
 	FAT_BLO=*((int *)(start+0x24));
-	fat1=start+BLO_NUM*BLO+SZ;
+	fat1=start+BLO_NUM*BLO_SZ;
 	fat2=fat1+FAT_BLO*BLO_SZ;
 	data=fat2+FAT_BLO*BLO_SZ;
 	printf("f1=%x,f2=%x,data=%x\n",fat1-start,fat2-start,data-start);
