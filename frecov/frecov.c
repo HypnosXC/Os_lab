@@ -73,10 +73,13 @@ int main(int argc, char *argv[]) {
   init(start);
   void *head=data;
   int i=1;
+  char pre[10];
   while(1) {
 	  i++;
 	  if(i>10000000)
 		  break;
+	 snprintf(pre,3,"%s",(char *)(head+0x8));
+	 printf("%s\n",pre);
 	 int kd=(int )*((char *)(head+0xb));
 	 printf("%d\n",kd);
 	 int tail=(int)*((char *)(head));
