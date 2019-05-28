@@ -12,7 +12,7 @@ int BLO_NUM;
 int BLO_SZ;
 int FAT_NUM;
 int FAT_BLO;
-void *fat1,fat2,data;
+//void *fat1,fat2,data;
 void init(void *start) {
 	int jm=*((int *)(start+0x03));
 	BLO_NUM=*((short*)(start+0x0e));
@@ -29,6 +29,5 @@ int main(int argc, char *argv[]) {
   }
   int size=lseek(p,0,SEEK_END)-lseek(p,0,SEEK_SET);
   start=mmap(NULL,size,PROT_READ,MAP_SHARED,p,0);
-  BLO_NUM=*((short *)(start+0x0e));
-  printf("%d\n",BLO_NUM);
+  init(start);
 }
