@@ -10,6 +10,7 @@
 char *start;
 int main(int argc, char *argv[]) {
   int p=open(argv[0],O_RDONLY);
+  printf("%s",argv[0]);
   if(p==-1) {
   	printf("\033[32m No such file to open! \033[0m \n");
 	assert(0);
