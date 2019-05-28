@@ -24,7 +24,9 @@ struct file{
 }fl_tab[10000];
 char na[10][100];
 int num;
-void* namcpy(void *buf,const void*in,int sz) {
+void* namcpy(void *bbuf,const void*iin,int sz) {
+	char * buf=(char *)bbuf;
+	char * in=(char *)iin;
 	for(int i=0;i<sz;i++) {
 		*(buf+i)=*(in+i);
 	}
