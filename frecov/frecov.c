@@ -15,6 +15,6 @@ int main(int argc, char *argv[]) {
 	assert(0);
   }
   int size=lseek(p,0,SEEK_END)-lseek(p,0,SEEK_SET);
-  start=mmap(NULL,size,PROT_READ,MAP_SHARD,p,0);
+  start=mmap(NULL,size,PROT_READ,MAP_SHARED,p,0);
   printf("%s,%d\n",(start+0x52),size);
 }
