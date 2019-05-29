@@ -45,7 +45,7 @@ void* file_read(void *head) {
 	memset(na[1],0,sizeof(char)*100);
 	memset(na[0],0,sizeof(char)*100);
 	char *p=na[0];
-//	char *np=na[1];
+	char *np=na[1];
 	while(kd==0xf) {
 		tot++;
 		/*
@@ -58,12 +58,9 @@ void* file_read(void *head) {
 		p=namcpy(p,head+0xe,12);
 		p=namcpy(p,head+0x1c,4);
 		p=na[0];
-		sprintf(na[2],"%s%s",na[1],na[0]);
-		memset(na[1],0,100);
-		sprintf(na[1],"%s",na[2]);
+		strcat(np,p);
 		memset(na[0],0,sizeof(char)*100);
-		printf("%s\n",na[2]);
-		np=p;
+		printf("%s\n",np);
 		head+=0x20;
 		kd=(int)(*(char *)(head+0xb));
 	}
