@@ -42,7 +42,8 @@ void* file_read(void *head) {
 		assert(0);
 	}
 	int tot=0;
-	char *p=(char *)fl_tab[num].name+190;
+	char *p=na[0];
+	char *np=na[1];
 	while(kd==0xf) {
 		tot++;
 		/*
@@ -51,10 +52,11 @@ void* file_read(void *head) {
 		memcpy(na[tot]+22,(head+0x1c),4);
 		?????????
 		*/
- 		p-=26;
 		p=namcpy(p,head+1,10);
 		p=namcpy(p,head+0xe,12);
 		p=namcpy(p,head+0x1c,2);
+		printf("%s\n",p);
+		np=p;
 		head+=0x20;
 		kd=(int)(*(char *)(head+0xb));
 	}
