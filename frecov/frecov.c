@@ -71,6 +71,7 @@ void* file_read(void *head) {
 	if(!strcmp(pre,"BMP")) {
 		int pos=*((short *)(head+0x14));
 		pos=(pos<<16)+*((short*)(head+0x1a));
+		printf("pos is %d",pos);
 		fl_tab[num].start=fat2+(pos-2)*GP_BLO*BLO_SZ;
 		fl_tab[num].sz=*((int *)(head+0x1c));
 		strcpy(fl_tab[num].name,na[1]);
