@@ -115,4 +115,21 @@ int main(int argc, char *argv[]) {
 	 else
 	 	head+=32;
   }
+  for(int i=0;i<num;i++) {
+  	if pid=fork();
+	if(pid==0) {
+		int fd=open(fl_tab[i].name,O_RDWR|O_CREAT,777);
+		write(fd,fl_tab[i].start,fl_tab[i].sz);
+		close(fd);
+	}
+	else {
+		int fd=open(fl_tab[i].name,O_RDONLY);
+		while(fd==-1)
+			fd=open(fl_tab[i].name,O_RDONLY);
+		char* arg[]={"sha1sum".fl_tab[i].name};
+		char * envp={0,NULL};
+		execve("/usr/bin/sha1sum",arg,envp);
+		assert(0);
+	}
+  }
 }
