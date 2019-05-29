@@ -77,7 +77,7 @@ void* file_read(void *head) {
 		strcpy(fl_tab[num].name,na[1]);
 		num++;
 		printf("got file:");
-		printf("head=%x,%s,offset=%x,sz=%d\n",(int)(head-start),fl_tab[num-1].name,(int)(fl_tab[num-1].start-start,fl_tab[num-1].sz);
+		printf("head=%x,%s,offset=%x,sz=%d\n",(int)(head-start),fl_tab[num-1].name,(int)(fl_tab[num-1].start-start),fl_tab[num-1].sz);
 	}
 	return head+32;
 }
