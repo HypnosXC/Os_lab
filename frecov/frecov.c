@@ -58,8 +58,8 @@ void* file_read(void *head) {
 		p=namcpy(p,head+0xe,12);
 		p=namcpy(p,head+0x1c,4);
 		p=na[0];
-		sprintf(na[2],"%s%s".na[1],na[0]);
-		sprintf(na[1],"%s".na[2]);
+		sprintf(na[2],"%s%s",na[1],na[0]);
+		sprintf(na[1],"%s",na[2]);
 		memset(na[0],0,sizeof(char)*100);
 		printf("%s\n",np);
 		np=p;
