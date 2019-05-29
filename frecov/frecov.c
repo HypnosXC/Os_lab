@@ -28,8 +28,8 @@ int num;
 void* namcpy(void *bbuf,const void*iin,int sz) {
 	char * buf=(char *)bbuf;
 	char * in=(char *)iin;
-	for(int i=0;i<sz;i++) {
-		*(buf+i)=*(in+i);
+	for(int i=0;i<sz/2;i++) {
+		*(buf+i)=*(in+2*i);
 	}
 	return buf+sz;
 }	
@@ -41,7 +41,7 @@ void* file_read(void *head) {
 		assert(0);
 	}
 	int tot=0;
-	wchar_t *p=fl_tab[num].name+190;
+	char *p=(char *)fl_tab[num].name+190;
 	while(kd==0xf) {
 		tot++;
 		/*
@@ -50,7 +50,7 @@ void* file_read(void *head) {
 		memcpy(na[tot]+22,(head+0x1c),4);
 		?????????
 		*/
- 		p-=52;
+ 		p-=26;
 		p=namcpy(p,head+1,10);
 		p=namcpy(p,head+0xe,12);
 		p=namcpy(p,head+0x1c,2);
@@ -69,7 +69,7 @@ void* file_read(void *head) {
 		num++;
 		printf("got file:");
 		for(int i=0;i<10;i++)
-			printf("%ls",p);
+			printf("%s",p);
 		wcstombs(pre,fl_tab[num-1].name,90);
 		printf("head=%x,%s,offset=%x\n",(int)(head-start),fl_tab[num-1].na,(int)(fl_tab[num-1].start-start));
 	}
