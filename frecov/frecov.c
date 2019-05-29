@@ -54,12 +54,12 @@ void* file_read(void *head) {
 		memcpy(na[tot]+22,(head+0x1c),4);
 		?????????
 		*/
+		memset(na[0],0,sizeof(na[0]));
+		p=na[0];
 		p=namcpy(p,head+1,10);
 		p=namcpy(p,head+0xe,12);
 		p=namcpy(p,head+0x1c,4);
-		p=na[0];
 		strcat(np,p);
-		memset(na[0],0,sizeof(char)*100);
 		printf("%s\n",np);
 		head+=0x20;
 		kd=(int)(*(char *)(head+0xb));
