@@ -30,8 +30,8 @@ void* namcpy(void *bbuf,const void*iin,int sz) {
 	char * in=(char *)iin;
 	for(int i=0;i<sz/2;i++) {
 		*(buf+i)=*(in+2*i);
-		printf("%c",*((char *)(buf+i)));
 	}
+	printf("%s",buf);
 	return buf+sz;
 }	
 void* file_read(void *head) {
