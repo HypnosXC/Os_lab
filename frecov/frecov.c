@@ -127,7 +127,7 @@ int main(int argc, char *argv[]) {
 		while(fd==-1)
 			fd=open(fl_tab[i].name,O_RDONLY);
 		char* arg[]={"sha1sum".fl_tab[i].name};
-		char * envp={0,NULL};
+		char * envp[]={0,NULL};
 		execve("/usr/bin/sha1sum",arg,envp);
 		assert(0);
 	}
