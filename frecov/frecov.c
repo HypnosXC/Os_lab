@@ -58,7 +58,7 @@ void* file_read(void *head) {
 		p=namcpy(p,head+0xe,12);
 		p=namcpy(p,head+0x1c,4);
 		p=na[0];
-		strcat(np,na[0]);
+		strcat(np,p);
 		memset(na[0],0,sizeof(char)*100);
 		printf("%s\n",np);
 		np=p;
