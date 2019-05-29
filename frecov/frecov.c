@@ -60,7 +60,7 @@ void* file_read(void *head) {
 		p=namcpy(p,head+0xe,12);
 		p=namcpy(p,head+0x1c,4);
 		strcat(np,na[0]);
-		printf("p=%s,np%s\n",p,np);
+		printf("\np=%s,np%s\n",p,np);
 		head+=0x20;
 		kd=(int)(*(char *)(head+0xb));
 	}
