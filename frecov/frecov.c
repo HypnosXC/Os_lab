@@ -68,8 +68,8 @@ void* file_read(void *head) {
 		fl_tab[num].sz=*((int *)(head+0x1c));
 		num++;
 		printf("got file:");
-	//	for(int i=0;i<10;i++)
-	//		printf("%c",(char)fl_tab[num-1].name[i]);
+		for(int i=0;i<10;i++)
+			printf("%c",(char)fl_tab[num-1].na[i]);
 		wcstombs(pre,fl_tab[num-1].name,90);
 		printf("head=%x,%s,offset=%x\n",(int)(head-start),fl_tab[num-1].na,(int)(fl_tab[num-1].start-start));
 	}
