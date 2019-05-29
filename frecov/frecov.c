@@ -18,7 +18,8 @@ void* fat1;
 void *fat2;
 void *data;
 struct file{
-	wchar_t name[100];
+	wchar_t name[200];
+	char *na;
 	void *start;
 	int sz;
 }fl_tab[10000];
@@ -40,7 +41,7 @@ void* file_read(void *head) {
 		assert(0);
 	}
 	int tot=0;
-	wchar_t *p=fl_tab[num].name;
+	wchar_t *p=fl_tab[num].name+190;
 	while(kd==0xf) {
 		tot++;
 		/*
@@ -49,12 +50,14 @@ void* file_read(void *head) {
 		memcpy(na[tot]+22,(head+0x1c),4);
 		?????????
 		*/
+ 		p-=52;
 		p=namcpy(p,head+1,10);
 		p=namcpy(p,head+0xe,12);
 		p=namcpy(p,head+0x1c,2);
 		head+=0x20;
 		kd=(int)(*(char *)(head+0xb));
 	}
+	fl_tab[num].na=p;
 	char pre[100];
 	memset(pre,0,sizeof(pre));
 	memcpy(pre,head+0x8,3);
@@ -104,8 +107,9 @@ int main(int argc, char *argv[]) {
 	 memset(pre,0,sizeof(pre));
 	 memcpy(pre,(head+0x8),3);
 	 int kd=(int )*((char *)(head+0xb));
+	 int tail=(int)*((char *)head);
 //	 printf("kd=%s,%d\n",pre,kd);
-	 if(kd==0xf)
+	 if(kd==0xf&&(tail&64))
 		head=file_read(head);
 	 else
 	 	head+=32;
