@@ -57,7 +57,7 @@ void* file_read(void *head) {
 		head+=0x20;
 		kd=(int)(*(char *)(head+0xb));
 	}
-	fl_tab[num].na=p;
+	fl_tab[num].na=(char *)p;
 	char pre[100];
 	memset(pre,0,sizeof(pre));
 	memcpy(pre,head+0x8,3);
@@ -71,7 +71,7 @@ void* file_read(void *head) {
 	//	for(int i=0;i<10;i++)
 	//		printf("%c",(char)fl_tab[num-1].name[i]);
 		wcstombs(pre,fl_tab[num-1].name,90);
-		printf("head=%x,%s,offset=%x\n",(int)(head-start),pre,(int)(fl_tab[num-1].start-start));
+		printf("head=%x,%s,offset=%x\n",(int)(head-start),fl_tab[num-1].na,(int)(fl_tab[num-1].start-start));
 	}
 	return head+32;
 }
