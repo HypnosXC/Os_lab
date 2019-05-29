@@ -45,7 +45,7 @@ void* file_read(void *head) {
 	memset(na[1],0,sizeof(char)*100);
 	memset(na[0],0,sizeof(char)*100);
 	char *p=na[0];
-	char *np=na[1];
+//	char *np=na[1];
 	while(kd==0xf) {
 		tot++;
 		/*
