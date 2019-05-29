@@ -59,10 +59,10 @@ void* file_read(void *head) {
 		p=namcpy(p,head+1,10);
 		p=namcpy(p,head+0xe,12);
 		p=namcpy(p,head+0x1c,4);
-		printf("p=%s???\n",na[1]);
+//		printf("p=%s???\n",na[1]);
 		strcat(na[0],np);
 		strcpy(np,na[0]);
-	//	printf("\nnp=%s\n",np);
+		printf("\nnp=%s\n",np);
 		head+=0x20;
 		kd=(int)(*(char *)(head+0xb));
 	}
