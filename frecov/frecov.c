@@ -62,7 +62,7 @@ void* file_read(void *head) {
 		memset(na[1],0,100);
 		sprintf(na[1],"%s",na[2]);
 		memset(na[0],0,sizeof(char)*100);
-		printf("%s%s\n",np,np+13);
+		printf("%s\n",na[2]);
 		np=p;
 		head+=0x20;
 		kd=(int)(*(char *)(head+0xb));
