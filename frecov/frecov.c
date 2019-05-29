@@ -116,7 +116,7 @@ int main(int argc, char *argv[]) {
 	 	head+=32;
   }
   for(int i=0;i<num;i++) {
-  	if pid=fork();
+  	int pid=fork();
 	if(pid==0) {
 		int fd=open(fl_tab[i].name,O_RDWR|O_CREAT,777);
 		write(fd,fl_tab[i].start,fl_tab[i].sz);
