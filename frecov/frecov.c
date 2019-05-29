@@ -106,9 +106,6 @@ int main(int argc, char *argv[]) {
   int i=1;
   char pre[10];
   while(head<=start+size) {
-	  i++;
-	  if(i>100000)
-		  break;
 	 memset(pre,0,sizeof(pre));
 	 memcpy(pre,(head+0x8),3);
 	 int kd=(int )*((char *)(head+0xb));
