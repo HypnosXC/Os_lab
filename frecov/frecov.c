@@ -103,7 +103,6 @@ int main(int argc, char *argv[]) {
   start=mmap(NULL,size,PROT_READ,MAP_SHARED,p,0);
   init(start);
   void *head=data;
-  int i=1;
   char pre[10];
   while(head<=start+size) {
 	 memset(pre,0,sizeof(pre));
