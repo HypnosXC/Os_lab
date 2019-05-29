@@ -105,7 +105,7 @@ int main(int argc, char *argv[]) {
   void *head=data;
   int i=1;
   char pre[10];
-  while(1) {
+  while(head<=start+size) {
 	  i++;
 	  if(i>100000)
 		  break;
