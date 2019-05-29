@@ -32,7 +32,7 @@ void* namcpy(void *bbuf,const void*iin,int sz) {
 		*(buf+i)=*(in+2*i);
 	}
 //	printf("%s",buf);
-	return buf+sz;
+	return buf+sz/2;
 }	
 void* file_read(void *head) {
 	int kd=(int)(*(char *)(head+0xB));
