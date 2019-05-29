@@ -69,7 +69,7 @@ void* file_read(void *head) {
 	memset(pre,0,sizeof(pre));
 	memcpy(pre,head+0x8,3);
 	if(!strcmp(pre,"BMP")) {
-		int pos=*((short *)(head+0x14));
+		int pos=(int)*((short *)(head+0x14));
 		pos=(pos<<16)+*((short*)(head+0x1a));
 		printf("pos is %d",pos);
 		fl_tab[num].start=fat2+FAT_BLO*BLO_SZ+(pos-2)*GP_BLO*BLO_SZ;
