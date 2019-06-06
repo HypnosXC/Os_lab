@@ -133,7 +133,7 @@ char* kvdb_get(kvdb_t *db,const char *key) {
 		value=malloc(s->size+1);
 		read(db->fd,value,s->size);
 		free(s);
-		pthread_mutex_unlock(dn->mutex);
+		pthread_mutex_unlock(db->mutex);
 		return value;
  	}
 }

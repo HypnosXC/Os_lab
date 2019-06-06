@@ -8,7 +8,7 @@ typedef struct _jour_mod{
 }jmod;
 struct kvdb {
 	int fd;
-	pthread_mutex_t mutex;
+	pthread_mutex_t *mutex;
 	int closed;
 };
 typedef struct kvdb kvdb_t;
