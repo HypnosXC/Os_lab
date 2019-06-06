@@ -20,9 +20,9 @@ void journaling(kvdb_t *db) {
 		offset+=sizeof(jmod);
 		read(db->fd,cure,sizeof(jmod));
 		if(curs->state==1&&cure->state==2) {//recovery able
-			char *buf=alloc(sizeof(char)*curs->size);
+			char *buf=malloc(sizeof(char)*curs->size);
 			lseek(db->fd,offset,SEEK_SET);
-			offset+=size;
+			offset+=curs->size;
 			read(db->fd,buf,curs->size);
 			write(db->fd,buf,size);
 			offset+=size;
