@@ -13,7 +13,8 @@ void journaling(kvdb_t *db) {
 	int max_off=lseek(db->fd,0,SEEK_END),doff=0;
 	while(offset<=max_off) {
 		lseek(db->fd,offset,SEEK_SET);
-		jmod* curs=malloc(sizeof(jmod)),cure=malloc(sizeof(jmod));
+		jmod* curs=malloc(sizeof(jmod));
+		jmod *cure=malloc(sizeof(jmod));
 		read(db->fd,cur,sizeof(jmod));
 		offset+=sizeof(jmod);
 		lseek(db->fd,offset,SEEK_SET);
