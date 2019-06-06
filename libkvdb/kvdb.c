@@ -68,11 +68,11 @@ int kvdb_put(kvdb_t *db,const char * key,const char *value) {
 		return -1;
 	}
 	flock(db->fd,LOCK_EX);
-	off=lseek(db->fd,0,SEEK_END);
+	int off=lseek(db->fd,0,SEEK_END);
 	jmod s;
-	s->state=1;
-	s->size=strlen(value);
-	strcpy(s->name,key);
+	s.state=1;
+	s.size=strlen(value);
+	strcpy(s.name,key);
 	write(db->fd,&s,sizeof(jmod));
 	write(db->fd,&s,sizeof(jmod));
 	write(db->fd,value,strlen(value));
