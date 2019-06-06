@@ -77,7 +77,7 @@ int kvdb_put(kvdb_t *db,const char * key,const char *value) {
 	write(db->fd,value,strlen(value));
 	sync();
 	//create head jour and record data
-	s->state=2;
+	s.state=2;
 	lseek(db->fd,off+sizeof(jmod),SEEK_SET);
 	write(db->fd,&s,sizeof(jmod));
 	sync();
@@ -85,7 +85,7 @@ int kvdb_put(kvdb_t *db,const char * key,const char *value) {
 	lseek(db->fd,0,SEEK_END);
 	write(db->fd,value,sizeof(value));
 	// write data
-	s->state=3;
+	s.state=3;
 	lseek(db->fd,off,SEEK_SET);
 	write(db->fd,&s,sizeof(jmod));
 	off=lseek(db->fd,0,SEEK_END);
@@ -96,7 +96,7 @@ int kvdb_put(kvdb_t *db,const char * key,const char *value) {
 	return 0;
 }
 char* kvdb_get(kvdb_t *db,const char *key) {
-	offset=8;
+	int offset=8;
 	int max_off=0,doff=0;
 	char* value=0;
 	read(db->fd,&max_off,sizeof(int));
