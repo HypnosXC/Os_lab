@@ -29,7 +29,7 @@ void journaling(kvdb_t* db) {
 			offset+=curs->size;
 			sync();
 			curs->state=3;
-			lseek(db->fd,offset-2*(size+sizeof(jmod)),SEEK_SET);
+			lseek(db->fd,offset-2*(curs->size+sizeof(jmod)),SEEK_SET);
 			write(db->fd,curs,sizeof(jmod));
 			free(buf);
 			doff=offset;
