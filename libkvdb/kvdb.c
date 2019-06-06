@@ -107,7 +107,9 @@ char* kvdb_get(kvdb_t *db,const char *key) {
 	if(doff==0) {
 		free(s);
 		char pre[]="No such a key !\n";
-		return pre;
+		value=malloc(strlen(pre));
+		strcpy(value,pre);
+		return value;
 	}
 	else {
 		lseek(db->fd,doff,SEEK_SET);
