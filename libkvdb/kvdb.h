@@ -1,5 +1,6 @@
 #ifndef __KVDB_H__
 #define __KVDB_H__
+#include<pthread.h>
 typedef struct _jour_mod{
 	int state;//1 for head, 2 for end ,3 for used or not useful;
 	int size;//file size 
@@ -7,6 +8,7 @@ typedef struct _jour_mod{
 }jmod;
 struct kvdb {
 	int fd;
+	pthread_mutex_t mutex;
 	int closed;
 };
 typedef struct kvdb kvdb_t;

@@ -47,6 +47,9 @@ int kvdb_open(kvdb_t *db,const char *filename) {
 	if(db->fd==-1)
 		return -1;
 	flock(db->fd,LOCK_EX);
+//	db->mutex=PTHREAD_MUTEX_INITIALIZER;
+	pthread_mutex_init(db->mutex);
+	pthread_mutex_lock(db->mutex);
 	if(lseek(db->fd,0,SEEK_END)!=0) {
 		journaling(db);
 	}
@@ -54,12 +57,16 @@ int kvdb_open(kvdb_t *db,const char *filename) {
 		long long f=0;
 		write(db->fd,&f,sizeof(long long));
 	}
+	pthread_mutex_unlock(db->mutex);
 	flock(db->fd,LOCK_UN);
 	return 0;
 }
 int kvdb_close(kvdb_t *db) {
+	pthread_mutex_lock(db->mutex);
 	db->closed=1;
 	int f=close(db->fd);
+	pthread_mutex_unlock(db->mutex);
+	pthread_mutex_destroy(db->mutex);
 	return f;
 }
 int kvdb_put(kvdb_t *db,const char * key,const char *value) {
@@ -67,6 +74,7 @@ int kvdb_put(kvdb_t *db,const char * key,const char *value) {
 		printf("error: dataset closed!\n");
 		return -1;
 	}
+	pthread_mutex_lock(db->mutex);
 	flock(db->fd,LOCK_EX);
 	int off=lseek(db->fd,0,SEEK_END);
 	jmod s;
@@ -94,9 +102,11 @@ int kvdb_put(kvdb_t *db,const char * key,const char *value) {
 	write(db->fd,&off,sizeof(int));
 	// change  the maxoff
 	flock(db->fd,LOCK_UN);
+	pthread_mutex_unlock(db->mutex);
 	return 0;
 }
 char* kvdb_get(kvdb_t *db,const char *key) {
+	pthread_mutex_lock(db->mutex);
 	int offset=8;
 	int max_off=0,doff=0;
 	char* value=0;
@@ -108,14 +118,13 @@ char* kvdb_get(kvdb_t *db,const char *key) {
 		if(!strcmp(s->name,key))
 		   	doff=offset;
 		offset+=2*sizeof(jmod)+s->size*2;	
-	}
+	} 
 	if(doff==0) {
 		free(s);
-		char pre[]="No such a key !\n";
-		value=malloc(strlen(pre));
-		strcpy(value,pre);
-		return value;
-	}
+		printf("No such a key !\n");
+		pthread_mutex_unlock(db->mutex);
+		return NULL;
+	} 
 	else {
 		lseek(db->fd,doff,SEEK_SET);
 		read(db->fd,s,sizeof(jmod));
@@ -124,8 +133,10 @@ char* kvdb_get(kvdb_t *db,const char *key) {
 		value=malloc(s->size+1);
 		read(db->fd,value,s->size);
 		free(s);
+		pthread_mutex_unlock(dn->mutex);
 		return value;
-	}
+ 	}
 }
+
 
 
