@@ -55,7 +55,7 @@ int kvdb_open(kvdb_t *db,const char *filename) {
 	pthread_mutex_lock(db->mutex);
 	printf("off %d\n",(int)lseek(db->fd,0,SEEK_END));
 	fflush(stdout);
-	if(lseek(db->fd,0,SEEK_END)!=-1) {
+	if(lseek(db->fd,0,SEEK_END)!=0) {
 		journaling(db);
 	}
 	else {
@@ -81,7 +81,8 @@ int kvdb_put(kvdb_t *db,const char * key,const char *value) {
 	}
 	pthread_mutex_lock(db->mutex);
 	flock(db->fd,LOCK_EX);
-	int off=lseek(db->fd,0,SEEK_END);
+	int off;
+	read(db->fd,&off,sizeof(int));
 	jmod s;
 	s.state=1;
 	s.size=strlen(value);
