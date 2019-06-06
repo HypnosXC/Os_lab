@@ -50,7 +50,6 @@ int kvdb_open(kvdb_t *db,const char *filename) {
 		journaling(db);
 	}
 	else {
-		db->offset=8;
 		long long f=0;
 		write(db->fd,&f,sizeof(long long));
 	}
