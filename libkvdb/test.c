@@ -3,7 +3,7 @@
 #include "kvdb.h"
 int main() {
 	kvdb_t db;
-	const char key="opearating-ss";
+	const char *key="opearating-ss";
 	char *value;
 	kvdb_open(&db,"a.db");
 	kvdb_put(&db,key,"hahahah");
