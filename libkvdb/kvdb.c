@@ -43,6 +43,8 @@ void journaling(kvdb_t *db) {
 int kvdb_open(kvdb_t *db,const char *filename) {
 	db->closed=0;
 	db->fd=open(filename,O_RDWR|O_CREAT,777);
+	if(db->fd==-1)
+		return -1;
 	flock(db->fd,LOCK_EX);
 	if(lseek(db->fd,0,SEEK_END)!=0) {
 		journaling(db);
@@ -53,9 +55,12 @@ int kvdb_open(kvdb_t *db,const char *filename) {
 		write(db->fd,&f,sizeof(long long));
 	}
 	flock(db->fd,LOCK_UN);
+	return 0;
 }
 int kvdb_close(kvdb_t *db) {
 	db->closed=1;
+	int f=close(db->fd);
+	return f;
 }
 int kvdb_put(kvdb_t *db,const char * key,const char *value) {
 	if(db->closed==1) {
@@ -95,8 +100,8 @@ char* kvdb_get(kvdb_t *db,const char *key) {
 	offset=8;
 	int max_off=0,doff=0;
 	char* value=0;
-	read(db->fd,max_off,sizeof(int));
-	jmod *s=alloc(sizeof(jmod));
+	read(db->fd,&max_off,sizeof(int));
+	jmod *s=malloc(sizeof(jmod));
 	while(offset<=max_off) {
 		lseek(db->fd,offset,SEEK_SET);
 		read(db->fd,s,sizeof(jmod));
@@ -116,7 +121,7 @@ char* kvdb_get(kvdb_t *db,const char *key) {
 		read(db->fd,s,sizeof(jmod));
 		doff+=s->size+sizeof(jmod)*2;
 		lseek(db->fd,doff,SEEK_SET);
-		value=alloc(s->size+1);
+		value=malloc(s->size+1);
 		read(db->fd,value,s->size);
 		free(s);
 		return value;
