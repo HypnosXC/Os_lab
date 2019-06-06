@@ -103,6 +103,7 @@ int kvdb_put(kvdb_t *db,const char * key,const char *value) {
 	write(db->fd,&off,sizeof(int));
 	// change  the maxoff
 	flock(db->fd,LOCK_UN);
+	printf("[%s]=[%s],offset=%d",key,value,off);
 	pthread_mutex_unlock(db->mutex);
 	return 0;
 }
