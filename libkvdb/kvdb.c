@@ -51,7 +51,7 @@ int kvdb_open(kvdb_t *db,const char *filename) {
 	db->mutex=malloc(sizeof(pthread_mutex_t));
 	pthread_mutex_init(db->mutex,NULL);
 	pthread_mutex_lock(db->mutex);
-	if(lseek(db->fd,0,SEEK_END)!=0) {
+	if(lseek(db->fd,0,SEEK_END)!=-1) {
 		journaling(db);
 	}
 	else {
@@ -103,7 +103,7 @@ int kvdb_put(kvdb_t *db,const char * key,const char *value) {
 	write(db->fd,&off,sizeof(int));
 	// change  the maxoff
 	flock(db->fd,LOCK_UN);
-	printf("[%s]=[%s],offset=%d",key,value,off);
+	printf("[%s]=[%s],offset=%d\n",key,value,off);
 	pthread_mutex_unlock(db->mutex);
 	return 0;
 }
