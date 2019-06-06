@@ -15,7 +15,7 @@ void journaling(kvdb_t *db) {
 		lseek(db->fd,offset,SEEK_SET);
 		jmod* curs=malloc(sizeof(jmod));
 		jmod *cure=malloc(sizeof(jmod));
-		read(db->fd,cur,sizeof(jmod));
+		read(db->fd,curs,sizeof(jmod));
 		offset+=sizeof(jmod);
 		lseek(db->fd,offset,SEEK_SET);
 		offset+=sizeof(jmod);
