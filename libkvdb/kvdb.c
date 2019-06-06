@@ -8,7 +8,7 @@
 #include<unistd.h>
 #include<stdlib.h>
 #include<string.h>
-void journaling(kvdb_t *db) {
+void journaling(kvdb_t* db) {
 	int offset=8;
 	int max_off=lseek(db->fd,0,SEEK_END),doff=0;
 	while(offset<=max_off) {
@@ -26,7 +26,7 @@ void journaling(kvdb_t *db) {
 			offset+=curs->size;
 			read(db->fd,buf,curs->size);
 			write(db->fd,buf,curs->size);
-			offset+=size;
+			offset+=curs->size;
 			sync();
 			curs->state=3;
 			lseek(db->fd,offset-2*(size+sizeof(jmod)),SEEK_SET);
