@@ -44,8 +44,10 @@ void journaling(kvdb_t* db) {
 int kvdb_open(kvdb_t *db,const char *filename) {
 	db->closed=0;
 	db->fd=open(filename,O_RDWR|O_CREAT,777);
-	if(db->fd==-1)
+	if(db->fd==-1) {
+		printf("Not opened!\n");
 		return -1;
+	}
 	flock(db->fd,LOCK_EX);
 //	db->mutex=PTHREAD_MUTEX_INITIALIZER;
 	db->mutex=malloc(sizeof(pthread_mutex_t));
