@@ -48,6 +48,7 @@ int kvdb_open(kvdb_t *db,const char *filename) {
 		return -1;
 	flock(db->fd,LOCK_EX);
 //	db->mutex=PTHREAD_MUTEX_INITIALIZER;
+	db->mutex=malloc(sizeof(pthread_mutex_t));
 	pthread_mutex_init(db->mutex,NULL);
 	pthread_mutex_lock(db->mutex);
 	if(lseek(db->fd,0,SEEK_END)!=0) {
