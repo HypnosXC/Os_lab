@@ -51,7 +51,7 @@ int kvdb_open(kvdb_t *db,const char *filename) {
 	db->mutex=malloc(sizeof(pthread_mutex_t));
 	pthread_mutex_init(db->mutex,NULL);
 	pthread_mutex_lock(db->mutex);
-	printf("off %d\n",lseek(db->fd,0,SEEK_END));
+	printf("off %d\n",(int)lseek(db->fd,0,SEEK_END));
 	if(lseek(db->fd,0,SEEK_END)!=-1) {
 		journaling(db);
 	}
