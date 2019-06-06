@@ -122,6 +122,7 @@ char* kvdb_get(kvdb_t *db,const char *key) {
 	while(offset<=max_off) {
 		lseek(db->fd,offset,SEEK_SET);
 		read(db->fd,s,sizeof(jmod));
+		printf("name=%s\n",s->name);
 		if(!strcmp(s->name,key))
 		   	doff=offset;
 		offset+=2*sizeof(jmod)+s->size*2;	
