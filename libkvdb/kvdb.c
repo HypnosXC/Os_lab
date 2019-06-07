@@ -108,7 +108,7 @@ int kvdb_put(kvdb_t *db,const char * key,const char *value) {
 	// create end jour
 	lseek(db->fd,0,SEEK_END);
 	write(db->fd,value,strlen(value));
-	printf("data end off is",cursk(db));
+	printf("data end off is%d\n",cursk(db));
 	// write data
 	s.state=3;
 	lseek(db->fd,off,SEEK_SET);
