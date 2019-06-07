@@ -152,6 +152,7 @@ char* kvdb_get(kvdb_t *db,const char *key) {
 	else {
 		lseek(db->fd,doff,SEEK_SET);
 		read(db->fd,s,sizeof(jmod));
+		printf("\033[34mfind key :%s \n\033[0m",s->name);
 		doff+=s->size+sizeof(jmod)*2;
 		lseek(db->fd,doff,SEEK_SET);
 		value=malloc(s->size+1);
