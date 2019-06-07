@@ -90,6 +90,7 @@ int kvdb_put(kvdb_t *db,const char * key,const char *value) {
 	int off;
 	read(db->fd,&off,sizeof(int));
 	printf("now off is%d,jmod size is %d",off,(int)sizeof(jmod));
+	lseek(db->fd,off,SEEK_SET);
 	jmod s;
 	s.state=1;
 	s.size=strlen(value);
