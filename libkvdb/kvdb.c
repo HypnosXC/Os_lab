@@ -42,7 +42,8 @@ void journaling(kvdb_t* db) {
 		free(cure);
 	}
 	lseek(db->fd,0,SEEK_SET);
-	write(db->fd,&doff,sizeof(int));
+	if(doff!=0)
+		write(db->fd,&doff,sizeof(int));
 	sync();
 }
 int kvdb_open(kvdb_t *db,const char *filename) {
