@@ -135,7 +135,7 @@ char* kvdb_get(kvdb_t *db,const char *key) {
 	lseek(db->fd,0,SEEK_SET);
 	read(db->fd,&max_off,sizeof(int));
 	jmod *s=malloc(sizeof(jmod));
-	while(offset<=max_off) {
+	while(offset<max_off) {
 		lseek(db->fd,offset,SEEK_SET);
 		read(db->fd,s,sizeof(jmod));
 		printf("\033[32m offset=%d,name=%s,%d\033[0m\n",offset,s->name,strcmp(s->name,key));
