@@ -118,6 +118,7 @@ int kvdb_put(kvdb_t *db,const char * key,const char *value) {
 	lseek(db->fd,off,SEEK_SET);
 	write(db->fd,&s,sizeof(jmod));
 	off=lseek(db->fd,0,SEEK_END);
+	printf("finished with offset=%d\n",off);
 	lseek(db->fd,0,SEEK_SET);
 	write(db->fd,&off,sizeof(int));
 	// change  the maxoff
@@ -137,6 +138,7 @@ char* kvdb_get(kvdb_t *db,const char *key) {
 	while(offset<=max_off) {
 		lseek(db->fd,offset,SEEK_SET);
 		read(db->fd,s,sizeof(jmod));
+		printf("\033[32m offset=%d,name=%s\033[0m\n",offset,s->name);
 		if(!strcmp(s->name,key))
 		   	doff=offset;
 		offset+=2*sizeof(jmod)+s->size*2;	
