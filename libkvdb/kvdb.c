@@ -63,8 +63,9 @@ int kvdb_open(kvdb_t *db,const char *filename) {
 		journaling(db);
 	}
 	else {
-		long long f=0;
-		int ff=write(db->fd,&f,sizeof(long long));
+		int f=8;
+		int ff=write(db->fd,&f,sizeof(int));
+		int ff=write(db->fd,&f,sizeof(int));
 		printf("scu=%d,\n",ff);
 	//	printf("reach init ,id=%d,off=%d\n",db->fd,(int)lseek(db->fd,0,SEEK_END));
 	}
