@@ -88,6 +88,7 @@ int kvdb_put(kvdb_t *db,const char * key,const char *value) {
 	pthread_mutex_lock(db->mutex);
 	flock(db->fd,LOCK_EX);
 	int off;
+	lseek(db->fd,0,SEEK_SET);
 	read(db->fd,&off,sizeof(int));
 	printf("now off is%d,jmod size is %d",off,(int)sizeof(jmod));
 	lseek(db->fd,off,SEEK_SET);
