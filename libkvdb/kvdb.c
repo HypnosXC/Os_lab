@@ -97,7 +97,7 @@ int kvdb_put(kvdb_t *db,const char * key,const char *value) {
 	write(db->fd,&s,sizeof(jmod));
 	write(db->fd,&s,sizeof(jmod));
 	write(db->fd,value,strlen(value));
-	printf("after jor ,off is %d\n",cursk(db));
+	printf("after jor ,off is \n",cursk(db));
 	sync();
 	//create head jour and record data
 	s.state=2;
@@ -108,6 +108,7 @@ int kvdb_put(kvdb_t *db,const char * key,const char *value) {
 	// create end jour
 	lseek(db->fd,0,SEEK_END);
 	write(db->fd,value,strlen(value));
+	printf("data end off is",cursk(db));
 	// write data
 	s.state=3;
 	lseek(db->fd,off,SEEK_SET);
