@@ -60,7 +60,8 @@ int kvdb_open(kvdb_t *db,const char *filename) {
 	}
 	else {
 		long long f=0;
-		write(db->fd,&f,sizeof(long long));
+		int f=write(db->fd,&f,sizeof(long long));
+		printf("%d,\n",f);
 	//	printf("reach init ,id=%d,off=%d\n",db->fd,(int)lseek(db->fd,0,SEEK_END));
 	}
 	pthread_mutex_unlock(db->mutex);
