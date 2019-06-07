@@ -8,6 +8,10 @@
 #include<unistd.h>
 #include<stdlib.h>
 #include<string.h>
+#define cursk(x) ((int)lseek(x->fd,0,SEEK_CUR))
+#define zerosk(x) (lseek(x->fd,0,SEEK_SET))
+#define endsk(x)  lseek(x->fd,0,SEEK_END)
+#define cgsk(x,offset) lseek(x->fd,offset,SEEK_SET)
 void journaling(kvdb_t* db) {
 	int offset=8;
 	int max_off=lseek(db->fd,0,SEEK_END),doff=0;
@@ -85,6 +89,7 @@ int kvdb_put(kvdb_t *db,const char * key,const char *value) {
 	flock(db->fd,LOCK_EX);
 	int off;
 	read(db->fd,&off,sizeof(int));
+	printf("now off is%d",off);
 	jmod s;
 	s.state=1;
 	s.size=strlen(value);
@@ -92,12 +97,14 @@ int kvdb_put(kvdb_t *db,const char * key,const char *value) {
 	write(db->fd,&s,sizeof(jmod));
 	write(db->fd,&s,sizeof(jmod));
 	write(db->fd,value,strlen(value));
+	printf("after jor ,off is \n",cursk(db));
 	sync();
 	//create head jour and record data
 	s.state=2;
 	lseek(db->fd,off+sizeof(jmod),SEEK_SET);
 	write(db->fd,&s,sizeof(jmod));
 	sync();
+	printf("hor end ,off is %d\n",cursk(db));
 	// create end jour
 	lseek(db->fd,0,SEEK_END);
 	write(db->fd,value,strlen(value));
