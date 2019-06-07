@@ -105,9 +105,9 @@ int kvdb_put(kvdb_t *db,const char * key,const char *value) {
 	printf("\033[32mnow off is %d\n\033[0m",cursk(db));
 	write(db->fd,&s,sizeof(jmod));
 	sync();
-	printf("hor end ,off is %d\n",cursk(db));
 	// create end jour
 	lseek(db->fd,0,SEEK_END);
+	printf("hor end ,off is %d\n",cursk(db));
 	write(db->fd,value,strlen(value));
 	printf("data end off is%d\n",cursk(db));
 	// write data
