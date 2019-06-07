@@ -43,7 +43,7 @@ void journaling(kvdb_t* db) {
 }
 int kvdb_open(kvdb_t *db,const char *filename) {
 	db->closed=0;
-	db->fd=open(filename,O_REWR|O_CREAT,0777);
+	db->fd=open(filename,O_RDWR|O_CREAT,0777);
 	if(db->fd==-1) {
 		printf("Not opened!\n");
 		return -1;
