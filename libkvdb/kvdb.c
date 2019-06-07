@@ -43,7 +43,7 @@ void journaling(kvdb_t* db) {
 }
 int kvdb_open(kvdb_t *db,const char *filename) {
 	db->closed=0;
-	db->fd=open(filename,O_CREAT,S_IRWXU|S_IRWXG|S_IRWXO);
+	db->fd=open(filename,O_CREAT,0777);
 	if(db->fd==-1) {
 		printf("Not opened!\n");
 		return -1;
@@ -61,7 +61,7 @@ int kvdb_open(kvdb_t *db,const char *filename) {
 	else {
 		long long f=0;
 		write(db->fd,&f,sizeof(long long));
-		printf("reach init ,id=%d,off=%d\n",db->fd,(int)lseek(db->fd,0,SEEK_END));
+	//	printf("reach init ,id=%d,off=%d\n",db->fd,(int)lseek(db->fd,0,SEEK_END));
 	}
 	pthread_mutex_unlock(db->mutex);
 	flock(db->fd,LOCK_UN);
