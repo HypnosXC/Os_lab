@@ -59,9 +59,9 @@ int kvdb_open(kvdb_t *db,const char *filename) {
 		journaling(db);
 	}
 	else {
-		printf("reach init!\n");
 		long long f=0;
 		write(db->fd,&f,sizeof(long long));
+		printf("reach init ,off=%d\n",(int)lseek(db->fd.0,SEEK_END));
 	}
 	pthread_mutex_unlock(db->mutex);
 	flock(db->fd,LOCK_UN);
