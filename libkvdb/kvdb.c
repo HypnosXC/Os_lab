@@ -100,7 +100,7 @@ int kvdb_put(kvdb_t *db,const char * key,const char *value) {
 	sync();
 	// create end jour
 	lseek(db->fd,0,SEEK_END);
-	write(db->fd,value,sizeof(value));
+	write(db->fd,value,strlen(value));
 	// write data
 	s.state=3;
 	lseek(db->fd,off,SEEK_SET);
