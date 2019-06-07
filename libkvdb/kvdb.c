@@ -130,6 +130,7 @@ char* kvdb_get(kvdb_t *db,const char *key) {
 	int offset=8;
 	int max_off=0,doff=0;
 	char* value=0;
+	lseek(db->fd,0,SEEK_SET);
 	read(db->fd,&max_off,sizeof(int));
 	jmod *s=malloc(sizeof(jmod));
 	while(offset<=max_off) {
