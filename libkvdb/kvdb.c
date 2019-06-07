@@ -102,6 +102,7 @@ int kvdb_put(kvdb_t *db,const char * key,const char *value) {
 	//create head jour and record data
 	s.state=2;
 	lseek(db->fd,off+sizeof(jmod),SEEK_SET);
+	printf("\033[32mnow off is %d\n\033[0m",cursk(db))
 	write(db->fd,&s,sizeof(jmod));
 	sync();
 	printf("hor end ,off is %d\n",cursk(db));
