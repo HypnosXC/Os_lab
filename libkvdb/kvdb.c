@@ -89,7 +89,7 @@ int kvdb_put(kvdb_t *db,const char * key,const char *value) {
 	flock(db->fd,LOCK_EX);
 	int off;
 	read(db->fd,&off,sizeof(int));
-	printf("now off is%d",off);
+	printf("now off is%d,jmod size is %d",off,sizeof(jmod));
 	jmod s;
 	s.state=1;
 	s.size=strlen(value);
