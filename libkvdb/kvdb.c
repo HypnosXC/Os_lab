@@ -43,7 +43,7 @@ void journaling(kvdb_t* db) {
 }
 int kvdb_open(kvdb_t *db,const char *filename) {
 	db->closed=0;
-	db->fd=open(filename,O_RDWR|O_CREAT,777);
+	db->fd=open(filename,O_CREAT,S_IRWXU|S_IRWXG|S_IRWXO);
 	if(db->fd==-1) {
 		printf("Not opened!\n");
 		return -1;
@@ -59,6 +59,7 @@ int kvdb_open(kvdb_t *db,const char *filename) {
 		journaling(db);
 	}
 	else {
+		printf("reach init!\n");
 		long long f=0;
 		write(db->fd,&f,sizeof(long long));
 	}
@@ -122,7 +123,6 @@ char* kvdb_get(kvdb_t *db,const char *key) {
 	while(offset<=max_off) {
 		lseek(db->fd,offset,SEEK_SET);
 		read(db->fd,s,sizeof(jmod));
-		printf("name=%s\n",s->name);
 		if(!strcmp(s->name,key))
 		   	doff=offset;
 		offset+=2*sizeof(jmod)+s->size*2;	
