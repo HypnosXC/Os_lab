@@ -48,7 +48,7 @@ void journaling(kvdb_t* db) {
 	sync();
 }
 void may_crash(char *s) {
-	srand(time());
+	srand(time(0));
 	int n=rand();	
 	int f=1;
 	for(int i=1;i<=n%1000;i++)
