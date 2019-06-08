@@ -92,7 +92,7 @@ int kvdb_put(kvdb_t *db,const char * key,const char *value) {
 	int off;
 	lseek(db->fd,0,SEEK_SET);
 	read(db->fd,&off,sizeof(int));
-	printf("now off is%d,jmod size is %d",off,(int)sizeof(jmod));
+//	printf("now off is%d,jmod size is %d",off,(int)sizeof(jmod));
 	lseek(db->fd,off,SEEK_SET);
 	jmod s;
 	s.state=1;
@@ -101,30 +101,30 @@ int kvdb_put(kvdb_t *db,const char * key,const char *value) {
 	write(db->fd,&s,sizeof(jmod));
 	write(db->fd,&s,sizeof(jmod));
 	write(db->fd,value,strlen(value));
-	printf("after jor ,off is %d\n",cursk(db));
+//	printf("after jor ,off is %d\n",cursk(db));
 	sync();
 	//create head jour and record data
 	s.state=2;
 	lseek(db->fd,off+sizeof(jmod),SEEK_SET);
-	printf("\033[32mnow off is %d\n\033[0m",cursk(db));
+//	printf("\033[32mnow off is %d\n\033[0m",cursk(db));
 	write(db->fd,&s,sizeof(jmod));
 	sync();
 	// create end jour
 	lseek(db->fd,0,SEEK_END);
-	printf("hor end ,off is %d\n",cursk(db));
+//	printf("hor end ,off is %d\n",cursk(db));
 	write(db->fd,value,strlen(value));
-	printf("data end off is%d\n",cursk(db));
+//	printf("data end off is%d\n",cursk(db));
 	// write data
 	s.state=3;
 	lseek(db->fd,off,SEEK_SET);
 	write(db->fd,&s,sizeof(jmod));
 	off=lseek(db->fd,0,SEEK_END);
-	printf("finished with offset=%d\n",off);
+//	printf("finished with offset=%d\n",off);
 	lseek(db->fd,0,SEEK_SET);
 	write(db->fd,&off,sizeof(int));
 	// change  the maxoff
 	flock(db->fd,LOCK_UN);
-	printf("[%s]=[%s],offset=%d\n",key,value,off);
+//	printf("[%s]=[%s],offset=%d\n",key,value,off);
 	pthread_mutex_unlock(db->mutex);
 	return 0;
 }
