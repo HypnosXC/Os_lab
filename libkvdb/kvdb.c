@@ -52,7 +52,7 @@ void may_crash(char *s) {
 	int f=1;
 	for(int i=1;i<=n%1000;i++)
 		f=rand()%3;
-	if(f==1) {
+	if(f==0) {
 		printf("\033[031mcrash at %s,offset=%d\n\033[0m",s,f);
 		fflush(stdout);
 		exit(0);
