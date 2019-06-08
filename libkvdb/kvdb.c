@@ -46,6 +46,14 @@ void journaling(kvdb_t* db) {
 		write(db->fd,&doff,sizeof(int));
 	sync();
 }
+bool may_crash(char *s) {
+	int f=rand()%3;
+	if(f==1) {
+		printf("\033[031mcrash at %s\n\033[0m",s);
+		fflush(stdout);
+		exit(0);
+	}
+}
 int kvdb_open(kvdb_t *db,const char *filename) {
 	db->closed=0;
 	db->fd=open(filename,O_RDWR|O_CREAT,0777);
@@ -101,20 +109,20 @@ int kvdb_put(kvdb_t *db,const char * key,const char *value) {
 	write(db->fd,&s,sizeof(jmod));
 	write(db->fd,&s,sizeof(jmod));
 	write(db->fd,value,strlen(value));
-//	printf("after jor ,off is %d\n",cursk(db));
 	sync();
+	may_crash("journaling finished");
 	//create head jour and record data
 	s.state=2;
 	lseek(db->fd,off+sizeof(jmod),SEEK_SET);
-//	printf("\033[32mnow off is %d\n\033[0m",cursk(db));
 	write(db->fd,&s,sizeof(jmod));
 	sync();
 	// create end jour
+	may_crash("end journaling");
 	lseek(db->fd,0,SEEK_END);
-//	printf("hor end ,off is %d\n",cursk(db));
 	write(db->fd,value,strlen(value));
 //	printf("data end off is%d\n",cursk(db));
 	// write data
+	may_crash("data write");
 	s.state=3;
 	lseek(db->fd,off,SEEK_SET);
 	write(db->fd,&s,sizeof(jmod));
@@ -126,6 +134,7 @@ int kvdb_put(kvdb_t *db,const char * key,const char *value) {
 	flock(db->fd,LOCK_UN);
 //	printf("[%s]=[%s],offset=%d\n",key,value,off);
 	pthread_mutex_unlock(db->mutex);
+	may_crash("whole finished!");
 	return 0;
 }
 char* kvdb_get(kvdb_t *db,const char *key) {
