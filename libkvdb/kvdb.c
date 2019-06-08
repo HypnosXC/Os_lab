@@ -46,7 +46,7 @@ void journaling(kvdb_t* db) {
 		write(db->fd,&doff,sizeof(int));
 	sync();
 }
-bool may_crash(char *s) {
+void may_crash(char *s) {
 	int f=rand()%3;
 	if(f==1) {
 		printf("\033[031mcrash at %s\n\033[0m",s);
