@@ -47,7 +47,7 @@ void work_place_r(kvdb_t *db){
 		while(str == NULL)
 			str= kvdb_get(db, a);
 
-		printf("\33[1;35mnum:%d %s\33[0m\n", num, str);
+		printf("\33[1;35 get num:%d %s\33[0m\n", num, str);
 	}
 	printf("end\n");
 }
@@ -62,7 +62,7 @@ void work_place_w(kvdb_t *db){
 		b[i] = 'b'+alphaOff;
 		printf("$$$ create %s %s\n", a, b);
 		//alphaOff += 1;
-		printf("num:%d %d\n", num, kvdb_put(db, a, b));
+		printf("create num:%d %d\n", num, kvdb_put(db, a, b));
 	}
 	printf("end\n");
 }
