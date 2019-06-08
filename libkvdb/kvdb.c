@@ -48,7 +48,7 @@ void journaling(kvdb_t* db) {
 	sync();
 }
 void may_crash(char *s) {
-	int n=rand();	
+/*	int n=rand();	
 	int f=1;
 	for(int i=1;i<=n%1000;i++)
 		f=rand()%30;
@@ -57,6 +57,9 @@ void may_crash(char *s) {
 		fflush(stdout);
 		exit(0);
 	}
+	used for debugging
+	*/
+	return ;
 }
 int kvdb_open(kvdb_t *db,const char *filename) {
 	srand(time(0));
