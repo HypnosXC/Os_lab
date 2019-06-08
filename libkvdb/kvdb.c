@@ -50,6 +50,7 @@ void journaling(kvdb_t* db) {
 void may_crash(char *s) {
 	srand(time());
 	int n=rand();	
+	int f=1;
 	for(int i=1;i<=n%1000;i++)
 		f=rand()%3;
 	if(f==1) {
