@@ -1,4 +1,5 @@
 #include "kvdb.h"
+#include<time.h>
 #include<sys/file.h>
 #include<stdio.h>
 #include<fcntl.h>
@@ -48,7 +49,9 @@ void journaling(kvdb_t* db) {
 }
 void may_crash(char *s) {
 	srand(time());
-	int f=rand()%3;
+	int n=rand();	
+	for(int i=1;i<=n%1000;i++)
+		f=rand()%3;
 	if(f==1) {
 		printf("\033[031mcrash at %s\n\033[0m",s);
 		fflush(stdout);
