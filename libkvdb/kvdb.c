@@ -48,7 +48,6 @@ void journaling(kvdb_t* db) {
 	sync();
 }
 void may_crash(char *s) {
-	srand(time(0));
 	int n=rand();	
 	int f=1;
 	for(int i=1;i<=n%1000;i++)
@@ -60,6 +59,7 @@ void may_crash(char *s) {
 	}
 }
 int kvdb_open(kvdb_t *db,const char *filename) {
+	srand(time(0));
 	db->closed=0;
 	db->fd=open(filename,O_RDWR|O_CREAT,0777);
 	if(db->fd==-1) {
