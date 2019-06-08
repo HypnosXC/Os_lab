@@ -41,7 +41,7 @@ void work_place_r(kvdb_t *db){
 	for(int i=0;i < 20;i++){
 		a[i] = 'a'+alphaOff;
 		b[i] = 'b'+alphaOff;
-		printf("$$$ %s %s\n", a, b);
+		printf("$$$ seek %s %s\n", a, b);
 		//alphaOff += 1;
 		char* str = NULL;
 		while(str == NULL)
@@ -60,7 +60,7 @@ void work_place_w(kvdb_t *db){
 	for(int i=0;i < 20;i++){
 		a[i] = 'a'+alphaOff;
 		b[i] = 'b'+alphaOff;
-		printf("$$$ %s %s\n", a, b);
+		printf("$$$ create %s %s\n", a, b);
 		//alphaOff += 1;
 		printf("num:%d %d\n", num, kvdb_put(db, a, b));
 	}
