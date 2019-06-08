@@ -123,7 +123,7 @@ int kvdb_put(kvdb_t *db,const char * key,const char *value) {
 	sync();
 	// create end jour
 	may_crash("end journaling");
-	lseek(db->fd,0,SEEK_END);
+	lseek(db->fd,off+sizeof(jmod)*2+s->size,SEEK_SET);
 	write(db->fd,value,strlen(value));
 //	printf("data end off is%d\n",cursk(db));
 	// write data
@@ -131,7 +131,7 @@ int kvdb_put(kvdb_t *db,const char * key,const char *value) {
 	s.state=3;
 	lseek(db->fd,off,SEEK_SET);
 	write(db->fd,&s,sizeof(jmod));
-	off=lseek(db->fd,0,SEEK_END);
+	off+=2*(s->size+sizeof(jmod));
 //	printf("finished with offset=%d\n",off);
 	lseek(db->fd,0,SEEK_SET);
 	write(db->fd,&off,sizeof(int));
