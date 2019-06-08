@@ -54,7 +54,7 @@ void may_crash(char *s) {
 	for(int i=1;i<=n%1000;i++)
 		f=rand()%3;
 	if(f==1) {
-		printf("\033[031mcrash at %s\n\033[0m",s);
+		printf("\033[031mcrash at %s,offset=\n\033[0m",s);
 		fflush(stdout);
 		exit(0);
 	}
@@ -153,7 +153,7 @@ char* kvdb_get(kvdb_t *db,const char *key) {
 	while(offset<max_off) {
 		lseek(db->fd,offset,SEEK_SET);
 		read(db->fd,s,sizeof(jmod));
-		printf("\033[32m offset=%d,name=%s,%d\033[0m\n",offset,s->name,strcmp(s->name,key));
+//		printf("\033[32m offset=%d,name=%s,%d\033[0m\n",offset,s->name,strcmp(s->name,key));
 		if(!strcmp(s->name,key))
 		   	doff=offset;
 		offset+=2*sizeof(jmod)+s->size*2;	
