@@ -54,7 +54,7 @@ void may_crash(char *s) {
 	for(int i=1;i<=n%1000;i++)
 		f=rand()%3;
 	if(f==1) {
-		printf("\033[031mcrash at %s,offset=\n\033[0m",s);
+		printf("\033[031mcrash at %s,offset=%d\n\033[0m",s,f);
 		fflush(stdout);
 		exit(0);
 	}
