@@ -1,4 +1,5 @@
 #include<common.h>
+#include<devices.h>
 #include<klib.h>
 spinlock_t *inode_lk;
 int inode_open(file_t *file,int flags) {
