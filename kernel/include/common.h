@@ -11,6 +11,7 @@
 //#define spin_init(c,name) kmt->spin_init(c,name)
 struct task {
 	char name[30];
+	file_t *fildes[100];
 	_Context *context;
 	_Area stack;
 	int state;//running or some 
