@@ -48,20 +48,20 @@ void basic_read(inode_t *inode,off_t offset,char *buf,size_t size) {
 	off_t doff=0;
 	int i=0;
 	void **page=pmm->alloc(BLOCK_SIZE);
-	dev->read(dev,inode->ptr,page,BLOCK_SIZE);
+	dev->ops->read(dev,inode->ptr,page,BLOCK_SIZE);
 	void *ps=pmm->alloc(BLOCK_SIZE);
-	while(size) {
+	while(size ) {
 		if(doff+BLOCK_SIZE<=offset) {
 			i++;
-		}
+		} 
 		else {
 			off_t rsize=min(size,doff+BLOCK_SIZE-offset);
-			dev->read(dev,page[i],ps,BLOCK_SIZE);
+			dev->ops->read(dev,page[i],ps,BLOCK_SIZE);
 			memncpy(buf,ps+offset-doff,rsize);
 			size-=rsize;
 			if(size>0)
 				offset=doff+BLOCK_SIZE;
-		}
+		} 
 	}	
 }
 void basic_write(inode_t *inode,off_t offset,const char* buf,size_t size){
@@ -69,15 +69,15 @@ void basic_write(inode_t *inode,off_t offset,const char* buf,size_t size){
 	off_t doff=0;
 	int i=0;
 	void **page=pmm->alloc(BLOCK_SIZE);
-	dev->read(dev,inode->ptr,page,BLOCK_SIZE);
+	dev->ops->read(dev,inode->ptr,page,BLOCK_SIZE);
 	void *ps=pmm->alloc(BLOCK_SIZE);
 	while(size) {
-		if(doff+BLOCK_SIZE<=offset) {
+		if(doff +BLOCK_SIZE<=offset) {
 			i++;
 		}
 		else {
 			off_t rsize=min(size,doff+BLOCK_SIZE-offset);
-			dev->write(dev,page[i]+offset-doff,buf,rsize);
+			dev->ops->write(dev,page[i]+offset-doff,buf,rsize);
 			size-=rsize;
 			if(size>0)
 				offset=doff+BLOCK_SIZE;
