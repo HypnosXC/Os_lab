@@ -1,5 +1,5 @@
 #include<common.h>
-#include<device.h>
+#include<devices.h>
 #include<klib.h>
 #define BLOCK_SIZE 2048
 #define INODE_MAP_ENTRY 0
