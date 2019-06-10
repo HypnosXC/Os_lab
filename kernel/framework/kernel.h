@@ -82,7 +82,7 @@ typedef struct inode {
   void *ptr;
   filesystem_t *fs;
   inodeops_t *ops; 
-}inode _t;
+}inode_t;
 typedef struct {
 	void (*init)();
 	int (*access)(const char * path,int mode);
