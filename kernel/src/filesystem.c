@@ -36,9 +36,9 @@ void del_map(device_t *dev,off_t entry,int num) {
 	int pos=num/8;
 	unsigned char va=1<<(num%8-1);
 	unsigned char realval=0;
-	dev->ops->read(dev,entry+pos,(void *)realval,sizeof(char));
+	dev->ops->read(dev,entry+pos,&realval,sizeof(char));
 	realval-=va;
-	dev->ops->write(dev,entry+pos,(void *)realval,sizeof(char));
+	dev->ops->write(dev,entry+pos,&realval,sizeof(char));
 }
 int fs_close(inode_t *inode) {
 	inode_t *pre=pmm->alloc(sizeof(inode_t));
