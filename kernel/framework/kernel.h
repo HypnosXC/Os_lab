@@ -62,6 +62,7 @@ typedef struct fsops {
 	int (*close)(inode_t *inode);
 }fsops_t;
 struct filesystem {
+	char name[100];
 	fsops_t *ops;
 	device_t *dev;
 };
@@ -80,8 +81,10 @@ typedef struct inodeops{
 typedef struct inode {
   int refcnt;
   void *ptr;
+  void *refptr;
+  int size;
   filesystem_t *fs;
-  inodeops_t *ops; 
+  inodeops_t *ops;  
 }inode_t;
 typedef struct {
 	void (*init)();

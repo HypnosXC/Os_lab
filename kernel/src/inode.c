@@ -1,7 +1,7 @@
 #include<common.h>
 #include<klib.h>
 spinlock_t *inode_lk;
-int open(file_t *file,int flags) {
+int inode_open(file_t *file,int flags) {
 	kmt->spin_lock(inode_lk);
 	task_t* cur=current_task();
 	int i=0;
@@ -15,7 +15,7 @@ int open(file_t *file,int flags) {
 	return i;
 	kmt->spin_unlock(inode_lk);
 }
-int close(file_t* file) {
+int inode_close(file_t* file) {
 	kmt->spin_lock(inode_lk);
 	task_t *cur=current_task();
 	int i=0;
@@ -28,7 +28,7 @@ int close(file_t* file) {
 	return i;
 	kmt->spin_unlock(inode_lk);
 }
-off_t lseek(file_t * file,off_t offset,int whence) {
+off_t inode_lseek(file_t * file,off_t offset,int whence) {
 	switch(whence){
 	  case 0:
 	  	file->offset=offset;
@@ -42,4 +42,51 @@ off_t lseek(file_t * file,off_t offset,int whence) {
 	}
 	return file->offset;
 }
+void basic_read(inode_t *inode,off_t offset,char *buf,size_t size) {
+	device_t * dev=inode->fs->dev;
+	off_t doff=0;
+	int i=0;
+	void **page=pmm->alloc(BLOCK_SIZE);
+	dev->read(dev,inode->ptr,page,BLOCK_SIZE);
+	void *ps=pmm->alloc(BLOCK_SIZE);
+	while(size) {
+		if(doff+BLOCK_SIZE<=offset) {
+			i++;
+		}
+		else {
+			off_t rsize=min(size,doff+BLOCK_SIZE-offset);
+			dev->read(dev,page[i],ps,BLOCK_SIZE);
+			memncpy(buf,ps+offset-doff,rsize);
+			size-=rsize;
+			if(size>0)
+				offset=doff+BLOCK_SIZE;
+		}
+	}	
+}
+void basic_write(inode_t *inode,off_t offset,const char* buf,size_t size){
+	device_t * dev=inode->fs->dev;
+	off_t doff=0;
+	int i=0;
+	void **page=pmm->alloc(BLOCK_SIZE);
+	dev->read(dev,inode->ptr,page,BLOCK_SIZE);
+	void *ps=pmm->alloc(BLOCK_SIZE);
+	while(size) {
+		if(doff+BLOCK_SIZE<=offset) {
+			i++;
+		}
+		else {
+			off_t rsize=min(size,doff+BLOCK_SIZE-offset);
+			dev->write(dev,page[i]+offset-doff,buf,rsize);
+			size-=rsize;
+			if(size>0)
+				offset=doff+BLOCK_SIZE;
+		}
+	}	
+}
+void inode_read(file_t *file,char *buf,size_t size) {
+	basic_read(file->inode,file->offset,buf,size);
 
+}
+void inode_write(file_t *file,const char *buf,size_t size) {
+	basic_write(file->inode,file->offset,const char *buf,size);
+}
