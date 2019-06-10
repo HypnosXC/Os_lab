@@ -73,10 +73,10 @@ void fs_close(inode_t *inode) {
 	pmm->free(pre);
 	return 0;
 }
-inode_t * fs_lookup(filesystem_t *fs,const char *path,int flags) {
+/*inode_t * fs_lookup(filesystem_t *fs,const char *path,int flags) {
 	char name[100];
-	char *page=pmm->alloc(BLOCK_SIZE);
-	int num;
+//	char *page=pmm->alloc(BLOCK_SIZE);
+	//int num;
 	int i=0,l=strlen(path);
 	device_t * dev=fs->dev;
 	inode_t *pre=pmm->alloc(sizeof(inode_t));
@@ -96,4 +96,4 @@ inode_t * fs_lookup(filesystem_t *fs,const char *path,int flags) {
 		i+=j;		
 	}
 }
-
+*/
