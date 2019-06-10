@@ -30,12 +30,15 @@ int close(file_t* file) {
 }
 off_t lseek(file_t * file,off_t offset,int whence) {
 	switch(whence){
-	  0:
+	  case 0:
 	  	file->offset=offset;
-	  1:
+	  	break;
+	  case 1:
 		file->offset=0;
-	  2:
+		break;
+	  case 2:
 		file->offset=file->size;
+		break;
 	}
 	return file->offset;
 }
