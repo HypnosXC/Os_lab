@@ -19,7 +19,7 @@ void fs_init(filesystem_t *fs,const char *name,device_t *dev) {
 	fs->dev=dev;
 	int f=1;
 	dev->ops->write(dev,INODE_MAP_ENTRY,&f,sizeof(f));
-	dev->ops->wrtie(dev,DATA_MAP_ENTRY,&f,sizeof(f));
+	dev->ops->write(dev,DATA_MAP_ENTRY,&f,sizeof(f));
 	// inode for filesystem
 	inode_t s;
 	//s.ops=inode_ops;
@@ -33,7 +33,7 @@ void fs_init(filesystem_t *fs,const char *name,device_t *dev) {
 }
 void del_map(device_t *dev,off_t entry,int num) {
 	int pos=num/8;
-	unsigned char va=1<<(i%8-1);
+	unsigned char va=1<<(num%8-1);
 	unsigned char realval=0;
 	dev->ops->read(dev,entry+pos,realval,sizeof(char));
 	realval-=va;
