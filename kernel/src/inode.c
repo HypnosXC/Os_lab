@@ -48,8 +48,8 @@ void basic_read(inode_t *inode,off_t offset,char *buf,size_t size) {
 	off_t doff=0;
 	int i=0;
 	void **page=pmm->alloc(BLOCK_SIZE);
-	dev->ops->read(dev,inode->ptr,page,BLOCK_SIZE);
 	void *ps=pmm->alloc(BLOCK_SIZE);
+	dev->ops->read(dev,inode->ptr,page,BLOCK_SIZE);
 	while(size ) {
 		if(doff+BLOCK_SIZE<=offset) {
 			i++;
@@ -63,6 +63,8 @@ void basic_read(inode_t *inode,off_t offset,char *buf,size_t size) {
 				offset=doff+BLOCK_SIZE;
 		} 
 	}	
+	pmm->free(page);
+	pmm->free(ps);
 }
 void basic_write(inode_t *inode,off_t offset,const char* buf,size_t size){
 	device_t * dev=inode->fs->dev;
@@ -70,7 +72,6 @@ void basic_write(inode_t *inode,off_t offset,const char* buf,size_t size){
 	int i=0;
 	void **page=pmm->alloc(BLOCK_SIZE);
 	dev->ops->read(dev,inode->ptr,page,BLOCK_SIZE);
-	void *ps=pmm->alloc(BLOCK_SIZE);
 	while(size) {
 		if(doff +BLOCK_SIZE<=offset) {
 			i++;
@@ -82,7 +83,8 @@ void basic_write(inode_t *inode,off_t offset,const char* buf,size_t size){
 			if(size>0)
 				offset=doff+BLOCK_SIZE;
 		}
-	}	
+	}
+	pmm->free(page);	
 }
 void inode_read(file_t *file,char *buf,size_t size) {
 	basic_read(file->inode,file->offset,buf,size);
