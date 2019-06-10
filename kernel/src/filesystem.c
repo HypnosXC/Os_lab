@@ -22,7 +22,7 @@ void fs_init(filesystem_t *fs,const char *name,device_t *dev) {
 	dev->ops->wrtie(dev,DATA_MAP_ENTRY,&f,sizeof(f));
 	// inode for filesystem
 	inode_t s;
-	s.ops=inode_ops;
+	//s.ops=inode_ops;
 	s.size=0;
 	s.ptr=(void *)DATA_ENTRY;
 	s.fs=fs;
