@@ -29,16 +29,16 @@ void fs_init(filesystem_t *fs,const char *name,device_t *dev) {
 	s.fs=fs;
 	s.refcnt=0;
 	s.refptr=NULL;
-	dev->write(dev,INODE_ENTRY,&s,sizeof(inode_t));
+	dev->ops->write(dev,INODE_ENTRY,&s,sizeof(inode_t));
 	// one inode;
 }
 void del_map(device_t *dev,off_t entry,int num) {
 	int pos=num/8;
 	unsigned char va=1<<(num%8-1);
 	unsigned char realval=0;
-	dev->ops->read(dev,entry+pos,realval,sizeof(char));
+	dev->ops->read(dev,entry+pos,(void *)realval,sizeof(char));
 	realval-=va;
-	dev->ops->write(dev,entry+pos,realval,sizeof(char));
+	dev->ops->write(dev,entry+pos,(void *)realval,sizeof(char));
 }
 int fs_close(inode_t *inode) {
 	inode_t *pre=pmm->alloc(sizeof(inode_t));
@@ -62,7 +62,7 @@ int fs_close(inode_t *inode) {
 		del_map(dev,DATA_MAP_ENTRY,i);
 	}*/
 	void* *page=pmm->alloc(BLOCK_SIZE);
-	dev->read(dev,(off_t)pre->ptr,page,BLOCK_SIZE);
+	dev->ops->read(dev,(off_t)pre->ptr,page,BLOCK_SIZE);
 	for(int j=0;j<=128;j++) {
 		if(page[j]==NULL)
 			break;
