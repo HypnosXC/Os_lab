@@ -47,7 +47,7 @@ void basic_read(inode_t *inode,off_t offset,char *buf,size_t size) {
 	device_t * dev=inode->fs->dev;
 	off_t doff=0;
 	int i=0;
-	void **page=pmm->alloc(BLOCK_SIZE);
+	off_t *page=pmm->alloc(BLOCK_SIZE);
 	void *ps=pmm->alloc(BLOCK_SIZE);
 	dev->ops->read(dev,(off_t)inode->ptr,page,BLOCK_SIZE);
 	while(size ) {
@@ -56,7 +56,7 @@ void basic_read(inode_t *inode,off_t offset,char *buf,size_t size) {
 		} 
 		else {
 			off_t rsize=min(size,doff+BLOCK_SIZE-offset);
-			dev->ops->read(dev,(off_t)page[i],ps,BLOCK_SIZE);
+			dev->ops->read(dev,page[i],ps,BLOCK_SIZE);
 			memncpy(buf,ps+offset-doff,rsize);
 			size-=rsize;
 			if(size>0)
