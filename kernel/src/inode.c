@@ -1,5 +1,5 @@
 #include<common.h>
-#include<kilb.h>
+#include<klib.h>
 spinlock_t *inode_lk;
 int open(file_t *file,int flags) {
 	kmt->spin_lock(inode_lk);
