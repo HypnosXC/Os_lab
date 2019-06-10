@@ -86,7 +86,7 @@ typedef struct inode {
 typedef struct {
 	void (*init)();
 	int (*access)(const char * path,int mode);
-	int (*mount)(const char *path,filsystem_t *fs);
+	int (*mount)(const char *path,filesystem_t *fs);
 	int (*unmont)(const char *path);
 	int (*mkdir)(const char *path);
 	int (*rmdir)(const char *path);
