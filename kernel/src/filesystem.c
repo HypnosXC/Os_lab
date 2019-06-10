@@ -3,10 +3,10 @@
 #define BLOCK_SIZE 2048
 #define INODE_MAP_ENTRY 0
 #define DATA_MAP_ENTRY 2048
-#define INDODE_ENTRY 4096
+#define INODE_ENTRY 4096
 #define DATA_ENTRY (4096+2048*sizeof(inode_t))
 #define FLSYS_NUM  10
-/*         								using ext file system
+/*        								using ext file system
  *									Using one block for blockbitmap, another for inode
  * 									only indirect pointer used (no double as well as direct)
  * 									for each inode , one data block used for ref information
@@ -37,9 +37,9 @@ void del_map(device_t *dev,off_t entry,int num) {
 	unsigned char realval=0;
 	dev->ops->read(dev,entry+pos,realval,sizeof(char));
 	realval-=va;
-	dev->ops->write(dev,entry+ops,realval,sizeof(char));
+	dev->ops->write(dev,entry+pos,realval,sizeof(char));
 }
-void fs_close(inode_t *inode) {
+int fs_close(inode_t *inode) {
 	inode_t *pre=pmm->alloc(sizeof(inode_t));
 	pre->ptr=NULL;
 	device_t* dev=inode->fs->dev;
