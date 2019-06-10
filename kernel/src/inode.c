@@ -70,8 +70,8 @@ void basic_write(inode_t *inode,off_t offset,const char* buf,size_t size){
 	device_t * dev=inode->fs->dev;
 	off_t doff=0;
 	int i=0;
-	void **page=pmm->alloc(BLOCK_SIZE);
-	dev->ops->read(dev,inode->ptr,page,BLOCK_SIZE);
+	off_t *page=pmm->alloc(BLOCK_SIZE);
+	dev->ops->read(dev,(off_t)inode->ptr,page,BLOCK_SIZE);
 	while(size) {
 		if(doff +BLOCK_SIZE<=offset) {
 			i++;
