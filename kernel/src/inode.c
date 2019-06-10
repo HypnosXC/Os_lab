@@ -1,6 +1,7 @@
 #include<common.h>
 #include<devices.h>
 #include<klib.h>
+#define BLOCK_SIZE 2048
 spinlock_t *inode_lk;
 int inode_open(file_t *file,int flags) {
 	kmt->spin_lock(inode_lk);
@@ -55,15 +56,17 @@ void basic_read(inode_t *inode,off_t offset,char *buf,size_t size) {
 			i++;
 		} 
 		else {
-			off_t rsize=min(size,doff+BLOCK_SIZE-offset);
+			off_t rsize=doff+BLOCK_SIZE-offset;
+			if(rsize>size)
+				rsize=size;
 			dev->ops->read(dev,page[i],ps,BLOCK_SIZE);
 			memcpy(buf,ps+offset-doff,rsize);
 			size-=rsize;
 			if(size>0)
 				offset=doff+BLOCK_SIZE;
 		} 
-	}	
-	pmm->free(page);
+ 	}	
+ 	pmm->free(page);
 	pmm->free(ps);
 }
 void basic_write(inode_t *inode,off_t offset,const char* buf,size_t size){
@@ -77,7 +80,9 @@ void basic_write(inode_t *inode,off_t offset,const char* buf,size_t size){
 			i++;
 		}
 		else {
-			off_t rsize=min(size,doff+BLOCK_SIZE-offset);
+			off_t rsize=doff+BLOCK_SIZE-offset;
+			if(rsize>size)
+				risze=size;
 			dev->ops->write(dev,page[i]+offset-doff,buf,rsize);
 			size-=rsize;
 			if(size>0)
