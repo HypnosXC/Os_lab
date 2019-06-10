@@ -42,7 +42,7 @@ typedef struct {
   void (*sem_wait)(sem_t *sem);
   void (*sem_signal)(sem_t *sem);
 } MODULE(kmt);
-typedef file {
+typedef struct file {
 	int  refcnt;
 	inode_t *inode;
 	uint64_t offset;
