@@ -37,7 +37,7 @@ off_t lseek(file_t * file,off_t offset,int whence) {
 		file->offset=0;
 		break;
 	  case 2:
-		file->offset=file->size;
+	//	file->offset=file->size;
 		break;
 	}
 	return file->offset;
