@@ -57,7 +57,7 @@ void basic_read(inode_t *inode,off_t offset,char *buf,size_t size) {
 		else {
 			off_t rsize=min(size,doff+BLOCK_SIZE-offset);
 			dev->ops->read(dev,page[i],ps,BLOCK_SIZE);
-			memncpy(buf,ps+offset-doff,rsize);
+			memcpy(buf,ps+offset-doff,rsize);
 			size-=rsize;
 			if(size>0)
 				offset=doff+BLOCK_SIZE;
