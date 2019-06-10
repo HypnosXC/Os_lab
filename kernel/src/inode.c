@@ -82,7 +82,7 @@ void basic_write(inode_t *inode,off_t offset,const char* buf,size_t size){
 		else {
 			off_t rsize=doff+BLOCK_SIZE-offset;
 			if(rsize>size)
-				risze=size;
+				rsize=size;
 			dev->ops->write(dev,page[i]+offset-doff,buf,rsize);
 			size-=rsize;
 			if(size>0)
@@ -96,5 +96,5 @@ void inode_read(file_t *file,char *buf,size_t size) {
 
 }
 void inode_write(file_t *file,const char *buf,size_t size) {
-	basic_write(file->inode,file->offset,const char *buf,size);
+	basic_write(file->inode,file->offset,buf,size);
 }
