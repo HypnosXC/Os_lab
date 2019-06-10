@@ -15,7 +15,7 @@
 extern inodeops_t *inodeops;
 filesystem_t fs_tab[FLSYS_NUM];
 void fs_init(filesystem_t *fs,const char *name,device_t *dev) {
-	memcpy(fs->name,name);
+	memcpy(fs->name,name,strlen(name));
 	fs->dev=dev;
 	int f=1;
 	dev->ops->write(dev,INODE_MAP_ENTRY,&f,sizeof(f));
