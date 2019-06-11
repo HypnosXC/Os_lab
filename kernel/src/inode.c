@@ -10,12 +10,13 @@ int inode_open(file_t *file,int flags) {
 	for(;i<=32;i++) {
 		if(cur->flides[i]==NULL)
 			break;
-	}
-	if(i==33)
-		return -1;
-	cur->flides[i]=file;
-	return i;
+	} 
+	if(i<32)
+		cur->flides[i]=file;
+	else 
+		i=-1;
 	kmt->spin_unlock(inode_lk);
+	return i;
 }
 int inode_close(file_t* file) {
 	kmt->spin_lock(inode_lk);
@@ -24,11 +25,13 @@ int inode_close(file_t* file) {
 	for(;i<=32;i++)
 		if(cur->flides[i]==file)
 			break;
-	if(i>32)
+	if(i>32) {
+		kmt->spin_unlock(inode_lk);
 		return -1;
+	}
 	cur->flides[i]=NULL;
-	return i;
 	kmt->spin_unlock(inode_lk);
+	return i;
 }
 off_t inode_lseek(file_t * file,off_t offset,int whence) {
 	kmt->spin_lock(inode_lk);
