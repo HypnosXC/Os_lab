@@ -3,7 +3,7 @@
 void cd_operation(const char * path) {
 	task_t *cur=current_task();
 	filesystem_t *fs=cur->preloc->fs;
-	inode_t *pre=fs->ops->lookup(path,7);
+	inode_t *pre=fs->ops->lookup(fs,path,7);
 	pmm->free(cur->preloc);
 	cur->preloc=pre;
 }
@@ -18,7 +18,7 @@ void ls_operation(const char *path) {
 	int end=vfs->lseek(fd,0,2);
 	int doff=0;
 	char name[109];
-	while(doff!=end) {
+	while(doff!=end) { 
 		vfs->lseek(fd,doff,0);
 		vfs->read(fd,name,100);
 		printf("%s ",name);
