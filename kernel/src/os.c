@@ -57,7 +57,7 @@ void echo_task(void *name) {
 			if(line[i]==' ')
 				line[i]=0;
 		char *op=line;
-		char *path=line+strlen(op);
+		char *path=line+strlen(op)+1;
 		printf("op=%s, path=%s\n",op,path);
 		if(!strcmp(op,"ls")) {
 			printf("ls operation!\n");
