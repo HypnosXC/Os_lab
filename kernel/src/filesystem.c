@@ -280,7 +280,7 @@ int vfs_unlink(const char *path) {
 	cur->preloc->ops->unlink(path);
 }
 MODULE_DEF(vfs) {
-	.init= vfs_init;
+	.init=vfs_init;
 	.access=vfs_access;
 	.mount=vfs_mount;
 	.unmount=vfs_unmount;
