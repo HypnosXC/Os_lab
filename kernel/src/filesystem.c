@@ -199,9 +199,9 @@ inode_t * fs_lookup(filesystem_t *fs,const char *path,int flags) {
 	return pre;
 }
 fsops_t fs_op = {
-	.init=fs_init;
-	.lookup=fs_lookup;
-	.close=fs_close;
+	.init=fs_init,
+	.lookup=fs_lookup,
+	.close=fs_close,
 };
 /* file sysytem finished
 *
@@ -296,19 +296,19 @@ int vfs_unlink(const char *path) {
 	return cur->preloc->ops->unlink(path);
 }
 MODULE_DEF(vfs) {
-	.init=vfs_init;
-	.access=vfs_access;
-	.mount=vfs_mount;
-	.unmount=vfs_unmount;
-	.mkdir=vfs_mkdir;
-	.rmdir=vfs_rmdir;
-	.link=vfs_link;
-	.unlink=vfs_unlink;
-	.open=vfs_open;
-	.read=vfs_read;
-	.write=vfs_write;
-	.lseek=vfs_lseek;
-	.close=vfs_close;
+	.init=vfs_init,
+	.access=vfs_access,
+	.mount=vfs_mount,
+	.unmount=vfs_unmount,
+	.mkdir=vfs_mkdir,
+	.rmdir=vfs_rmdir,
+	.link=vfs_link,
+	.unlink=vfs_unlink,
+	.open=vfs_open,
+	.read=vfs_read,
+	.write=vfs_write,
+	.lseek=vfs_lseek,
+	.close=vfs_close,
 };
 
 
