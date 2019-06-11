@@ -204,7 +204,7 @@ inode_t * fs_lookup(filesystem_t *fs,const char *path,int flags) {
 			basic_write(pre,pre->size,(char *)&addr,sizeof(off_t));
 			pre->size+=128-pre->size%128;
 		}
-		i+=j;
+		i+=j+1;
 
 	}
 	kmt->spin_unlock(fs_lk);
