@@ -229,6 +229,7 @@ fsops_t fs_op = {
 * vfs started!
 */
 void vfs_init() {
+	printf("start vfs init\n");
 	inode_lk=pmm->alloc(sizeof(spinlock_t));
 	fs_lk=pmm->alloc(sizeof(spinlock_t));
 	kmt->spin_init(inode_lk,"inode");
@@ -236,13 +237,14 @@ void vfs_init() {
 	device_t *dev=dev_lookup("ramdisk0");
 	fs_init(&fs_tab[0],"/",dev);
 	fs_tab[0].ops=&fs_op;
+	printf("vfs init finished!\n");
 }
 int vfs_access(const char *path,int mode){
 	printf("access : TODO!\n");
 	assert(0);
 	return 0;
 }
-int vfs_mount(const char *path,filesystem_t *fs) {
+nt vfs_mount(const char *path,filesystem_t *fs) {
 	printf("mount : to do \n");
 	assert(0);
 	memcpy(fs->name,path,strlen(path));
