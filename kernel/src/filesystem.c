@@ -17,6 +17,8 @@
  *									its offset(num of bitmap)
  */
 extern inodeops_t *inode_op;
+extern spinlock_t *inode_lk;
+spinlock_t *fs_lk;
 filesystem_t fs_tab[FLSYS_NUM];
 void new_block(inode_t* inode) {
 	device_t *dev=inode->fs->dev;
@@ -102,6 +104,7 @@ void del_map(device_t *dev,off_t entry,int num) {
 	dev->ops->write(dev,entry+pos,&realval,sizeof(char));
 }
 int fs_close(inode_t *inode) {
+	kmt->spin_lock(fk_lk);
 	inode_t *pre=pmm->alloc(sizeof(inode_t));
 	pre->ptr=NULL;
 	device_t* dev=inode->fs->dev;
@@ -135,6 +138,7 @@ int fs_close(inode_t *inode) {
 	i=(int)(pre->ptr-DATA_ENTRY)/BLOCK_SIZE;
 	del_map(dev,DATA_MAP_ENTRY,i);
 	pmm->free(pre);
+	kmt->spin_unlock(fk_lk);
 	return 0;
 }
 off_t name_lookup(inode_t *inode,const char *name) {
@@ -158,6 +162,7 @@ off_t name_lookup(inode_t *inode,const char *name) {
 	assert(0);	
 }
 inode_t * fs_lookup(filesystem_t *fs,const char *path,int flags) {
+	kmt->spin_lock(fs_lk);
 	char name[100];
 	inode_t *pre=pmm->alloc(BLOCK_SIZE);
 	memcpy(pre,fs->inode,sizeof(inode_t));
@@ -196,6 +201,7 @@ inode_t * fs_lookup(filesystem_t *fs,const char *path,int flags) {
 		}
 
 	}
+	kmt->spin_unlock(fs_lk);
 	return pre;
 }
 fsops_t fs_op = {
@@ -223,6 +229,10 @@ fsops_t fs_op = {
 * vfs started!
 */
 void vfs_init() {
+	inode_lk=pmm->alloc(sizeof(spinlock_t));
+	fs_lk=pmm->alloc(sizeof(spinlock_t));
+	kmt->spin_init(inode_lk,"inode");
+	kmt->spin_init(fs_lk,"file system");
 	device_t *dev=dev_lookup("ramdisk0");
 	fs_init(&fs_tab[0],"/",dev);
 	fs_tab[0].ops=&fs_op;
