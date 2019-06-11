@@ -259,7 +259,7 @@ ssize_t vfs_write(int fd,void *buf,size_t size) {
 off_t vfs_lseek(int fd,off_t offset,int whence) {
 	task_t *cur=current_task();
 	file_t *file=cur->flides[fd];
-	return file->inode->ops->lseek(file,offset,whence);
+	file->inode->ops->lseek(file,offset,whence);
 }
 int vfs_close(int fd) {
 	task_t *cur=current_task();
@@ -275,7 +275,7 @@ int vfs_link(const char *oldpath,const char *newpath) {
 	return pre->ops->link(newpath,pre);
 }
 int vfs_unlink(const char *path) {
-	task_t cur=current_task();
+	task_t *cur=current_task();
 	return cur->preloc->ops->unlink(path);
 }
 MODULE_DEF(vfs) {
