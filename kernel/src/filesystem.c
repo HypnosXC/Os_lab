@@ -127,14 +127,18 @@ int fs_close(inode_t *inode) {
 	}
 	// To change the inode bitmap
 	del_map(dev,INODE_MAP_ENTRY,i);
+
+
+
+
 	// To change the data bitmap
 /*	if(pre->refptr!=NULL) {
 		i=(int)(pre->refptr-DATA_ENTRY)/BLOCK_SIZE;
 		del_map(dev,DATA_MAP_ENTRY,i);
 	}*/
-	void* *page=pmm->alloc(BLOCK_SIZE);
+	off_t *page=pmm->alloc(BLOCK_SIZE);
 	dev->ops->read(dev,(off_t)pre->ptr,page,BLOCK_SIZE);
-	for(int j=0;j<=128;j++) {
+	for(int j=0;j<pre->msize/BLOCK_SIZE;j++) {
 		if(page[j]==NULL)
 			break;
 		i=(int)(page[j]-DATA_ENTRY)/BLOCK_SIZE;
