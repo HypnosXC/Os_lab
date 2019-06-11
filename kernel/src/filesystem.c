@@ -45,7 +45,8 @@ int inode_create(filesystem_t *fs,int prio,int type,inodeops_t *ops) {
 	pre->type=type;
 	pre->ops=ops;
 	pre->size=BLOCK_SIZE;	
-	for(int i=0;i<BLOCK_SIZE*8;i++) {
+	int i=0;
+	for(;i<BLOCK_SIZE*8;i++) {
 		int pos=i/8;
 		int loc=1<<(i%8-1);
 		char realva;
@@ -54,10 +55,11 @@ int inode_create(filesystem_t *fs,int prio,int type,inodeops_t *ops) {
 			realva|=loc;
 			dev->ops->write(dev,DATA_MAP_ENTRY+pos,realva,sizeof(char));
 			pre->ptr=(void *)(DATA_ENTRY+i*BLOCK_SIZE);
-			return i;
+			break;
 		}
 	}
 	new_block(pre);
+	return i;
 }
 void fs_init(filesystem_t *fs,const char *name,device_t *dev) {
 	memcpy(fs->name,name,strlen(name));
