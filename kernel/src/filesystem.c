@@ -188,7 +188,7 @@ inode_t * fs_lookup(filesystem_t *fs,const char *path,int flags) {
 	while(i<l) {
 		memset(name,0,strlen(name));
 		int j=0;
-		while(path[i+j]!='/'&&i+j<=l)
+		while(path[i+j]!='/'&&i+j<l)
 			j++;
 		strncpy(name,path+i,j);
 		printf("name=%s\n",name);
@@ -205,8 +205,8 @@ inode_t * fs_lookup(filesystem_t *fs,const char *path,int flags) {
 			int f=0;
 			while(pre->size%128!=112)
 				basic_write(pre,pre->size,(char *)&f,sizeof(int));
-			int i=inode_create(fs,flags,(flags!=4),&inode_op);
-			off_t addr=INODE_ENTRY+i*sizeof(inode_t);
+			int num=inode_create(fs,flags,(flags!=4),&inode_op);
+			off_t addr=INODE_ENTRY+num*sizeof(inode_t);
 			basic_write(pre,pre->size,(char *)&addr,sizeof(off_t));
 			while(pre->size%128)
 				basic_write(pre,pre->size,(char *)&f,sizeof(int));
