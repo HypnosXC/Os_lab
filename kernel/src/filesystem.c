@@ -71,8 +71,8 @@ int inode_create(filesystem_t *fs,int prio,int type,inodeops_t *ops) {
 		if(!(realva&loc)) {
 			realva|=loc;
 			dev->ops->write(dev,INODE_MAP_ENTRY+pos,&realva,sizeof(char));
-			dev->ops->write(dev,0/*INODE_ENTRY+i*sizeof(inode_t)*/,(char *)pre,sizeof(inode_t));
-			dev->ops->read(dev,0/*INODE_ENTRY+i*sizeof(inode_t)*/,pre,sizeof(inode_t));
+			dev->ops->write(dev,INODE_ENTRY+i*sizeof(inode_t),(char *)pre,sizeof(inode_t));
+			dev->ops->read(dev,INODE_ENTRY+i*sizeof(inode_t),pre,sizeof(inode_t));
 			printf("now pre is %p",pre->ptr);
 			break;
 		}
@@ -92,7 +92,7 @@ void fs_init(filesystem_t *fs,const char *name,device_t *dev) {
 	// inode for filesystem
 	int i=inode_create(fs,4,0,inode_op);
 	inode_t *pre=pmm->alloc(sizeof(inode_t));
-	dev->ops->read(dev,INODE_ENTRY+i*sizeof(inode_t),&pre,sizeof(inode_t));
+	dev->ops->read(dev,INODE_ENTRY+i*sizeof(inode_t),pre,sizeof(inode_t));
 	fs->inode=pre;
 	printf("pre is %p",pre->ptr);
 	// one inode;
