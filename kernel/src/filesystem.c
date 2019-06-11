@@ -53,10 +53,10 @@ int inode_create(filesystem_t *fs,int prio,int type,inodeops_t *ops) {
 		int pos=i/8;
 		int loc=1<<(i%8-1);
 		char realva;
-		dev->ops->read(dev,DATA_MAP_ENTRY+pos,&realva,sizeof(char));
-		if(i==0)
-			printf("val=%x\n",(int)realva);
+		dev->ops->read(dev,DATA_MAP_ENTRY+pos,&realva,sizeof(char));	
 		if(!(realva&loc)) {
+			if(i==0)
+				printf("val=%x\n",(int)realva);
 			realva|=loc;
 			dev->ops->write(dev,DATA_MAP_ENTRY+pos,&realva,sizeof(char));
 			pre->ptr=(void *)(DATA_ENTRY+i*BLOCK_SIZE);
