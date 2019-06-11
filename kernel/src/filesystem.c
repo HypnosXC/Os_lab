@@ -234,6 +234,7 @@ void vfs_init() {
 	fs_lk=pmm->alloc(sizeof(spinlock_t));
 	kmt->spin_init(inode_lk,"inode");
 	kmt->spin_init(fs_lk,"file system");
+	printf("got here!\n");
 	device_t *dev=dev_lookup("ramdisk0");
 	fs_init(&fs_tab[0],"/",dev);
 	fs_tab[0].ops=&fs_op;
