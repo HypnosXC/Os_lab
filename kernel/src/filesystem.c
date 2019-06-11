@@ -271,7 +271,7 @@ int vfs_close(int fd) {
 int vfs_link(const char *oldpath,const char *newpath) {
 	task_t *cur=current_task();
 	filesystem_t *fs=cur->preloc->fs;
-	inode_t *pre=fs->ops->lookup(oldpath);
+	inode_t *pre=fs->ops->lookup(oldpath,7);
 	return pre->ops->link(newpath,pre);
 }
 int vfs_unlink(const char *path) {
