@@ -77,7 +77,7 @@ void basic_read(inode_t *inode,off_t offset,char *buf,size_t size) {
 void basic_write(inode_t *inode,off_t offset,const char* buf,size_t size){
 	if(offset+size>inode->size)
 		inode->size=offset+size;
-	printf("%d,%d",offset,size);
+//	printf("%d,%d",offset,size);
 	while(inode->msize<offset+size) {
 		printf("size=%d ",inode->msize);
 		new_block(inode);
