@@ -104,7 +104,7 @@ void del_map(device_t *dev,off_t entry,int num) {
 	dev->ops->write(dev,entry+pos,&realval,sizeof(char));
 }
 int fs_close(inode_t *inode) {
-	kmt->spin_lock(fk_lk);
+	kmt->spin_lock(fs_lk);
 	inode_t *pre=pmm->alloc(sizeof(inode_t));
 	pre->ptr=NULL;
 	device_t* dev=inode->fs->dev;
