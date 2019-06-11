@@ -62,7 +62,6 @@ int inode_create(filesystem_t *fs,int prio,int type,inodeops_t *ops) {
 		}
 	}
 	new_block(pre);
-	printf("finished data search");
 	for(i=0;i<BLOCK_SIZE;i++) {
 		int pos=i/8;
 		int loc=1<<(i%8-1);
@@ -76,7 +75,7 @@ int inode_create(filesystem_t *fs,int prio,int type,inodeops_t *ops) {
 		}
 	}
 	pmm->free(pre);
-	printf("created finished!\n");
+	//printf("created finished!\n");
 	return i;
 }
 void fs_init(filesystem_t *fs,const char *name,device_t *dev) {
@@ -92,6 +91,7 @@ void fs_init(filesystem_t *fs,const char *name,device_t *dev) {
 	inode_t *pre=pmm->alloc(sizeof(inode_t));
 	dev->ops->read(dev,INODE_ENTRY+i*sizeof(inode_t),&pre,sizeof(inode_t));
 	fs->inode=pre;
+	printf("pre is %p",pre->ptr);
 	// one inode;
 }
 void del_map(device_t *dev,off_t entry,int num) {
