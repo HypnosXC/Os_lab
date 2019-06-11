@@ -211,11 +211,15 @@ inode_t * fs_lookup(filesystem_t *fs,const char *path,int flags) {
 			while(pre->size%128)
 				basic_write(pre,pre->size,(char *)&f,sizeof(int));
 			printf("now size is %d\n",pre->size);
+			dev->ops->read(dev,addr,pre,sizeof(inode_t));
+			if(i+j<l) {
+				printf("\033[42m fs_lookup,wrong dir happened!\033[0m\n");
+				assert(0);
+			}
+			break;
 		}
 		i+=j+1;
-
 	}
-	pmm->free(t);
 	kmt->spin_unlock(fs_lk);
 	return pre;
 }
