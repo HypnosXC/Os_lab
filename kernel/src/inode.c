@@ -74,8 +74,10 @@ void basic_read(inode_t *inode,off_t offset,char *buf,size_t size) {
 void basic_write(inode_t *inode,off_t offset,const char* buf,size_t size){
 	if(offset+size>inode->size)
 		inode->size=offset+size;
-	while(inode->msize<offset+size)
+	while(inode->msize<offset+size) {
+		printf("size=%d ",inode->msize);
 		new_block(inode);
+	}
 	device_t * dev=inode->fs->dev;
 	off_t doff=0;
 	int i=0;
