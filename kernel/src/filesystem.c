@@ -151,6 +151,7 @@ int fs_close(inode_t *inode) {
 	return 0;
 }
 off_t name_lookup(inode_t *inode,const char *name) {
+	self_fetch(inode);
 	if(inode->type!=0) {// must be a directory inode
 		printf("lookup in a non directory file!\n");
 		assert(0);
