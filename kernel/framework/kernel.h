@@ -87,6 +87,7 @@ typedef struct inode {
   void *refptr;// not used now
   int msize;// block_size involved 
   int size;// end of file
+  off_t pos;
   filesystem_t *fs;
   inodeops_t *ops;  
 }inode_t;

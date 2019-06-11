@@ -72,6 +72,7 @@ int inode_create(filesystem_t *fs,int prio,int type,inodeops_t *ops) {
 		if(!(realva&loc)) {
 			realva|=loc;
 			dev->ops->write(dev,INODE_MAP_ENTRY+pos,&realva,sizeof(char));
+			pre->pos=INODE_ENTRY+i*sizeof(inode_t);
 			dev->ops->write(dev,INODE_ENTRY+i*sizeof(inode_t),(char *)pre,sizeof(inode_t));
 			dev->ops->read(dev,INODE_ENTRY+i*sizeof(inode_t),pre,sizeof(inode_t));
 	//		printf("now pre is %p\n",pre->ptr);
@@ -201,11 +202,14 @@ inode_t * fs_lookup(filesystem_t *fs,const char *path,int flags) {
 				assert(0);
 			}
 			basic_write(pre,pre->size,name,100);
-			pre->size+=12;
+			int f=0;
+			while(pre->size%128!=112)
+				basic_write(pre,pre->size,(char *)&f,sizeof(int));
 			int i=inode_create(fs,flags,(flags!=4),&inode_op);
 			off_t addr=INODE_ENTRY+i*sizeof(inode_t);
 			basic_write(pre,pre->size,(char *)&addr,sizeof(off_t));
-			pre->size+=128-pre->size%128;
+			while(pre->size%128)
+				basic_write(pre,pre->size,(char *)&f,sizeof(int));
 		}
 		i+=j+1;
 

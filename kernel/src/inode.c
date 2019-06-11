@@ -3,6 +3,14 @@
 #include<klib.h>
 #define BLOCK_SIZE 2048
 spinlock_t *inode_lk;
+void self_fetch(inode_t *inode) {
+	device_t *dev=inode->fs->dev;
+	dev->ops->read(dev,inode->pos,inode,sizeof(inode_t));
+}
+void self_update(inode_t *inode) {
+	device_t *dev=inode->fs->dev;
+	dev->ops->write(dev,inode->pos,inode,sizeof(inode_t));
+}
 int inode_open(file_t *file,int flags) {
 	kmt->spin_lock(inode_lk);
 	task_t* cur=current_task();
@@ -50,6 +58,7 @@ off_t inode_lseek(file_t * file,off_t offset,int whence) {
 	return file->offset;
 }
 void basic_read(inode_t *inode,off_t offset,char *buf,size_t size) {
+	self_fetch(inode);
 	device_t * dev=inode->fs->dev;
 	off_t doff=0;
 	int i=0;
@@ -75,6 +84,7 @@ void basic_read(inode_t *inode,off_t offset,char *buf,size_t size) {
 	pmm->free(ps);
 }
 void basic_write(inode_t *inode,off_t offset,const char* buf,size_t size){
+	self_fetch(inode);
 	if(offset+size>inode->size)
 		inode->size=offset+size;
 //	printf("%d,%d",offset,size);
@@ -101,7 +111,8 @@ void basic_write(inode_t *inode,off_t offset,const char* buf,size_t size){
 				offset=doff+BLOCK_SIZE;
 		}
 	}
-	pmm->free(page);	
+	pmm->free(page);
+	self_update(inode);	
 }
 ssize_t inode_read(file_t *file,char *buf,size_t size) {
 	kmt->spin_lock(inode_lk);
