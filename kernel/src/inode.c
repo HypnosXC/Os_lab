@@ -115,7 +115,7 @@ int mkdir(const char *name) {
 	return 0;
 }
 int rmdir(const char *name) {
-	task_t cur*=current_task();
+	task_t *cur=current_task();
 	cur->preloc->fs->ops->lookup(cur->preloc->fs,name,4);
 	return 0;
 }
@@ -131,13 +131,13 @@ int unlink(const char *name) {
 	return  0;
 }
 inodeops_t inode_op = {
-	.open=inode_open;
-	.close=inode_close;
-	.read=inode_read;
-	.write=inode_write;
-	.lseek=inode_lseek;
-	.mkdir=mkdir;
-	.rmdir=rmdir;
-	.link=link;
-	.unlink=unlink;
+	.open=inode_open,
+	.close=inode_close,
+	.read=inode_read,
+	.write=inode_write,
+	.lseek=inode_lseek,
+	.mkdir=mkdir,
+	.rmdir=rmdir,
+	.link=link,
+	.unlink=unlink,
 };
