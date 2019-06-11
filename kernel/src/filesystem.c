@@ -187,11 +187,10 @@ inode_t * fs_lookup(filesystem_t *fs,const char *path,int flags) {
 		while(path[i+j]!='/'&&i+j<l)
 			j++;
 		strncpy(name,path+i,j);
-		printf("name=%s,",name);
+		printf("name=%s,\n",name);
 		off_t doff=name_lookup(pre,name);
 		if (doff!=1) {
 			dev->ops->read(dev,doff,pre,sizeof(inode_t));	
-			i+=j;
 		}
 		else {
 			if(pre->prio!=4) {//not a dir
@@ -205,6 +204,7 @@ inode_t * fs_lookup(filesystem_t *fs,const char *path,int flags) {
 			basic_write(pre,pre->size,(char *)&addr,sizeof(off_t));
 			pre->size+=128-pre->size%128;
 		}
+		i+=j;
 
 	}
 	kmt->spin_unlock(fs_lk);
