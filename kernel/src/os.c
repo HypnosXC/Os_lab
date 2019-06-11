@@ -53,6 +53,29 @@ void echo_task(void *name) {
 		sprintf(text,"(%s) $ ", name);
 		tty->ops->write(tty,0,text,strlen(text));
 		int nread = tty->ops->read(tty,0,line,sizeof(line));
+		char *op=line;
+		char *path=line+strlen(op);
+		printf("op=%s, path=%s\n",op,path);
+		if(!strcmp(op,"ls")) {
+			printf("ls operation!\n");
+			if(path[0]!=0) 
+				ls_operation(path);
+		}
+		if(!strcmp(op,"cd")) {
+			printf("cd operation!\n");
+			if(path[0]!=0) 
+				cd_operation(path);
+		}
+		if(!strcmp(op,"mkdir")) {
+			printf("mkdir operation!\n");
+			if(path[0]!=0) 
+				mkdir_operation(path);
+		}
+		if(!strcmp(op,"rmdir")) {
+			printf("ls operation!\n");
+			if(path[0]!=0) 
+				rmdir_operation(path);
+		}
 		line[nread-1]='\0';
 		sprintf(text,"Echo: %s,\n",line);
 		tty->ops->write(tty,0,text,strlen(text));

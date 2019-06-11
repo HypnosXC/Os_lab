@@ -4,6 +4,13 @@
 //void spin_unlock(struct spinlock *lk);
 task_t * current_task();
 int cnt_cpu();
+
+//filesystem.c
 void new_block(inode_t *inode);
 void basic_read(inode_t *inode,off_t offset,char *buf,size_t size);
 void basic_write(inode_t *inode,off_t offset,const char *buf,size_t size);
+//operation.c
+void mkdir_operation(const char *path);
+void rmdir_operatopn(const char *path);
+void ls_operation(const char *path);
+void cd_operation(const char *path);
