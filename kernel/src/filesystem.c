@@ -199,7 +199,7 @@ inode_t * fs_lookup(filesystem_t *fs,const char *path,int flags) {
 			}
 			basic_write(pre,pre->size,name,100);
 			pre->size+=12;
-			int i=inode_create(fs,flags,(flags!=4),inode_op);
+			int i=inode_create(fs,flags,(flags!=4),&inode_op);
 			off_t addr=INODE_ENTRY+i*sizeof(inode_t);
 			basic_write(pre,pre->size,(char *)&addr,sizeof(off_t));
 			pre->size+=128-pre->size%128;
