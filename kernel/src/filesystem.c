@@ -131,7 +131,7 @@ off_t name_lookup(inode_t *inode,const char *name) {
 	while(doff<inode->size) {
 		basic_read(inode,doff,pname,100);
 		if(!strcmp(pname,name)) {
-			basic_read(inode,doff+112,off,sizeof(off_t));
+			basic_read(inode,doff+112,(char *)&off,sizeof(off_t));
 			return off;
 		}
 		doff+=128;
