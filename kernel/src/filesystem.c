@@ -186,7 +186,7 @@ inode_t * fs_lookup(filesystem_t *fs,const char *path,int flags) {
 	}
 	i++;
 	while(i<l) {
-		printf("\033[32m now name is %s\033[0m\n",name);
+		memset(name,0,strlen(name));
 		int j=0;
 		while(path[i+j]!='/'&&i+j<l)
 			j++;
