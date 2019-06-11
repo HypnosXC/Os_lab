@@ -12,6 +12,7 @@
 struct task {
 	char name[30];
 	file_t *flides[100];
+	inode_t * preloc;
 	_Context *context;
 	_Area stack;
 	int state;//running or some 

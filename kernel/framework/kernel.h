@@ -63,6 +63,7 @@ typedef struct fsops {
 }fsops_t;
 struct filesystem {
 	char name[100];
+	inode_t *inode;
 	fsops_t *ops;
 	device_t *dev;
 };
@@ -80,9 +81,12 @@ typedef struct inodeops{
 }inodeops_t;
 typedef struct inode {
   int refcnt;
-  void *ptr;
-  void *refptr;
-  int size;
+  int prio;// the priviledge 100 readable,010 writeable,001 execuable
+  int type;// 0 dir , 1 otherwise
+  void *ptr;// double datablock map
+  void *refptr;// not used now
+  int msize;// block_size involved 
+  int size;// end of file
   filesystem_t *fs;
   inodeops_t *ops;  
 }inode_t;

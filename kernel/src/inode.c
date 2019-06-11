@@ -31,6 +31,7 @@ int inode_close(file_t* file) {
 	kmt->spin_unlock(inode_lk);
 }
 off_t inode_lseek(file_t * file,off_t offset,int whence) {
+	kmt->spin_lock(inode_lk);
 	switch(whence){
 	  case 0:
 	  	file->offset=offset;
@@ -39,9 +40,10 @@ off_t inode_lseek(file_t * file,off_t offset,int whence) {
 		file->offset=0;
 		break;
 	  case 2:
-	//	file->offset=file->size;
+		file->offset=file->inode->size;
 		break;
 	}
+	kmt->spin_unlock(inode_lk);
 	return file->offset;
 }
 void basic_read(inode_t *inode,off_t offset,char *buf,size_t size) {
@@ -70,6 +72,10 @@ void basic_read(inode_t *inode,off_t offset,char *buf,size_t size) {
 	pmm->free(ps);
 }
 void basic_write(inode_t *inode,off_t offset,const char* buf,size_t size){
+	if(offset+size>inode->size)
+		inode->size=offset+size;
+	while(inode->msize<offset+size)
+		new_block(inode);
 	device_t * dev=inode->fs->dev;
 	off_t doff=0;
 	int i=0;
@@ -91,10 +97,47 @@ void basic_write(inode_t *inode,off_t offset,const char* buf,size_t size){
 	}
 	pmm->free(page);	
 }
-void inode_read(file_t *file,char *buf,size_t size) {
+ssize_t inode_read(file_t *file,char *buf,size_t size) {
+	kmt->spin_lock(inode_lk);
 	basic_read(file->inode,file->offset,buf,size);
-
+	kmt->spin_unlock(inode_lk);
+	return size;
 }
-void inode_write(file_t *file,const char *buf,size_t size) {
+ssize_t inode_write(file_t *file,const char *buf,size_t size) {
+	kmt->spin_lock(inode_lk);
 	basic_write(file->inode,file->offset,buf,size);
+	kmt->spin_unlock(inode_lk);
+	return size;
 }
+int mkdir(const char *name) {
+	task_t * cur=current_task();
+	cur->preloc->fs->ops->lookup(cur->preloc->fs,name,4);
+	return 0;
+}
+int rmdir(const char *name) {
+	task_t cur*=current_task();
+	cur->preloc->fs->ops->lookup(cur->preloc->fs,name,4);
+	return 0;
+}
+int link(const char *name,inode_t *inode) {
+	//inode_t *pre=inode->fs->lookup(fs,name,7);
+	printf("to do link!\n");
+	assert(0);
+	return 0;
+}
+int unlink(const char *name) {
+	printf("to do : unlink!\n");
+	assert(0);
+	return  0;
+}
+inodeops_t inode_op = {
+	.open=inode_open;
+	.close=inode_close;
+	.read=inode_read;
+	.write=inode_write;
+	.lseek=inode_lseek;
+	.mkdir=mkdir;
+	.rmdir=rmdir;
+	.link=link;
+	.unlink=unlink;
+};
