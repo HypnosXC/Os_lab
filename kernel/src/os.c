@@ -53,6 +53,9 @@ void echo_task(void *name) {
 		sprintf(text,"(%s) $ ", name);
 		tty->ops->write(tty,0,text,strlen(text));
 		int nread = tty->ops->read(tty,0,line,sizeof(line));
+		for(int i=0;i<=sizeof(line);i++)
+			if(line[i]==' ')
+				line[i]=0;
 		char *op=line;
 		char *path=line+strlen(op);
 		printf("op=%s, path=%s\n",op,path);
