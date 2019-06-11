@@ -69,8 +69,6 @@ int inode_create(filesystem_t *fs,int prio,int type,inodeops_t *ops) {
 		char realva;
 		dev->ops->read(dev,INODE_MAP_ENTRY+pos,&realva,sizeof(char));
 		if(!(realva&loc)) {
-			if(i==0)
-				printf("val=%x\n",(int)realva);
 			realva|=loc;
 			dev->ops->write(dev,INODE_MAP_ENTRY+pos,&realva,sizeof(char));
 			dev->ops->write(dev,INODE_ENTRY+i*sizeof(inode_t),(char *)pre,sizeof(inode_t));
@@ -78,6 +76,7 @@ int inode_create(filesystem_t *fs,int prio,int type,inodeops_t *ops) {
 		}
 	}
 	pmm->free(pre);
+	printf("created finished!\n");
 	return i;
 }
 void fs_init(filesystem_t *fs,const char *name,device_t *dev) {
