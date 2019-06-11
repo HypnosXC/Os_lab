@@ -47,7 +47,7 @@ int inode_create(filesystem_t *fs,int prio,int type,inodeops_t *ops) {
 	pre->prio=prio;
 	pre->type=type;
 	pre->ops=ops;
-	pre->size=BLOCK_SIZE;	
+	pre->size=0;	
 	int i=0;
 	for(;i<BLOCK_SIZE*8;i++) {
 		int pos=i/8;
