@@ -175,6 +175,7 @@ inode_t * fs_lookup(filesystem_t *fs,const char *path,int flags) {
 	kmt->spin_lock(fs_lk);
 	char name[100];
 	inode_t *pre=fs->inode;
+	inode_t *t=pmm->alloc(sizeof(inode_t));
 	//int num;
 	int i=0,l=strlen(path);
 	device_t * dev=fs->dev;
@@ -191,7 +192,8 @@ inode_t * fs_lookup(filesystem_t *fs,const char *path,int flags) {
 		printf("name=%s\n",name);
 		off_t doff=name_lookup(pre,name);
 		if (doff!=1) {
-			dev->ops->read(dev,doff,pre,sizeof(inode_t));	
+			dev->ops->read(dev,doff,t,sizeof(inode_t));	
+			pre=t;
 		}
 		else {
 			if(pre->prio!=4) {//not a dir
@@ -208,6 +210,7 @@ inode_t * fs_lookup(filesystem_t *fs,const char *path,int flags) {
 		i+=j+1;
 
 	}
+	pmm->free(t);
 	kmt->spin_unlock(fs_lk);
 	return pre;
 }
