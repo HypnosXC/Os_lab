@@ -209,7 +209,7 @@ fsops_t fs_op = {
 void vfs_init() {
 	device_t *dev=dev_lookup("ramdisk0");
 	fs_init(&fs_tab[0],"/",dev);
-	fs_tab[0]->ops=&fs_op;
+	fs_tab[0].ops=&fs_op;
 }
 int vfs_access(const char *path,int mode){
 	printf("access : TODO!\n");
