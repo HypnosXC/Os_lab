@@ -263,7 +263,7 @@ int vfs_unmount(const char *path) {
 }
 int vfs_mkdir(const char *path) {
 	filesystem_t *fs=&fs_tab[0];
-	printf("reach vfs,mkdir");
+	printf("addr=%p\n",fs->inode->ops->mkdir);
 	fs->inode->ops->mkdir(path);
 	return 0;
 }
