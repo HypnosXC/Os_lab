@@ -153,13 +153,14 @@ off_t name_lookup(inode_t *inode,const char *name) {
 	if(inode->type!=0) {// must be a directory inode
 		printf("lookup in a non directory file!\n");
 		assert(0);
-	}
+ 	}
 	off_t doff=0;
 	char pname[124];
 	off_t off=0;
-	while(doff<inode->size) {
+ 	while(doff<inode->size) {
 		basic_read(inode,doff,pname,100);
-		if(!strcmp(pname,name)) {
+		printf("get name as %s\n",pname);
+ 		if(!strcmp(pname,name)) {
 			basic_read(inode,doff+112,(char *)&off,sizeof(off_t));
 			return off;
 		}
@@ -187,7 +188,7 @@ inode_t * fs_lookup(filesystem_t *fs,const char *path,int flags) {
 		while(path[i+j]!='/'&&i+j<l)
 			j++;
 		strncpy(name,path+i,j);
-		printf("name=%s,\n",name);
+		printf("name=%s\n",name);
 		off_t doff=name_lookup(pre,name);
 		if (doff!=1) {
 			dev->ops->read(dev,doff,pre,sizeof(inode_t));	
@@ -264,7 +265,6 @@ int vfs_unmount(const char *path) {
 }
 int vfs_mkdir(const char *path) {
 	filesystem_t *fs=&fs_tab[0];
-	printf("addr=%p\n",fs->inode->ops->mkdir);
 	fs->inode->ops->mkdir(path);
 	return 0;
 }
