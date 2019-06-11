@@ -174,8 +174,7 @@ off_t name_lookup(inode_t *inode,const char *name) {
 inode_t * fs_lookup(filesystem_t *fs,const char *path,int flags) {
 	kmt->spin_lock(fs_lk);
 	char name[100];
-	inode_t *pre=pmm->alloc(BLOCK_SIZE);
-	memcpy(pre,fs->inode,sizeof(inode_t));
+	inode_t *pre=fs->inode;
 	//int num;
 	int i=0,l=strlen(path);
 	device_t * dev=fs->dev;
