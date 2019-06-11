@@ -72,17 +72,19 @@ int inode_create(filesystem_t *fs,int prio,int type,inodeops_t *ops) {
 			break;
 		}
 	}
+	pmm->free(pre);
 	return i;
 }
 void fs_init(filesystem_t *fs,const char *name,device_t *dev) {
 	memcpy(fs->name,name,strlen(name));
 	fs->dev=dev;
-	int f=1;
 	dev->ops->write(dev,INODE_MAP_ENTRY,&f,sizeof(f));
 	dev->ops->write(dev,DATA_MAP_ENTRY,&f,sizeof(f));
 	// inode for filesystem
-	inode_t *s=inode_create(fs,4,0,inode_op);
-	fs->inode=s;
+	int i=inode_create(fs,4,0,inode_op);
+	inode_t *pre=pmm->alloc(sizeof(inode_t));
+	dev->ops->read(dev,INODE_ENTRY+i*sizeof(inode_t),&pre,sizeof(inode_t));
+	fs->inode=pre;
 	// one inode;
 }
 void del_map(device_t *dev,off_t entry,int num) {
