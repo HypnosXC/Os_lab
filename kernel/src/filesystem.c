@@ -54,9 +54,7 @@ int inode_create(filesystem_t *fs,int prio,int type,inodeops_t *ops) {
 		int loc=1<<(i%8-1);
 		char realva;
 		dev->ops->read(dev,DATA_MAP_ENTRY+pos,&realva,sizeof(char));	
-		if(!(realva&loc)) {
-			if(i==0)
-				printf("val=%x\n",(int)realva);
+		if(!(realva&loc)) {	
 			realva|=loc;
 			dev->ops->write(dev,DATA_MAP_ENTRY+pos,&realva,sizeof(char));
 			pre->ptr=(void *)(DATA_ENTRY+i*BLOCK_SIZE);
@@ -64,6 +62,7 @@ int inode_create(filesystem_t *fs,int prio,int type,inodeops_t *ops) {
 		}
 	}
 	new_block(pre);
+	printf("finished data search");
 	for(i=0;i<BLOCK_SIZE;i++) {
 		int pos=i/8;
 		int loc=1<<(i%8-1);
