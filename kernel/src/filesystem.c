@@ -239,7 +239,7 @@ int vfs_rmdir(const char *path) {
 }
 int vfs_open(char *path,int flags) {
 	filesystem_t *fs=&fs_tab[0];
-	inode_t *p=fs->ops->lookup(path,flags);
+	inode_t *p=fs->ops->lookup(fs,path,flags);
 	file_t *file=pmm->alloc(sizeof(file_t));
 	file->inode=p;
 	file->offset=0;
@@ -253,7 +253,7 @@ ssize_t vfs_read(int fd,void *buf,size_t size) {
 }
 ssize_t vfs_write(int fd,void *buf,size_t size) {
 	task_t *cur=current_task();
-	file_t file=cur->flides[fd];
+	file_t *file=cur->flides[fd];
 	return file->inode->ops->write(file,buf,size);
 }
 off_t vfs_lseek(int fd,off_t offset,int whence) {
