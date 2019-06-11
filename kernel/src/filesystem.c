@@ -73,7 +73,7 @@ int inode_create(filesystem_t *fs,int prio,int type,inodeops_t *ops) {
 			dev->ops->write(dev,INODE_MAP_ENTRY+pos,&realva,sizeof(char));
 			dev->ops->write(dev,INODE_ENTRY+i*sizeof(inode_t),(char *)pre,sizeof(inode_t));
 			dev->ops->read(dev,INODE_ENTRY+i*sizeof(inode_t),pre,sizeof(inode_t));
-			printf("now pre is %p",pre->ptr);
+			printf("now pre is %p\n",pre->ptr);
 			break;
 		}
 	}
