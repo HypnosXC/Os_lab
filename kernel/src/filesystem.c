@@ -37,6 +37,9 @@ void del_map(device_t *dev,off_t entry,int num) {
 	unsigned char va=1<<(num%8-1);
 	unsigned char realval=0;
 	dev->ops->read(dev,entry+pos,&realval,sizeof(char));
+	if(!(realval&va)) {
+		printf("map not recorded!,entry %x,location %d,\n",entry,num);
+	}
 	realval-=va;
 	dev->ops->write(dev,entry+pos,&realval,sizeof(char));
 }
