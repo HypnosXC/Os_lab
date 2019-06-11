@@ -24,13 +24,13 @@ void new_block(inode_t* inode) {
 		int pos=i/8;
 		int loc=1<<(i%8-1);
 		char realva;
-		dev->ops->read(dev,DATA_MAP_ENTRY+pos,realva,sizeof(char));
+		dev->ops->read(dev,DATA_MAP_ENTRY+pos,&realva,sizeof(char));
 		if(!(realva&loc)) {
 			realva|=loc;
-			dev->ops->write(dev,DATA_MAP_ENTRY+pos,realva,sizeof(char));
+			dev->ops->write(dev,DATA_MAP_ENTRY+pos,&realva,sizeof(char));
 			off_t ptr=DATA_ENTRY+i*BLOCK_SIZE;
-			pos=inode->size/BLOCK_SIZE;
-			dev->ops->write(dev,DATA_MAP,(off_t)inode->ptr+pos*sizeof(off_t),&ptr,sizeof(off_t));
+			pos=inode->msize/BLOCK_SIZE;
+			dev->ops->write(dev,(off_t)inode->ptr+pos*sizeof(off_t),&ptr,sizeof(off_t));
 			inode->msize+=BLOCK_SIZE;
 			return;
 		}
