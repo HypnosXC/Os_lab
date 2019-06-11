@@ -121,11 +121,10 @@ int fs_close(inode_t *inode) {
 	return 0;
 }
 off_t name_lookup(inode_t *inode,const char *name) {
-	if(inode->type!=DIR_FILE) {// must be a directory inode
+	if(inode->type!=0) {// must be a directory inode
 		printf("lookup in a non directory file!\n");
 		assert(0);
 	}
-	device_t *dev=inode->fs->dev;
 	off_t doff=0;
 	char pname[124];
 	off_t off=0;
