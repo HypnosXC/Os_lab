@@ -210,6 +210,7 @@ inode_t * fs_lookup(filesystem_t *fs,const char *path,int flags) {
 			basic_write(pre,pre->size,(char *)&addr,sizeof(off_t));
 			while(pre->size%128)
 				basic_write(pre,pre->size,(char *)&f,sizeof(int));
+			printf("now size is %d\n",pre->size);
 		}
 		i+=j+1;
 
@@ -243,16 +244,13 @@ fsops_t fs_op = {
 * vfs started!
 */
 void vfs_init() {
-	printf("start vfs init\n");
 	inode_lk=pmm->alloc(sizeof(spinlock_t));
 	fs_lk=pmm->alloc(sizeof(spinlock_t));
 	kmt->spin_init(inode_lk,"inode");
 	kmt->spin_init(fs_lk,"file system");
 	device_t *dev=dev_lookup("ramdisk0");
-	printf("dead in init!\n");
 	fs_init(&fs_tab[0],"/",dev);
 	fs_tab[0].ops=&fs_op;
-	printf("vfs init finished!\n");
 }
 int vfs_access(const char *path,int mode){
 	printf("access : TODO!\n");
