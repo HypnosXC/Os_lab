@@ -139,8 +139,6 @@ int fs_close(inode_t *inode) {
 	off_t *page=pmm->alloc(BLOCK_SIZE);
 	dev->ops->read(dev,(off_t)pre->ptr,page,BLOCK_SIZE);
 	for(int j=0;j<pre->msize/BLOCK_SIZE;j++) {
-		if(page[j]==NULL)
-			break;
 		i=(int)(page[j]-DATA_ENTRY)/BLOCK_SIZE;
 		del_map(dev,DATA_MAP_ENTRY,i);
 	}
