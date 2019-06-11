@@ -81,7 +81,7 @@ void fs_init(filesystem_t *fs,const char *name,device_t *dev) {
 	for(int i=0;i<2048;i++) {
 		char f=0;
 		dev->ops->write(dev,INODE_MAP_ENTRY+i,&f,sizeof(char));
-		dev->ops->write(dev,DATA_MAP_ENTRY+i,*f,sizeof(char));
+		dev->ops->write(dev,DATA_MAP_ENTRY+i,&f,sizeof(char));
 	}
 	// inode for filesystem
 	int i=inode_create(fs,4,0,inode_op);
