@@ -188,7 +188,7 @@ inode_t * fs_lookup(filesystem_t *fs,const char *path,int flags) {
 	while(i<l) {
 		memset(name,0,strlen(name));
 		int j=0;
-		while(path[i+j]!='/'&&i+j<l)
+		while(path[i+j]!='/'&&i+j<=l)
 			j++;
 		strncpy(name,path+i,j);
 		printf("name=%s\n",name);
