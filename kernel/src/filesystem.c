@@ -40,6 +40,7 @@ void new_block(inode_t* inode) {
 }
 int inode_create(filesystem_t *fs,int prio,int type,inodeops_t *ops) {
 	inode_t *pre=pmm->alloc(sizeof(inode_t));
+	device_t *dev=fs->dev;
 	pre->fs=fs;
 	pre->prio=prio;
 	pre->type=type;
@@ -59,6 +60,18 @@ int inode_create(filesystem_t *fs,int prio,int type,inodeops_t *ops) {
 		}
 	}
 	new_block(pre);
+	for(i=0;i<BLOCK_SIZE:i++) {
+		int pos=i/8;
+		int loc=1<<(i%8-1);
+		char realva;
+		dev->ops->read(dev,INODE_MAP_ENTRY+pos,realva,sizeof(char));
+		if(!(realva&loc)) {
+			realva|=loc;
+			dev->ops->write(dev,INODE_MAP_ENTRY+pos,realva.sizeof(char));
+			dev->ops->write(dev,INODE_ENTRY+i*sizeof(inode_t),(char *)pre,sizeof(inode_t));
+			break;
+		}
+	}
 	return i;
 }
 void fs_init(filesystem_t *fs,const char *name,device_t *dev) {
@@ -69,7 +82,6 @@ void fs_init(filesystem_t *fs,const char *name,device_t *dev) {
 	dev->ops->write(dev,DATA_MAP_ENTRY,&f,sizeof(f));
 	// inode for filesystem
 	inode_t *s=inode_create(fs,4,0,inode_op);
-	dev->ops->write(dev,INODE_ENTRY,&s,sizeof(inode_t));
 	fs->inode=s;
 	// one inode;
 }
