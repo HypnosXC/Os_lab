@@ -219,7 +219,7 @@ int vfs_access(const char *path,int mode){
 int vfs_mount(const char *path,filesystem_t *fs) {
 	printf("mount : to do \n");
 	assert(0);
-	memncpy(fs->name,path,strlen(path));
+	memcpy(fs->name,path,strlen(path));
 	return 0;
 }
 int unmount(const char *path) {
