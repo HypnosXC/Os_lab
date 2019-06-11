@@ -80,11 +80,13 @@ int inode_create(filesystem_t *fs,int prio,int type,inodeops_t *ops) {
 void fs_init(filesystem_t *fs,const char *name,device_t *dev) {
 	memcpy(fs->name,name,strlen(name));
 	fs->dev=dev;
+	printf("reach here");
 	for(int i=0;i<2048;i++) {
 		char f=0;
 		dev->ops->write(dev,INODE_MAP_ENTRY+i,&f,sizeof(char));
 		dev->ops->write(dev,DATA_MAP_ENTRY+i,&f,sizeof(char));
 	}
+	printf("empty finished\n");
 	// inode for filesystem
 	int i=inode_create(fs,4,0,inode_op);
 	inode_t *pre=pmm->alloc(sizeof(inode_t));
