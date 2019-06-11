@@ -111,6 +111,7 @@ ssize_t inode_write(file_t *file,const char *buf,size_t size) {
 }
 int mkdir(const char *name) {
 	task_t * cur=current_task();
+	printf("reach here!\n");
 	cur->preloc->fs->ops->lookup(cur->preloc->fs,name,4);
 	return 0;
 }
