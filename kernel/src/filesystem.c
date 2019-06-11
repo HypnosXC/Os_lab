@@ -138,7 +138,7 @@ int fs_close(inode_t *inode) {
 	i=(int)(pre->ptr-DATA_ENTRY)/BLOCK_SIZE;
 	del_map(dev,DATA_MAP_ENTRY,i);
 	pmm->free(pre);
-	kmt->spin_unlock(fk_lk);
+	kmt->spin_unlock(fs_lk);
 	return 0;
 }
 off_t name_lookup(inode_t *inode,const char *name) {
