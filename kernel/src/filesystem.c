@@ -58,6 +58,7 @@ int inode_create(filesystem_t *fs,int prio,int type,inodeops_t *ops) {
 			realva|=loc;
 			dev->ops->write(dev,DATA_MAP_ENTRY+pos,&realva,sizeof(char));
 			pre->ptr=(void *)(DATA_ENTRY+i*BLOCK_SIZE);
+			printf("pre is %p",pre->ptr);
 			break;
 		}
 	}
