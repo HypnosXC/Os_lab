@@ -53,6 +53,7 @@ void echo_task(void *name) {
 		sprintf(text,"(%s) $ ", name);
 		tty->ops->write(tty,0,text,strlen(text));
 		int nread = tty->ops->read(tty,0,line,sizeof(line));
+		line[nread-1]='\0';
 		for(int i=0;i<sizeof(line);i++)
 			if(line[i]==' ')
 				line[i]=0;
@@ -78,8 +79,7 @@ void echo_task(void *name) {
 			printf("ls operation!\n");
 			if(path[0]!=0) 
 				rmdir_operation(path);
-		}
-		line[nread-1]='\0';
+		}	
 		sprintf(text,"Echo: %s,\n",line);
 		tty->ops->write(tty,0,text,strlen(text));
 	}
