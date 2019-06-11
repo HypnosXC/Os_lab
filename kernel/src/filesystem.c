@@ -238,7 +238,7 @@ int vfs_mount(const char *path,filesystem_t *fs) {
 	memcpy(fs->name,path,strlen(path));
 	return 0;
 }
-int unmount(const char *path) {
+int vfs_unmount(const char *path) {
 	printf("unmount: todo\n");
 	assert(0);
 	return 0;
@@ -253,7 +253,7 @@ int vfs_rmdir(const char *path) {
 	fs->inode->ops->rmdir(path);
 	return 0;
 }
-int vfs_open(char *path,int flags) {
+int vfs_open(const char *path,int flags) {
 	filesystem_t *fs=&fs_tab[0];
 	inode_t *p=fs->ops->lookup(fs,path,flags);
 	file_t *file=pmm->alloc(sizeof(file_t));
