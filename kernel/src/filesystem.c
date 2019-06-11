@@ -16,7 +16,7 @@
  *									for directories , 128 b for its subdir as 120 for name and 8 
  *									its offset(num of bitmap)
  */
-extern inodeops_t *inode_op;
+extern inodeops_t inode_op;
 extern spinlock_t *inode_lk;
 spinlock_t *fs_lk;
 filesystem_t fs_tab[FLSYS_NUM];
@@ -90,7 +90,7 @@ void fs_init(filesystem_t *fs,const char *name,device_t *dev) {
 		dev->ops->write(dev,DATA_MAP_ENTRY+i,&f,sizeof(char));
 	}
 	// inode for filesystem
-	int i=inode_create(fs,4,0,inode_op);
+	int i=inode_create(fs,4,0,&inode_op);
 	inode_t *pre=pmm->alloc(sizeof(inode_t));
 	dev->ops->read(dev,INODE_ENTRY+i*sizeof(inode_t),pre,sizeof(inode_t));
 	fs->inode=pre;
