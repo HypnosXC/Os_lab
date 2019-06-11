@@ -64,10 +64,10 @@ int inode_create(filesystem_t *fs,int prio,int type,inodeops_t *ops) {
 		int pos=i/8;
 		int loc=1<<(i%8-1);
 		char realva;
-		dev->ops->read(dev,INODE_MAP_ENTRY+pos,realva,sizeof(char));
+		dev->ops->read(dev,INODE_MAP_ENTRY+pos,&realva,sizeof(char));
 		if(!(realva&loc)) {
 			realva|=loc;
-			dev->ops->write(dev,INODE_MAP_ENTRY+pos,realva.sizeof(char));
+			dev->ops->write(dev,INODE_MAP_ENTRY+pos,&realva.sizeof(char));
 			dev->ops->write(dev,INODE_ENTRY+i*sizeof(inode_t),(char *)pre,sizeof(inode_t));
 			break;
 		}
