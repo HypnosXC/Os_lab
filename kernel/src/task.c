@@ -3,6 +3,7 @@
 #define FL_IF 0x00000200  
 #define STACK_SIZE 4096
 #define TASK_SIZE 32
+extern filesystem_t fs_tab[];
 task_t *current[TASK_SIZE];
 task_t *loader[TASK_SIZE];
 spinlock_t ct_lk,tsk_lk,yield_lk;
