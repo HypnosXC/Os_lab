@@ -101,7 +101,7 @@ void fs_init(filesystem_t *fs,const char *name,device_t *dev) {
 	// one inode;
 }
 void del_map(device_t *dev,off_t entry,int num) {
-	printf("\033[34m block %d realsed !\n\033[0m",num);
+	printf("\033[34m block %x,%d realsed !\n\033[0m",entry,num);
 	int pos=num/8;
 	unsigned char va=1<<(num%8);
 	unsigned char realval=0;

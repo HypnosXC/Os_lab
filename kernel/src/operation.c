@@ -18,6 +18,7 @@ char* ls_operation(const char *path) {
 	char **pre=pmm->alloc(256);
 	int fd=vfs->open(path,4);
 	int end=vfs->lseek(fd,0,2);
+	printf("\033[42m end=%d\033[0m\n");
 	int doff=0,i=0;
 	while(doff!=end) {
 	    char *name=pmm->alloc(128);	
