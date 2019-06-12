@@ -81,7 +81,7 @@ int inode_create(filesystem_t *fs,int prio,int type,inodeops_t *ops) {
 	 	}
 	} 
 	pmm->free(pre);
-	//printf("created finished!\n");
+	printf("created finished, inode is %x!\n",inode->pos);
 	return i;
 }
 void fs_init(filesystem_t *fs,const char *name,device_t *dev) {
@@ -113,6 +113,7 @@ void del_map(device_t *dev,off_t entry,int num) {
 	dev->ops->write(dev,entry+pos,&realval,sizeof(char));
 }
 int in_close(inode_t *inode) {
+	printf("\033[42m DELETE Inode !\033[0m\n");
 	inode_t *pre=inode;
 	device_t* dev=inode->fs->dev;
 	int i=(inode->pos-INODE_ENTRY)/sizeof(inode_t);
