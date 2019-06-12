@@ -299,14 +299,14 @@ int vfs_open(const char *path,int flags) {
 ssize_t vfs_read(int fd,void *buf,size_t size) {
 	task_t * cur=current_task();
 	file_t * file=cur->flides[fd];
-	int ret=file->inode->ops->read(file,buf,size);
+	ssize_t ret=file->inode->ops->read(file,buf,size);
 	file->offset+=size;
 	return ret;
 }
 ssize_t vfs_write(int fd,void *buf,size_t size) {
 	task_t *cur=current_task();
 	file_t *file=cur->flides[fd];
-	int ret=file->inode->ops->write(file,buf,size);
+	ssize_t ret=file->inode->ops->write(file,buf,size);
 	file->offset+=size;
 }
 off_t vfs_lseek(int fd,off_t offset,int whence) {
