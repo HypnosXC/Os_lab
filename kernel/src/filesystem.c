@@ -308,6 +308,7 @@ ssize_t vfs_write(int fd,void *buf,size_t size) {
 	file_t *file=cur->flides[fd];
 	ssize_t ret=file->inode->ops->write(file,buf,size);
 	file->offset+=size;
+	return ret;
 }
 off_t vfs_lseek(int fd,off_t offset,int whence) {
 	task_t *cur=current_task();
