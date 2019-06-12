@@ -117,7 +117,7 @@ int fs_close(inode_t *inode) {
 	inode_t *pre=inode;
 	pre->ptr=NULL;
 	device_t* dev=inode->fs->dev;
-	int i=(inode->pos-INODE_MAP)/sizeof(inode_t);
+	int i=(inode->pos-INODE_ENTRY)/sizeof(inode_t);
 	if(pre->ptr==NULL) {
 		printf("\033[32m wrong inode close!\n");
 		assert(0);
