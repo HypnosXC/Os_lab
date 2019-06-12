@@ -22,6 +22,7 @@ char* ls_operation(const char *path) {
 	    char *name=pmm->alloc(128);	
 		vfs->lseek(fd,doff,0);
 		vfs->read(fd,name,100);
+		name[strlen(name)]='\n';
 		pre[doff/128]=name;
 		printf("%s ",name);
 		doff+=128;
