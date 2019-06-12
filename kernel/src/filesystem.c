@@ -114,7 +114,6 @@ void del_map(device_t *dev,off_t entry,int num) {
 }
 int in_close(inode_t *inode) {
 	inode_t *pre=inode;
-	pre->ptr=NULL;
 	device_t* dev=inode->fs->dev;
 	int i=(inode->pos-INODE_ENTRY)/sizeof(inode_t);
 	if(pre->ptr==NULL) {
