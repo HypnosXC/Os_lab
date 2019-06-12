@@ -59,11 +59,19 @@ void echo_task(void *name) {
 				line[i]=0;
 		char *op=line;
 		char *path=line+strlen(op)+1;
+		char **ls_goal=NULL;
 		printf("op=%s, path=%s\n",op,path);
 		if(!strcmp(op,"ls")) {
 			printf("ls operation!\n");
 			if(path[0]!=0) 
-				ls_operation(path);
+				ls_goal=ls_operation(path);
+			int i=0;
+			while(ls_goal[i]!=NULL) {
+				tty->ops->write(tty,0,ls_goal[i],strlen(goal[i]));
+				pmm->free(ls_goal[i]);
+				i++;
+			}
+			pmm->free(ls_goal);
 		}
 		if(!strcmp(op,"cd")) {
 			printf("cd operation!\n");
@@ -79,7 +87,7 @@ void echo_task(void *name) {
 			printf("ls operation!\n");
 			if(path[0]!=0) 
 				rmdir_operation(path);
-		}	
+		}
 		sprintf(text,"Echo: %s,\n",line);
 		tty->ops->write(tty,0,text,strlen(text));
 	}

@@ -13,16 +13,19 @@ void mkdir_operation(const char *path) {
 void rmdir_operation(const char *path) {
 	vfs->rmdir(path);
 }
-void ls_operation(const char *path) {
+char* ls_operation(const char *path) {
+	char **pre=pmm->alloc(256);
 	int fd=vfs->open(path,4);
 	int end=vfs->lseek(fd,0,2);
 	int doff=0;
-	char name[109];
-	while(doff!=end) { 
+	while(doff!=end) {
+	    char *name=pmm->alloc(128);	
 		vfs->lseek(fd,doff,0);
 		vfs->read(fd,name,100);
+		pre[doff/128]=name;
 		printf("%s ",name);
 		doff+=128;
 	}
-	printf("\n");
+	pre[doff/128]=NULL;
+	return pre;
 }
