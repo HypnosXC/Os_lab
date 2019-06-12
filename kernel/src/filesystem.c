@@ -24,7 +24,7 @@ void new_block(inode_t* inode) {
 	device_t *dev=inode->fs->dev;
 	for(int i=0;i<BLOCK_SIZE*8;i++) {
 		int pos=i/8;
-		int loc=1<<(i%8-1);
+		int loc=1<<(i%8);
 		char realva;
 		dev->ops->read(dev,DATA_MAP_ENTRY+pos,&realva,sizeof(char));
 		if(!(realva&loc)) {
