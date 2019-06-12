@@ -165,11 +165,12 @@ off_t name_lookup(inode_t *inode,const char *name) {
 	assert(0);	
 }
 int inode_ex(off_t offset,filesystem_t *fs){
-	int num=(offset-INODE_ENTRT)/sizeof(inode_t);
+	int num=(offset-INODE_ENTRY)/sizeof(inode_t);
 	char realva=0;
 	device_t *dev=fs->dev;
 	dev->ops->read(dev,INODE_MAP_ENTRY+num/8,&realva,sizeof(char));
-	if((realva&(1<<(num%8))!=0)
+	int f=(realva&(1<<(num%8)));
+	if ( f != 0) 
 		return 1;
 	return 0;
 }
