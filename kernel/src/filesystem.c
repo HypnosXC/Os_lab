@@ -101,8 +101,9 @@ void fs_init(filesystem_t *fs,const char *name,device_t *dev) {
 	// one inode;
 }
 void del_map(device_t *dev,off_t entry,int num) {
+	printf("\033[34m block %d realsed !\n\033[0m",num);
 	int pos=num/8;
-	unsigned char va=1<<(num%8-1);
+	unsigned char va=1<<(num%8);
 	unsigned char realval=0;
 	dev->ops->read(dev,entry+pos,&realval,sizeof(char));
 	if(!(realval&va)) {
@@ -113,27 +114,16 @@ void del_map(device_t *dev,off_t entry,int num) {
 }
 int fs_close(inode_t *inode) {
 	kmt->spin_lock(fs_lk);
-	inode_t *pre=pmm->alloc(sizeof(inode_t));
+	inode_t *pre=inode;
 	pre->ptr=NULL;
 	device_t* dev=inode->fs->dev;
-	int i=0;
-	for(;i<BLOCK_SIZE;i++) {
-			dev->ops->read(dev,INODE_ENTRY+i*sizeof(inode_t),pre,sizeof(inode_t));
-			if(pre==NULL)
-				continue;
-			if(pre->ptr==inode->ptr)
-				break;
-	}
+	int i=(inode->pos-INODE_MAP)/sizeof(inode_t);
 	if(pre->ptr==NULL) {
 		printf("\033[32m wrong inode close!\n");
 		assert(0);
 	}
 	// To change the inode bitmap
 	del_map(dev,INODE_MAP_ENTRY,i);
-
-
-
-
 	// To change the data bitmap
 /*	if(pre->refptr!=NULL) {
 		i=(int)(pre->refptr-DATA_ENTRY)/BLOCK_SIZE;
@@ -174,6 +164,16 @@ off_t name_lookup(inode_t *inode,const char *name) {
 	return 1;
 	assert(0);	
 }
+int inode_ex(off_t offset,filesystem_t *fs){
+	int num=(offset-INODE_ENTRT)/sizeof(inode_t);
+	char realva=0;
+	device_t *dev=fs->dev;
+	dev->ops->read(dev,INODE_MAP_ENTRY+num/8,&realva,sizeof(char));
+	if((realva&(1<<(num%8))!=0)
+		return 1;
+	return 0;
+}
+// 1-7 file flags ,8 - delete file
 inode_t * fs_lookup(filesystem_t *fs,const char *path,int flags) {
 	kmt->spin_lock(fs_lk);
 	char name[100];
@@ -195,11 +195,14 @@ inode_t * fs_lookup(filesystem_t *fs,const char *path,int flags) {
 		printf("now name is %s,node is %p\n",name,pre->ptr);
 		strncpy(name,path+i,j);
 		off_t doff=name_lookup(pre,name);
-		if (doff!=1) {
+		if (doff!=1) {	
 			dev->ops->read(dev,doff,pre,sizeof(inode_t));	
+			if(i+j>=l&&flags==8) {
+				fs_close(pre);
+			}
 		}
 		else {
-			if(pre->prio!=4) {//not a dir
+			if(pre->prio!=4||flags==8) {//not a dir
 				printf("wrong position,not a dir!\n");
 				assert(0);
 			}
@@ -295,12 +298,15 @@ int vfs_open(const char *path,int flags) {
 ssize_t vfs_read(int fd,void *buf,size_t size) {
 	task_t * cur=current_task();
 	file_t * file=cur->flides[fd];
-	return file->inode->ops->read(file,buf,size);
+	int ret=file->inode->ops->read(file,buf,size);
+	file->offset+=size;
+	return ret;
 }
 ssize_t vfs_write(int fd,void *buf,size_t size) {
 	task_t *cur=current_task();
 	file_t *file=cur->flides[fd];
-	return file->inode->ops->write(file,buf,size);
+	int ret=file->inode->ops->write(file,buf,size);
+	file->offset+=size;
 }
 off_t vfs_lseek(int fd,off_t offset,int whence) {
 	task_t *cur=current_task();

@@ -83,14 +83,12 @@ void echo_task(void *name) {
 			printf("mkdir operation!\n");
 			if(path[0]!=0) 
 				mkdir_operation(path);
-		}
+		} 
 		if(!strcmp(op,"rmdir")) {
-			printf("ls operation!\n");
+			printf("rmdir operation!\n");
 			if(path[0]!=0) 
 				rmdir_operation(path);
-		}
-		sprintf(text,"Echo: %s,\n",line);
-		tty->ops->write(tty,0,text,strlen(text));
+		} 
 	}
 }
 static _Context *os_trap(_Event ev, _Context *context) {

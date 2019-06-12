@@ -133,7 +133,8 @@ int mkdir(const char *name) {
 }
 int rmdir(const char *name) {
 	task_t *cur=current_task();
-	cur->preloc->fs->ops->lookup(cur->preloc->fs,name,4);
+	inode_t *f=cur->preloc->fs->ops->lookup(cur->preloc->fs,name,8);
+	
 	return 0;
 }
 int link(const char *name,inode_t *inode) {
