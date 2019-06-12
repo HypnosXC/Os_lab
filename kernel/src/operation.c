@@ -27,5 +27,5 @@ char* ls_operation(const char *path) {
 		doff+=128;
 	}
 	pre[doff/128]=NULL;
-	return pre;
+	return (char *)pre;
 }

@@ -64,7 +64,7 @@ void echo_task(void *name) {
 		if(!strcmp(op,"ls")) {
 			printf("ls operation!\n");
 			if(path[0]!=0) 
-				ls_goal=ls_operation(path);
+				ls_goal=(char **)ls_operation(path);
 			int i=0;
 			while(ls_goal[i]!=NULL) {
 				tty->ops->write(tty,0,ls_goal[i],strlen(goal[i]));
