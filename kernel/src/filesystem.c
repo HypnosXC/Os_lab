@@ -167,7 +167,7 @@ off_t name_lookup(inode_t *inode,const char *name) {
 	printf("now inode size is %d\n",inode->size);
  	while(doff<inode->size) {
 		basic_read(inode,doff,pname,100);
-		basic_read(inode,doff+112,ioff,sizeof(off_t));
+		basic_read(inode,doff+112,&ioff,sizeof(off_t));
 		if(!inode_ex(ioff,inode->fs))
 			continue;
 		printf("get name as %s\n",pname);
