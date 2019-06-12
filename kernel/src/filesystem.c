@@ -28,6 +28,7 @@ void new_block(inode_t* inode) {
 		char realva;
 		dev->ops->read(dev,DATA_MAP_ENTRY+pos,&realva,sizeof(char));
 		if(!(realva&loc)) {
+			printf("\033[32m block %d used!\n\033[0m",i);
 			realva|=loc;
 			dev->ops->write(dev,DATA_MAP_ENTRY+pos,&realva,sizeof(char));
 			off_t ptr=DATA_ENTRY+i*BLOCK_SIZE;
