@@ -191,8 +191,8 @@ inode_t * fs_lookup(filesystem_t *fs,const char *path,int flags) {
 		int j=0;
 		while(path[i+j]!='/'&&i+j<l)
 			j++;
+		printf("now name is %s,node is %p\n",name,pre->ptr);
 		strncpy(name,path+i,j);
-		printf("name=%s\n",name);
 		off_t doff=name_lookup(pre,name);
 		if (doff!=1) {
 			dev->ops->read(dev,doff,pre,sizeof(inode_t));	
