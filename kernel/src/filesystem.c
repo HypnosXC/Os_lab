@@ -145,6 +145,16 @@ int fs_close(inode_t *inode ){
 	kmt->spin_unlock(fs_lk);
 	return ret;
 }
+int inode_ex(off_t offset,filesystem_t *fs){
+	int num=(offset-INODE_ENTRY)/sizeof(inode_t);
+	char realva=0;
+	device_t *dev=fs->dev;
+	dev->ops->read(dev,INODE_MAP_ENTRY+num/8,&realva,sizeof(char));
+	int f=(realva&(1<<(num%8)));
+	if ( f != 0) 
+		return 1;
+	return 0;
+}
 off_t name_lookup(inode_t *inode,const char *name) {
 	self_fetch(inode);
 	if(inode->type!=0) {// must be a directory inode
@@ -153,10 +163,13 @@ off_t name_lookup(inode_t *inode,const char *name) {
  	}
 	off_t doff=0;
 	char pname[124];
-	off_t off=0;
+	off_t off=0,ioff=0;
 	printf("now inode size is %d\n",inode->size);
  	while(doff<inode->size) {
 		basic_read(inode,doff,pname,100);
+		basic_read(inode,doff+112,ioff,sizeof(off_t));
+		if(!inode_ex(ioff,inode->fs))
+			continue;
 		printf("get name as %s\n",pname);
  		if(!strcmp(pname,name)) {
 			basic_read(inode,doff+112,(char *)&off,sizeof(off_t));
@@ -168,16 +181,7 @@ off_t name_lookup(inode_t *inode,const char *name) {
 	return 1;
 	assert(0);	
 }
-int inode_ex(off_t offset,filesystem_t *fs){
-	int num=(offset-INODE_ENTRY)/sizeof(inode_t);
-	char realva=0;
-	device_t *dev=fs->dev;
-	dev->ops->read(dev,INODE_MAP_ENTRY+num/8,&realva,sizeof(char));
-	int f=(realva&(1<<(num%8)));
-	if ( f != 0) 
-		return 1;
-	return 0;
-}
+
 // 1-7 file flags ,8 - delete file
 inode_t * fs_lookup(filesystem_t *fs,const char *path,int flags) {
 	kmt->spin_lock(fs_lk);
