@@ -112,8 +112,7 @@ void del_map(device_t *dev,off_t entry,int num) {
 	realval-=va;
 	dev->ops->write(dev,entry+pos,&realval,sizeof(char));
 }
-int fs_close(inode_t *inode) {
-	kmt->spin_lock(fs_lk);
+int in_close(inode_t *inode) {
 	inode_t *pre=inode;
 	pre->ptr=NULL;
 	device_t* dev=inode->fs->dev;
@@ -138,8 +137,13 @@ int fs_close(inode_t *inode) {
 	i=(int)(pre->ptr-DATA_ENTRY)/BLOCK_SIZE;
 	del_map(dev,DATA_MAP_ENTRY,i);
 	pmm->free(pre);
-	kmt->spin_unlock(fs_lk);
 	return 0;
+}
+int fs_close(inode_t *inode ){
+	kmt->spin_lock(fs_lk);
+	int ret=in_close(inode);
+	kmt->spin_unlock(fs_lk);
+	return ret;
 }
 off_t name_lookup(inode_t *inode,const char *name) {
 	self_fetch(inode);
@@ -199,7 +203,7 @@ inode_t * fs_lookup(filesystem_t *fs,const char *path,int flags) {
 		if (doff!=1) {	
 			dev->ops->read(dev,doff,pre,sizeof(inode_t));	
 			if(i+j>=l&&flags==8) {
-				fs_close(pre);
+				in_close(pre);
 			}
 		}
 		else {
