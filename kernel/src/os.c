@@ -67,7 +67,7 @@ void echo_task(void *name) {
 				ls_goal=(char **)ls_operation(path);
 			int i=0;
 			while(ls_goal[i]!=NULL) {
-				tty->ops->write(tty,0,ls_goal[i],strlen(goal[i]));
+				tty->ops->write(tty,0,ls_goal[i],strlen(ls_goal[i]));
 				pmm->free(ls_goal[i]);
 				i++;
 			}
