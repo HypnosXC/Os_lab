@@ -18,6 +18,7 @@ char* ls_operation(const char *path) {
 	task_t *cur=current_task();
 	char **pre=pmm->alloc(256);
 	char rpath[100];
+	memset(rpath,0,sizeof(rpath));
 	strcpy(rpath,path);
 	int fd=vfs->open(path,4);
 	int end=vfs->lseek(fd,0,2);
