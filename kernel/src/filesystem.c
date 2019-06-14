@@ -188,6 +188,7 @@ off_t name_lookup(inode_t *inode,const char *name) {
 	off_t off=0,ioff=0;
 	printf("now inode size is %d\n",inode->size);
  	while(doff<inode->size) {
+		printf("doff=%d\n",doff);
 		basic_read(inode,doff,pname,100);
 		basic_read(inode,doff+112,(char *)&ioff,sizeof(off_t));
 		if(!inode_ex(ioff,inode->fs))
