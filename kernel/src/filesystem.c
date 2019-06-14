@@ -274,7 +274,7 @@ inode_t * fs_lookup(filesystem_t *fs,const char *path,int flags) {
 			if(i+j<l) {
 				printf("\033[42m fs_lookup,wrong dir happened!\033[0m,l=%d,i=%d,j=%d\n",l,i,j);
 				assert(0);
-			}
+			} 
 			break;
 		}
 		i+=j+1;

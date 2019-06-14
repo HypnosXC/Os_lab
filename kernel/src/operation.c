@@ -24,6 +24,10 @@ char* ls_operation(const char *path) {
 	int end=vfs->lseek(fd,0,2);
 	printf("\033[42m end=%d\033[0m\n");
 	int doff=0,i=0;
+	char *name=pmm->alloc(256);
+	sprintf(name,"%s","Name                 Type                 Priority\n");
+	pre[0]=name;
+	i++;
 	while(doff<end) {
 	    char *name=pmm->alloc(256);
 		vfs->lseek(fd,doff,0);
@@ -41,10 +45,15 @@ char* ls_operation(const char *path) {
 		inode_t *pe=fs->ops->lookup(fs,rpath,9);
 		memset(rpath,0,sizeof(rpath));
 		strcpy(rpath,path);
+		while(strlen(name)<22)
+			strcat(name," ");
 		if(pe->type==0)
-			strcat(name,"  dir file  rw.\n");
+			strcat(name,"Directory File");
 		else
-			strcat(name,"    file    rwx\n");
+			strcat(name,"File");
+		while(strlen(name)<44)
+			strcat(name," ");
+		strcat(name,"rw.\n");
 		pmm->free(pe);
 		pre[i]=name;
 		i++;
