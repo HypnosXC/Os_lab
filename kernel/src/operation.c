@@ -14,7 +14,7 @@ void rmdir_operation(const char *path) {
 	vfs->rmdir(path);
 }
 char* ls_operation(const char *path) {
-	task_t *cur=current_task();
+//	task_t *cur=current_task();
 	char **pre=pmm->alloc(256);
 	int fd=vfs->open(path,4);
 	int end=vfs->lseek(fd,0,2);
