@@ -38,7 +38,7 @@ void real_path(char *path,const char *tpath) {
 		}
 	}
 	for(int i=0;i<l;i++) 
-		if(refpath[i]!=0&&(i=0||refpath[i-1]==0)) {
+		if(refpath[i]!=0&&(i==0||refpath[i-1]==0)) {
 			strcat(path,refpath);
 		}
 }
