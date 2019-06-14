@@ -142,7 +142,7 @@ int inode_create(filesystem_t *fs,int prio,int type,inodeops_t *ops) {
 			break;
 	 	}
 	} 
-	printf("created finished, inode is %x!\n",pre->pos);
+	printf("created finished, inode is %p!\n",pre->pos);
 	pmm->free(pre);
 	return i;
 }
