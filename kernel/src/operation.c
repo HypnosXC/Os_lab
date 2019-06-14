@@ -7,6 +7,7 @@ void real_path(char *path,const char *tpath) {
 	memset(refpath,0,sizeof(refpath));
 	if(tpath[0]=='.'&&tpath[1]!='.')  {
 		strcpy(refpath,cur->loc);
+		if(strlen(tpath!=))
 		strcat(refpath,"/");
 		strcat(refpath,tpath+1);
 	}
@@ -52,10 +53,42 @@ void cd_operation(const char * rpath) {
 	cur->preloc=pre;
 	strcpy(cur->loc,path);
 }
-void mkdir_operation(const char *path) {
+void mkdir_operation(const char *tpath) {
+	task_t *cur =current_task();
+	char path[100];
+	memset(path,0,sizeof(path));
+	if(tpath[0]=='.') {
+		strcat(path,cur->loc);
+		if(tpath[1]=='.') {
+			while(path[strlen(path)-1]!='/')
+				path[strlen(path)-1]=0;
+			if(strlen(tpath)==2)
+				path[strlen(path)-1]=0;
+		}
+		else if(strlen(tpath)!=1&&path[strlen(path)-1]!='/')
+			strcat(path,"/");
+	}
+	strcat(path,tpath);
+
 	vfs->mkdir(path);
 }
-void rmdir_operation(const char *path) {
+void rmdir_operation(const char *tpath) {
+	task_t *cur =current_task();
+	char path[100];
+	memset(path,0,sizeof(path));
+	if(tpath[0]=='.') {
+		strcat(path,cur->loc);
+		if(tpath[1]=='.') {
+			while(path[strlen(path)-1]!='/')
+				path[strlen(path)-1]=0;
+			if(strlen(tpath)==2)
+				path[strlen(path)-1]=0;
+		}
+		else if(strlen(tpath)!=1&&path[strlen(path)-1]!='/')
+			strcat(path,"/");
+	}
+	strcat(path,tpath);
+
 	vfs->rmdir(path);
 }
 char* ls_operation(const char *tpath) {
