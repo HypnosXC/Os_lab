@@ -2,7 +2,6 @@
 #include<klib.h>
 void real_path(char *path,const char *tpath) {
  	task_t *cur =current_task();
-	char path[100];
 	memset(path,0,sizeof(path));
 	if(tpath[0]=='.') {
 		strcat(path,cur->loc);
