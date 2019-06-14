@@ -185,6 +185,7 @@ int create(task_t *task,const char *name,void (*entry)(void *arg),void *arg) {
 	task->state=0;
 	task->park=0;
 	task->preloc=fs_tab[0].inode;
+	strcpy(task->loc,"/");
 	task->stack.start=pmm->alloc(STACK_SIZE);
 	task->stack.end=(void *)((intptr_t)task->stack.start+STACK_SIZE);
 	task->context=_kcontext(task->stack,entry,arg);
