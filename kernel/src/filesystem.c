@@ -28,7 +28,7 @@ void new_block(inode_t* inode) {
 		char realva;
 		dev->ops->read(dev,DATA_MAP_ENTRY+pos,&realva,sizeof(char));
 		if(!(realva&loc)) {
-			printf("\033[32m block %d used,realva=%d!\n\033[0m",i,realva|=loc);
+	//		printf("\033[32m block %d used,realva=%d!\n\033[0m",i,realva|=loc);
 			realva|=loc;
 			dev->ops->write(dev,DATA_MAP_ENTRY+pos,&realva,sizeof(char));
 			for(int i=0;i<2048;i++) {
