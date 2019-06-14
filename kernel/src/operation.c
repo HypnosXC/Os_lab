@@ -1,12 +1,5 @@
 #include<common.h>
 #include<klib.h>
-void cd_operation(const char * path) {
-	task_t *cur=current_task();
-	filesystem_t *fs=cur->preloc->fs;
-	inode_t *pre=fs->ops->lookup(fs,path,7);
-	pmm->free(cur->preloc);
-	cur->preloc=pre;
-}
 void real_path(char *path,const char *tpath) {
 	task_t *cur=current_task();
 	char refpath[100];
@@ -47,6 +40,16 @@ void real_path(char *path,const char *tpath) {
 			strcat(path,refpath);
 		}
 	printf("new path is %s\n",path);
+}
+void cd_operation(const char * rpath) {
+	char path[100];
+	real_path(path,rpath);
+	task_t *cur=current_task();
+	filesystem_t *fs=cur->preloc->fs;
+	inode_t *pre=fs->ops->lookup(fs,path,7);
+	pmm->free(cur->preloc);
+	cur->preloc=pre;
+	cur->loc=path;
 }
 void mkdir_operation(const char *path) {
 	vfs->mkdir(path);
