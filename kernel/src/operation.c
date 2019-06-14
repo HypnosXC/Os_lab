@@ -49,7 +49,7 @@ void cd_operation(const char * rpath) {
 	inode_t *pre=fs->ops->lookup(fs,path,7);
 	pmm->free(cur->preloc);
 	cur->preloc=pre;
-	cur->loc=path;
+	strcpy(cur->loc,path);
 }
 void mkdir_operation(const char *path) {
 	vfs->mkdir(path);
