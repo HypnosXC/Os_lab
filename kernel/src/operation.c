@@ -10,6 +10,7 @@ void cd_operation(const char * path) {
 void real_path(char *path,const char *tpath) {
 	task_t *cur=current_task();
 	char refpath[100];
+	memset(refpath,0,sizeof(refpath));
 	if(tpath[0]=='.'&&tpath[1]!='.')  {
 		strcpy(refpath,cur->loc);
 		strcat(refpath,"/");
@@ -21,6 +22,8 @@ void real_path(char *path,const char *tpath) {
 			refpath[strlen(refpath)-1]=0;
 		strcat(path,tpath+2);
 	}
+	else 
+		strcpy(refpath,tpath);
 	printf("refpath is %s",refpath);
 	int l=strlen(refpath);
 	for(int i=1;i<l;) {
