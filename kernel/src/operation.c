@@ -35,6 +35,7 @@ char* ls_operation(const char *path) {
 			doff+=128;
 			continue;
 		}
+		strcat(rpath,"/");
 		strcat(rpath,name);
 		filesystem_t *fs=cur->flides[fd]->inode->fs;
 		inode_t *pe=fs->ops->lookup(fs,rpath,9);
