@@ -37,6 +37,7 @@ void new_block(inode_t* inode) {
 			}
 			off_t ptr=DATA_ENTRY+i*BLOCK_SIZE;
 			pos=inode->msize/BLOCK_SIZE;
+			printf("\033[42m new_block :block at %d now used\033[43m",ptr);
 			dev->ops->write(dev,(off_t)inode->ptr+pos*sizeof(off_t),&ptr,sizeof(off_t));
 			inode->msize+=BLOCK_SIZE;
 			return;
@@ -68,7 +69,8 @@ int inode_create(filesystem_t *fs,int prio,int type,inodeops_t *ops) {
 	pre->prio=prio;
 	pre->type=type;
 	pre->ops=ops;
-	pre->size=0;	
+	pre->size=0;
+	pre->msize=0;	
 	int i=0;
 	for(;i<BLOCK_SIZE*8;i++) {
 		int pos=i/8;
