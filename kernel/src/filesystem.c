@@ -1,11 +1,11 @@
 #include<common.h>
 #include<devices.h>
 #include<klib.h>
-#define BLOCK_SIZE 2048
-#define INODE_MAP_ENTRY 0
-#define DATA_MAP_ENTRY 2048
-#define INODE_ENTRY 4096
-#define DATA_ENTRY (4096+2048*sizeof(inode_t))
+#define BLOCK_SIZE (off_t)2048
+#define INODE_MAP_ENTRY (off_t)0
+#define DATA_MAP_ENTRY (off_t)2048
+#define INODE_ENTRY (off_t)4096
+#define DATA_ENTRY (off_t)(4096+2048*sizeof(inode_t))
 #define FLSYS_NUM  10
 /*        								using ext file system
  *									Using one block for blockbitmap, another for inode
@@ -77,8 +77,8 @@ int inode_create(filesystem_t *fs,int prio,int type,inodeops_t *ops) {
 		int loc=1<<(i%8);
 		char realva;
 		dev->ops->read(dev,DATA_MAP_ENTRY+pos,&realva,sizeof(char));	
-//		printf("At %d , now mark is %d\n",i,realva+1);
 		if(!(realva&loc)) {	
+			printf("At %d , now mark is %d\n",i,realva+1);
 			realva|=loc;
 			dev->ops->write(dev,DATA_MAP_ENTRY+pos,&realva,sizeof(char));
 			pre->ptr=(void *)(DATA_ENTRY+i*BLOCK_SIZE);
