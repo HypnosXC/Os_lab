@@ -172,6 +172,7 @@ int inode_ex(off_t offset,filesystem_t *fs){
 	char realva=0;
 	device_t *dev=fs->dev;
 	dev->ops->read(dev,INODE_MAP_ENTRY+num/8,&realva,sizeof(char));
+	printf("num=%d,realva=%d",num,(unsigned int)realva);
 	int f=(realva&(1<<(num%8)));
 	if ( f != 0) 
 		return 1;
