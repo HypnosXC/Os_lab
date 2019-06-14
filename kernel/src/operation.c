@@ -27,7 +27,7 @@ char* ls_operation(const char *path) {
 		vfs->lseek(fd,doff+112,0);
 		off_t off;
 		vfs->read(fd,&off,sizeof(off_t));
-		if(off!=-1) {
+		if(off==-1) {
 			doff+=128;
 			continue;
 		}
