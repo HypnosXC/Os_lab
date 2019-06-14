@@ -3,6 +3,7 @@
 void real_path(char *path,const char *tpath) {
 	task_t *cur=current_task();
 	char refpath[100];
+	memset(path,0,sizeof(path));
 	memset(refpath,0,sizeof(refpath));
 	if(tpath[0]=='.'&&tpath[1]!='.')  {
 		strcpy(refpath,cur->loc);
