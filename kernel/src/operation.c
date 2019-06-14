@@ -31,12 +31,12 @@ char* ls_operation(const char *path) {
 			doff+=128;
 			continue;
 		}
-		inode_t *pre=vfs->lookup(strcat(path,name));
-		if(pre->type==0)
+		inode_t *pe=vfs->lookup(strcat(path,name));
+		if(pe->type==0)
 			strcat(name,"  dir file  rw.\n");
 		else
 			strcat(name,"    file    rwx\n");
-		pmm->free(pre);
+		pmm->free(pe);
 		pre[i]=name;
 		i++;
 		printf("%s ",name);
