@@ -193,6 +193,7 @@ int in_close(inode_t *pre) {
 			basic_write(mpre,doff+112,(char *)&ioff,sizeof(int));
 			break;
 		}
+		doff+=128;
 	}
 	pmm->free(pre);
 	pmm->free(mpre);
