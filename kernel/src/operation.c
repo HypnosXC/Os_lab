@@ -7,13 +7,51 @@ void cd_operation(const char * path) {
 	pmm->free(cur->preloc);
 	cur->preloc=pre;
 }
+void real_path(char *path,const char *rpath) {
+	task_t *cur=current_task();
+	char refpath[100];
+	if(tpath[0]=='.'&&tpath[1]!='.')  {
+		strcpy(refpath,cur->loc);
+		strcat(refpath,"/");
+		strcat(refpath,tpath+1);
+	}
+	else if(tpath[0]=='.') {
+		strcpy(refpath,cur->loc);
+		while(refpath[strlen(refpath)-1]!='/')
+			refpath[strlen(refpath)-1]=0;
+		strcat(path,tpath+2);
+	}
+	int l=strlen(refpath);
+	for(int i=1;i<l;) {
+		int j=0;
+		while(refpath[i+j]!='/'&&i+j<strlen(refpath))
+			j++;
+		if(refpath[i]=='.'&&j==2) {
+			int k=i+j-1;
+			while(refpath[k]!='/')refpath[k]=0;
+			refpath[k]=0;
+			while(refpath[k]!='/')refpath[k]=0;
+		}
+		if(refpath[i]=='.'&&j==1) {
+			int k=i+j-1;
+			while(refpath[k]!='/')refpath[k]=0;
+		}
+	}
+	for(int i=0;i<l;i++) 
+		if(refpath[i]!=0&&(i=0||refpath[i-1]==0)) {
+			strcat(path,refpath);
+		}
+}
 void mkdir_operation(const char *path) {
 	vfs->mkdir(path);
 }
 void rmdir_operation(const char *path) {
 	vfs->rmdir(path);
 }
-char* ls_operation(const char *path) {
+char* ls_operation(const char *tpath) {
+	char path[100];
+	real_path(path,tpath);
+	printf("now path is %s\n",path);
 	printf("ls:path=%s\n",path);
 	task_t *cur=current_task();
 	char **pre=pmm->alloc(256);
