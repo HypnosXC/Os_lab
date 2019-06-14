@@ -244,6 +244,7 @@ inode_t * fs_lookup(filesystem_t *fs,const char *path,int flags) {
 				assert(0);
 			}
 			int num=inode_create(fs,flags,(flags!=4),&inode_op);
+			printf("\033[42 m new block is %d\033[0m\n",num);
 			off_t addr=INODE_ENTRY+num*sizeof(inode_t);
 			memcpy(mpre,pre,sizeof(inode_t));
 			dev->ops->read(dev,addr,pre,sizeof(inode_t));
