@@ -59,7 +59,48 @@ void add_inode(inode_t* dir,const char *name,inode_t *fl) {
 	printf("\033[42m add_inode: originally size=%d,name=%s\033,off %d=%d[0m\n",dir->size,pname,ff,fl->pos);
 	basic_write(dir,dir->size,pname+112,128-dir->size%128);
 	printf("\033[42m add_inode Now size is %d\033[0m\n",dir->size);
+}/*
+int inode_ex(off_t offset,filesystem_t *fs){
+	int num=(offset-INODE_ENTRY)/sizeof(inode_t);
+	char realva=0;
+	device_t *dev=fs->dev;
+	dev->ops->read(dev,INODE_MAP_ENTRY+num/8,&realva,sizeof(char));
+	printf("num=%d,realva=%d\n",num,realva);
+	int f=(realva&(1<<(num%8)));
+	if ( f != 0) 
+		return 1;
+	return 0;
+}*/
+off_t name_lookup(inode_t *inode,const char *name) {
+	self_fetch(inode);
+	if(inode->type!=0) {// must be a directory inode
+		printf("lookup in a non directory file!\n");
+		assert(0);
+ 	}
+	off_t doff=0;
+	char pname[124];
+	off_t off=0,ioff=0;
+	printf("now inode size is %d\n",inode->size);
+ 	while(doff<inode->size) {
+		basic_read(inode,doff,pname,100);
+		basic_read(inode,doff+112,(char *)&ioff,sizeof(off_t));
+		if(ioff==-1){
+			doff+=128;
+			continue;
+		}
+		printf("get name as %s\n",pname);
+ 		if(!strcmp(pname,name)) {
+			basic_read(inode,doff+112,(char *)&off,sizeof(off_t));
+			return off;
+		}
+		doff+=128;
+		printf("doff=%d\n",doff);
+	}
+	printf("name %s no found!\n",name);
+	return 1;
+	assert(0);	
 }
+
 int inode_create(filesystem_t *fs,int prio,int type,inodeops_t *ops) {
 	inode_t *pre=pmm->alloc(sizeof(inode_t));
 	device_t *dev=fs->dev;
@@ -105,23 +146,6 @@ int inode_create(filesystem_t *fs,int prio,int type,inodeops_t *ops) {
 	pmm->free(pre);
 	return i;
 }
-void fs_init(filesystem_t *fs,const char *name,device_t *dev) {
-	memcpy(fs->name,name,strlen(name));
-	fs->dev=dev;
-	for(int i=0;i<2048;i++) {
-		char f=0;
-		dev->ops->write(dev,INODE_MAP_ENTRY+i,&f,sizeof(char));
-		dev->ops->write(dev,DATA_MAP_ENTRY+i,&f,sizeof(char));
-	}
-	// inode for filesystem
-	int i=inode_create(fs,4,0,&inode_op);
-	inode_t *pre=pmm->alloc(sizeof(inode_t));
-	dev->ops->read(dev,INODE_ENTRY+i*sizeof(inode_t),pre,sizeof(inode_t));
-//	add_inode(pre,".",pre);
-	fs->inode=pre;
-	printf("pre is %p\n",pre->ptr);
-	// one inode;
-}
 void del_map(device_t *dev,off_t entry,int num) {
 	printf("\033[34m block %x,%d realsed !\n\033[0m",entry,num);
 	int pos=num/8;
@@ -134,11 +158,10 @@ void del_map(device_t *dev,off_t entry,int num) {
 	realval-=va;
 	dev->ops->write(dev,entry+pos,&realval,sizeof(char));
 }
-int in_close(inode_t *inode) {
+int in_close(inode_t *pre) {
 	printf("\033[42m DELETE Inode !\033[0m\n");
-	inode_t *pre=inode;
-	device_t* dev=inode->fs->dev;
-	int i=(inode->pos-INODE_ENTRY)/sizeof(inode_t);
+	device_t* dev=pre->fs->dev;
+	int i=(pre->pos-INODE_ENTRY)/sizeof(inode_t);
 	if(pre->ptr==NULL) {
 		printf("\033[32m wrong inode close!\n");
 		assert(0);
@@ -158,56 +181,43 @@ int in_close(inode_t *inode) {
 	}
 	i=(int)(pre->ptr-DATA_ENTRY)/BLOCK_SIZE;
 	del_map(dev,DATA_MAP_ENTRY,i);
+	inode_t *mpre=name_lookup(pre,"..");
+	off_t doff=0,ioff=0;
+	while(doff<=mpre->size) {
+		basic_read(mpre,doff+112,ioff,sizeof(off_t));
+		if(ioff==pre->pos) {
+			ioff=-1;
+			basic_write(mpre,doff+112,(char *)&ioff,sizeof(int));
+			break;
+		}
+	}
 	pmm->free(pre);
 	return 0;
 }
+void fs_init(filesystem_t *fs,const char *name,device_t *dev) {
+	memcpy(fs->name,name,strlen(name));
+	fs->dev=dev;
+	for(int i=0;i<2048;i++) {
+		char f=0;
+		dev->ops->write(dev,INODE_MAP_ENTRY+i,&f,sizeof(char));
+		dev->ops->write(dev,DATA_MAP_ENTRY+i,&f,sizeof(char));
+	}
+	// inode for filesystem
+	int i=inode_create(fs,4,0,&inode_op);
+	inode_t *pre=pmm->alloc(sizeof(inode_t));
+	dev->ops->read(dev,INODE_ENTRY+i*sizeof(inode_t),pre,sizeof(inode_t));
+//	add_inode(pre,".",pre);
+	fs->inode=pre;
+	printf("pre is %p\n",pre->ptr);
+	// one inode;
+}
+
 int fs_close(inode_t *inode ){
 	kmt->spin_lock(fs_lk);
 	int ret=in_close(inode);
 	kmt->spin_unlock(fs_lk);
 	return ret;
 }
-int inode_ex(off_t offset,filesystem_t *fs){
-	int num=(offset-INODE_ENTRY)/sizeof(inode_t);
-	char realva=0;
-	device_t *dev=fs->dev;
-	dev->ops->read(dev,INODE_MAP_ENTRY+num/8,&realva,sizeof(char));
-	printf("num=%d,realva=%d\n",num,realva);
-	int f=(realva&(1<<(num%8)));
-	if ( f != 0) 
-		return 1;
-	return 0;
-}
-off_t name_lookup(inode_t *inode,const char *name) {
-	self_fetch(inode);
-	if(inode->type!=0) {// must be a directory inode
-		printf("lookup in a non directory file!\n");
-		assert(0);
- 	}
-	off_t doff=0;
-	char pname[124];
-	off_t off=0,ioff=0;
-	printf("now inode size is %d\n",inode->size);
- 	while(doff<inode->size) {
-		basic_read(inode,doff,pname,100);
-		basic_read(inode,doff+112,(char *)&ioff,sizeof(off_t));
-		if(!inode_ex(ioff,inode->fs)) {
-			doff+=128;
-			continue;
-		}
-		printf("get name as %s\n",pname);
- 		if(!strcmp(pname,name)) {
-			basic_read(inode,doff+112,(char *)&off,sizeof(off_t));
-			return off;
-		}
-		doff+=128;
-		printf("doff=%d\n",doff);
-	}
-	printf("name %s no found!\n",name);
-	return 1;
-	assert(0);	
-}
-
 // 1-7 file flags ,8 - delete file
 inode_t * fs_lookup(filesystem_t *fs,const char *path,int flags) {
 	kmt->spin_lock(fs_lk);
