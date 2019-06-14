@@ -289,6 +289,7 @@ void vfs_init() {
 	device_t *dev=dev_lookup("ramdisk0");
 	fs_init(&fs_tab[0],"/",dev);
 	fs_tab[0].ops=&fs_op;
+	printf("\033[42m where dead?\033[0m\n");
 }
 int vfs_access(const char *path,int mode){
 	printf("access : TODO!\n");
