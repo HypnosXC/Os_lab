@@ -50,11 +50,11 @@ void add_inode(inode_t* dir,const char *name,inode_t *fl) {
 		printf("\033[42m Mkdir in a nondirectory!\033[0m\n");
 		assert(0);
 	}
-	printf("\033[42m add_inode: originally size=%d\033[0m\n",dir->size);
 	char pname[110];
 	memset(pname,0,sizeof(pname));
 	memcpy(pname,name,strlen(name));
 	basic_write(dir,dir->size,pname,100);
+	printf("\033[42m add_inode: originally size=%d,name=%s\033[0m\n",dir->size,pname);
 	int f=0;
 	while(dir->size%128!=112)
 		basic_write(dir,dir->size,(char *)&f,sizeof(int));
