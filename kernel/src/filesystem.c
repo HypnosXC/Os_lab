@@ -183,6 +183,7 @@ int in_close(inode_t *pre) {
 	del_map(dev,DATA_MAP_ENTRY,i);
 	inode_t *mpre=pmm->alloc(sizeof(inode_t));
 	off_t poff=name_lookup(pre,"..");
+	printf("\033[42m inode_close: pre inode is %p\033[0m\n",poff);
 	dev->ops->read(dev,poff,&mpre,sizeof(inode_t));
 	off_t doff=0,ioff=0;
 	while(doff<=mpre->size) {
