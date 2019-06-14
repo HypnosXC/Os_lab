@@ -32,7 +32,7 @@ void new_block(inode_t* inode) {
 	//		printf("\033[32m block %d used,realva=%d!\n\033[0m",i,realva|=loc);
 			realva|=loc;
 			dev->ops->write(dev,DATA_MAP_ENTRY+pos,&realva,sizeof(char));
-			dep->ops->write(dev,DATA_ENTRY+i*BLOCK_SIZE,empty_BLOCK,BLOCK_SIZE);
+			dev->ops->write(dev,DATA_ENTRY+i*BLOCK_SIZE,empty_BLOCK,BLOCK_SIZE);
 			off_t ptr=DATA_ENTRY+i*BLOCK_SIZE;
 			pos=inode->msize/BLOCK_SIZE;
 			printf("\033[42m new_block :%d stored block at %d now used\033[43m",pos,ptr);
