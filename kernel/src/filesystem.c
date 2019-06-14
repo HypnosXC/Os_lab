@@ -20,6 +20,7 @@ extern inodeops_t inode_op;
 extern spinlock_t *inode_lk;
 spinlock_t *fs_lk;
 filesystem_t fs_tab[FLSYS_NUM];
+char empty_BLOCK[BLOCK_SIZE*2];
 void new_block(inode_t* inode) {
 	device_t *dev=inode->fs->dev;
 	for(int i=0;i<BLOCK_SIZE*8;i++) {
@@ -31,13 +32,10 @@ void new_block(inode_t* inode) {
 	//		printf("\033[32m block %d used,realva=%d!\n\033[0m",i,realva|=loc);
 			realva|=loc;
 			dev->ops->write(dev,DATA_MAP_ENTRY+pos,&realva,sizeof(char));
-			for(int i=0;i<2048;i++) {
-				char f=0;
-				dev->ops->write(dev,DATA_ENTRY+pos*BLOCK_SIZE+i,&f,sizeof(char));
-			}
+			dep->ops->write(dev,DATA_ENTRY+i*BLOCK_SIZE,empty_BLOCK,BLOCK_SIZE);
 			off_t ptr=DATA_ENTRY+i*BLOCK_SIZE;
 			pos=inode->msize/BLOCK_SIZE;
-			printf("\033[42m new_block :block at %d now used\033[43m",ptr);
+			printf("\033[42m new_block :%d stored block at %d now used\033[43m",pos,ptr);
 			dev->ops->write(dev,(off_t)inode->ptr+pos*sizeof(off_t),&ptr,sizeof(off_t));
 			inode->msize+=BLOCK_SIZE;
 			return;
