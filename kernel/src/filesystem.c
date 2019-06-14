@@ -114,7 +114,7 @@ void fs_init(filesystem_t *fs,const char *name,device_t *dev) {
 	dev->ops->read(dev,INODE_ENTRY+i*sizeof(inode_t),pre,sizeof(inode_t));
 	add_inode(pre,".",pre);
 	fs->inode=pre;
-	printf("pre is %p",pre->ptr);
+	printf("pre is %p\n",pre->ptr);
 	// one inode;
 }
 void del_map(device_t *dev,off_t entry,int num) {
