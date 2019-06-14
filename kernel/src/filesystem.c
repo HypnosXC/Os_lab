@@ -258,7 +258,7 @@ inode_t * fs_lookup(filesystem_t *fs,const char *path,int flags) {
 				assert(0);
 			}
 			if(flags==9) {
-				printf("No such a file or directory!,i+j=%d,l=%d\n",i+j,l);
+				printf("No such a file or directory!,i+j=%d,l=%d,path=%s\n",i+j,l,path);
 				assert(0);
 			}
 			int num=inode_create(fs,flags,(flags!=4),&inode_op);
