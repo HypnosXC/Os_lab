@@ -24,7 +24,7 @@ char* ls_operation(const char *path) {
 	int end=vfs->lseek(fd,0,2);
 	printf("\033[42m end=%d\033[0m\n");
 	int doff=0,i=0;
-	while(doff<=end) {
+	while(doff<end) {
 	    char *name=pmm->alloc(256);
 		vfs->lseek(fd,doff,0);
 		vfs->read(fd,name,100);
