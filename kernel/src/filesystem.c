@@ -184,7 +184,7 @@ int in_close(inode_t *pre) {
 	inode_t *mpre=name_lookup(pre,"..");
 	off_t doff=0,ioff=0;
 	while(doff<=mpre->size) {
-		basic_read(mpre,doff+112,ioff,sizeof(off_t));
+		basic_read(mpre,doff+112,&ioff,sizeof(off_t));
 		if(ioff==pre->pos) {
 			ioff=-1;
 			basic_write(mpre,doff+112,(char *)&ioff,sizeof(int));
