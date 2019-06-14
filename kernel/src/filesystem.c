@@ -190,8 +190,10 @@ off_t name_lookup(inode_t *inode,const char *name) {
  	while(doff<inode->size) {
 		basic_read(inode,doff,pname,100);
 		basic_read(inode,doff+112,(char *)&ioff,sizeof(off_t));
-		if(!inode_ex(ioff,inode->fs))
+		if(!inode_ex(ioff,inode->fs)) {
+			doff+=128;
 			continue;
+		}
 		printf("get name as %s\n",pname);
  		if(!strcmp(pname,name)) {
 			basic_read(inode,doff+112,(char *)&off,sizeof(off_t));
