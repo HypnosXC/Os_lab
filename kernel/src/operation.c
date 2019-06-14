@@ -46,6 +46,7 @@ void real_path(char *path,const char *tpath) {
 		if(refpath[i]!=0&&(i==0||refpath[i-1]==0)) {
 			strcat(path,refpath);
 		}
+	printf("new path is %s\n",path);
 }
 void mkdir_operation(const char *path) {
 	vfs->mkdir(path);
@@ -54,8 +55,19 @@ void rmdir_operation(const char *path) {
 	vfs->rmdir(path);
 }
 char* ls_operation(const char *tpath) {
+	task_t *cur =current_task();
 	char path[100];
-	real_path(path,tpath);
+	memset(path,0,sizeof(path));
+	if(tpath[0]=='.') {
+		strcat(path,cur->loc);
+		if(tpath[1]=='.') {
+			while(path[strlen(path)-1]!='/')
+				path[strlen(path)-1]=0;
+		}
+		else
+			strcat(path,"/");
+	}
+	strcat(path,tpath);
 	printf("now path is %s\n",path);
 	printf("ls:path=%s\n",path);
 	task_t *cur=current_task();
