@@ -181,7 +181,9 @@ int in_close(inode_t *pre) {
 	}
 	i=(int)(pre->ptr-DATA_ENTRY)/BLOCK_SIZE;
 	del_map(dev,DATA_MAP_ENTRY,i);
-	inode_t *mpre=name_lookup(pre,"..");
+	inode_t *mpre=pmm->alloc(sizeof(inode_t));
+	off_t poff=name_lookup(pre,"..");
+	dev->ops->read(dev,poff,&mpre,sizeof(inode_t));
 	off_t doff=0,ioff=0;
 	while(doff<=mpre->size) {
 		basic_read(mpre,doff+112,(char *)&ioff,sizeof(off_t));
@@ -192,6 +194,7 @@ int in_close(inode_t *pre) {
 		}
 	}
 	pmm->free(pre);
+	pmm->free(mpre);
 	return 0;
 }
 void fs_init(filesystem_t *fs,const char *name,device_t *dev) {
