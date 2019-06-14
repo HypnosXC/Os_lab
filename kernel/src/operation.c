@@ -33,7 +33,7 @@ char* ls_operation(const char *path) {
 			doff+=128;
 			continue;
 		}
-		inode_t *pe=cur->flides[fd]->fs->ops->lookup(strcat(rpath,name));
+		inode_t *pe=cur->flides[fd].fs->ops->lookup(strcat(rpath,name));
 		strcpy(rpath,path);
 		if(pe->type==0)
 			strcat(name,"  dir file  rw.\n");
