@@ -56,6 +56,7 @@ void add_inode(inode_t* dir,const char *name,inode_t *fl) {
 	basic_write(dir,dir->size,(char *)&fl->pos,sizeof(off_t));
 	while(dir->size%128!=0)
 		basic_write(dir,dir->size,(char *)&f,sizeof(int));
+	printf("Now size is %d\n",dir->size);
 }
 int inode_create(filesystem_t *fs,int prio,int type,inodeops_t *ops) {
 	inode_t *pre=pmm->alloc(sizeof(inode_t));
