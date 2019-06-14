@@ -71,14 +71,14 @@ int inode_create(filesystem_t *fs,int prio,int type,inodeops_t *ops) {
 	pre->type=type;
 	pre->ops=ops;
 	pre->size=0;	
-	int i=1;
+	int i=0;
 	for(;i<BLOCK_SIZE*8;i++) {
 		int pos=i/8;
 		int loc=1<<(i%8);
 		char realva;
 		dev->ops->read(dev,DATA_MAP_ENTRY+pos,&realva,sizeof(char));	
 		if(!(realva&loc)) {	
-			printf("At %d , now mark is %d\n",i,realva+1);
+			printf("At %d , now mark is %d\n",i,realva);
 			realva|=loc;
 			dev->ops->write(dev,DATA_MAP_ENTRY+pos,&realva,sizeof(char));
 			pre->ptr=(void *)(DATA_ENTRY+i*BLOCK_SIZE);
