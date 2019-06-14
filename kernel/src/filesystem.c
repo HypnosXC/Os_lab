@@ -31,6 +31,10 @@ void new_block(inode_t* inode) {
 			printf("\033[32m block %d used,realva=%d!\n\033[0m",i,realva|=loc);
 			realva|=loc;
 			dev->ops->write(dev,DATA_MAP_ENTRY+pos,&realva,sizeof(char));
+			for(int i=0;i<2048;i++) {
+				char f=0;
+				dev->ops->write(dev,DATA_ENTRY+pos*BLOCK_SIZE+i,&f,sizeof(char));
+			}
 			off_t ptr=DATA_ENTRY+i*BLOCK_SIZE;
 			pos=inode->msize/BLOCK_SIZE;
 			dev->ops->write(dev,(off_t)inode->ptr+pos*sizeof(off_t),&ptr,sizeof(off_t));
@@ -56,7 +60,7 @@ void add_inode(inode_t* dir,const char *name,inode_t *fl) {
 	basic_write(dir,dir->size,(char *)&fl->pos,sizeof(off_t));
 	while(dir->size%128!=0)
 		basic_write(dir,dir->size,(char *)&f,sizeof(int));
-	printf("Now size is %d\n",dir->size);
+	printf("\033[42m add_inode Now size is %d\033[0m\n",dir->size);
 }
 int inode_create(filesystem_t *fs,int prio,int type,inodeops_t *ops) {
 	inode_t *pre=pmm->alloc(sizeof(inode_t));
