@@ -39,6 +39,7 @@ char* ls_operation(const char *path) {
 		strcat(rpath,name);
 		filesystem_t *fs=cur->flides[fd]->inode->fs;
 		inode_t *pe=fs->ops->lookup(fs,rpath,9);
+		memset(rpath,0,sizeof(rpath));
 		strcpy(rpath,path);
 		if(pe->type==0)
 			strcat(name,"  dir file  rw.\n");
