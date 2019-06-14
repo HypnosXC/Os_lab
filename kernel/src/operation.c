@@ -40,6 +40,7 @@ void real_path(char *path,const char *tpath) {
 			int k=i+j-1;
 			while(refpath[k]!='/')refpath[k]=0;
 		}
+		i+=j;
 	}
 	for(int i=0;i<l;i++) 
 		if(refpath[i]!=0&&(i==0||refpath[i-1]==0)) {
