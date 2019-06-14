@@ -70,7 +70,6 @@ char* ls_operation(const char *tpath) {
 	strcat(path,tpath);
 	printf("now path is %s\n",path);
 	printf("ls:path=%s\n",path);
-	task_t *cur=current_task();
 	char **pre=pmm->alloc(256);
 	char rpath[100];
 	memset(rpath,0,sizeof(rpath));
