@@ -21,7 +21,7 @@ char* ls_operation(const char *path) {
 	printf("\033[42m end=%d\033[0m\n");
 	int doff=0,i=0;
 	while(doff<=end) {
-	    char *name=pmm->alloc(128);	
+	    char *name=pmm->alloc(256);
 		vfs->lseek(fd,doff,0);
 		vfs->read(fd,name,100);
 		vfs->lseek(fd,doff+112,0);
@@ -31,12 +31,18 @@ char* ls_operation(const char *path) {
 			doff+=128;
 			continue;
 		}
-		name[strlen(name)]='\n';
+		inode_t *pre=vfs->lookup(strcat(path,name));
+		if(pre->type==0)
+			strcat(name,"  dir file  rw.\n");
+		else
+			strcat(name,"    file    rwx\n");
+		pmm->free(pre);
 		pre[i]=name;
 		i++;
 		printf("%s ",name);
 		doff+=128;
 	}
 	pre[i]=NULL;
+	vfs->close(fd);
 	return (char *)pre;
 }

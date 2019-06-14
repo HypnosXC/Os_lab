@@ -223,7 +223,7 @@ int fs_close(inode_t *inode ){
 	kmt->spin_unlock(fs_lk);
 	return ret;
 }
-// 1-7 file flags ,8 - delete file
+// 1-7 file flags ,8 - delete file,9 cd/find 
 inode_t * fs_lookup(filesystem_t *fs,const char *path,int flags) {
 	kmt->spin_lock(fs_lk);
 	char name[100];
@@ -255,6 +255,10 @@ inode_t * fs_lookup(filesystem_t *fs,const char *path,int flags) {
 		else {
 			if(pre->prio!=4||flags==8) {//not a dir
 				printf("wrong position,not a dir!\n");
+				assert(0);
+			}
+			if(flags==9) {
+				printf("No such a file or directory!\n");
 				assert(0);
 			}
 			int num=inode_create(fs,flags,(flags!=4),&inode_op);
