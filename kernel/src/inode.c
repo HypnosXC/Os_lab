@@ -103,6 +103,7 @@ void basic_write(inode_t *inode,off_t offset,const char* buf,size_t size){
 		}
 		else {
 			off_t rsize=doff+BLOCK_SIZE-offset;
+			printf("\033[42m basic:write : offset is %d\033[0m\n",page[i]+offset-doff);
 			if(rsize>size)
 				rsize=size;
 			dev->ops->write(dev,page[i]+offset-doff,buf,rsize);
