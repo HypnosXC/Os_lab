@@ -14,7 +14,7 @@ void rmdir_operation(const char *path) {
 	vfs->rmdir(path);
 }
 char* ls_operation(const char *path) {
-//	task_t *cur=current_task();
+	task_t *cur=current_task();
 	char **pre=pmm->alloc(256);
 	char rpath[100];
 	strcpy(rpath,path);
@@ -33,7 +33,7 @@ char* ls_operation(const char *path) {
 			doff+=128;
 			continue;
 		}
-		inode_t *pe=vfs->lookup(strcat(rpath,name));
+		inode_t *pe=cur->filedes[fd]->fs->ops->lookup(strcat(rpath,name));
 		strcpy(rpath,path);
 		if(pe->type==0)
 			strcat(name,"  dir file  rw.\n");
