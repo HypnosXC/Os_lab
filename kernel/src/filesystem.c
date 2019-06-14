@@ -41,6 +41,19 @@ void new_block(inode_t* inode) {
 	printf("No avialiable block!\n");
 	assert(0);
 }
+void add_inode(inode_t* dir,const char *name,inode_t *fl) {
+	if(dir->type!=0) {
+		printf("\033[42m Mkdir in a nondirectory!\033[0m\n");
+		assert(0);
+	}
+	basic_write(dir,dir->size,name,100);
+	int f=0;
+	while(dir->size%128!=112)
+		basic_write(dir,dir->size,(char *)&f,sizeof(int));
+	basic_write(dir,dir->size,(char *)&fl->pos,sizeof(off_t));
+	while(dir->size%128!=0)
+		basic_write(dir,dir->size,(char *)&f,sizeof(int));
+}
 int inode_create(filesystem_t *fs,int prio,int type,inodeops_t *ops) {
 	inode_t *pre=pmm->alloc(sizeof(inode_t));
 	device_t *dev=fs->dev;
@@ -96,6 +109,7 @@ void fs_init(filesystem_t *fs,const char *name,device_t *dev) {
 	int i=inode_create(fs,4,0,&inode_op);
 	inode_t *pre=pmm->alloc(sizeof(inode_t));
 	dev->ops->read(dev,INODE_ENTRY+i*sizeof(inode_t),pre,sizeof(inode_t));
+	add_inode(pre,".",pre);
 	fs->inode=pre;
 	printf("pre is %p",pre->ptr);
 	// one inode;
@@ -181,19 +195,7 @@ off_t name_lookup(inode_t *inode,const char *name) {
 	return 1;
 	assert(0);	
 }
-void add_inode(inode_t* dir,const char *name,inode_t *fl) {
-	if(dir->type!=0) {
-		printf("\033[42m Mkdir in a nondirectory!\033[0m\n");
-		assert(0);
-	}
-	basic_write(dir,dir->size,name,100);
-	int f=0;
-	while(dir->size%128!=112)
-		basic_write(dir,dir->size,(char *)&f,sizeof(int));
-	basic_write(dir,dir->size,(char *)&fl->pos,sizeof(off_t));
-	while(dir->size%128!=0)
-		basic_write(dir,dir->size,(char *)&f,sizeof(int));
-}
+
 // 1-7 file flags ,8 - delete file
 inode_t * fs_lookup(filesystem_t *fs,const char *path,int flags) {
 	kmt->spin_lock(fs_lk);
