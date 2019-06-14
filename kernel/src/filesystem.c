@@ -249,9 +249,6 @@ inode_t * fs_lookup(filesystem_t *fs,const char *path,int flags) {
 		}
 		i+=j+1;
 	}
-	if(pre->type==0) {// is a dir
-		basic_write(pre,pre->size,)
-	}
 	kmt->spin_unlock(fs_lk);
 	return pre;
 }
