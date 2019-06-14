@@ -21,6 +21,7 @@ void real_path(char *path,const char *tpath) {
 			refpath[strlen(refpath)-1]=0;
 		strcat(path,tpath+2);
 	}
+	printf("refpath is %s",refpath);
 	int l=strlen(refpath);
 	for(int i=1;i<l;) {
 		int j=0;
