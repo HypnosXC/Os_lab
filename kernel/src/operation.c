@@ -34,7 +34,7 @@ char* ls_operation(const char *path) {
 			continue;
 		}
 		strcat(rpath,name);
-		filesysytem_t *fs=cur->flides[fd]->inode->fs;
+		filesystem_t *fs=cur->flides[fd]->inode->fs;
 		inode_t *pe=fs->ops->lookup(fs,rpath,9);
 		strcpy(rpath,path);
 		if(pe->type==0)
