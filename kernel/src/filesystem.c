@@ -78,7 +78,7 @@ int inode_create(filesystem_t *fs,int prio,int type,inodeops_t *ops) {
 		char realva;
 		dev->ops->read(dev,DATA_MAP_ENTRY+pos,&realva,sizeof(char));	
 		if(!(realva&loc)) {	
-			printf("At %d , now mark is %d\n",i,realva);
+//			printf("At %d , now mark is %d\n",i,realva);
 			realva|=loc;
 			dev->ops->write(dev,DATA_MAP_ENTRY+pos,&realva,sizeof(char));
 			pre->ptr=(void *)(DATA_ENTRY+i*BLOCK_SIZE);
@@ -93,6 +93,7 @@ int inode_create(filesystem_t *fs,int prio,int type,inodeops_t *ops) {
 		char realva;
 		dev->ops->read(dev,INODE_MAP_ENTRY+pos,&realva,sizeof(char));
 		if(!(realva&loc)) {
+			printf("At %d, now mark is %d",i,realva);
 			realva|=loc;
 			dev->ops->write(dev,INODE_MAP_ENTRY+pos,&realva,sizeof(char));
 			pre->pos=INODE_ENTRY+i*sizeof(inode_t);
