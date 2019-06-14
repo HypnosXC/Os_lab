@@ -93,7 +93,7 @@ int inode_create(filesystem_t *fs,int prio,int type,inodeops_t *ops) {
 		char realva;
 		dev->ops->read(dev,INODE_MAP_ENTRY+pos,&realva,sizeof(char));
 		if(!(realva&loc)) {
-			printf("At %d, now mark is %d",i,realva);
+//			printf("At %d, now mark is %d\n",i,realva);
 			realva|=loc;
 			dev->ops->write(dev,INODE_MAP_ENTRY+pos,&realva,sizeof(char));
 			pre->pos=INODE_ENTRY+i*sizeof(inode_t);
@@ -174,7 +174,7 @@ int inode_ex(off_t offset,filesystem_t *fs){
 	char realva=0;
 	device_t *dev=fs->dev;
 	dev->ops->read(dev,INODE_MAP_ENTRY+num/8,&realva,sizeof(char));
-	printf("num=%d,realva=%d\n",num,(unsigned int)realva);
+	printf("num=%d,realva=%d\n",num,realva);
 	int f=(realva&(1<<(num%8)));
 	if ( f != 0) 
 		return 1;
