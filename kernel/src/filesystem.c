@@ -181,12 +181,25 @@ off_t name_lookup(inode_t *inode,const char *name) {
 	return 1;
 	assert(0);	
 }
-
+void add_inode(inode_t* dir,const char *name,inode_t *fl) {
+	if(dir->type!=0) {
+		printf("\033[42m Mkdir in a nondirectory!\033[0m\n");
+		assert(0);
+	}
+	basic_write(dir,dir->size,name,100);
+	int f=0;
+	while(dir->size%128!=112)
+		basic_write(dir,dir->size,(char *)&f,sizeof(int));
+	basic_write(dir,dir->size,fl->pos,sizeof(off_t));
+	while(dir->size%128!=0)
+		basic_write(dir,dir->size,(char *)&f,sizeof(int));
+}
 // 1-7 file flags ,8 - delete file
 inode_t * fs_lookup(filesystem_t *fs,const char *path,int flags) {
 	kmt->spin_lock(fs_lk);
 	char name[100];
 	inode_t *pre=pmm->alloc(sizeof(inode_t));
+	inode_t *mpre=pmm->alloc(sizeof(inode_t));
 	memcpy(pre,fs->inode,sizeof(inode_t));
 	//int num;
 	int i=0,l=strlen(path);
@@ -221,10 +234,13 @@ inode_t * fs_lookup(filesystem_t *fs,const char *path,int flags) {
 				basic_write(pre,pre->size,(char *)&f,sizeof(int));
 			int num=inode_create(fs,flags,(flags!=4),&inode_op);
 			off_t addr=INODE_ENTRY+num*sizeof(inode_t);
-			basic_write(pre,pre->size,(char *)&addr,sizeof(off_t));
-			while(pre->size%128)
-				basic_write(pre,pre->size,(char *)&f,sizeof(int));
+			memcpy(mpre,pre,sizeof(inode_t));
 			dev->ops->read(dev,addr,pre,sizeof(inode_t));
+			add_inode(mpre,name,pre);
+			if(pre->type==0) {
+				add_inode(pre,"..",mpre);
+				add_inode(pre,".",pre);
+			}
 			if(i+j<l) {
 				printf("\033[42m fs_lookup,wrong dir happened!\033[0m,l=%d,i=%d,j=%d\n",l,i,j);
 				assert(0);
@@ -232,6 +248,9 @@ inode_t * fs_lookup(filesystem_t *fs,const char *path,int flags) {
 			break;
 		}
 		i+=j+1;
+	}
+	if(pre->type==0) {// is a dir
+		basic_write(pre,pre->size,)
 	}
 	kmt->spin_unlock(fs_lk);
 	return pre;
