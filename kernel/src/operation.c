@@ -45,13 +45,13 @@ char* ls_operation(const char *path) {
 		inode_t *pe=fs->ops->lookup(fs,rpath,9);
 		memset(rpath,0,sizeof(rpath));
 		strcpy(rpath,path);
-		while(strlen(name)<22)
+		while(strlen(name)<21)
 			strcat(name," ");
 		if(pe->type==0)
 			strcat(name,"Directory File");
 		else
 			strcat(name,"File");
-		while(strlen(name)<44)
+		while(strlen(name)<42)
 			strcat(name," ");
 		strcat(name,"rw.\n");
 		pmm->free(pe);
