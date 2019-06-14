@@ -7,7 +7,7 @@ void cd_operation(const char * path) {
 	pmm->free(cur->preloc);
 	cur->preloc=pre;
 }
-void real_path(char *path,const char *rpath) {
+void real_path(char *path,const char *tpath) {
 	task_t *cur=current_task();
 	char refpath[100];
 	if(tpath[0]=='.'&&tpath[1]!='.')  {
