@@ -1,47 +1,22 @@
 #include<common.h>
 #include<klib.h>
 void real_path(char *path,const char *tpath) {
-	task_t *cur=current_task();
-	char refpath[100];
+ 	task_t *cur =current_task();
+	char path[100];
 	memset(path,0,sizeof(path));
-	memset(refpath,0,sizeof(refpath));
-	if(tpath[0]=='.'&&tpath[1]!='.')  {
-		strcpy(refpath,cur->loc);
-		if(strlen(tpath!=))
-		strcat(refpath,"/");
-		strcat(refpath,tpath+1);
-	}
-	else if(tpath[0]=='.') {
-		strcpy(refpath,cur->loc);
-		while(refpath[strlen(refpath)-1]!='/')
-			refpath[strlen(refpath)-1]=0;
-		strcat(path,tpath+2);
-	}
-	else 
-		strcpy(refpath,tpath);
-	printf("refpath is %s",refpath);
-	int l=strlen(refpath);
-	for(int i=1;i<l;) {
-		int j=0;
-		while(refpath[i+j]!='/'&&i+j<strlen(refpath))
-			j++;
-		if(refpath[i]=='.'&&j==2) {
-			int k=i+j-1;
-			while(refpath[k]!='/')refpath[k]=0;
-			refpath[k]=0;
-			while(refpath[k]!='/')refpath[k]=0;
+	if(tpath[0]=='.') {
+		strcat(path,cur->loc);
+		if(tpath[1]=='.') {
+			while(path[strlen(path)-1]!='/')
+				path[strlen(path)-1]=0;
+			path[strlen(path)-1]=0;
+			if(strlen(tpath)!=2&&path[strlen(path)-1]!='/')
+				strcat(path,"/");
 		}
-		if(refpath[i]=='.'&&j==1) {
-			int k=i+j-1;
-			while(refpath[k]!='/')refpath[k]=0;
-		}
-		i+=j;
+		else if(strlen(tpath)!=1&&path[strlen(path)-1]!='/')
+			strcat(path,"/");
 	}
-	for(int i=0;i<l;i++) 
-		if(refpath[i]!=0&&(i==0||refpath[i-1]==0)) {
-			strcat(path,refpath);
-		}
-	printf("new path is %s\n",path);
+	strcat(path,tpath);
 }
 void cd_operation(const char * rpath) {
 	char path[100];
