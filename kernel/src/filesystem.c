@@ -243,10 +243,6 @@ inode_t * fs_lookup(filesystem_t *fs,const char *path,int flags) {
 				printf("wrong position,not a dir!\n");
 				assert(0);
 			}
-			basic_write(pre,pre->size,name,100);
-			int f=0;
-			while(pre->size%128!=112)
-				basic_write(pre,pre->size,(char *)&f,sizeof(int));
 			int num=inode_create(fs,flags,(flags!=4),&inode_op);
 			off_t addr=INODE_ENTRY+num*sizeof(inode_t);
 			memcpy(mpre,pre,sizeof(inode_t));
@@ -264,6 +260,7 @@ inode_t * fs_lookup(filesystem_t *fs,const char *path,int flags) {
 		}
 		i+=j+1;
 	}
+	pmm->free(mpre);
 	kmt->spin_unlock(fs_lk);
 	return pre;
 }
