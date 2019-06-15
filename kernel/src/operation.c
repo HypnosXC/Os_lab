@@ -5,6 +5,7 @@ void road_free(char *path,char *pre) {
 	memset(path,0,len);
 	path[0]='/';
 	while(r<len) {
+		printf("now r is %d\n",r);
 		int j=0;
 		while(pre[r+j]!='/'&&r+j<len)
 			j++;
