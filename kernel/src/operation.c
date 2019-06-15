@@ -1,21 +1,51 @@
 #include<common.h>
 #include<klib.h>
+void road_free(char *path,char *pre) {
+	assert(l<0||r>l);
+	int l=0,r=1,l=strlen(pre);
+	memset(path,0,l);
+	while(r<l) {
+		int j=0;
+		while(pre[r+j]!='/'&&r+j<l)
+			j++;
+		if(pre[r]=='.') {
+			if(pre[r+1]=='.') {
+				while(path[strlen(path)-1]!='/')
+					path[strlen(path)-1]=0;
+			}
+		}
+		else {
+			if(path[strlen(path)-1]!='/')
+				path[strlen(path)]='/';
+			for(int i=0;i<j;i++)
+				path[strlen(path)]=pre[r+i];
+		}
+		r+=j;
+	}
+}
 void real_path(char *path,const char *tpath) {
  	task_t *cur =current_task();
+	char *tpath[110];
 	memset(path,0,sizeof(path));
+	memset(rpath,0,sizeof(rpath));
 	if(tpath[0]=='.') {
 		strcat(path,cur->loc);
 		if(tpath[1]=='.') {
 			while(path[strlen(path)-1]!='/')
 				path[strlen(path)-1]=0;
-			path[strlen(path)-1]=0;
-			if(strlen(tpath)!=2&&path[strlen(path)-1]!='/')
-				strcat(path,"/");
 		}
-		else if(strlen(tpath)!=1&&path[strlen(path)-1]!='/')
+		if(path[strlen(path)-1]!='/')
 			strcat(path,"/");
 	}
-	strcat(path,tpath);
+	if(strlen(path)>2) {
+		strcat(path,tpath);
+		if(path[strlen(path)-1]=='/')
+			path[strlen(path)-1]=0;
+		road_free(rpath,path);
+		memset(path,0,sizeof(path));
+		strcpy(path,rpath);
+	}
+	printf("\033[42mcd path:now path is %s\033[0m\n",path);
 }
 void cd_operation(const char * rpath) {
 	char path[100];
