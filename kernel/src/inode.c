@@ -163,7 +163,7 @@ int unlink(const char *name) {
 	int doff=0;
 	off_t ptr=0;
 	while(doff<pre->size) {
-		basic_read(pre,doff+112,&ptr,sizeof(off_t));
+		basic_read(pre,doff+112,(char *)&ptr,sizeof(off_t));
 		if(ptr==go->pos) {
 			ptr=-1;
 			basic_write(pre,doff+112,(char *)&ptr,sizeof(off_t));
