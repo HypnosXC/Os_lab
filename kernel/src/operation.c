@@ -207,6 +207,6 @@ void rm_op(const char *name) {
 	real_path(path,name);
 	task_t *cur=current_task();
 	filesystem_t *fs=cur->preloc->fs;
-	fs->ops->lookup(name,8);
+	fs->ops->lookup(fs,name,8);
 }
 
