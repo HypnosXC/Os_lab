@@ -27,7 +27,7 @@ void road_free(char *path,const char *pre) {
 void real_path(char *path,const char *tpath) {
  	task_t *cur =current_task();
 	char rpath[110];
-	memset(path,0,sizeof(path));
+	memset(path,0,sizeof(char)*90);
 	memset(rpath,0,sizeof(rpath));
 	if(tpath[0]=='.') {
 		strcat(rpath,cur->loc);
@@ -213,7 +213,7 @@ void rm_op(const char *name) {
 }
 int open_op(const char *name) {
 	char path[100];
-	memset(path,0,sizeof(path));
+	//memset(path,0,sizeof(path));
 	real_path(path,name);
 	printf("open path =%s\n",path);
 	return vfs->open(path,7);
