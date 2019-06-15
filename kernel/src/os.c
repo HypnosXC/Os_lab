@@ -48,9 +48,10 @@ static void os_run() {
 device_t *dev_lookup (const char* name);
 void echo_task(void *name) {
 	device_t *tty= dev_lookup(name);
+	task_t *cur=current_task();
 	while(1) {
 		char line[128],text[128];
-		sprintf(text,"(%s) $ ", name);
+		sprintf(text,"(%s%s) $ ", name,cur->loc);
 		tty->ops->write(tty,0,text,strlen(text));
 		int nread = tty->ops->read(tty,0,line,sizeof(line));
 		line[nread-1]='\0';
