@@ -116,7 +116,7 @@ void echo_task(void *name) {
 			int i=read_int(path,&fd);
 			while(path[i]<'0'||'9'<path[i])
 				i++;
-			i=read_int(path+i,&size);
+			i+=read_int(path+i,&size);
 			printf("read_op,fd=%d,size=%d\n",fd,size);
 			memset(echo_buf,0,strlen(echo_buf));
 			read_op(fd,echo_buf,size);
@@ -127,7 +127,7 @@ void echo_task(void *name) {
 			int i=read_int(path,&fd);
 			while(path[i]<'0'||'9'<path[i])
 				i++;
-			i=read_int(path+i,&size);
+			i+=read_int(path+i,&size);
 			while(path[i]==' ')
 				i++;
 			printf("write_op,fd=%d,size=%d,path =%s\n",fd,size,path+i);
@@ -139,13 +139,13 @@ void echo_task(void *name) {
 			int i=read_int(path,&fd);
 			while(path[i]<'0'||'9'<path[i])
 				i++;
-			i=read_int(path+i,&off);
+			i+=read_int(path+i,&off);
 			while(path[i]<'0'||'9'<path[i])
 				i++;
-			i=read_int(path+i,&whence);
+			i+=read_int(path+i,&whence);
 			printf("lseek_op,fd=%d,offset=%d\n",fd,off);
 			lseek_op(fd,off,whence);
-		} 
+		}  
 
 
 
