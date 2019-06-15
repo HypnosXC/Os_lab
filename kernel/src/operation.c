@@ -36,10 +36,8 @@ void real_path(char *path,const char *tpath) {
 		if(path[strlen(path)-1]!='/')
 			strcat(path,"/");
 	}
-	if(strlen(path)>2) {
+	if(strlen(tpath)>2) {
 		strcat(path,tpath);
-		if(path[strlen(path)-1]=='/')
-			path[strlen(path)-1]=0;
 		road_free(rpath,path);
 		memset(path,0,sizeof(path));
 		strcpy(path,rpath);
@@ -61,8 +59,8 @@ void cd_operation(const char * rpath) {
 	inode_t *pre=fs->ops->lookup(fs,path,7);
 	pmm->free(cur->preloc);
 	cur->preloc=pre;
-	printf("\033[42mcd path:now real path is %s\033[0m\n",path);
 	real_path(path,rpath);
+	printf("\033[42mcd path:now real path is %s\033[0m\n",path);
 	strcpy(cur->loc,path);
 }
 void mkdir_operation(const char *tpath) {
