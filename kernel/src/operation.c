@@ -22,13 +22,12 @@ void cd_operation(const char * rpath) {
 	memset(path,0,sizeof(path));
 	task_t *cur=current_task();
 	//real_path(path,rpath);
-	if(rpath=='.') {
+	if(rpath[0]=='.') {
 		strcat(path,cur->loc);
 		if(cur->loc[strlen(cur->loc)-1]!='/')
 			strcat(path,"/");
 		strcat(path,rpath);
 	}
-	task_t *cur=current_task();
 	filesystem_t *fs=cur->preloc->fs;
 	inode_t *pre=fs->ops->lookup(fs,path,7);
 	pmm->free(cur->preloc);
