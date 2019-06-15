@@ -44,7 +44,6 @@ void real_path(char *path,const char *tpath) {
 		memset(path,0,sizeof(path));
 		strcpy(path,rpath);
 	}
-	printf("\033[42mcd path:now path is %s\033[0m\n",path);
 }
 void cd_operation(const char * rpath) {
 	char path[100];
@@ -57,10 +56,12 @@ void cd_operation(const char * rpath) {
 			strcat(path,"/");
 		strcat(path,rpath);
 	}
+	printf("\033[42mcd path:now path is %s\033[0m\n",path);
 	filesystem_t *fs=cur->preloc->fs;
 	inode_t *pre=fs->ops->lookup(fs,path,7);
 	pmm->free(cur->preloc);
 	cur->preloc=pre;
+	printf("\033[42mcd path:now real path is %s\033[0m\n",path);
 	real_path(path,rpath);
 	strcpy(cur->loc,path);
 }
