@@ -29,19 +29,13 @@ void real_path(char *path,const char *tpath) {
 	memset(path,0,sizeof(path));
 	memset(rpath,0,sizeof(rpath));
 	if(tpath[0]=='.') {
-		strcat(path,cur->loc);
-		if(tpath[1]=='.') {
-			while(path[strlen(path)-1]!='/')
-				path[strlen(path)-1]=0;
-		}
-		if(path[strlen(path)-1]!='/')
-			strcat(path,"/");
+		strcat(rpath,cur->loc);
+		if(path[strlen(rpath)-1]!='/')
+			strcat(rpath,"/");
 	}
 	if(strlen(tpath)>2) {
-		strcat(path,tpath);
-		road_free(rpath,path);
-		memset(path,0,sizeof(path));
-		strcpy(path,rpath);
+		strcat(rpath,tpath);
+		road_free(path,rpath);
 	}
 }
 void cd_operation(const char * rpath) {
