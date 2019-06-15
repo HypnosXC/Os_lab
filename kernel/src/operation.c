@@ -2,6 +2,7 @@
 #include<klib.h>
 void road_free(char *path) {
 	char pre[100];
+	memset(pre,0,sizeof(pre));
 	strcpy(pre,path);
 	int r=1,len=strlen(pre);
 	memset(path,0,len);
