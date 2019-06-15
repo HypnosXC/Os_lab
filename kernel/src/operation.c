@@ -59,6 +59,7 @@ void cd_operation(const char * rpath) {
 	cur->preloc=pre;
 	real_path(tpath,path);
 	printf("\033[42mcd path:now real path is %s\033[0m\n",tpath);
+	memset(cur->loc,0,sizeof(cur->loc));
 	strcpy(cur->loc,tpath);
 }
 void mkdir_operation(const char *tpath) {
