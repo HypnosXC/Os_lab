@@ -345,7 +345,7 @@ int vfs_rmdir(const char *path) {
 }
 int vfs_open(const char *path,int flags) {
 	task_t *cur=current_task();
-	filesystem_t *fs=cur->pre_loc->fs;
+	filesystem_t *fs=cur->preloc->fs;
 	inode_t *p=fs->ops->lookup(fs,path,flags);
 	file_t *file=pmm->alloc(sizeof(file_t));
 	file->inode=p;
