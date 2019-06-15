@@ -1,7 +1,9 @@
 #include<common.h>
 #include<klib.h>
-void road_free(char *path,char *pre) {
+void road_free(char *path) {
 	int r=1,len=strlen(pre);
+	char pre[100];
+	strcpy(pre,path);
 	memset(path,0,len);
 	path[0]='/';
 	while(r<len) {
