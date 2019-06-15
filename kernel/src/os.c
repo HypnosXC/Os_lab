@@ -128,6 +128,7 @@ void echo_task(void *name) {
 			while(path[i]<'0'||'9'<path[i])
 				i++;
 			i+=read_int(path+i,&size);
+			printf("pathi=%d\n",(int)path[i]);
 			while(path[i]==' ')
 				i++;
 			printf("write_op,fd=%d,size=%d,path =%s\n",fd,size,path+i);
