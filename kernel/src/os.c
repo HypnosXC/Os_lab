@@ -106,7 +106,7 @@ void echo_task(void *name) {
 			tty->ops->write(tty,0,echo_buf,sz);
 		}
 		if(!strcmp(op,"open")) {
-			open_op(path,7);
+			open_op(path);
 		}
 		if(!strcmp(op,"read")) {	
 			int fd=0,size=0;
