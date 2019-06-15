@@ -21,7 +21,7 @@ void road_free(char *path,const char *pre) {
 			for(int i=0;i<j;i++)
 				path[strlen(path)]=pre[r+i];
 		}
-		r+=j;
+		r+=j+1;
 	}
 }
 void real_path(char *path,const char *tpath) {
