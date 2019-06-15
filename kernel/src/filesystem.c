@@ -234,6 +234,7 @@ inode_t * fs_lookup(filesystem_t *fs,const char *path,int flags) {
 	//int num;
 	int i=0,l=strlen(path);
 	device_t * dev=fs->dev;
+	printf("\033[43m Lookup: name=%s\n",path);
 	if(path[i]!='/') {
 		printf("Not a correct path!\n");
 		assert(0);
