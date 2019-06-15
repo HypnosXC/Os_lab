@@ -224,7 +224,7 @@ int fs_close(inode_t *inode ){
 	kmt->spin_unlock(fs_lk);
 	return ret;
 }
-// 1-7 file flags ,8 - delete file,9 cd/find 
+// 1-7 file flags ,8 - delete file,9 cd/find,10 unlink 
 inode_t * fs_lookup(filesystem_t *fs,const char *path,int flags) {
 	kmt->spin_lock(fs_lk);
 	char name[100];

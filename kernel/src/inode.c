@@ -139,14 +139,40 @@ int rmdir(const char *name) {
 	return 0;
 }
 int link(const char *name,inode_t *inode) {
-	//inode_t *pre=inode->fs->lookup(fs,name,7);
-	printf("to do link!\n");
-	assert(0);
+	char pname[100];
+	int len=strlen(name);
+	int l=len-1;
+	while(name[l]!='/')
+		l--;
+	l++;
+	strcpy(pname,name+l);
+	while(l<len)
+		name[l++]=0;
+	inode_t *pre=inode->fs->lookup(fs,name,9);
+	add_inode(pre,pname,inode);
+	pmm->free(pre);
 	return 0;
 }
 int unlink(const char *name) {
-	printf("to do : unlink!\n");
-	assert(0);
+	char fname[100];
+	memset(fname,0,sizeof(pre));
+	sprintf(fname,"%s%s",name."/..");
+	inode_t *pre=fs_tab[0].ops->lookup(&fs_tab[0],fname,9);
+	inode_t *go=fs_tab[0].ops->lookup(&fs_tab[0],name,9);
+	int doff=0;
+	off_t ptr=0;
+	char pname[100];
+	while(doff<pre->size) {
+		basic_read(pre,doff+112,&ptr,sizeof(off_t));
+		if(ptr==go->pos) {
+			ptr=-1;
+			basic_write(pre,doff+112,&ptr,sizeof(off_t));
+			break;
+		}
+		doff+=128;
+	}
+	pmm->free(pre);
+	pmm->free(go);
 	return  0;
 }
 inodeops_t inode_op = {
