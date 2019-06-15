@@ -195,13 +195,14 @@ void lseek_op(int fd,off_t offset,int whence) {
 		assert(0);
 	vfs->lseek(fd,offset,whence);
 }
-void cat_op(const char *name,char *buf) {
+int cat_op(const char *name,char *buf) {
 	char path[100];
 	real_path(path,name);
 	int fd=vfs->open(name,7);
 	int sz=vfs->lseek(fd,0,2);
 	vfs->read(fd,buf,sz);
 	vfs->close(fd);
+	return sz;
 }
 void rm_op(const char *name) {
 	char path[100];
