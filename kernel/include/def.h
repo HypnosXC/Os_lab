@@ -18,4 +18,4 @@ void mkdir_operation(const char *path);
 void rmdir_operation(const char *path);
 char * ls_operation(const char *path);
 void cd_operation(const char *path);
-void cat_op(const char *name,char *buf);
+int cat_op(const char *name,char *buf);

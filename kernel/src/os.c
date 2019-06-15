@@ -94,8 +94,8 @@ void echo_task(void *name) {
 		if(!strcmp(op,"cat")) {
 			printf("cat operation!\n");
 			memset(echo_buf,0,strlen(echo_buf));
-			cat_op(path,echo_buf);
-			tty->ops->write(tty,0,echo_buf,sizeof(echo_buf));
+			int sz=cat_op(path,echo_buf);
+			tty->ops->write(tty,0,echo_buf,sz);
 		}
 	}
 }
