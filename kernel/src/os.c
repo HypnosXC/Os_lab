@@ -139,9 +139,9 @@ void echo_task(void *name) {
 			i=read_int(path+i,&off);
 			while(path[i]<'0'||'9'<path[i])
 				i++;
-			i=read_int(path+i,whence);
+			i=read_int(path+i,&whence);
 			printf("lseek_op,fd=%d,offset=%d\n",fd,off);
-			lseek_op(fd,off,&whence);
+			lseek_op(fd,off,whence);
 		} 
 
 
