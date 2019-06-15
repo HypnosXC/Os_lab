@@ -149,7 +149,7 @@ int link(const char *name,inode_t *inode) {
 	strcpy(pname,name+l);
 	while(l<len)
 		name[l++]=0;
-	inode_t *pre=inode->fs->lookup(fs,name,9);
+	inode_t *pre=inode->fs->lookup(inode->fs,name,9);
 	add_inode(pre,pname,inode);
 	pmm->free(pre);
 	return 0;
