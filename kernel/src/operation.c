@@ -85,9 +85,9 @@ void rmdir_operation(const char *tpath) {
 	task_t *cur =current_task();
 	char path[100];
 	memset(path,0,sizeof(path));
-	if(tpath[0]=='.') {
+ 	if(tpath[0]=='.') {
 		strcat(path,cur->loc);
-		if(tpath[1]=='.') {
+ 		if(tpath[1]=='.') {
 			while(path[strlen(path)-1]!='/')
 				path[strlen(path)-1]=0;
 			if(strlen(tpath)==2)
@@ -166,3 +166,47 @@ char* ls_operation(const char *tpath) {
 	vfs->close(fd);
 	return (char *)pre;
 }
+void link_op(const *char roldpath,const char *rnewpath) {
+	char opath[100],npath[100];
+	real_path(opath,roldpath);
+	real_path(npath,rnewpath);
+	vfs->link(opath,npath);
+}
+void unlink_op(const char *rpath){
+	char path[100];
+	real_path(path,rpath);
+	vfs->unlink(path);
+}
+void read_op(int fd,void *buf,size_t size) {
+	task_t *cur=current_task();
+	if(cur->flides[fd]==NULL)
+		assert(0);
+	vfs->read(fd,buf,size);
+}
+void write_op(int fd,void *buf,size_t size) {
+	task_t *cur=current_task();
+	if(cur->flides[fd]==NULL)
+		assert(0);
+	vfs->write(fd,buf,size);
+}
+void lseek_op(int fd,off_t offset,int whence) {
+	task_t *cur=current_task();
+	if(cur->flides[fd]==NULL)
+		assert(0);
+	vfs->lseek(fd,offset,whence);
+}
+void cat_op(const char *name,void *buf) {
+	char path[100];
+	real_path(path,name);
+	int fd=vfs->open(name);
+	int sz=vfs->lseek(fd,0,2);
+	vfs->read(fd,buf,sz);
+}
+void rm_op(const char *name) {
+	char path[100];
+	real_path(path,name);
+	task_t *cur=current_task();
+	filesystem_t *fs=cur->preloc->fs;
+	fs->ops->lookup(name,8);
+}
+
