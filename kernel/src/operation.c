@@ -109,10 +109,9 @@ char* ls_operation(const char *tpath) {
 		if(tpath[1]=='.') {
 			while(path[strlen(path)-1]!='/')
 				path[strlen(path)-1]=0;
-			if(strlen(tpath)==2)
-				path[strlen(path)-1]=0;
+			path[strlen(path)-1]=0;
 		}
-		else if(strlen(tpath)!=1&&path[strlen(path)-1]!='/')
+	    if(path[strlen(path)-1]!='/')
 			strcat(path,"/");
 	}
 	strcat(path,tpath);
