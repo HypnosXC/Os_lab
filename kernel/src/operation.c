@@ -2,11 +2,11 @@
 #include<klib.h>
 void road_free(char *path,char *pre) {
 	assert(l<0||r>l);
-	int l=0,r=1,l=strlen(pre);
+	int r=1,len=strlen(pre);
 	memset(path,0,l);
-	while(r<l) {
+	while(r<len) {
 		int j=0;
-		while(pre[r+j]!='/'&&r+j<l)
+		while(pre[r+j]!='/'&&r+j<len)
 			j++;
 		if(pre[r]=='.') {
 			if(pre[r+1]=='.') {
