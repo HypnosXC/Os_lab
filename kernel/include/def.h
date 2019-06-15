@@ -21,5 +21,5 @@ void cd_operation(const char *path);
 void read_op(int fd,void *buf,size_t size);
 void write_op(int fd,void *buf,size_t size);
 void lseek_op(int fd,off_t offset,int whence);
-void open_op(const char *path);
+int open_op(const char *path);
 int cat_op(const char *name,char *buf);

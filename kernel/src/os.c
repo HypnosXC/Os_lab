@@ -99,14 +99,17 @@ void echo_task(void *name) {
 			if(path[0]!=0) 
 				rmdir_operation(path);
 		} 
-		if(!strcmp(op,"cat")) {
+	 	if(!strcmp(op,"cat")) {
 			printf("cat operation!\n");
 			memset(echo_buf,0,strlen(echo_buf));
 			int sz=cat_op(path,echo_buf);
 			tty->ops->write(tty,0,echo_buf,sz);
 		}
 		if(!strcmp(op,"open")) {
-			open_op(path);
+			int fd=open_op(path);
+			memset(echo_buf,0,strlen(echo));
+			sprintf(echo_buf,"open as fd=%d\n",fd);
+			tty->ops->write(tty,0,echo_buf,strlen(echo_buf));
 		}
 		if(!strcmp(op,"read")) {	
 			int fd=0,size=0;
@@ -114,10 +117,10 @@ void echo_task(void *name) {
 			while(path[i]<'0'||'9'<path[i])
 				i++;
 			i=read_int(path+i,&size);
-			while(path[i]==' ')
-				i++;
 			printf("read_op,fd=%d,size=%d\n",fd,size);
-			read_op(fd,path+i,size);
+			memset(echo_buf,0,strlen(echo));
+			read_op(fd,echo_buf,size);
+			tty->ops->write(tty,0,echo_buf,strlen(echo_buf));
 		}
 		if(!strcmp(op,"write"))  {	
 			int fd=0,size=0;
