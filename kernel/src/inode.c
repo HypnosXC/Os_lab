@@ -43,6 +43,7 @@ int inode_close(file_t* file) {
 }
 off_t inode_lseek(file_t * file,off_t offset,int whence) {
 	kmt->spin_lock(inode_lk);
+	self_fetch(file->inode);
 	switch(whence){
 	  case 0:
 	  	file->offset=offset;
