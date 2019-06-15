@@ -2,7 +2,7 @@
 #include<klib.h>
 void road_free(char *path,char *pre) {
 	int r=1,len=strlen(pre);
-	memset(path,0,l);
+	memset(path,0,len);
 	while(r<len) {
 		int j=0;
 		while(pre[r+j]!='/'&&r+j<len)
