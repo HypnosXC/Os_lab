@@ -166,7 +166,7 @@ char* ls_operation(const char *tpath) {
 	vfs->close(fd);
 	return (char *)pre;
 }
-void link_op(const *char roldpath,const char *rnewpath) {
+void link_op(const char *roldpath,const char *rnewpath) {
 	char opath[100],npath[100];
 	real_path(opath,roldpath);
 	real_path(npath,rnewpath);
