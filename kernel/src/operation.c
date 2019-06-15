@@ -201,6 +201,7 @@ void cat_op(const char *name,void *buf) {
 	int fd=vfs->open(name,7);
 	int sz=vfs->lseek(fd,0,2);
 	vfs->read(fd,buf,sz);
+	vfs->close(fd);
 }
 void rm_op(const char *name) {
 	char path[100];

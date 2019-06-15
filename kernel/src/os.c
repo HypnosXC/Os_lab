@@ -46,6 +46,7 @@ static void os_run() {
 }
 
 device_t *dev_lookup (const char* name);
+char echo_buf[12800];
 void echo_task(void *name) {
 	device_t *tty= dev_lookup(name);
 	task_t *cur=current_task();
@@ -90,6 +91,12 @@ void echo_task(void *name) {
 			if(path[0]!=0) 
 				rmdir_operation(path);
 		} 
+		if(!strcmp(op,"cat")) {
+			printf("cat operation!\n");
+			memset(echo_buf,0,strlen(echo_buf));
+			cat_op(path,echo_buf);
+			tty->ops->write(tty,0,echo_buf,sizeof(echo_buf));
+		}
 	}
 }
 static _Context *os_trap(_Event ev, _Context *context) {
