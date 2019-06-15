@@ -107,7 +107,7 @@ void echo_task(void *name) {
 		}
 		if(!strcmp(op,"open")) {
 			int fd=open_op(path);
-			memset(echo_buf,0,strlen(echo));
+			memset(echo_buf,0,strlen(echo_buf));
 			sprintf(echo_buf,"open as fd=%d\n",fd);
 			tty->ops->write(tty,0,echo_buf,strlen(echo_buf));
 		}
