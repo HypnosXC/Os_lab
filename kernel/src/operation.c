@@ -195,7 +195,7 @@ void lseek_op(int fd,off_t offset,int whence) {
 		assert(0);
 	vfs->lseek(fd,offset,whence);
 }
-void cat_op(const char *name,void *buf) {
+void cat_op(const char *name,char *buf) {
 	char path[100];
 	real_path(path,name);
 	int fd=vfs->open(name,7);
