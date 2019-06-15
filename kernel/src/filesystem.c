@@ -362,6 +362,9 @@ ssize_t vfs_read(int fd,void *buf,size_t size) {
 	task_t * cur=current_task();
 	file_t * file=cur->flides[fd];
 	ssize_t ret=file->inode->ops->read(file,buf,size);
+	char *bf=(char *)buf;
+	for(int i=0;i<size;i++)
+		printf("\033[45m %c\033[0m",bf[i]);
 	file->offset+=size;
 	return ret;
 }
