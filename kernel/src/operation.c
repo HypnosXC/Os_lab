@@ -213,6 +213,7 @@ void rm_op(const char *name) {
 }
 int open_op(const char *name) {
 	char path[100];
+	memset(path,0,sizeof(path));
 	real_path(path,name);
 	printf("open path =%s\n",path);
 	return vfs->open(path,7);
