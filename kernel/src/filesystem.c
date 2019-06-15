@@ -355,8 +355,7 @@ int vfs_open(const char *path,int flags) {
 	file_t *file=pmm->alloc(sizeof(file_t));
 	file->inode=p;
 	file->offset=0;
-	file->inode->ops->open(file,flags);
-	return 0;
+	return file->inode->ops->open(file,flags);
 }
 ssize_t vfs_read(int fd,void *buf,size_t size) {
 	task_t * cur=current_task();
