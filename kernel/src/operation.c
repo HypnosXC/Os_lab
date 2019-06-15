@@ -123,7 +123,7 @@ char* ls_operation(const char *tpath) {
 	strcpy(rpath,path);
 	int fd=vfs->open(path,4);
 	int end=vfs->lseek(fd,0,2);
-	printf("\033[42m end=%d\033[0m\n");
+	printf("\033[42m end=%d\033[0m\n",end);
 	int doff=0,i=0;
 	char *name=pmm->alloc(256);
 	sprintf(name,"%s","Name                 Type                 Priority\n");
