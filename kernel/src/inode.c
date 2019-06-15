@@ -141,15 +141,22 @@ int rmdir(const char *name) {
 }
 int link(const char *name,inode_t *inode) {
 	char pname[100];
+	char tname[100];
+	memcpy(tname,name,strlen(name));
 	int len=strlen(name);
 	int l=len-1;
 	while(name[l]!='/')
 		l--;
-	l++;
+	if(name[l]=='/')
+		l++;
 	strcpy(pname,name+l);
-	while(l<len)
-		name[l++]=0;
-	inode_t *pre=inode->fs->lookup(inode->fs,name,9);
+	l=len-1;
+	while(tname[l]!='/')
+		tname[l--]=0;
+	if(tname[l]=='/')
+		tname[l--]=0;
+	memcpy(tname,name,l-1);
+	inode_t *pre=inode->fs->ops->lookup(inode->fs,tname,9);
 	add_inode(pre,pname,inode);
 	pmm->free(pre);
 	return 0;
