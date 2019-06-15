@@ -54,8 +54,8 @@ void cd_operation(const char * rpath) {
 		strcat(path,cur->loc);
 		if(cur->loc[strlen(cur->loc)-1]!='/')
 			strcat(path,"/");
-		strcat(path,rpath);
 	}
+	strcat(path,rpath);
 	printf("\033[42mcd path:now path is %s\033[0m\n",path);
 	filesystem_t *fs=cur->preloc->fs;
 	inode_t *pre=fs->ops->lookup(fs,path,7);
