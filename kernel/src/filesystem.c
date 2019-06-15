@@ -212,6 +212,7 @@ void fs_init(filesystem_t *fs,const char *name,device_t *dev) {
 	inode_t *pre=pmm->alloc(sizeof(inode_t));
 	dev->ops->read(dev,INODE_ENTRY+i*sizeof(inode_t),pre,sizeof(inode_t));
 	add_inode(pre,".",pre);
+	add_inode(pre,"..",pre);
 	fs->inode=pre;
 	printf("pre is %p\n",pre->ptr);
 	// one inode;
