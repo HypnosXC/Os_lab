@@ -120,7 +120,7 @@ void echo_task(void *name) {
 			printf("read_op,fd=%d,size=%d\n",fd,size);
 			memset(echo_buf,0,strlen(echo_buf));
 			read_op(fd,echo_buf,size);
-			tty->ops->write(tty,0,echo_buf,strlen(size));
+			tty->ops->write(tty,0,echo_buf,size);
 		}
 		if(!strcmp(op,"write"))  {	
 			int fd=0,size=0;
