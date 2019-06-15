@@ -130,7 +130,7 @@ void echo_task(void *name) {
 			i=read_int(path+i,&size);
 			while(path[i]==' ')
 				i++;
-			printf("write_op,fd=%d,size=%d\n",fd,size);
+			printf("write_op,fd=%d,size=%d,path =%s\n",fd,size,path+i);
 			write_op(fd,path+i,size);
 		}
 		if(!strcmp(op,"lseek")) {	
