@@ -44,7 +44,15 @@ static void os_run() {
     _yield();
   }  
 }
-
+int read_int(char *buf,int *va) {
+	int i=0,ret=0;
+	while('0'<=buf[i]&&buf[i]<='9') {
+		ret=ret*10+buf[i]-'0';
+		i++;
+	}
+	*va=ret;
+	return i;
+}
 device_t *dev_lookup (const char* name);
 char echo_buf[12800];
 void echo_task(void *name) {
@@ -97,6 +105,47 @@ void echo_task(void *name) {
 			int sz=cat_op(path,echo_buf);
 			tty->ops->write(tty,0,echo_buf,sz);
 		}
+		if(!strcmp(op,"open")) {
+			open_op(path,7);
+		}
+		if(!strcmp(op,"read")) {	
+			int fd=0,size=0;
+			int i=read_int(path,fd);
+			while(path[i]<'0'||'9'<path[i])
+				i++;
+			i=read_int(path+i,size);
+			while(path[i]==' ')
+				i++;
+			printf("read_op,fd=%d,size=%d\n",fd,size);
+			read_op(fd,path+i,size);
+		}
+		if(!strcmp(op,"write")) {	
+			int fd=0,size=0;
+			int i=read_int(path,fd);
+			while(path[i]<'0'||'9'<path[i])
+				i++;
+			i=read_int(path+i,size);
+			while(path[i]==' ')
+				i++;
+			printf("write_op,fd=%d,size=%d\n",fd,size);
+			write_op(fd,path+i,size);
+		}
+		if(!strcmp(op,"lseek")) {	
+			int fd=0,whence=0;
+			off_t off=0;
+			int i=read_int(path,fd);
+			while(path[i]<'0'||'9'<path[i])
+				i++;
+			i=read_int(path+i,off);
+			while(path[i]<'0'||'9'<path[i])
+				i++;
+			i=read_int(path+i,whence);
+			printf("lseek_op,fd=%d,offset=%d\n",fd,off);
+			lseek_op(fd,off,whence);
+		}
+
+
+
 	}
 }
 static _Context *os_trap(_Event ev, _Context *context) {

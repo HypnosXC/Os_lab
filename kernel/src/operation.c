@@ -211,4 +211,9 @@ void rm_op(const char *name) {
 	filesystem_t *fs=cur->preloc->fs;
 	fs->ops->lookup(fs,name,8);
 }
+void open_op(const char *name) {
+	char path[100];
+	real_path(path,name);
+	vfs->open(path,7);
+}
 

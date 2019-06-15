@@ -18,4 +18,7 @@ void mkdir_operation(const char *path);
 void rmdir_operation(const char *path);
 char * ls_operation(const char *path);
 void cd_operation(const char *path);
+void read_op(int fd,void *buf,size_t size);
+void write_op(int fd,void *buf,size_t size);
+void lseek_op(int fd,off_t offset,int whence);
 int cat_op(const char *name,char *buf);
