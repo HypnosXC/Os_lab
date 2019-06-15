@@ -161,12 +161,11 @@ int unlink(const char *name) {
 	inode_t *go=fs_tab[0].ops->lookup(&fs_tab[0],name,9);
 	int doff=0;
 	off_t ptr=0;
-	char pname[100];
 	while(doff<pre->size) {
 		basic_read(pre,doff+112,&ptr,sizeof(off_t));
 		if(ptr==go->pos) {
 			ptr=-1;
-			basic_write(pre,doff+112,&ptr,sizeof(off_t));
+			basic_write(pre,doff+112,(char *)&ptr,sizeof(off_t));
 			break;
 		}
 		doff+=128;
