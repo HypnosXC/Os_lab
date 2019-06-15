@@ -110,21 +110,21 @@ void echo_task(void *name) {
 		}
 		if(!strcmp(op,"read")) {	
 			int fd=0,size=0;
-			int i=read_int(path,fd);
+			int i=read_int(path,&fd);
 			while(path[i]<'0'||'9'<path[i])
 				i++;
-			i=read_int(path+i,size);
+			i=read_int(path+i,&size);
 			while(path[i]==' ')
 				i++;
 			printf("read_op,fd=%d,size=%d\n",fd,size);
 			read_op(fd,path+i,size);
 		}
-		if(!strcmp(op,"write")) {	
+		if(!strcmp(op,"write"))  {	
 			int fd=0,size=0;
-			int i=read_int(path,fd);
+			int i=read_int(path,&fd);
 			while(path[i]<'0'||'9'<path[i])
 				i++;
-			i=read_int(path+i,size);
+			i=read_int(path+i,&size);
 			while(path[i]==' ')
 				i++;
 			printf("write_op,fd=%d,size=%d\n",fd,size);
@@ -133,16 +133,16 @@ void echo_task(void *name) {
 		if(!strcmp(op,"lseek")) {	
 			int fd=0,whence=0;
 			off_t off=0;
-			int i=read_int(path,fd);
+			int i=read_int(path,&fd);
 			while(path[i]<'0'||'9'<path[i])
 				i++;
-			i=read_int(path+i,off);
+			i=read_int(path+i,&off);
 			while(path[i]<'0'||'9'<path[i])
 				i++;
 			i=read_int(path+i,whence);
 			printf("lseek_op,fd=%d,offset=%d\n",fd,off);
-			lseek_op(fd,off,whence);
-		}
+			lseek_op(fd,off,&whence);
+		} 
 
 
 
