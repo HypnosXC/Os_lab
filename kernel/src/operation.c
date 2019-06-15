@@ -1,9 +1,6 @@
 #include<common.h>
 #include<klib.h>
-void road_free(char *path) {
-	char pre[100];
-	memset(pre,0,sizeof(pre));
-	strcpy(pre,path);
+void road_free(char *path,const char *pre) {
 	int r=1,len=strlen(pre);
 	memset(path,0,len);
 	path[0]='/';
@@ -39,7 +36,7 @@ void real_path(char *path,const char *tpath) {
 	}
 	if(strlen(tpath)>2) {
 		strcat(rpath,tpath);
-		road_free(path);
+		road_free(path,rpath);
 	}
 }
 void cd_operation(const char * rpath) {
