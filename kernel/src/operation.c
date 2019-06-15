@@ -141,7 +141,8 @@ char* ls_operation(const char *tpath) {
 			doff+=128;
 			continue;
 		}
-		strcat(rpath,"/");
+		if(rpath[strlen(rpath)-1]!='/')
+			strcat(rpath,"/");
 		strcat(rpath,name);
 		filesystem_t *fs=cur->flides[fd]->inode->fs;
 		inode_t *pe=fs->ops->lookup(fs,rpath,9);
