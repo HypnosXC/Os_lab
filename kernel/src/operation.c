@@ -200,6 +200,7 @@ int cat_op(const char *name,char *buf) {
 	real_path(path,name);
 	int fd=vfs->open(name,7);
 	int sz=vfs->lseek(fd,0,2);
+	vfs->lseek(fd,0,0);
 	vfs->read(fd,buf,sz);
 	vfs->close(fd);
 	return sz;
