@@ -61,9 +61,9 @@ off_t inode_lseek(file_t * file,off_t offset,int whence) {
 }
 void basic_read(inode_t *inode,off_t offset,char *buf,size_t size) {
 	self_fetch(inode);
-	printf("\033[42m basic:write : offset is %d,%d\033[0m\n",offset,size);
+	printf("\033[42m basic_read : offset is %d,%d\033[0m\n",offset,size);
 	device_t * dev=inode->fs->dev;
-	printf("")
+	//printf("")
 	off_t doff=0;
 	int i=0;
 	off_t *page=pmm->alloc(BLOCK_SIZE);
