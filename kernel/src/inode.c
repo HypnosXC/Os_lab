@@ -3,6 +3,7 @@
 #include<klib.h>
 #define BLOCK_SIZE 2048
 spinlock_t *inode_lk;
+extern filesystem_t fs_tab[];
 void self_fetch(inode_t *inode) {
 	device_t *dev=inode->fs->dev;
 	dev->ops->read(dev,inode->pos,inode,sizeof(inode_t));
@@ -155,8 +156,8 @@ int link(const char *name,inode_t *inode) {
 }
 int unlink(const char *name) {
 	char fname[100];
-	memset(fname,0,sizeof(pre));
-	sprintf(fname,"%s%s",name."/..");
+	memset(fname,0,sizeof(fname));
+	sprintf(fname,"%s%s",name,"/..");
 	inode_t *pre=fs_tab[0].ops->lookup(&fs_tab[0],fname,9);
 	inode_t *go=fs_tab[0].ops->lookup(&fs_tab[0],name,9);
 	int doff=0;
