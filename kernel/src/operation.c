@@ -25,7 +25,7 @@ void road_free(char *path,char *pre) {
 }
 void real_path(char *path,const char *tpath) {
  	task_t *cur =current_task();
-	char *rpath[110];
+	char rpath[110];
 	memset(path,0,sizeof(path));
 	memset(rpath,0,sizeof(rpath));
 	if(tpath[0]=='.') {
