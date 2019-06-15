@@ -118,7 +118,7 @@ void echo_task(void *name) {
 				i++;
 			i=read_int(path+i,&size);
 			printf("read_op,fd=%d,size=%d\n",fd,size);
-			memset(echo_buf,0,strlen(echo));
+			memset(echo_buf,0,strlen(echo_buf));
 			read_op(fd,echo_buf,size);
 			tty->ops->write(tty,0,echo_buf,strlen(echo_buf));
 		}
