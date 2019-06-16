@@ -24,7 +24,7 @@ char empty_BLOCK[BLOCK_SIZE*2];
 char cpuinfo[100],meminfo[100];
 void info_update() {
 	memset(cpuinfo,0,sizeof(cpuinfo));
-	sprintf("Total CPU num:%d\nRunning cpu:%d\n",_npu(),_cpu());
+	sprintf(cpuinfo,"Total CPU num:%d\nRunning cpu:%d\n",_npu(),_cpu());
 	int icnt=0,dcnt=0;
 	device_t *dev=dev_lookup("ramdisk0");
 	for(int i=0;i<2048;i++) {
@@ -39,7 +39,7 @@ void info_update() {
 			dcnt++;
 	}
 	memset(meminfo,0,sizeof(meminfo));
-	sprintf("Now inode used %d blocks and data used %d blocks!\n",icnt,dcnt);
+	sprintf(meminfo,"Now inode used %d blocks and data used %d blocks!\n",icnt,dcnt);
 }
 void new_block(inode_t* inode) {
 	device_t *dev=inode->fs->dev;
