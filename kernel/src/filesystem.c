@@ -390,13 +390,13 @@ void vfs_init() {
 	fs_init(fs,"/",dev);
 	printf("init f\n");	
 	fs_lookup(fs,"/proc",4);
-//	fs_lookup(fs,"/dev",4);
-//	fs_lookup(fs,"/dev/ramdisk1",3);
-//	fs_lookup(fs,"/dev/null",2);
-//	fs_lookup(fs,"/dev/zero",1);
-//	fs_lookup(fs,"/dev/rand",0);
-//	fs_lookup(fs,"/proc/cpuinfo",5);
-//	fs_lookup(fs,"/proc/meminfo",5);
+	fs_lookup(fs,"/dev",4);
+	fs_lookup(fs,"/dev/ramdisk1",3);
+	fs_lookup(fs,"/dev/null",2);
+	fs_lookup(fs,"/dev/zero",1);
+	fs_lookup(fs,"/dev/rand",0);
+	fs_lookup(fs,"/proc/cpuinfo",5);
+	fs_lookup(fs,"/proc/meminfo",5);
 	fs_tab[0].ops=&fs_op;
 	printf("\033[42m where dead?\033[0m\n");
 }
