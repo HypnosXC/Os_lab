@@ -1,11 +1,11 @@
 #include<common.h>
 #include<devices.h>
 #include<klib.h>
-#define BLOCK_SIZE (off_t)1024
+#define BLOCK_SIZE (off_t)4096
 #define INODE_MAP_ENTRY (off_t)0
-#define DATA_MAP_ENTRY (off_t)1024
-#define INODE_ENTRY (off_t)2048
-#define DATA_ENTRY (off_t)(2048+1024*sizeof(inode_t))
+#define DATA_MAP_ENTRY (off_t)4096
+#define INODE_ENTRY (off_t)8192
+#define DATA_ENTRY (off_t)(8192+4096*sizeof(inode_t))
 #define FLSYS_NUM  10
 /*        								using ext file system
  *									Using one block for blockbitmap, another for inode
