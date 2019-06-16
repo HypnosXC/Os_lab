@@ -187,7 +187,7 @@ int unlink(const char *name) {
 }
 ssize_t devfs_read(file_t *file,char *buf,size_t size) {
 	if(file->inode->type==3) {
-		dev_t *dev=(device_t *) file->inode->ptr;
+		device_t *dev=(device_t *) file->inode->ptr;
 		ssize_t nread=dev->ops->read(dev,file->offset,buf,size);
 		file->offset+=size;
 		return nread;
