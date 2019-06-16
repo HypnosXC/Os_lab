@@ -234,7 +234,7 @@ int proc_read(file_t *file,char *buf,size_t size) {
 			sprintf(taskinfo,"Task %d : name :%s\n",pos,loader[pos]->name);	
 		else
 			sprintf(taskinfo,"No such a task!\n");
-		memcpy(buf.taskinfo,size);
+		memcpy(buf,taskinfo,size);
 	}
 	return size;
 }
