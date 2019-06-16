@@ -387,7 +387,7 @@ void vfs_init() {
 	kmt->spin_init(fs_lk,"file system");
 	device_t *dev=dev_lookup("ramdisk0");
 	filesystem_t *fs=&fs_tab[0];
-	fs_init(&fs_tab[0],"/",dev);
+	fs_init(fs,"/",dev);
 	printf("init f\n");	
 //	fs_lookup(fs,"/proc",4);
 //	fs_lookup(fs,"/dev",4);
