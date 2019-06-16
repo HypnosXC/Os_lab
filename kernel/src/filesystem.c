@@ -168,10 +168,10 @@ int inode_create(filesystem_t *fs,int prio,int type,inodeops_t *ops) {
 }
 int dev_create(filesystem_t *fs,int prio,int type,inodeops_t *ops,char *name) {
 	inode_t *pre=pmm->alloc(sizeof(inode_t));
-	int num=*inode_create(fs,prio,type,ops);
+	int num=inode_create(fs,prio,type,ops);
 	int off=INODE_ENTRY+sizeof(inode_t)*num;
 	device_t *dev=fs->dev;
-	dev->read(dev,off,pre,sizeof(inode_t));
+	dev->ops->read(dev,off,pre,sizeof(inode_t));
 	pre->size=100;
 	if(prio==3) {
 		device_t *ndev=dev_lookup(name);
@@ -185,10 +185,10 @@ int dev_create(filesystem_t *fs,int prio,int type,inodeops_t *ops,char *name) {
 }
 int proc_create(filesystem_t *fs,int prio,int type,inodeops_t *ops,char *name) {
 	inode_t *pre=pmm->alloc(sizeof(inode_t));
-	int num=*inode_create(fs,prio,type,ops);
+	int num=inode_create(fs,prio,type,ops);
 	int off=INODE_ENTRY+sizeof(inode_t)*num;
 	device_t *dev=fs->dev;
-	dev->read(dev,off,pre,sizeof(inode_t));
+	dev->ops->read(dev,off,pre,sizeof(inode_t));
 	pre->size=100;
 	if(name!=NULL) {
 		if(name[0]=='c')//cpuinfo
@@ -199,7 +199,7 @@ int proc_create(filesystem_t *fs,int prio,int type,inodeops_t *ops,char *name) {
 			int f=0;
 			char *p=pre->ptr;
 			while('0'<=*p&&*p<='9') {
-				f=f*10+p-'0';
+				f=f*10+*p-'0';
 				p++;
 			}
 			pre->ptr=(void *)f;
