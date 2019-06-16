@@ -173,6 +173,7 @@ int dev_create(filesystem_t *fs,int prio,int type,inodeops_t *ops,char *name) {
 	int off=INODE_ENTRY+sizeof(inode_t)*num;
 	device_t *dev=fs->dev;
 	dev->ops->read(dev,off,pre,sizeof(inode_t));
+	printf("reached!\n");
 	pre->size=100;
 	if(prio==3) {
 		device_t *ndev=dev_lookup(name);
@@ -181,7 +182,6 @@ int dev_create(filesystem_t *fs,int prio,int type,inodeops_t *ops,char *name) {
 	else 
 		pre->ptr=NULL;
 	self_update(pre);
-	printf("reached!\n");
 	pmm->free(pre);
 	return num;
 }
