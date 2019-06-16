@@ -241,7 +241,7 @@ int proc_read(file_t *file,char *buf,size_t size) {
 			sprintf(taskinfo,"No such a task!\n");
 		memcpy(buf,taskinfo,size);
 	} 
-	return size;
+	return 100;
 }
 ssize_t proc_write(file_t *file,const char *buf,size_t size) {
 	printf("\033[41m Permission denied !\n\033[0m");
