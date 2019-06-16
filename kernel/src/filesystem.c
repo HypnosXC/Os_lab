@@ -172,6 +172,7 @@ int dev_create(filesystem_t *fs,int prio,int type,inodeops_t *ops,char *name) {
 	int num=inode_create(fs,prio,type,ops);
 	int off=INODE_ENTRY+sizeof(inode_t)*num;
 	device_t *dev=fs->dev;
+	printf("reached\n");
 	dev->ops->read(dev,off,pre,sizeof(inode_t));
 	printf("reached!\n");
 	pre->size=100;
