@@ -187,17 +187,17 @@ int unlink(const char *name) {
 }
 ssize_t devfs_read(file_t *file,char *buf,size_t size) {
 	printf("defv read!\n");
-	if(file->inode->type==3) {
+	if(file->inode->prio==3) {
 		device_t *dev=(device_t *) file->inode->ptr;
 		ssize_t nread=dev->ops->read(dev,file->offset,buf,size);
 		file->offset+=size;
 		return nread;
 	}
-	else if(file->inode->type==0) {//rand
+	else if(file->inode->prio==0) {//rand
 		for(int i=0;i<size;i++)
 			buf[i]=rand()%256;
 	}
-	else if(file->inode->type==1) {
+	else if(file->inode->prio==1) {
 		for(int i=0;i<size;i++)
 			buf[i]='0';
 	}
@@ -208,16 +208,16 @@ ssize_t devfs_read(file_t *file,char *buf,size_t size) {
 	return size;
 }
 int devfs_write(file_t *file,const char *buf,size_t size) {
-	if(file->inode->type==3){//dev
+	if(file->inode->prio==3){//dev
 		device_t *dev=(device_t *)file->inode->ptr;
 		ssize_t nread=dev->ops->write(dev,file->offset,buf,size);
 		file->offset+=size;
 		return nread;
-	}
-	else if(file->inode->type==2) {
+	} 
+	else if(file->inode->prio==2) {
 		return size;
-	}
-	else {
+	} 
+	else { 
 		printf("\033[41mOperation not supported!\033[0m\n");
 		assert(0);
 	}
@@ -227,10 +227,10 @@ char taskinfo[100];
 int proc_read(file_t *file,char *buf,size_t size) {
 	info_update();
 	printf("\033[42mgot here proc_read!\n");
-	if(file->inode->type==5) {
-		//memcpy(buf,file->inode->ptr,size);
-		strcpy(buf,"ha?");
-	}
+	if(file->inode->prio==5) {
+		memcpy(buf,file->inode->ptr,size);
+		//strcpy(buf,"ha?");
+	} 
 	else {
 		int pos=(int)file->inode->ptr;
 		memset(taskinfo,0,sizeof(taskinfo));
@@ -239,7 +239,7 @@ int proc_read(file_t *file,char *buf,size_t size) {
 		else
 			sprintf(taskinfo,"No such a task!\n");
 		memcpy(buf,taskinfo,size);
-	}
+	} 
 	return size;
 }
 ssize_t proc_write(file_t *file,const char *buf,size_t size) {
