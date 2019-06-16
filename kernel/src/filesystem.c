@@ -26,7 +26,7 @@ void info_update() {
 	memset(cpuinfo,0,sizeof(cpuinfo));
 	sprintf(cpuinfo,"Total CPU num:%d\nRunning cpu:%d\n",_ncpu(),_cpu());
 	int icnt=0,dcnt=0;
-	device_t *dev=dev_lookup("ramdisk0");
+	device_t *dev=dev_lookup("ramdisk1");
 	for(int i=0;i<BLOCK_SIZE;i++) {
 		int loc=1<<(i%8);
 		int pos=i/8;

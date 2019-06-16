@@ -225,7 +225,7 @@ int devfs_write(file_t *file,const char *buf,size_t size) {
 //aimed at type=0 1 2 3
 char taskinfo[100];
 int proc_read(file_t *file,char *buf,size_t size) {
-//	info_update();
+	info_update();
 	printf("\033[42mgot here proc_read!\n");
 	if(file->inode->prio==5) {
 		memcpy(buf,file->inode->ptr,size);
