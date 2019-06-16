@@ -40,6 +40,7 @@ void info_update() {
 	}
 	memset(meminfo,0,sizeof(meminfo));
 	sprintf(meminfo,"Now inode used %d blocks and data used %d blocks!\n",icnt,dcnt);
+	printf("Information is %s\n%s\n,%p,%p\n",cpuinfo,meminfo,cpuinfo,meminfo);
 }
 void new_block(inode_t* inode) {
 	device_t *dev=inode->fs->dev;
