@@ -1,11 +1,11 @@
 #include<common.h>
 #include<devices.h>
 #include<klib.h>
-#define BLOCK_SIZE (off_t)2048
+#define BLOCK_SIZE (off_t)1024
 #define INODE_MAP_ENTRY (off_t)0
-#define DATA_MAP_ENTRY (off_t)2048
-#define INODE_ENTRY (off_t)4096
-#define DATA_ENTRY (off_t)(4096+2048*sizeof(inode_t))
+#define DATA_MAP_ENTRY (off_t)1024
+#define INODE_ENTRY (off_t)2048
+#define DATA_ENTRY (off_t)(2048+1024*sizeof(inode_t))
 #define FLSYS_NUM  10
 /*        								using ext file system
  *									Using one block for blockbitmap, another for inode
@@ -27,7 +27,7 @@ void info_update() {
 	sprintf(cpuinfo,"Total CPU num:%d\nRunning cpu:%d\n",_ncpu(),_cpu());
 	int icnt=0,dcnt=0;
 	device_t *dev=dev_lookup("ramdisk0");
-	for(int i=0;i<2048;i++) {
+	for(int i=0;i<BLOCK_SIZE;i++) {
 		int loc=1<<(i%8);
 		int pos=i/8;
 		char realva=0;
@@ -267,7 +267,7 @@ int in_close(inode_t *pre) {
 void fs_init(filesystem_t *fs,const char *name,device_t *dev) {
 	memcpy(fs->name,name,strlen(name));
 	fs->dev=dev;
-	for(int i=0;i<2048;i++) {
+	for(int i=0;i<BLOCK_SIZE;i++) {
 		char f=0;
 		dev->ops->write(dev,INODE_MAP_ENTRY+i,&f,sizeof(char));
 		dev->ops->write(dev,DATA_MAP_ENTRY+i,&f,sizeof(char));
