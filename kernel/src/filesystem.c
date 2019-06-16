@@ -55,6 +55,7 @@ void new_block(inode_t* inode) {
 			dev->ops->write(dev,DATA_ENTRY+i*BLOCK_SIZE,empty_BLOCK,BLOCK_SIZE);
 			off_t ptr=DATA_ENTRY+i*BLOCK_SIZE;
 			pos=inode->msize/BLOCK_SIZE;
+			printf("\nnew block : pos %d\n",pos);
 			printf("\033[42m new_block :%d stored block at %d now used\033[43m",pos,ptr);
 			dev->ops->write(dev,(off_t)inode->ptr+pos*sizeof(off_t),&ptr,sizeof(off_t));
 			inode->msize+=BLOCK_SIZE;
