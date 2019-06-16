@@ -181,6 +181,7 @@ int dev_create(filesystem_t *fs,int prio,int type,inodeops_t *ops,char *name) {
 	else 
 		pre->ptr=NULL;
 	self_update(pre);
+	printf("reached!\n");
 	pmm->free(pre);
 	return num;
 }
