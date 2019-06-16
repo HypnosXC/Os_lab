@@ -187,7 +187,9 @@ int proc_create(filesystem_t *fs,int prio,int type,inodeops_t *ops,char *name) {
 	inode_t *pre=pmm->alloc(sizeof(inode_t));
 	int num=*inode_create(fs,prio,type,ops);
 	int off=INODE_ENTRY+sizeof(inode_t)*num;
-	pre->size=0;
+	device_t *dev=fs->dev;
+	dev->read(dev,off,pre,sizeof(inode_t));
+	pre->size=100;
 	if(name!=NULL) {
 		if(name[0]=='c')//cpuinfo
 			pre->ptr=(void *)cpuinfo;
@@ -332,7 +334,7 @@ inode_t * fs_lookup(filesystem_t *fs,const char *path,int flags) {
 			if(0<=flags&&flags<=3)
 				num=dev_create(fs,flags,(flags!=4),&dev_ops,name);
 			if(flags==5||flags==6)
-				num=proc_create(fs,flags,(flags!=4),&proc_op,name);
+				num=proc_create(fs,flags,(flags!=4),&proc_ops,name);
 			printf("\033[42 m new block is %d\033[0m\n",num);
 			off_t addr=INODE_ENTRY+num*sizeof(inode_t);
 			memcpy(mpre,pre,sizeof(inode_t));
