@@ -201,7 +201,7 @@ int create(task_t *task,const char *name,void (*entry)(void *arg),void *arg) {
 	char pre[100];
 	memset(pre,0,sizeof(pre));
 	sprintf(pre,"/proc/%d",i);
-	fs_tab[0]->ops->lookup(&fs_tab[0],4,pre);
+	fs_tab[0].ops->lookup(&fs_tab[0],4,pre);
 	return i;
 }
 void teardown(task_t *task) {

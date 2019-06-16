@@ -172,6 +172,7 @@ int dev_create(filesystem_t *fs,int prio,int type,inodeops_t *ops,char *name) {
 	int off=INODE_ENTRY+sizeof(inode_t)*num;
 	device_t *dev=fs->dev;
 	dev->read(dev,off,pre,sizeof(inode_t));
+	pre->size=100;
 	if(prio==3) {
 		device_t *ndev=dev_lookup(name);
 		pre->ptr=(void *)ndev;
@@ -186,6 +187,7 @@ int proc_create(filesystem_t *fs,int prio,int type,inodeops_t *ops,char *name) {
 	inode_t *pre=pmm->alloc(sizeof(inode_t));
 	int num=*inode_create(fs,prio,type,ops);
 	int off=INODE_ENTRY+sizeof(inode_t)*num;
+	pre->size=0;
 	if(name!=NULL) {
 		if(name[0]=='c')//cpuinfo
 			pre->ptr=(void *)cpuinfo;
