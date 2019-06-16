@@ -471,6 +471,7 @@ int vfs_close(int fd) {
 	cur->flides[fd]=NULL;
 	pmm->free(file->inode);
 	pmm->free(file);
+	printf("\033[42m ????\033[0m");
 	return 0;
 }
 int vfs_link(const char *oldpath,const char *newpath) {
