@@ -391,7 +391,7 @@ void vfs_init() {
 	printf("init f\n");	
 	fs_lookup(fs,"/proc",4);
 	fs_lookup(fs,"/dev",4);
-	fs_lookup(fs,"/dev/ramdisk1",3);
+//	fs_lookup(fs,"/dev/ramdisk1",3);
 //	fs_lookup(fs,"/dev/null",2);
 //	fs_lookup(fs,"/dev/zero",1);
 //	fs_lookup(fs,"/dev/rand",0);
