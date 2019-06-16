@@ -185,11 +185,12 @@ int unlink(const char *name) {
 	pmm->free(go);
 	return  0;
 }
-void devfs_read(file_t *file,char *buf,size_t size) {
+ssize_t devfs_read(file_t *file,char *buf,size_t size) {
 	if(file->inode->type==3) {
 		dev_t *dev=(device_t *) file->inode->ptr;
 		ssize_t nread=dev->ops->read(dev,file->offset,buf,size);
 		file->offset+=size;
+		return nread;
 	}
 	else if(file->inode->type==0) {//rand
 		for(int i=0;i<size;i++)
@@ -198,19 +199,18 @@ void devfs_read(file_t *file,char *buf,size_t size) {
 	else if(file->inode->type==1) {
 		memset(buf,0,size);
 	}
-	else {
+	else  {
 		printf("\033[41mOperation not supported!\033[0m\n");
 		assert(0);
 	}
-
-
+	return size;
 }
 int devfs_write(file_t *file,char *buf,size_t size) {
 	if(file->inode->type==3){//dev
 		dev_t *dev=(device_t *)file->inode->ptr;
 		ssize_t nread=dev->ops->write(dev,file->offset,buf,size);
 		file->offset+=size;
-		return size;
+		return nread;
 	}
 	else if(file->inode->type==2) {
 		return size;
