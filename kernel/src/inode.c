@@ -205,7 +205,7 @@ ssize_t devfs_read(file_t *file,char *buf,size_t size) {
 	}
 	return size;
 }
-int devfs_write(file_t *file,char *buf,size_t size) {
+int devfs_write(file_t *file,const char *buf,size_t size) {
 	if(file->inode->type==3){//dev
 		device_t *dev=(device_t *)file->inode->ptr;
 		ssize_t nread=dev->ops->write(dev,file->offset,buf,size);
@@ -238,7 +238,7 @@ int proc_read(file_t *file,char *buf,size_t size) {
 	}
 	return size;
 }
-int proc_write(file_t *file,char *buf,size_t size) {
+ssize_t proc_write(file_t *file,const char *buf,size_t size) {
 	printf("\033[41m Permission denied !\n\033[0m");
 	return 0;
 }
