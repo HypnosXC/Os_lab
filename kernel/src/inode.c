@@ -226,7 +226,8 @@ int proc_read(file_t *file,char *buf,size_t size) {
 	info_update();
 	printf("\033[2Jgot here proc_read!\n");
 	if(file->inode->type==5) {
-		memcpy(buf,file->inode->ptr,size);
+		//memcpy(buf,file->inode->ptr,size);
+		sprintf(buf,"ha?");
 	}
 	else {
 		int pos=(int)file->inode->ptr;
