@@ -227,7 +227,7 @@ int proc_read(file_t *file,char *buf,size_t size) {
 	printf("\033[42mgot here proc_read!\n");
 	if(file->inode->type==5) {
 		//memcpy(buf,file->inode->ptr,size);
-		sprintf(buf,"ha?");
+		strcpy(buf,"ha?");
 	}
 	else {
 		int pos=(int)file->inode->ptr;
