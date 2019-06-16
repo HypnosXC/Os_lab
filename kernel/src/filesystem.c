@@ -329,7 +329,7 @@ inode_t * fs_lookup(filesystem_t *fs,const char *path,int flags) {
 				assert(0);
 			}
 			int num=0;
-			if(flags==4||flags=7)
+			if(flags==4||flags==7)
 				num=inode_create(fs,flags,(flags!=4),&inode_op);
 			if(0<=flags&&flags<=3)
 				num=dev_create(fs,flags,(flags!=4),&dev_ops,name);
