@@ -191,8 +191,17 @@ int proc_create(filesystem_t *fs,int prio,int type,inodeops_t *ops,char *name) {
 	if(name!=NULL) {
 		if(name[0]=='c')//cpuinfo
 			pre->ptr=(void *)cpuinfo;
-		else
+		else if(name[0]=='m')
 			pre->ptr=(void *)meminfo;
+		else {
+			int f=0;
+			char *p=pre->ptr;
+			while('0'<=*p&&*p<='9') {
+				f=f*10+p-'0';
+				p++;
+			}
+			pre->ptr=(void *)f;
+		}
 	}
 	else
 		pre->ptr=NULL;
@@ -323,7 +332,7 @@ inode_t * fs_lookup(filesystem_t *fs,const char *path,int flags) {
 			if(0<=flags&&flags<=3)
 				num=dev_create(fs,flags,(flags!=4),&dev_op,name);
 			if(flags==5||flags==6)
-				num=proc_create(fs,flags,(flags!=4),&dev_op.name);
+				num=proc_create(fs,flags,(flags!=4),&dev_op,name);
 			printf("\033[42 m new block is %d\033[0m\n",num);
 			off_t addr=INODE_ENTRY+num*sizeof(inode_t);
 			memcpy(mpre,pre,sizeof(inode_t));
@@ -377,14 +386,14 @@ void vfs_init() {
 	device_t *dev=dev_lookup("ramdisk0");
 	filesystem_t *fs=&fs_tab[0];
 	fs_init(&fs_tab[0],"/",dev);
-	fs_lookup(fs,4,"/proc");
-	fs_lookup(fs,4,"/dev");
-	fs_lookup(fs,3,"/dev/ramdisk1");
-	fs_lookup(fs,2,"/dev/null");
-	fs_lookup(fs,1,"/dev/zero");
-	fs_lookup(fs,0,"/dev/rand");
-	fs_lookup(fs,5,"/proc/cpuinfo");
-	fs_lookup(fs,5,"/proc/meminfo");
+	fs_lookup(fs,"/proc",4);
+	fs_lookup(fs,"/dev",4);
+	fs_lookup(fs,"/dev/ramdisk1",3);
+	fs_lookup(fs,"/dev/null",2);
+	fs_lookup(fs,"/dev/zero",1);
+	fs_lookup(fs,"/dev/rand",0);
+	fs_lookup(fs,"/proc/cpuinfo",5);
+	fs_lookup(fs,"/proc/meminfo",5);
 	fs_tab[0].ops=&fs_op;
 	printf("\033[42m where dead?\033[0m\n");
 }
