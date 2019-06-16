@@ -142,7 +142,7 @@ int inode_create(filesystem_t *fs,int prio,int type,inodeops_t *ops) {
 			realva|=loc;
 			dev->ops->write(dev,DATA_MAP_ENTRY+pos,&realva,sizeof(char));
 			pre->ptr=(void *)(DATA_ENTRY+i*BLOCK_SIZE);
-	//		printf("pre is %p\n",pre->ptr);
+			printf("pre is %p\n",pre->ptr);
 			break;
 		}
 	}
@@ -392,12 +392,12 @@ void vfs_init() {
 	printf("init f\n");	
 	fs_lookup(fs,"/proc",4);
 	fs_lookup(fs,"/dev",4);
-	fs_lookup(fs,"/dev/ramdisk1",3);
-	fs_lookup(fs,"/dev/null",2);
-	fs_lookup(fs,"/dev/zero",1);
-	fs_lookup(fs,"/dev/rand",0);
-	fs_lookup(fs,"/proc/cpuinfo",5);
-	fs_lookup(fs,"/proc/meminfo",5);
+//	fs_lookup(fs,"/dev/ramdisk1",3);
+//	fs_lookup(fs,"/dev/null",2);
+//	fs_lookup(fs,"/dev/zero",1);
+//	fs_lookup(fs,"/dev/rand",0);
+//	fs_lookup(fs,"/proc/cpuinfo",5);
+//	fs_lookup(fs,"/proc/meminfo",5);
 	fs_tab[0].ops=&fs_op;
 	printf("\033[42m where dead?\033[0m\n");
 }
