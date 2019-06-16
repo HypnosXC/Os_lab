@@ -16,11 +16,31 @@
  *									for directories , 128 b for its subdir as 120 for name and 8 
  *									its offset(num of bitmap)
  */
-extern inodeops_t inode_op;
+extern inodeops_t inode_op,dev_ops,proc_ops;
 extern spinlock_t *inode_lk;
 spinlock_t *fs_lk;
 filesystem_t fs_tab[FLSYS_NUM];
 char empty_BLOCK[BLOCK_SIZE*2];
+char cpuinfo[100],meminfo[100];
+void info_update() {
+	memset(cpuinfo,0,sizeof(cpuinfo));
+	sprintf("Total CPU num:%d\nRunning cpu:%d\n",_npu(),_cpu());
+	int icnt=0,dcnt=0;
+	device_t *dev=dev_lookup("ramdisk0");
+	for(int i=0;i<2048;i++) {
+		int loc=1<<(i%8);
+		int pos=i/8;
+		char realva=0;
+		dev->ops->read(dev,INODE_MAP_ENTRY+pos,&realva,1);
+		if(realva&loc)
+			icnt++;
+		dev->ops->read(dev,DATA_MAP_ENTRY+pos,&realva,1);
+		if(realva&loc)
+			dcnt++;
+	}
+	memset(meminfo,0,sizeof(meminfo));
+	sprintf("Now inode used %d blocks and data used %d blocks!\n",icnt,dcnt);
+}
 void new_block(inode_t* inode) {
 	device_t *dev=inode->fs->dev;
 	for(int i=0;i<BLOCK_SIZE*8;i++) {
@@ -131,7 +151,7 @@ int inode_create(filesystem_t *fs,int prio,int type,inodeops_t *ops) {
 		int loc=1<<(i%8);
 		char realva;
 		dev->ops->read(dev,INODE_MAP_ENTRY+pos,&realva,sizeof(char));
-		if(!(realva&loc)) {
+	 	if(!(realva&loc)) {
 			realva|=loc;
 			printf("At %d, now mark is %d\n",i,realva);
 			dev->ops->write(dev,INODE_MAP_ENTRY+pos,&realva,sizeof(char));
@@ -141,10 +161,42 @@ int inode_create(filesystem_t *fs,int prio,int type,inodeops_t *ops) {
 	//		printf("now pre is %p\n",pre->ptr);
 			break;
 	 	}
-	} 
+	}  
 	printf("created finished, inode is %p!\n",pre->pos);
 	pmm->free(pre);
 	return i;
+}
+int dev_create(filesystem_t *fs,int prio,int type,inodeops_t *ops,char *name) {
+	inode_t *pre=pmm->alloc(sizeof(inode_t));
+	int num=*inode_create(fs,prio,type,ops);
+	int off=INODE_ENTRY+sizeof(inode_t)*num;
+	device_t *dev=fs->dev;
+	dev->read(dev,off,pre,sizeof(inode_t));
+	if(prio==3) {
+		device_t *ndev=dev_lookup(name);
+		pre->ptr=(void *)ndev;
+	}
+	else 
+		pre->ptr=NULL;
+	self_update(pre);
+	pmm->free(pre);
+	return num;
+}
+int proc_create(filesystem_t *fs,int prio,int type,inodeops_t *ops,char *name) {
+	inode_t *pre=pmm->alloc(sizeof(inode_t));
+	int num=*inode_create(fs,prio,type,ops);
+	int off=INODE_ENTRY+sizeof(inode_t)*num;
+	if(name!=NULL) {
+		if(name[0]=='c')//cpuinfo
+			pre->ptr=(void *)cpuinfo;
+		else
+			pre->ptr=(void *)meminfo;
+	}
+	else
+		pre->ptr=NULL;
+	self_update(pre);
+	pmm->free(pmm);
+	return num;
 }
 void del_map(device_t *dev,off_t entry,int num) {
 	printf("\033[34m block %x,%d realsed !\n\033[0m",entry,num);
@@ -263,7 +315,13 @@ inode_t * fs_lookup(filesystem_t *fs,const char *path,int flags) {
 				printf("No such a file or directory!,i+j=%d,l=%d,path=%s\n",i+j,l,path);
 				assert(0);
 			}
-			int num=inode_create(fs,flags,(flags!=4),&inode_op);
+			int num=0;
+			if(flags==4||flags=7)
+				num=inode_create(fs,flags,(flags!=4),&inode_op);
+			if(0<=flags&&flags<=3)
+				num=dev_create(fs,flags,(flags!=4),&dev_op,name);
+			if(flags==5||flags==6)
+				num=proc_create(fs,flags,(flags!=4),&dev_op.name);
 			printf("\033[42 m new block is %d\033[0m\n",num);
 			off_t addr=INODE_ENTRY+num*sizeof(inode_t);
 			memcpy(mpre,pre,sizeof(inode_t));
@@ -315,7 +373,16 @@ void vfs_init() {
 	kmt->spin_init(inode_lk,"inode");
 	kmt->spin_init(fs_lk,"file system");
 	device_t *dev=dev_lookup("ramdisk0");
+	filesystem_t *fs=&fs_tab[0];
 	fs_init(&fs_tab[0],"/",dev);
+	fs_lookup(fs,4,"/proc");
+	fs_lookup(fs,4,"/dev");
+	fs_lookup(fs,3,"/dev/ramdisk1");
+	fs_lookup(fs,2,"/dev/null");
+	fs_lookup(fs,1,"/dev/zero");
+	fs_lookup(fs,0,"/dev/rand");
+	fs_lookup(fs,5,"/proc/cpuinfo");
+	fs_lookup(fs,5,"/proc/meminfo");
 	fs_tab[0].ops=&fs_op;
 	printf("\033[42m where dead?\033[0m\n");
 }

@@ -4,6 +4,7 @@
 #define BLOCK_SIZE 2048
 spinlock_t *inode_lk;
 extern filesystem_t fs_tab[];
+extern task_t *loader[];
 void self_fetch(inode_t *inode) {
 	device_t *dev=inode->fs->dev;
 	dev->ops->read(dev,inode->pos,inode,sizeof(inode_t));
@@ -184,6 +185,65 @@ int unlink(const char *name) {
 	pmm->free(go);
 	return  0;
 }
+void devfs_read(file_t *file,char *buf,size_t size) {
+	if(file->inode->type==3) {
+		dev_t *dev=(device_t *) file->inode->ptr;
+		ssize_t nread=dev->ops->read(dev,file->offset,buf,size);
+		file->offset+=size;
+	}
+	else if(file->inode->type==0) {//rand
+		for(int i=0;i<size;i++)
+			buf[i]=rand()%256;
+	}
+	else if(file->inode->type==1) {
+		memset(buf,0,size);
+	}
+	else {
+		printf("\033[41mOperation not supported!\033[0m\n");
+		assert(0);
+	}
+
+
+}
+int devfs_write(file_t *file,char *buf,size_t size) {
+	if(file->inode->type==3){//dev
+		dev_t *dev=(device_t *)file->inode->ptr;
+		ssize_t nread=dev->ops->write(dev,file->offset,buf,size);
+		file->offset+=size;
+		return size;
+	}
+	else if(file->inode->type==2) {
+		return size;
+	}
+	else {
+		printf("\033[41mOperation not supported!\033[0m\n");
+		assert(0);
+	}
+}
+//aimed at type=0 1 2 3
+char taskinfo[100];
+int proc_read(file_t *file,char *buf,size_t size) {
+	info_update();
+	if(file->inode->type==5) {
+		memcpy(buf,file->inode->ptr,size);
+	}
+	else {
+		int pos=(int)file->inode->ptr;
+		memset(taskinfo,0,sizeof(taskinfo));
+		if(loader[pos]!=NULL)
+			sprintf(taskinfo,"Task %d : name :%s\n",pos,loader[pos]->name);	
+		else
+			sprintf(taskinfo,"No such a task!\n");
+		memcpy(buf.taskinfo,size);
+	}
+	return size;
+}
+int proc_write(file_t *file,char *buf,size_t size) {
+	printf("\033[41m Permission denied !\n\033[0m");
+	return 0;
+}
+
+//aimed at type=5 6
 inodeops_t inode_op = {
 	.open=inode_open,
 	.close=inode_close,
@@ -195,3 +255,26 @@ inodeops_t inode_op = {
 	.link=link,
 	.unlink=unlink,
 };
+inodeops_t dev_ops= {
+	.open=inode_open,
+	.close=inode_close,
+	.read=devfs_read,
+	.write=devfs_write
+	.lseek=inode_lseek,
+	.mkdir=mkdir,
+	.rmdir=rmdir,
+	.link=link,
+	.unlink=unlink,
+};
+inodeops_t proc_ops= {
+	.open=inode_open,
+	.close=inode_close,
+	.read=proc_read,
+	.write=proc_write
+	.lseek=inode_lseek,
+	.mkdir=mkdir,
+	.rmdir=rmdir,
+	.link=link,
+	.unlink=unlink,
+};
+

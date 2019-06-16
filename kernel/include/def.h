@@ -8,6 +8,7 @@ int cnt_cpu();
 void self_fetch(inode_t *inode);
 void self_update(inode_t *inode);
 //filesystem.c
+void info_update();
 void add_inode(inode_t *pre,const char *name,inode_t *inode);
 int inode_ex(off_t offset,filesystem_t* fs);
 void new_block(inode_t *inode);
