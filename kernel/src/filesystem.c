@@ -354,6 +354,7 @@ inode_t * fs_lookup(filesystem_t *fs,const char *path,int flags) {
 		i+=j+1;
 	}
 	pmm->free(mpre);
+	printf("died here!\n");
 	kmt->spin_unlock(fs_lk);
 	return pre;
 }
