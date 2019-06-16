@@ -198,7 +198,8 @@ ssize_t devfs_read(file_t *file,char *buf,size_t size) {
 			buf[i]=rand()%256;
 	}
 	else if(file->inode->type==1) {
-		memset(buf,0,size);
+		for(int i=0;i<size;i++)
+			buf[i]='0';
 	}
 	else  {
 		printf("\033[41mOperation not supported!\033[0m\n");
