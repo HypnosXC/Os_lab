@@ -330,9 +330,9 @@ inode_t * fs_lookup(filesystem_t *fs,const char *path,int flags) {
 			if(flags==4||flags=7)
 				num=inode_create(fs,flags,(flags!=4),&inode_op);
 			if(0<=flags&&flags<=3)
-				num=dev_create(fs,flags,(flags!=4),&dev_op,name);
+				num=dev_create(fs,flags,(flags!=4),&dev_ops,name);
 			if(flags==5||flags==6)
-				num=proc_create(fs,flags,(flags!=4),&dev_op,name);
+				num=proc_create(fs,flags,(flags!=4),&proc_op,name);
 			printf("\033[42 m new block is %d\033[0m\n",num);
 			off_t addr=INODE_ENTRY+num*sizeof(inode_t);
 			memcpy(mpre,pre,sizeof(inode_t));
