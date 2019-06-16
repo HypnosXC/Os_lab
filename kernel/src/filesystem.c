@@ -196,9 +196,9 @@ int proc_create(filesystem_t *fs,int prio,int type,inodeops_t *ops,char *name) {
 	pre->size=100;
 	if(name!=NULL) {
 		if(name[0]=='c')//cpuinfo
-			pre->ptr=(void *)cpuinfo;
+			pre->ptr=(void *)cpuinfo,pre->type=4;
 		else if(name[0]=='m')
-			pre->ptr=(void *)meminfo;
+			pre->ptr=(void *)meminfo,pre->type=5;
 		else {
 			int f=0;
 			char *p=pre->ptr;

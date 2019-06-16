@@ -5,6 +5,7 @@
 spinlock_t *inode_lk;
 extern filesystem_t fs_tab[];
 extern task_t *loader[];
+extern char cpuinfo[],meminfo[];
 void self_fetch(inode_t *inode) {
 	device_t *dev=inode->fs->dev;
 	dev->ops->read(dev,inode->pos,inode,sizeof(inode_t));
@@ -227,11 +228,14 @@ char taskinfo[100];
 int proc_read(file_t *file,char *buf,size_t size) {
 	info_update();
 	printf("\033[42mgot here proc_read!\n");
-	if(file->inode->prio==5) {
-		char *p=file->inode->ptr;
-		memcpy(buf,p,100);
+	if(file->inode->type==4) {
+		//char *p=file->inode->ptr;
+		memcpy(buf,cpuinfo,100);
 		//strcpy(buf,"ha?");
-	} 
+	}
+	else if(file->inode->type==5) {
+		memcpy(buf,meminfo,100);
+	}
 	else {
 		assert(0);
 		int pos=(int)file->inode->ptr;
