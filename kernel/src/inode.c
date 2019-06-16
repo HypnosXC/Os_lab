@@ -233,6 +233,7 @@ int proc_read(file_t *file,char *buf,size_t size) {
 		//strcpy(buf,"ha?");
 	} 
 	else {
+		assert(0);
 		int pos=(int)file->inode->ptr;
 		memset(taskinfo,0,sizeof(taskinfo));
 		if(loader[pos]!=NULL)
