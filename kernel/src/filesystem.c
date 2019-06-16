@@ -428,10 +428,10 @@ int vfs_rmdir(const char *path) {
 }
 int vfs_open(const char *path,int flags) {
 	filesystem_t *fs=&fs_tab[0];
-	if(path[1]=='p'&&path[2]=='r'&&path[3]=='o'&&path[4]=='c'&&path[5]=='/')
-		fs=&fs_tab[1];
-	else if(path[1]=='d'&&path[2]=='e'&&path[3]=='v'&&path[4]=='/')
-		fs=&fs_tab[2];
+//	if(path[1]=='p'&&path[2]=='r'&&path[3]=='o'&&path[4]=='c'&&path[5]=='/')
+//		fs=&fs_tab[1];
+//	else if(path[1]=='d'&&path[2]=='e'&&path[3]=='v'&&path[4]=='/')
+//		fs=&fs_tab[2];
 	inode_t *p=fs->ops->lookup(fs,path,flags);
 	file_t *file=pmm->alloc(sizeof(file_t));
 	file->inode=p;

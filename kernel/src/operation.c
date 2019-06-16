@@ -118,9 +118,9 @@ char* ls_operation(const char *tpath) {
 	char **pre=pmm->alloc(256);
 	char rpath[100];
 	memset(rpath,0,sizeof(rpath));    	
-	printf("now path is %s\n",path);
 	strcpy(rpath,path);
 	int fd=vfs->open(path,4);
+
 	int end=vfs->lseek(fd,0,2);
 	printf("\033[42m end=%d\033[0m\n",end);
 	int doff=0,i=0;
