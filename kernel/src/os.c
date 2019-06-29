@@ -104,6 +104,7 @@ void echo_task(void *name) {
 			printf("cat operation!\n");
 			memset(echo_buf,0,strlen(echo_buf));
 			int sz=cat_op(path,echo_buf);
+			printf("\ncat :size=%d\n",sz);
 			tty->ops->write(tty,0,echo_buf,sz);
 		}
 		if(!strcmp(op,"open")) {
