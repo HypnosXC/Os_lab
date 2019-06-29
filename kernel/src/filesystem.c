@@ -102,23 +102,23 @@ off_t name_lookup(inode_t *inode,const char *name) {
 	off_t doff=0;
 	char pname[124];
 	off_t off=0,ioff=0;
-	printf("now inode size is %d\n",inode->size);
+	//printf("now inode size is %d\n",inode->size);
  	while(doff<inode->size) {
 		basic_read(inode,doff,pname,100);
 		basic_read(inode,doff+112,(char *)&ioff,sizeof(off_t));
-		if(ioff==-1){
+	 	if(ioff==-1){
 			doff+=128;
 			continue;
 		}
-		printf("get name as %s\n",pname);
- 		if(!strcmp(pname,name)) {
+	//	printf("get name as %s\n",pname);
+ 	 	if(!strcmp(pname,name)) {
 			basic_read(inode,doff+112,(char *)&off,sizeof(off_t));
 			return off;
 		}
 		doff+=128;
-		printf("doff=%d\n",doff);
+	//	printf("doff=%d\n",doff);
 	}
-	printf("name %s no found!\n",name);
+	//printf("name %s no found!\n",name);
 	return 1;
 	assert(0);	
 }
@@ -275,7 +275,7 @@ void fs_init(filesystem_t *fs,const char *name,device_t *dev) {
 		char f=0;
 		dev->ops->write(dev,INODE_MAP_ENTRY+i,&f,sizeof(char));
 		dev->ops->write(dev,DATA_MAP_ENTRY+i,&f,sizeof(char));
-	}
+	} 
 	// inode for filesystem
 	int i=inode_create(fs,4,0,&inode_op);
 	inode_t *pre=pmm->alloc(sizeof(inode_t));
@@ -283,7 +283,7 @@ void fs_init(filesystem_t *fs,const char *name,device_t *dev) {
 	add_inode(pre,".",pre);
 	add_inode(pre,"..",pre);
 	fs->inode=pre;
-	printf("pre is %p\n",pre->ptr);
+	//printf("pre is %p\n",pre->ptr);
 	// one inode;
 }
 
@@ -303,8 +303,8 @@ inode_t * fs_lookup(filesystem_t *fs,const char *path,int flags) {
 	//int num;
 	int i=0,l=strlen(path);
 	device_t * dev=fs->dev;
-	printf("\033[43m Lookup: name=%s\033[0m\n",path);
-	if(path[i]!='/') {
+	//printf("\033[43m Lookup: name=%s\033[0m\n",path);
+	if (path[i]!='/') {
 		printf("Not a correct path!\n");
 		assert(0);
 	}
@@ -314,21 +314,21 @@ inode_t * fs_lookup(filesystem_t *fs,const char *path,int flags) {
 		int j=0;
 		while(path[i+j]!='/'&&i+j<l)
 			j++;
-		printf("now name is %s,node is %p\n",name,pre->ptr);
+	//	printf("now name is %s,node is %p\n",name,pre->ptr);
 		strncpy(name,path+i,j);
 		off_t doff=name_lookup(pre,name);
-		if (doff!=1) {	
+	 	if (doff!=1) {	
 			dev->ops->read(dev,doff,pre,sizeof(inode_t));	
-			if(i+j>=l&&flags==8) {
+	 		if(i+j>=l&&flags==8) {
 				in_close(pre);
 			}
 		}
-		else {
+	 	else {
 			if(pre->prio!=4||flags==8) {//not a dir
 				printf("wrong position,not a dir!\n");
 				assert(0);
-			}
-			if(flags==9) {
+	 		}
+	 		if(flags==9) {
 				printf("No such a file or directory!,i+j=%d,l=%d,path=%s\n",i+j,l,path);
 				assert(0);
 			}
@@ -347,17 +347,17 @@ inode_t * fs_lookup(filesystem_t *fs,const char *path,int flags) {
 			if(pre->type==0) {
 				add_inode(pre,"..",mpre);
 				add_inode(pre,".",pre);
-			}
-			if(i+j<l) {
+	 		}
+	 		if(i+j<l) {
 				printf("\033[42m fs_lookup,wrong dir happened!\033[0m,l=%d,i=%d,j=%d\n",l,i,j);
 				assert(0);
-			} 
+	 		} 
 			break;
 		}
 		i+=j+1;
-	}
+	} 
 	pmm->free(mpre);
-	printf("died here!\n");
+	//printf("died here!\n");
 	kmt->spin_unlock(fs_lk);
 	return pre;
 }
