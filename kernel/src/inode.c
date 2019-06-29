@@ -36,7 +36,7 @@ int inode_close(file_t* file) {
 	for(;i<=32;i++)
 		if(cur->flides[i]==file)
 			break;
-	if(i>32) {
+ 	if(i>32) {
 		kmt->spin_unlock(inode_lk);
 		return -1;
 	}
@@ -47,7 +47,7 @@ int inode_close(file_t* file) {
 off_t inode_lseek(file_t * file,off_t offset,int whence) {
 	kmt->spin_lock(inode_lk);
 	self_fetch(file->inode);
-	switch(whence){
+ 	switch(whence){
 	  case 0:
 	  	file->offset=offset;
 	  	break;
@@ -63,7 +63,7 @@ off_t inode_lseek(file_t * file,off_t offset,int whence) {
 }
 void basic_read(inode_t *inode,off_t offset,char *buf,size_t size) {
 	self_fetch(inode);
-	printf("\033[42m basic_read : offset is %d,%d\033[0m\n",offset,size);
+//	printf("\033[42m basic_read : offset is %d,%d\033[0m\n",offset,size);
 	device_t * dev=inode->fs->dev;
 	//printf("")
 	off_t doff=0;
@@ -71,10 +71,10 @@ void basic_read(inode_t *inode,off_t offset,char *buf,size_t size) {
 	off_t *page=pmm->alloc(BLOCK_SIZE);
 	void *ps=pmm->alloc(BLOCK_SIZE);
 	dev->ops->read(dev,(off_t)inode->ptr,page,BLOCK_SIZE);
-	while(size ) {
+ 	while(size ) {
 		if(doff+BLOCK_SIZE<=offset) {
 			i++;
-		} 
+ 		} 
 		else {
 			off_t rsize=doff+BLOCK_SIZE-offset;
 			if(rsize>size)
@@ -84,14 +84,14 @@ void basic_read(inode_t *inode,off_t offset,char *buf,size_t size) {
 			size-=rsize;
 			if(size>0)
 				offset=doff+BLOCK_SIZE;
-		} 
+ 		} 
  	}	
  	pmm->free(page);
 	pmm->free(ps);
 }
 void basic_write(inode_t *inode,off_t offset,const char* buf,size_t size){
 	self_fetch(inode);
-	printf("\033[42m basic:write : offset is %d,%d\033[0m\n",offset,size);
+//	printf("\033[42m basic:write : offset is %d,%d\033[0m\n",offset,size);
 	if(offset+size>inode->size)
 		inode->size=offset+size;
 //	printf("%d,%d",offset,size);
@@ -117,7 +117,7 @@ void basic_write(inode_t *inode,off_t offset,const char* buf,size_t size){
 			if(size>0)
 				offset=doff+BLOCK_SIZE;
 		}
-	}
+ 	}
 	pmm->free(page);
 	self_update(inode);	
 }
