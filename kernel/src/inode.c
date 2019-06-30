@@ -231,10 +231,12 @@ int proc_read(file_t *file,char *buf,size_t size) {
 	if(file->inode->type==4) {
 		//char *p=file->inode->ptr;
 		memcpy(buf,cpuinfo,100);
+		return strlen(cpuinfo);
 		//strcpy(buf,"ha?");
 	}
 	else if(file->inode->type==5) {
 		memcpy(buf,meminfo,100);
+		return strlen(meminfo);
 	}
 	else {
 		assert(0);
@@ -245,8 +247,8 @@ int proc_read(file_t *file,char *buf,size_t size) {
 		else
 			sprintf(taskinfo,"No such a task!\n");
 		memcpy(buf,taskinfo,size);
-	} 
-	return 100;
+		return strlen(taskinfo);
+	}
 }
 ssize_t proc_write(file_t *file,const char *buf,size_t size) {
 	printf("\033[41m Permission denied !\n\033[0m");
