@@ -12,6 +12,7 @@
  */
 extern inodeops_t inode_op,dev_ops,proc_ops;
 extern spinlock_t *inode_lk;
+extern task_t* loader[];
 spinlock_t *fs_lk;
 filesystem_t fs_tab[FLSYS_NUM];
 char empty_BLOCK[BLOCK_SIZE*2];
@@ -174,7 +175,7 @@ int proc_create(filesystem_t *fs,int prio,int type,inodeops_t *ops,char *name) {
 			pre->type=5;
 		else {
 			int f=0;
-			char *p=pre->ptr;
+			char *p=name;
 			while('0'<=*p&&*p<='9') {
 				f=f*10+*p-'0';
 				p++;
@@ -375,6 +376,13 @@ void vfs_init() {
 	fs_lookup(fs,"/dev/rand",0);
 	fs_lookup(fs,"/proc/cpuinfo",5);
 	fs_lookup(fs,"/proc/meminfo",5);
+	for(int i=0;i<26;i++)	{
+		if(loader[i]!=NULL){
+			char path[100];
+			sprintf(path,"/proc/%d",i);
+			fs_lookup(fs,path,6);
+		}	
+	}
 	fs_tab[0].ops=&fs_op;
 	printf("\033[42m where dead?\033[0m\n");
 }
