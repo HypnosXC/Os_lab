@@ -7,7 +7,7 @@ extern task_t *loader[];
 char cpu_info[100],mem_info[100];
 void info_update() {
 	memset(cpu_info,0,sizeof(cpu_info));
-	sprintf(cpu_info,"Total CPU num:%d Running cpu:%d",_ncpu(),_cpu());
+	sprintf(cpu_info,"Total CPU num:%d \n Running cpu:%d",_ncpu(),_cpu());
 	int icnt=0,dcnt=0;
 	device_t *dev=dev_lookup("ramdisk1");
 	for(int i=0;i<BLOCK_SIZE;i++) {
@@ -22,7 +22,7 @@ void info_update() {
 			dcnt++;
 	}
 	memset(mem_info,0,sizeof(mem_info));
-	sprintf(mem_info,"Now inode used %d blocks and data used %d blocks!",icnt,dcnt);
+	sprintf(mem_info,"Now inode used : %d blocks \n Data used : %d blocks!",icnt,dcnt);
 	printf("Information is %s\n%s\n,%p,%p\n",cpu_info,mem_info,cpu_info,mem_info);
 
 }
@@ -221,7 +221,7 @@ ssize_t devfs_read(file_t *file,char *buf,size_t size) {
 	}
 	else if(file->inode->prio==1) {
 		for(int i=0;i<size;i++)
-			buf[i]='0';
+			buf[i]=0;
 	}
 	else  {
 		printf("\033[41mOperation not supported!\033[0m\n");
@@ -264,7 +264,7 @@ ssize_t proc_read(file_t *file,char *buf,size_t size) {
 		int pos=(int)file->inode->ptr;
 		memset(taskinfo,0,sizeof(taskinfo));
 		if(loader[pos]!=NULL)
-			sprintf(taskinfo,"Task %d : name :%s\n",pos,loader[pos]->name);	
+			sprintf(taskinfo,"Task %d : name :%s\n running :   %d\n",pos,loader[pos]->name,loader[pos]->state==2);	
 		else
 			sprintf(taskinfo,"No such a task!\n");
 		memcpy(buf,taskinfo,size);
