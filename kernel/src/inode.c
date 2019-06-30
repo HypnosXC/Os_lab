@@ -209,7 +209,7 @@ ssize_t devfs_read(file_t *file,char *buf,size_t size) {
 	}
 	return size;
 }
-int devfs_write(file_t *file,const char *buf,size_t size) {
+ssize_t devfs_write(file_t *file,const char *buf,size_t size) {
 	if(file->inode->prio==3){//dev
 		device_t *dev=(device_t *)file->inode->ptr;
 		ssize_t nread=dev->ops->write(dev,file->offset,buf,size);
@@ -226,11 +226,11 @@ int devfs_write(file_t *file,const char *buf,size_t size) {
 }
 //aimed at type=0 1 2 3
 char taskinfo[100];
-int proc_read(file_t *file,char *buf,size_t size) {
+ssize_t proc_read(file_t *file,char *buf,size_t size) {
 	info_update();
 	printf("\033[42mgot here proc_read!\n");
 	if(file->inode->type==4) {
-		//char *p=file->inode->ptr;
+		printf("\n\n\n\n\ncpuinfo here!\n");
 		memcpy(buf,cpuinfo,100);
 		return strlen(cpuinfo);
 		//strcpy(buf,"ha?");
