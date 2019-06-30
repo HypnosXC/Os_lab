@@ -169,6 +169,7 @@ void link_op(const char *roldpath,const char *rnewpath) {
 	char opath[100],npath[100];
 	real_path(opath,roldpath);
 	real_path(npath,rnewpath);
+	printf("two paths are %s,%s\n",opath,npath);
 	vfs->link(opath,npath);
 }
 void unlink_op(const char *rpath){
