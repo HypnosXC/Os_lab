@@ -156,7 +156,7 @@ void echo_task(void *name) {
 			unlink_op(path);
 		}
 		if(!strcmp(op,"link")) {
-			char *npath=path+strlen(path);
+			char *npath=path+strlen(path)+1;
 			printf("???\n %s\n ???",npath);
 			link_op(path,npath);
 		}
