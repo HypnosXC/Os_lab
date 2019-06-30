@@ -8,7 +8,7 @@ char cpu_info[100],mem_info[100];
 void info_update() {
 	memset(cpu_info,0,sizeof(cpu_info));
 	sprintf(cpu_info,"Total CPU num:%d Running cpu:%d",_ncpu(),_cpu());
-/*	int icnt=0,dcnt=0;
+	int icnt=0,dcnt=0;
 	device_t *dev=dev_lookup("ramdisk1");
 	for(int i=0;i<BLOCK_SIZE;i++) {
 		int loc=1<<(i%8);
@@ -21,10 +21,10 @@ void info_update() {
 		if(realva&loc)
 			dcnt++;
 	}
-	memset(meminfo,0,sizeof(meminfo));
-	sprintf(meminfo,"Now inode used %d blocks and data used %d blocks!",icnt,dcnt);
-	printf("Information is %s\n%s\n,%p,%p\n",cpuinfo,meminfo,cpuinfo,meminfo);
-*/
+	memset(mem_info,0,sizeof(mem_info));
+	sprintf(mem_info,"Now inode used %d blocks and data used %d blocks!",icnt,dcnt);
+	printf("Information is %s\n%s\n,%p,%p\n",cpu_info,mem_info,cpu_info,mem_info);
+
 }
 void self_fetch(inode_t *inode) {
 	device_t *dev=inode->fs->dev;
@@ -247,9 +247,8 @@ ssize_t devfs_write(file_t *file,const char *buf,size_t size) {
 //aimed at type=0 1 2 3
 char taskinfo[100];
 ssize_t proc_read(file_t *file,char *buf,size_t size) {
-//	kmt->spin_lock(inode_lk);
+	kmt->spin_lock(inode_lk);
 	info_update();
-	return 0;
 	ssize_t len=-1;
 	printf("\033[42mgot here proc_read!\n");
 	if(file->inode->type==4) {
