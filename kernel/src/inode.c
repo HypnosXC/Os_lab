@@ -255,7 +255,7 @@ ssize_t proc_read(file_t *file,char *buf,size_t size) {
 	if(file->inode->type==4) {
 		printf("\n\n\n\n\ncpuinfo here!\n");
 		memcpy(buf,cpu_info,100);
-		len=strlen(cpuinfo);
+		len=strlen(cpu_info);
 		//strcpy(buf,"ha?");
  	}
  	else if(file->inode->type==5) {
