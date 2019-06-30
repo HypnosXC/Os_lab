@@ -6,7 +6,7 @@ extern filesystem_t fs_tab[];
 extern task_t *loader[];
 char cpuinfo[100],meminfo[100];
 void info_update() {
-	memset(cpuinfo,0,sizeof(cpuinfo));
+//	memset(cpuinfo,0,sizeof(cpuinfo));
 //	sprintf(cpuinfo,"Total CPU num:%d Running cpu:%d",_ncpu(),_cpu());
 /*	int icnt=0,dcnt=0;
 	device_t *dev=dev_lookup("ramdisk1");
