@@ -8,7 +8,7 @@ char cpuinfo[100],meminfo[100];
 void info_update() {
 	memset(cpuinfo,0,sizeof(cpuinfo));
 	sprintf(cpuinfo,"Total CPU num:%d Running cpu:%d",_ncpu(),_cpu());
-	int icnt=0,dcnt=0;
+/*	int icnt=0,dcnt=0;
 	device_t *dev=dev_lookup("ramdisk1");
 	for(int i=0;i<BLOCK_SIZE;i++) {
 		int loc=1<<(i%8);
@@ -24,6 +24,7 @@ void info_update() {
 	memset(meminfo,0,sizeof(meminfo));
 	sprintf(meminfo,"Now inode used %d blocks and data used %d blocks!",icnt,dcnt);
 	printf("Information is %s\n%s\n,%p,%p\n",cpuinfo,meminfo,cpuinfo,meminfo);
+*/
 }
 void self_fetch(inode_t *inode) {
 	device_t *dev=inode->fs->dev;
