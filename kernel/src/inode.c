@@ -167,7 +167,7 @@ int link(const char *name,inode_t *inode) {
 	char pname[100];
 	char tname[100];
 	memcpy(tname,name,strlen(name));
-	memset(pane,0,sizeof(pname));
+	memset(pname,0,sizeof(pname));
 	int len=strlen(name);
 	int l=len-1;
 	while(name[l]!='/')
