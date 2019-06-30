@@ -453,13 +453,13 @@ int vfs_close(int fd) {
 	cur->flides[fd]=NULL;
 	pmm->free(file->inode);
 	pmm->free(file);
-	printf("\033[42m ????\033[0m");
 	return 0;
 }
 int vfs_link(const char *oldpath,const char *newpath) {
 	task_t *cur=current_task();
 	filesystem_t *fs=cur->preloc->fs;
 	inode_t *pre=fs->ops->lookup(fs,oldpath,7);
+	printf("link reached\n");
 	return pre->ops->link(newpath,pre);
 }
 int vfs_unlink(const char *path) {
