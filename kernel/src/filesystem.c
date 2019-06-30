@@ -59,7 +59,7 @@ void add_inode(inode_t* dir,const char *name,inode_t *fl) {
 off_t name_lookup(inode_t *inode,const char *name) {
 	self_fetch(inode);
 	if(inode->type!=0) {// must be a directory inode
-		printf("lookup in a non directory file!,%s\n",dir->type);
+		printf("lookup in a non directory file!,%s\n",inode->type);
 		assert(0);
  	}
 	off_t doff=0;

@@ -190,7 +190,12 @@ int link(const char *name,inode_t *inode) {
 int unlink(const char *name) {
 	char fname[100];
 	memset(fname,0,sizeof(fname));
-	sprintf(fname,"%s%s",name,"/..");
+	sprintf(fname,"%s",name);
+	int l=strlen(fname)-1;
+	while(fname[l]!='/');
+		fname[l--]=0;
+	if(fname[l]=='/'&&l!=0)
+		fname[l--]=0;
 	inode_t *pre=fs_tab[0].ops->lookup(&fs_tab[0],fname,9);
 	inode_t *go=fs_tab[0].ops->lookup(&fs_tab[0],name,9);
 	int doff=0;
