@@ -1,7 +1,6 @@
 #include<common.h>
 #include<devices.h>
 #include<klib.h>
-#define BLOCK_SIZE 2048
 spinlock_t *inode_lk;
 extern filesystem_t fs_tab[];
 extern task_t *loader[];
