@@ -227,20 +227,21 @@ ssize_t devfs_write(file_t *file,const char *buf,size_t size) {
 //aimed at type=0 1 2 3
 char taskinfo[100];
 ssize_t proc_read(file_t *file,char *buf,size_t size) {
+	kmt->spin_lock(inode_lk);
 	info_update();
+	ssize_t len=-1;
 	printf("\033[42mgot here proc_read!\n");
 	if(file->inode->type==4) {
 		printf("\n\n\n\n\ncpuinfo here!\n");
 		memcpy(buf,cpuinfo,100);
-		return strlen(cpuinfo);
+		len=strlen(cpuinfo);
 		//strcpy(buf,"ha?");
-	}
-	else if(file->inode->type==5) {
+ 	}
+ 	else if(file->inode->type==5) {
 		memcpy(buf,meminfo,100);
-		return strlen(meminfo);
+		len=strlen(meminfo);
 	}
 	else {
-		assert(0);
 		int pos=(int)file->inode->ptr;
 		memset(taskinfo,0,sizeof(taskinfo));
 		if(loader[pos]!=NULL)
@@ -248,8 +249,10 @@ ssize_t proc_read(file_t *file,char *buf,size_t size) {
 		else
 			sprintf(taskinfo,"No such a task!\n");
 		memcpy(buf,taskinfo,size);
-		return strlen(taskinfo);
-	}
+		len=strlen(taskinfo);
+ 	}
+	kmt->spin_unlock(inode_lk);
+	return len;
 }
 ssize_t proc_write(file_t *file,const char *buf,size_t size) {
 	printf("\033[41m Permission denied !\n\033[0m");
