@@ -201,8 +201,8 @@ int cat_op(const char *name,char *buf) {
 	int sz=vfs->lseek(fd,0,2);
 	printf("sz is %d\n");
 	vfs->lseek(fd,0,0);
-	vfs->read(fd,buf,sz);
 	assert(0);
+	vfs->read(fd,buf,sz);
 	vfs->close(fd);
 	printf("cat op!\n");
 	return sz;
