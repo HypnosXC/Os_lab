@@ -24,20 +24,20 @@ void new_block(inode_t* inode) {
 		char realva;
 		dev->ops->read(dev,DATA_MAP_ENTRY+pos,&realva,sizeof(char));
 		if(!(realva&loc)) {
-	//		printf("\033[32m block %d used,realva=%d!\n\033[0m",i,realva|=loc);
+
 			realva|=loc;
 			dev->ops->write(dev,DATA_MAP_ENTRY+pos,&realva,sizeof(char));
 			dev->ops->write(dev,DATA_ENTRY+i*BLOCK_SIZE,empty_BLOCK,BLOCK_SIZE);
 			off_t ptr=DATA_ENTRY+i*BLOCK_SIZE;
 			pos=inode->msize/BLOCK_SIZE;
-			printf("\nnew block : pos %d\n",pos);
-			printf("\033[42m new_block :%d stored block at %d now used\033[43m",pos,ptr);
+
+
 			dev->ops->write(dev,(off_t)inode->ptr+pos*sizeof(off_t),&ptr,sizeof(off_t));
 			inode->msize+=BLOCK_SIZE;
 			return;
 	 	}
 	} 
-	printf("No avialiable block!\n");
+
 	assert(0);
 }
 void add_inode(inode_t* dir,const char *name,inode_t *fl) {
@@ -52,21 +52,10 @@ void add_inode(inode_t* dir,const char *name,inode_t *fl) {
 	basic_write(dir,dir->size,(char *)&fl->pos,sizeof(off_t));
 	int ff=0;
 	basic_read(dir,dir->size-4,(char*)&ff,sizeof(off_t));
-	printf("\033[42m add_inode: originally size=%d,name=%s,%s\033,off %d=%d[0m\n",dir->size,name,pname,ff,fl->pos);
+
 	basic_write(dir,dir->size,pname+112,128-dir->size%128);
-	printf("\033[42m add_inode Now size is %d\033[0m\n",dir->size);
-}/*
-int inode_ex(off_t offset,filesystem_t *fs){
-	int num=(offset-INODE_ENTRY)/sizeof(inode_t);
-	char realva=0;
-	device_t *dev=fs->dev;
-	dev->ops->read(dev,INODE_MAP_ENTRY+num/8,&realva,sizeof(char));
-	printf("num=%d,realva=%d\n",num,realva);
-	int f=(realva&(1<<(num%8)));
-	if ( f != 0) 
-		return 1;
-	return 0;
-}*/
+
+}
 off_t name_lookup(inode_t *inode,const char *name) {
 	self_fetch(inode);
 	if(inode->type!=0) {// must be a directory inode
@@ -76,7 +65,7 @@ off_t name_lookup(inode_t *inode,const char *name) {
 	off_t doff=0;
 	char pname[124];
 	off_t off=0,ioff=0;
-	//printf("now inode size is %d\n",inode->size);
+
  	while(doff<inode->size) {
 		basic_read(inode,doff,pname,100);
 		basic_read(inode,doff+112,(char *)&ioff,sizeof(off_t));
@@ -84,15 +73,15 @@ off_t name_lookup(inode_t *inode,const char *name) {
 			doff+=128;
 			continue;
 		}
-	//	printf("get name as %s\n",pname);
+
  	 	if(!strcmp(pname,name)) {
 			basic_read(inode,doff+112,(char *)&off,sizeof(off_t));
 			return off;
 		}
 		doff+=128;
-	//	printf("doff=%d\n",doff);
+
 	}
-	//printf("name %s no found!\n",name);
+
 	return 1;
 	assert(0);	
 }
@@ -113,11 +102,11 @@ int inode_create(filesystem_t *fs,int prio,int type,inodeops_t *ops) {
 		char realva;
 		dev->ops->read(dev,DATA_MAP_ENTRY+pos,&realva,sizeof(char));	
 		if(!(realva&loc)) {	
-			printf("At %d , now mark is %d\n",i,realva+8);
+
 			realva|=loc;
 			dev->ops->write(dev,DATA_MAP_ENTRY+pos,&realva,sizeof(char));
 			pre->ptr=(void *)(DATA_ENTRY+i*BLOCK_SIZE);
-			printf("pre is %p\n",pre->ptr);
+
 			break;
 		}
 	}
@@ -129,12 +118,12 @@ int inode_create(filesystem_t *fs,int prio,int type,inodeops_t *ops) {
 		dev->ops->read(dev,INODE_MAP_ENTRY+pos,&realva,sizeof(char));
 	 	if(!(realva&loc)) {
 			realva|=loc;
-			printf("At %d, now mark is %d\n",i,realva);
+
 			dev->ops->write(dev,INODE_MAP_ENTRY+pos,&realva,sizeof(char));
 			pre->pos=INODE_ENTRY+i*sizeof(inode_t);
 			dev->ops->write(dev,INODE_ENTRY+i*sizeof(inode_t),(char *)pre,sizeof(inode_t));
 			dev->ops->read(dev,INODE_ENTRY+i*sizeof(inode_t),pre,sizeof(inode_t));
-	//		printf("now pre is %p\n",pre->ptr);
+
 			break;
 	 	}
 	}  
@@ -147,9 +136,9 @@ int dev_create(filesystem_t *fs,int prio,int type,inodeops_t *ops,char *name) {
 	int num=inode_create(fs,prio,type,ops);
 	off_t off=INODE_ENTRY+sizeof(inode_t)*num;
 	device_t *dev=fs->dev;
-	printf("reached %p\n",off);
+
 	dev->ops->read(dev,off,pre,sizeof(inode_t));
-	printf("reached!\n");
+
 	pre->size=100;
 	if(prio==3) {
 		device_t *ndev=dev_lookup(name);
@@ -190,7 +179,7 @@ int proc_create(filesystem_t *fs,int prio,int type,inodeops_t *ops,char *name) {
 	return num;
 }
 void del_map(device_t *dev,off_t entry,int num) {
-	printf("\033[34m block %x,%d realsed !\n\033[0m",entry,num);
+
 	int pos=num/8;
 	unsigned char va=1<<(num%8);
 	unsigned char realval=0;
@@ -257,7 +246,7 @@ void fs_init(filesystem_t *fs,const char *name,device_t *dev) {
 	add_inode(pre,".",pre);
 	add_inode(pre,"..",pre);
 	fs->inode=pre;
-	//printf("pre is %p\n",pre->ptr);
+
 	// one inode;
 }
 
@@ -277,7 +266,7 @@ inode_t * fs_lookup(filesystem_t *fs,const char *path,int flags) {
 	//int num;
 	int i=0,l=strlen(path);
 	device_t * dev=fs->dev;
-	//printf("\033[43m Lookup: name=%s\033[0m\n",path);
+
 	if (path[i]!='/') {
 		printf("Not a correct path!\n");
 		assert(0);
@@ -288,7 +277,7 @@ inode_t * fs_lookup(filesystem_t *fs,const char *path,int flags) {
 		int j=0;
 		while(path[i+j]!='/'&&i+j<l)
 			j++;
-	//	printf("now name is %s,node is %p\n",name,pre->ptr);
+
 		strncpy(name,path+i,j);
 		off_t doff=name_lookup(pre,name);
 	 	if (doff!=1) {	
@@ -313,7 +302,7 @@ inode_t * fs_lookup(filesystem_t *fs,const char *path,int flags) {
 				num=dev_create(fs,flags,(flags!=4),&dev_ops,name);
 			if(flags==5||flags==6)
 				num=proc_create(fs,flags,(flags!=4),&proc_ops,name);
-			printf("\033[42 m new block is %d\033[0m\n",num);
+
 			off_t addr=INODE_ENTRY+num*sizeof(inode_t);
 			memcpy(mpre,pre,sizeof(inode_t));
 			dev->ops->read(dev,addr,pre,sizeof(inode_t));
@@ -331,7 +320,7 @@ inode_t * fs_lookup(filesystem_t *fs,const char *path,int flags) {
 		i+=j+1;
 	} 
 	pmm->free(mpre);
-	//printf("died here!\n");
+
 	kmt->spin_unlock(fs_lk);
 	return pre;
 }
@@ -367,7 +356,7 @@ void vfs_init() {
 	device_t *dev=dev_lookup("ramdisk1");
 	filesystem_t *fs=&fs_tab[0];
 	fs_init(fs,"/",dev);
-	printf("init f\n");	
+
 	fs_lookup(fs,"/proc",4);
 	fs_lookup(fs,"/dev",4);
 	fs_lookup(fs,"/dev/ramdisk1",3);
@@ -384,7 +373,7 @@ void vfs_init() {
 		}	
 	}
 	fs_tab[0].ops=&fs_op;
-	printf("\033[42m where dead?\033[0m\n");
+
 }
 int vfs_access(const char *path,int mode){
 	printf("access : TODO!\n");
@@ -430,8 +419,6 @@ ssize_t vfs_read(int fd,void *buf,size_t size) {
 	memset(buf,0,size);
 	ssize_t ret=file->inode->ops->read(file,buf,size);
 	char *bf=(char *)buf;
-	for(int i=0;i<size;i++)
-		printf("\033[45m %c\033[0m",bf[i]);
 	file->offset+=size;
 	return ret;
 }
@@ -457,7 +444,7 @@ int vfs_close(int fd) {
 }
 int vfs_link(const char *oldpath,const char *newpath) {
 	filesystem_t *fs=&fs_tab[0];
-	printf("??\n");
+
 	inode_t *pre=fs->ops->lookup(fs,oldpath,7);
 	return pre->ops->link(newpath,pre);
 }
