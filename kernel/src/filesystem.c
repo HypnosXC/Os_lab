@@ -459,7 +459,6 @@ int vfs_link(const char *oldpath,const char *newpath) {
 	filesystem_t *fs=&fs_tab[0];
 	printf("??\n");
 	inode_t *pre=fs->ops->lookup(fs,oldpath,7);
-	printf("link reached\n");
 	return pre->ops->link(newpath,pre);
 }
 int vfs_unlink(const char *path) {

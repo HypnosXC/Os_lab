@@ -179,6 +179,7 @@ int link(const char *name,inode_t *inode) {
 		tname[l--]=0;
 	if(tname[l]=='/')
 		tname[l--]=0;
+	printf("\n...%s    %s....\n",tname,pname);
 	memcpy(tname,name,l-1);
 	inode_t *pre=inode->fs->ops->lookup(inode->fs,tname,9);
 	add_inode(pre,pname,inode);
