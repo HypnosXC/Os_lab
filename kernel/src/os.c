@@ -1,6 +1,7 @@
 #include <common.h>
 #include <klib.h>
 #include <devices.h>
+extern task_t* loader[];
 int rand();
 void pushcli();
 void popcli();
@@ -22,14 +23,13 @@ static void os_init() {
   kmt->init();
   _vme_init(pmm->alloc,pmm->free);
   dev->init();
- // vfs->init();
+  vfs->init();
   printf("reach here!\n");
   kmt->create(pmm->alloc(sizeof(task_t)),"print",echo_task,"tty1");
   kmt->create(pmm->alloc(sizeof(task_t)),"print",echo_task,"tty2");
   kmt->create(pmm->alloc(sizeof(task_t)),"print",echo_task,"tty3");
   kmt->create(pmm->alloc(sizeof(task_t)),"print",echo_task,"tty4");
-  vfs->init();
-  
+  fs_loadtask();
 }
 static void hello() {
   for (const char *ptr = "Hello from CPU #"; *ptr; ptr++) {

@@ -348,6 +348,17 @@ fsops_t fs_op = {
 *
 * vfs started!
 */
+void fs_loadtask() {
+	filesystem_t *fs=&fs_tab[0];
+	for(int i=0;i<26;i++)	{
+		if(loader[i]!=NULL){
+			char path[100];
+			sprintf(path,"/proc/%d",i);
+			fs_lookup(fs,path,6);
+		}	
+	}
+
+}
 void vfs_init() {
 	inode_lk=pmm->alloc(sizeof(spinlock_t));
 	fs_lk=pmm->alloc(sizeof(spinlock_t));
@@ -356,7 +367,6 @@ void vfs_init() {
 	device_t *dev=dev_lookup("ramdisk1");
 	filesystem_t *fs=&fs_tab[0];
 	fs_init(fs,"/",dev);
-
 	fs_lookup(fs,"/proc",4);
 	fs_lookup(fs,"/dev",4);
 	fs_lookup(fs,"/dev/ramdisk1",3);
@@ -365,13 +375,6 @@ void vfs_init() {
 	fs_lookup(fs,"/dev/rand",0);
 	fs_lookup(fs,"/proc/cpuinfo",5);
 	fs_lookup(fs,"/proc/meminfo",5);
-	for(int i=0;i<26;i++)	{
-		if(loader[i]!=NULL){
-			char path[100];
-			sprintf(path,"/proc/%d",i);
-			fs_lookup(fs,path,6);
-		}	
-	}
 	fs_tab[0].ops=&fs_op;
 
 }
