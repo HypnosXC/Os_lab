@@ -443,7 +443,6 @@ int vfs_close(int fd) {
 }
 int vfs_link(const char *oldpath,const char *newpath) {
 	filesystem_t *fs=&fs_tab[0];
-
 	inode_t *pre=fs->ops->lookup(fs,oldpath,7);
 	return pre->ops->link(newpath,pre);
 }
