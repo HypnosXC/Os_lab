@@ -4,10 +4,10 @@
 spinlock_t *inode_lk;
 extern filesystem_t fs_tab[];
 extern task_t *loader[];
-char cpinfo[100],meinfo[100];
+char cpu_info[100],mem_info[100];
 void info_update() {
-	memset(cpinfo,0,sizeof(cpinfo));
-	sprintf(cpinfo,"Total CPU num:%d Running cpu:%d",_ncpu(),_cpu());
+	memset(cpu_info,0,sizeof(cpu_info));
+	sprintf(cpu_info,"Total CPU num:%d Running cpu:%d",_ncpu(),_cpu());
 /*	int icnt=0,dcnt=0;
 	device_t *dev=dev_lookup("ramdisk1");
 	for(int i=0;i<BLOCK_SIZE;i++) {
@@ -254,13 +254,13 @@ ssize_t proc_read(file_t *file,char *buf,size_t size) {
 	printf("\033[42mgot here proc_read!\n");
 	if(file->inode->type==4) {
 		printf("\n\n\n\n\ncpuinfo here!\n");
-		memcpy(buf,cpuinfo,100);
+		memcpy(buf,cpu_info,100);
 		len=strlen(cpuinfo);
 		//strcpy(buf,"ha?");
  	}
  	else if(file->inode->type==5) {
-		memcpy(buf,meminfo,100);
-		len=strlen(meminfo);
+		memcpy(buf,mem_info,100);
+		len=strlen(mem_info);
 	}
 	else {
 		int pos=(int)file->inode->ptr;
