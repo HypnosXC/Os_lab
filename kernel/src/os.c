@@ -149,9 +149,9 @@ void echo_task(void *name) {
 			printf("lseek_op,fd=%d,offset=%d\n",fd,off);
 			lseek_op(fd,off,whence);
 		}  
-		if(!strcmp(op,"rm")) {
-			rm_op(path);
-		}
+//		if(!strcmp(op,"rm")) {
+//			rm_op(path);
+//		}
 		if(!strcmp(op,"unlink")) {
 			unlink_op(path);
 		}
