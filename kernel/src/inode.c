@@ -192,7 +192,7 @@ int unlink(const char *name) {
 	memset(fname,0,sizeof(fname));
 	sprintf(fname,"%s",name);
 	int l=strlen(fname)-1;
-	while(fname[l]!='/');
+	while(fname[l]!='/')
 		fname[l--]=0;
 	if(fname[l]=='/'&&l!=0)
 		fname[l--]=0;
