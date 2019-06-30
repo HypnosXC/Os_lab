@@ -24,3 +24,6 @@ void write_op(int fd,void *buf,size_t size);
 void lseek_op(int fd,off_t offset,int whence);
 int open_op(const char *path);
 int cat_op(const char *name,char *buf);
+void link_op(const char *oldpath,const char *newpath);
+void unlink_op(const char* path);
+void rm_op(const char *path);
