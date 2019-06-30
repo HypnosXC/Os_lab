@@ -1,6 +1,6 @@
 static int *btmp;
 static int mpsize;
-#define BLOCK_SIZE 4096
+//#define BLOCK_SIZE 4096
 #define base_sz 16
 #define lb(x) (x&(-x))
 int rand();
