@@ -7,7 +7,7 @@ extern task_t *loader[];
 char cpuinfo[100],meminfo[100];
 void info_update() {
 	memset(cpuinfo,0,sizeof(cpuinfo));
-	sprintf(cpuinfo,"Total CPU num:%d Running cpu:%d",_ncpu(),_cpu());
+//	sprintf(cpuinfo,"Total CPU num:%d Running cpu:%d",_ncpu(),_cpu());
 /*	int icnt=0,dcnt=0;
 	device_t *dev=dev_lookup("ramdisk1");
 	for(int i=0;i<BLOCK_SIZE;i++) {
