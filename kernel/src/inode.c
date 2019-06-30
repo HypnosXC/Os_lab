@@ -167,6 +167,7 @@ int link(const char *name,inode_t *inode) {
 	char pname[100];
 	char tname[100];
 	memcpy(tname,name,strlen(name));
+	memset(pane,0,sizeof(pname));
 	int len=strlen(name);
 	int l=len-1;
 	while(name[l]!='/')
@@ -177,10 +178,9 @@ int link(const char *name,inode_t *inode) {
 	l=len-1;
 	while(tname[l]!='/')
 		tname[l--]=0;
-	if(tname[l]=='/')
+	if(tname[l]=='/'&&l!=0)
 		tname[l--]=0;
 	printf("\n...%s    %s....\n",tname,pname);
-	memcpy(tname,name,l-1);
 	inode_t *pre=inode->fs->ops->lookup(inode->fs,tname,9);
 	add_inode(pre,pname,inode);
 	pmm->free(pre);
