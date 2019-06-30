@@ -189,6 +189,7 @@ int unlink(const char *name) {
 ssize_t devfs_read(file_t *file,char *buf,size_t size) {
 	printf("defv read!\n");
 	if(file->inode->prio==3) {
+		printf("\033[42mm ramdisk!\033[0m\n");
 		device_t *dev=(device_t *) file->inode->ptr;
 		ssize_t nread=dev->ops->read(dev,file->offset,buf,size);
 		file->offset+=size;
