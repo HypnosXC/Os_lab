@@ -458,7 +458,7 @@ int vfs_close(int fd) {
 int vfs_link(const char *oldpath,const char *newpath) {
 	task_t *cur=current_task();
 	filesystem_t *fs=cur->preloc->fs;
-	printf("??");
+	printf("??\n");
 	inode_t *pre=fs->ops->lookup(fs,oldpath,7);
 	printf("link reached\n");
 	return pre->ops->link(newpath,pre);
