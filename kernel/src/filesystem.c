@@ -52,7 +52,7 @@ void add_inode(inode_t* dir,const char *name,inode_t *fl) {
 	basic_write(dir,dir->size,(char *)&fl->pos,sizeof(off_t));
 	int ff=0;
 	basic_read(dir,dir->size-4,(char*)&ff,sizeof(off_t));
-	printf("\033[42m add_inode: originally size=%d,name=%s\033,off %d=%d[0m\n",dir->size,pname,ff,fl->pos);
+	printf("\033[42m add_inode: originally size=%d,name=%s,%s\033,off %d=%d[0m\n",dir->size,name,pname,ff,fl->pos);
 	basic_write(dir,dir->size,pname+112,128-dir->size%128);
 	printf("\033[42m add_inode Now size is %d\033[0m\n",dir->size);
 }/*
