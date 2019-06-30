@@ -418,7 +418,6 @@ ssize_t vfs_read(int fd,void *buf,size_t size) {
 	file_t * file=cur->flides[fd];
 	memset(buf,0,size);
 	ssize_t ret=file->inode->ops->read(file,buf,size);
-	char *bf=(char *)buf;
 	file->offset+=size;
 	return ret;
 }
