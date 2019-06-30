@@ -228,8 +228,8 @@ ssize_t devfs_write(file_t *file,const char *buf,size_t size) {
 char taskinfo[100];
 ssize_t proc_read(file_t *file,char *buf,size_t size) {
 //	kmt->spin_lock(inode_lk);
-	return 0;
 	info_update();
+	return 0;
 	ssize_t len=-1;
 	printf("\033[42mgot here proc_read!\n");
 	if(file->inode->type==4) {
